@@ -9,3 +9,5 @@ editor_options:
 ---
 
 Welcome to my research website.
+
++ [Check variance reduction: Gaussian case](sim_gaussian_res.html)
