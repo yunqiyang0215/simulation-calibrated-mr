@@ -1,0 +1,87 @@
+---
+title: "More simulation under Gaussian x1, x2"
+author: "Yunqi Yang"
+date: "2/9/2023"
+output:
+  pdf_document: default
+  html_document: default
+---
+## Description:
+
+Here I conducted more simulation to check the derivation of variance reduction under the assumption that x1, x2 are joint Gaussian. 
+
+The calibrated estimator is calculated using:
+$$
+\tilde\tau= \hat\beta_1-\hat\beta_2-v_{12}v_{22}^{-1}(\hat\alpha_1'-\hat\alpha_1),
+$$
+where $v_12$ and $v_{22}$ are theoretical values. 
+
+
+### Theoretical value of variance reduction:
+
+$$
+VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}
+$$
+```{r}
+compute_var_reduction <- function(sigma2, rho, r, b2){
+  vr <- (1-r)*(1-rho)/2 * sigma2 / (sigma2 + (1-r^2)*b2^2)
+  return(vr)
+}
+```
+
+### Theoretical vs. simulation: Change correlation 
+```{r}
+res <- readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/sim_gaussian/gaussian_r.rds")
+```
+
+```{r}
+rs <- c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8)
+est_var <- matrix(NA, ncol = 2, nrow = length(res))
+for (i in 1:length(res)){
+  est_var[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+```
+
+```{r}
+theo_vr <- rep(NA, length(res))
+for (i in 1:length(res)){
+  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = 0.1, r = rs[i], b2 = 0.1)
+}
+
+```
+
+```{r}
+plot(rs, 1-est_var[,1]/est_var[,2], xlab ="correlation between x1 and x2", ylab = "Variance reduction proportion")
+points(rs, theo_vr, col = "red")
+legend("topright", legend = c("empirical", "theoretical"), pch = 1, col = c(1,2))
+```
+
+### Theoretical vs. simulation: Change rho
+
+Here I fixed N = 5e4. Therefore, as $\rho$ increases, $n$ will increase. 
+
+```{r}
+res <- readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/sim_gaussian/gaussian_rho.rds")
+```
+
+```{r}
+rhos <- c(0.1, 0.3, 0.5, 0.8, 1)
+est_var <- matrix(NA, ncol = 2, nrow = length(res))
+for (i in 1:length(res)){
+  est_var[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+```
+
+```{r}
+theo_vr <- rep(NA, length(res))
+for (i in 1:length(res)){
+  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = rhos[i], r = 0.1, b2 = 0.1)
+}
+```
+
+```{r}
+plot(rhos, 1-est_var[,1]/est_var[,2], xlab ="rho (n/N)", ylab = "Variance reduction proportion")
+points(rhos, theo_vr, col = "red")
+legend("topright", legend = c("empirical", "theoretical"), col = c(1,2), pch = 1)
+```
+
