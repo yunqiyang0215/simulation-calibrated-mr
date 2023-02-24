@@ -35,7 +35,7 @@ Simulation script: https://github.com/yunqiyang0215/simulation-calibrated-mr/blo
 
 n = 5e3; N = 5e4; b = c(1,3,0.1); sigma = 1
 ```{r}
-res <- readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/sim_gaussian/gaussian_r.rds")
+res <- readRDS("./data/gaussian_r.rds")
 ```
 
 ```{r}
@@ -62,21 +62,21 @@ legend("topright", legend = c("empirical", "theoretical"), pch = 1, col = c(1,2)
 
 ### 3. Theoretical vs. simulation: Change rho
 
-Here I fixed N = 5e4. Therefore, as $\rho$ increases, $n$ will increase. 
+Here I fixed n = 5e3. Therefore, as $\rho$ increases, $N$ will decrease. 
 
 
 Simulation script: https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/master/analysis/gaussian_rho.R
 
 
-N = 5e4; b = c(1,3,0.1); sigma = 1; r = 0.1
+n = 5e3; b = c(1,3,0.1); sigma = 1; r = 0
 
 ```{r}
-res <- readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/sim_gaussian/gaussian_rho.rds")
+res <- readRDS("./data/gaussian_rho.rds")
 ```
 
 ```{r}
-rhos <- c(0.1, 0.3, 0.5, 0.8, 1)
-est_var <- matrix(NA, ncol = 2, nrow = length(res))
+rhos <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+est_var <- matrix(NA, ncol = 3, nrow = length(res))
 for (i in 1:length(res)){
   est_var[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
 }
@@ -85,14 +85,15 @@ for (i in 1:length(res)){
 ```{r}
 theo_vr <- rep(NA, length(res))
 for (i in 1:length(res)){
-  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = rhos[i], r = 0.1, b2 = 0.1)
+  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = rhos[i], r = 0, b2 = 0.1)
 }
 ```
 
 ```{r}
-plot(rhos, 1-est_var[,1]/est_var[,2], xlab ="rho (n/N)", ylab = "Variance reduction proportion")
+plot(rhos, 1-est_var[,1]/est_var[,3], xlab ="rho (n/N)", ylab = "Variance reduction proportion", ylim = c(0, 0.6))
 points(rhos, theo_vr, col = "red")
-legend("topright", legend = c("empirical", "theoretical"), col = c(1,2), pch = 1)
+points(rhos, 1-est_var[,2]/est_var[,3], col = 3)
+legend("topright", legend = c("empirical", "theoretical", "plugin true alpha"), col = c(1,2, 3), pch = 1)
 ```
 
 
