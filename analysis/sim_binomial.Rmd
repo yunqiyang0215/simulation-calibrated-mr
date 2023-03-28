@@ -1,0 +1,104 @@
+---
+title: "Variance reduction: binomial x1, x2"
+author: "Yunqi Yang"
+date: "3/28/2023"
+output: html_document
+---
+
+## Description:
+
+simulation to check variance reduction under binomial x1 and x2. x1 and x2 are first simulated from gaussian and then transformed to binomial distribution. 
+
+The calibrated estimator is calculated using:
+$$
+\tilde\tau= \hat\beta_1-\hat\beta_2-v_{12}v_{22}^{-1}(\hat\alpha_1'-\hat\alpha_1),
+$$
+where $v_{12}$ and $v_{22}$ are theoretical values. $\hat\alpha_1$ is the estimate from larger external data under mis-specified model. 
+
+
+### 1. Theoretical value of variance reduction (under x1, x2 joint gaussian case)
+
+$$
+VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}
+$$
+```{r}
+compute_var_reduction <- function(sigma2, rho, r, b2){
+  vr <- (1-r)*(1-rho)/2 * sigma2 / (sigma2 + (1-r^2)*b2^2)
+  return(vr)
+}
+```
+
+### 2. Theoretical vs. simulation: Change correlation 
+
+Script available: 
+
+n = 5e3; N = 5e4; b = c(1,3,0.1); sigma = 1
+
+$\tilde\tau$ is calculated using the equation under Gaussian case, and we use estimated empirical correlation for $r$, the correlation parameter. 
+```{r}
+res <- readRDS("./data/sim_binomial/binomial_r.rds")
+```
+
+```{r}
+rs <- c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8)
+est_var <- matrix(NA, ncol = 3, nrow = length(res))
+colnames(est_var) = c("gamma.tilde", "gamma.raw", "est.r")
+for (i in 1:length(res)){
+  est_var[i, 1:2] <- apply(res[[i]][,1:2], MARGIN = 2, function(x) var(x))
+  est_var[i, 3] <- mean(res[[i]][, 3])
+}
+```
+
+```{r}
+theo_vr <- rep(NA, length(res))
+for (i in 1:length(res)){
+  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = 0.1, r = mean(res[[i]][, 3]), b2 = 0.1)
+}
+
+```
+
+```{r}
+plot(est_var[,3], 1-est_var[,1]/est_var[,2], xlab ="estimated correlation between x1 and x2", ylab = "Variance reduction proportion")
+points(est_var[,3], theo_vr, col = "red")
+legend("topright", legend = c("empirical", "theoretical"), pch = 1, col = c(1,2))
+```
+**Comments**: we should use empirically estimated $\tilde\tau$ (by estimating the empirical covariance of score functions...), instead of using Gaussian equation to get $\tilde\tau$. 
+
+
+### 3. Theoretical vs. simulation: Change rho
+
+Here I fixed N = 5e4, and vary n based on different $\rho$ values. 
+
+Simulation script: 
+
+n = 5e3; b = c(1,3,0.1); sigma = 1; r = 0
+
+```{r}
+res <- readRDS("./data/sim_binomial/binomial_rho.rds")
+```
+
+```{r}
+rhos <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+est_var <- matrix(NA, ncol = 3, nrow = length(res))
+colnames(est_var) = c("gamma.tilde", "gamma.raw", "est.r")
+for (i in 1:length(res)){
+  est_var[i, 1:2] <- apply(res[[i]][,1:2], MARGIN = 2, function(x) var(x))
+  est_var[i, 3] <- mean(res[[i]][, 3])
+}
+```
+
+```{r}
+theo_vr <- rep(NA, length(res))
+for (i in 1:length(res)){
+  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = rhos[i], r = mean(res[[i]][, 3]), b2 = 0.1)
+}
+```
+
+```{r}
+plot(rhos, 1-est_var[,1]/est_var[,2], xlab ="rho (n/N)", ylab = "Variance reduction proportion", ylim = c(0, 0.5))
+points(rhos, theo_vr, col = "red")
+legend("topright", legend = c("empirical", "theoretical"), col = c(1,2), pch = 1)
+```
+
+
+
