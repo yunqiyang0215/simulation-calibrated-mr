@@ -94,7 +94,32 @@ plot(rhos, 1-est_var[,1]/est_var[,3], xlab ="rho (n/N)", ylab = "Variance reduct
 points(rhos, theo_vr, col = "red")
 points(rhos, 1-est_var[,2]/est_var[,3], col = 3)
 legend("topright", legend = c("empirical", "theoretical", "plugin true alpha"), col = c(1,2, 3), pch = 1)
+
+
 ```
 
+### 4. Increase n and N by 10 times, and vary rho
 
+Replicates = 5000
+```{r}
+res <- readRDS("./data/gaussian_rho1.rds")
+```
+
+```{r include = FALSE}
+rhos <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+est_var <- matrix(NA, ncol = 3, nrow = length(res))
+for (i in 1:length(res)){
+  est_var[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+
+theo_vr <- rep(NA, length(res))
+for (i in 1:length(res)){
+  theo_vr[i] <- compute_var_reduction(sigma2 = 1, rho = rhos[i], r = 0, b2 = 0.1)
+}
+
+plot(rhos, 1-est_var[,1]/est_var[,3], xlab ="rho (n/N)", ylab = "Variance reduction proportion", ylim = c(0, 0.6))
+points(rhos, theo_vr, col = "red")
+points(rhos, 1-est_var[,2]/est_var[,3], col = 3)
+legend("topright", legend = c("empirical", "theoretical", "plugin true alpha"), col = c(1,2, 3), pch = 1)
+```
 
