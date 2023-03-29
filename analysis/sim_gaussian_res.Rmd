@@ -100,7 +100,7 @@ legend("topright", legend = c("empirical", "theoretical", "plugin true alpha"), 
 
 ### 4. Increase n and N by 10 times, and vary rho
 
-Replicates = 5000
+Replicates = 5000. Fixed n = 5e4, N = n/rho. 
 ```{r echo = FALSE}
 res <- readRDS("./data/gaussian_rho1.rds")
 
