@@ -101,11 +101,9 @@ legend("topright", legend = c("empirical", "theoretical", "plugin true alpha"), 
 ### 4. Increase n and N by 10 times, and vary rho
 
 Replicates = 5000
-```{r}
-res <- readRDS("./data/gaussian_rho1.rds")
-```
-
 ```{r echo = FALSE}
+res <- readRDS("./data/gaussian_rho1.rds")
+
 rhos <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
 est_var <- matrix(NA, ncol = 3, nrow = length(res))
 for (i in 1:length(res)){
