@@ -111,7 +111,7 @@ plot(rs, 1-vars[,1]/vars[,2], xlab = "correlation between x1 and x2", ylab = 'pr
 
 b <- c(1,3,0.1); sigma <- 1; r <- 0; N <- 1e4
 
-**Problem**: when rho = 1, the calibrated_estimator function doesn't work. NA returned. 
+Problem: when rho = 1, the calibrated_estimator function doesn't work. NA returned. 
 
 ```{r}
 res <- readRDS("./data/simulation202304/binary_rho.rds")
