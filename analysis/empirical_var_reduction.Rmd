@@ -1,0 +1,125 @@
+---
+title: "Check variance reduction empirically"
+author: "Yunqi Yang"
+date: "4/4/2023"
+output: html_document
+---
+
+### 1. Under Gaussian x1, x2
+
+#### Vary correlation 
+
+data replicates: 5000
+
+n = 5e3; N = 5e4; b = c(1,3,0.1); sigma = 1
+
+```{r}
+res <- readRDS("./data/simulation202304/gaussian_r.rds")
+```
+
+```{r}
+rs <- c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8)
+vars <- matrix(NA, ncol = 2, nrow = length(res))
+colnames(vars) <- c("gamma.tilde", "gamma.raw")
+for (i in 1:length(res)){
+  vars[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+```
+
+```{r}
+par(mfrow = c(1,2))
+plot(rs, vars[,1], col = 2, ylim = c(0, 0.0020), xlab = "correlation between x1 and x2", ylab = "estimated variance")
+points(rs, vars[,2])
+legend("topleft", legend = c("tau.tilde", "tau.raw"), col = c(2,1), pch = 1)
+
+plot(rs, 1-vars[,1]/vars[,2], xlab = "correlation between x1 and x2", ylab = 'proportion of variance reduction')
+```
+
+
+#### Vary rhos: 1000 data replicates
+
+b <- c(1,3,0.1); sigma <- 1; r <- 0; N <- 1e4
+
+1. Problem: when rho = 1, the calibrated_estimator function doesn't work. NA returned. 
+
+```{r}
+res <- readRDS("./data/simulation202304/gaussian_rho.rds")
+
+rhos <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+vars <- matrix(NA, ncol = 2, nrow = length(res))
+colnames(vars) <- c("gamma.tilde", "gamma.raw")
+for (i in 1:length(res)){
+  vars[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+```
+
+```{r}
+par(mfrow = c(1,2))
+plot(rhos[1:9], vars[1:9,1], col = 2, ylim = c(0, 0.0021), xlab = "rho: n/N", ylab = "estimated variance")
+points(rhos[1:9], vars[1:9,2])
+legend("topright", legend = c("tau.tilde", "tau.raw"), col = c(2,1), pch = 1)
+
+plot(rhos[1:9], 1-vars[1:9,1]/vars[1:9,2], xlab = "rho: n/N", ylab = 'proportion of variance reduction')
+```
+
+
+
+
+
+### 2. Under Binary x1, x2
+
+#### Vary correlation 
+
+data replicates: 5000
+
+n = 5e3; N = 5e4; b = c(1,3,0.1); sigma = 1
+
+```{r}
+res <- readRDS("./data/simulation202304/binary_r.rds")
+```
+
+```{r}
+rs <- c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8)
+vars <- matrix(NA, ncol = 2, nrow = length(res))
+colnames(vars) <- c("gamma.tilde", "gamma.raw")
+for (i in 1:length(res)){
+  vars[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+```
+
+```{r}
+par(mfrow = c(1,2))
+plot(rs, vars[,1], col = 2, ylim = c(0, 0.0020), xlab = "correlation between x1 and x2", ylab = "estimated variance")
+points(rs, vars[,2])
+legend("topleft", legend = c("tau.tilde", "tau.raw"), col = c(2,1), pch = 1)
+
+plot(rs, 1-vars[,1]/vars[,2], xlab = "correlation between x1 and x2", ylab = 'proportion of variance reduction')
+```
+
+
+#### Vary rhos: 1000 data replicates
+
+b <- c(1,3,0.1); sigma <- 1; r <- 0; N <- 1e4
+
+1. Problem: when rho = 1, the calibrated_estimator function doesn't work. NA returned. 
+
+```{r}
+res <- readRDS("./data/simulation202304/binary_rho.rds")
+
+rhos <- c(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1)
+vars <- matrix(NA, ncol = 2, nrow = length(res))
+colnames(vars) <- c("gamma.tilde", "gamma.raw")
+for (i in 1:length(res)){
+  vars[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+}
+```
+
+```{r}
+par(mfrow = c(1,2))
+plot(rhos[1:9], vars[1:9,1], col = 2, ylim = c(0.0005, 0.0085), xlab = "rho: n/N", ylab = "estimated variance")
+points(rhos[1:9], vars[1:9,2])
+legend("topright", legend = c("tau.tilde", "tau.raw"), col = c(2,1), pch = 1)
+
+plot(rhos[1:9], 1-vars[1:9,1]/vars[1:9,2], xlab = "rho: n/N", ylab = 'proportion of variance reduction')
+```
+
