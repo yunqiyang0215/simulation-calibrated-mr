@@ -9,9 +9,7 @@ output: html_document
 
 check variance reduction using estimated mean and variance of score functions. And compute variance reduction empirically under Gaussian x1, x2 and binary x1, x2. Binary x1, x2 are obtained by first simulating from joint Gaussian and then transformed to binary data based on threshold $x>0$. 
 
-**Conclusion**:
-
-1. The patterns for variance reduction between Gaussian x1, x2 and binary x1, x2 are very similar. 
+**Conclusion**: the patterns for variance reduction between Gaussian x1, x2 and binary x1, x2 are very similar. 
 
 
 
