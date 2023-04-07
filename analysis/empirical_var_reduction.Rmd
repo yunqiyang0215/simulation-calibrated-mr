@@ -83,21 +83,23 @@ res <- readRDS("./data/simulation202304/binary_r.rds")
 ```
 
 ```{r}
-rs <- c(-0.8, -0.6, -0.4, -0.2, 0, 0.2, 0.4, 0.6, 0.8)
+
 vars <- matrix(NA, ncol = 2, nrow = length(res))
+est.r = rep(NA, length(res))
 colnames(vars) <- c("gamma.tilde", "gamma.raw")
 for (i in 1:length(res)){
-  vars[i, ] <- apply(res[[i]], MARGIN = 2, function(x) var(x))
+  vars[i, ] <- apply(res[[i]][, c(1,2)], MARGIN = 2, function(x) var(x))
+  est.r[i] = mean(res[[i]][,3])
 }
 ```
 
 ```{r}
 par(mfrow = c(1,2))
-plot(rs, vars[,1], col = 2, ylim = c(0, 0.0020), xlab = "correlation between x1 and x2", ylab = "estimated variance")
-points(rs, vars[,2])
+plot(est.r, vars[,1], col = 2, ylim = c(0, 0.0020), xlab = "correlation between x1 and x2", ylab = "estimated variance")
+points(est.r, vars[,2])
 legend("topleft", legend = c("tau.tilde", "tau.raw"), col = c(2,1), pch = 1)
 
-plot(rs, 1-vars[,1]/vars[,2], xlab = "correlation between x1 and x2", ylab = 'proportion of variance reduction')
+plot(est.r, 1-vars[,1]/vars[,2], xlab = "correlation between x1 and x2", ylab = 'proportion of variance reduction')
 ```
 
 
