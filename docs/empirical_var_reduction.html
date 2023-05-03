@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-04-11
+<strong>Last updated:</strong> 2023-05-02
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec8b4e22e49a348c90ef91eeaa86d1c0d4bd01c5ftargetblankc8b4e22a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c8b4e22e49a348c90ef91eeaa86d1c0d4bd01c5f" target="_blank">c8b4e22</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree5d8222e23861cba87c95198267f675e75035d131targetblank5d8222ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/5d8222e23861cba87c95198267f675e75035d131" target="_blank">5d8222e</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec8b4e22e49a348c90ef91eeaa86d1c0d4bd01c5ftargetblankc8b4e22a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree5d8222e23861cba87c95198267f675e75035d131targetblank5d8222ea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c8b4e22e49a348c90ef91eeaa86d1c0d4bd01c5f" target="_blank">c8b4e22</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/5d8222e23861cba87c95198267f675e75035d131" target="_blank">5d8222e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -503,12 +503,12 @@ Untracked files:
     Untracked:  analysis/check_var_reduction.Rmd
     Untracked:  data/gaussian_rho.R
     Untracked:  data/gaussian_rho1.rds
-    Untracked:  data/simulation202304/binary_rho.rds
-    Untracked:  data/simulation202304/gaussian_r.rds
-    Untracked:  data/simulation202304/gaussian_rho.rds
 
 Unstaged changes:
     Modified:   data/simulation202304/binary_r.rds
+    Modified:   data/simulation202304/binary_rho.rds
+    Modified:   data/simulation202304/gaussian_r.rds
+    Modified:   data/simulation202304/gaussian_rho.rds
 
 </code></pre>
 <p>
@@ -547,6 +547,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/5d8222e23861cba87c95198267f675e75035d131/analysis/empirical_var_reduction.Rmd" target="_blank">5d8222e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-02
+</td>
+<td>
+wflow_publish("analysis/empirical_var_reduction.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/44b3c730128185ac8f138acf482176d27efba377/docs/empirical_var_reduction.html" target="_blank">44b3c73</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-04-11
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -837,12 +871,22 @@ colnames(var2) &lt;- c(&quot;gamma.tilde&quot;, &quot;gamma.raw&quot;)
 
 
 for (i in 1:length(gaussian)){
-  var1[i, ] &lt;- apply(gaussian[[i]], MARGIN = 2, function(x) var(x))
+  var1[i, ] &lt;- apply(gaussian[[i]][,c(1,2)], MARGIN = 2, function(x) var(x))
 }
 
 for (i in 1:length(binary)){
   var2[i, ] &lt;- apply(binary[[i]][, c(1,2)], MARGIN = 2, function(x) var(x))
-  est.r[i] = mean(binary[[i]][,3])
+  est.r[i] = mean(binary[[i]][,4])
+}</code></pre>
+<pre class="r"><code>### Mean variance of calibrated estimator
+mean_var_gaussian &lt;- rep(NA, length(gaussian))
+mean_var_binary &lt;- rep(NA, length(binary))
+for (i in 1:length(gaussian)){
+  mean_var_gaussian[i] = mean(gaussian[[i]][,3])
+}
+
+for (i in 1:length(binary)){
+  mean_var_binary[i] = mean(binary[[i]][,3])
 }</code></pre>
 <pre class="r"><code>plot(rs, var1[,1], col = 2, ylim = c(0, 0.0050), xlab = &quot;correlation between x1 and x2&quot;, ylab = &quot;estimated variance&quot;, pch = 19)
 points(rs, var1[,2], pch = 19)
@@ -851,8 +895,59 @@ points(rs, var1[,2], pch = 19)
 points(est.r, var2[,1], col = 2, pch = 17, xlab = &quot;correlation between x1 and x2&quot;, ylab = &quot;estimated variance&quot;)
 points(est.r, var2[,2], pch = 17)
 legend(&quot;topleft&quot;, legend = c(&quot;Gaussian: tau.tilde&quot;, &quot;Gaussian: tau.raw&quot;, 
-                             &quot;Binary: tau.raw&quot;,&quot;Binary: tau.raw&quot;), col = c(2,1), pch = c(19, 19, 17, 17))</code></pre>
-<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+                             &quot;Binary: tau.tilde&quot;,&quot;Binary: tau.raw&quot;, &quot;Gaussian: mean(var.hat) of cali-estimator&quot;, &quot;Binary: mean(var.hat) of cali-estimator&quot;), col = c(2,1, 2,1, 1, 4), pch = c(19, 19, 17, 17, 1, 1))
+
+points(rs, mean_var_gaussian)
+points(est.r, mean_var_binary, col = 4)</code></pre>
+<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/44b3c730128185ac8f138acf482176d27efba377/docs/figure/empirical_var_reduction.Rmd/unnamed-chunk-5-1.png" target="_blank">44b3c73</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-04-11
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/dc9d4a6072de8954dc56db81fd04f06c7ffcc522/docs/figure/empirical_var_reduction.Rmd/unnamed-chunk-5-1.png" target="_blank">dc9d4a6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-04-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>grid = seq(-0.8, 0.8, length.out = 100)
 theo = rep(NA, length(grid))
 for (i in 1:length(grid)){
@@ -863,7 +958,7 @@ for (i in 1:length(grid)){
 points(est.r, 1-var2[,1]/var2[,2], pch = 17, col = &quot;blue&quot;)
 lines(grid, theo, lty = 2)
 legend(&quot;topright&quot;, legend = c(&quot;Gaussian&quot;, &quot;Binary&quot;), col = c(&quot;red&quot;,&quot;blue&quot;), pch = c(19, 17))</code></pre>
-<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="vary-rhos-1000-data-replicates" class="section level3">
 <h3>2. Vary rhos: 1000 data replicates</h3>
@@ -877,17 +972,67 @@ colnames(var1) &lt;- c(&quot;gamma.tilde&quot;, &quot;gamma.raw&quot;)
 colnames(var2) &lt;- c(&quot;gamma.tilde&quot;, &quot;gamma.raw&quot;)
 
 for (i in 1:length(rhos)){
-  var1[i, ] &lt;- apply(gaussian[[i]], MARGIN = 2, function(x) var(x))
-  var2[i, ] &lt;- apply(binary[[i]], MARGIN = 2, function(x) var(x))
+  var1[i, ] &lt;- apply(gaussian[[i]][,c(1,2)], MARGIN = 2, function(x) var(x))
+  var2[i, ] &lt;- apply(binary[[i]][,c(1,2)], MARGIN = 2, function(x) var(x))
+}</code></pre>
+<pre class="r"><code>### Mean variance of calibrated estimator
+mean_var_gaussian &lt;- rep(NA, 9)
+mean_var_binary &lt;- rep(NA, 9)
+for (i in 1:9){
+  mean_var_gaussian[i] = mean(gaussian[[i]][,3])
+}
+
+for (i in 1:9){
+  mean_var_binary[i] = mean(binary[[i]][,3])
 }</code></pre>
 <pre class="r"><code>plot(rhos, var1[,1], col = 2, ylim = c(0, 0.0090), xlab = &quot;rho: n/N&quot;, ylab = &quot;estimated variance&quot;, pch = 19)
 points(rhos, var1[,2], pch = 19)
 
 points(rhos, var2[,1], col = 2, pch = 17)
 points(rhos, var2[,2], pch = 17)
+points(rhos, mean_var_gaussian)
+points(rhos, mean_var_binary, col = 4)
+
 legend(&quot;topright&quot;, legend = c(&quot;Gaussian: tau.tilde&quot;, &quot;Gaussian: tau.raw&quot;, 
-                             &quot;Binary: tau.raw&quot;,&quot;Binary: tau.raw&quot;), col = c(2,1), pch = c(19, 19, 17, 17))</code></pre>
-<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+                             &quot;Binary: tau.tilde&quot;,&quot;Binary: tau.raw&quot;, &quot;Gaussian: mean(var.hat) of cali-estimator&quot;, &quot;Binary: mean(var.hat) of cali-estimator&quot;), col = c(2,1, 2,1, 1, 4), pch = c(19, 19, 17, 17, 1, 1))</code></pre>
+<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/44b3c730128185ac8f138acf482176d27efba377/docs/figure/empirical_var_reduction.Rmd/unnamed-chunk-11-1.png" target="_blank">44b3c73</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-04-11
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>grid = seq(0, 1, length.out = 100)
 theo = rep(NA, length(grid))
 for (i in 1:length(grid)){
@@ -896,9 +1041,11 @@ for (i in 1:length(grid)){
 <pre class="r"><code>plot(rhos, 1-var1[,1]/var1[,2], xlab = &quot;rho: n/N&quot;, ylab = &#39;proportion of variance reduction&#39;, pch = 19, col = &quot;red&quot;,
       xlim = c(0, 1), ylim = c(0, 0.6))
 points(rhos, 1-var2[,1]/var2[,2], pch = 17, col = &quot;blue&quot;)
+#points(rhos, 1-mean_var_gaussian/var1[,2], col = 1)
+#points(rhos, 1-mean_var_binary/var2[,2], col = 4)
 lines(grid, theo, lty = 2)
 legend(&quot;topright&quot;, legend = c(&quot;Gaussian&quot;, &quot;Binary&quot;), col = c(&quot;red&quot;,&quot;blue&quot;), pch = c(19, 17))</code></pre>
-<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/empirical_var_reduction.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
