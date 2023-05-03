@@ -24,9 +24,6 @@ compute_var_reduction <- function(sigma2, rho, r, b2){
 ```
 
 
-
-
-
 ### 1. Vary correlation 
 
 data replicates: 5000
@@ -49,14 +46,33 @@ colnames(var2) <- c("gamma.tilde", "gamma.raw")
 
 
 for (i in 1:length(gaussian)){
-  var1[i, ] <- apply(gaussian[[i]], MARGIN = 2, function(x) var(x))
+  var1[i, ] <- apply(gaussian[[i]][,c(1,2)], MARGIN = 2, function(x) var(x))
 }
 
 for (i in 1:length(binary)){
   var2[i, ] <- apply(binary[[i]][, c(1,2)], MARGIN = 2, function(x) var(x))
-  est.r[i] = mean(binary[[i]][,3])
+  est.r[i] = mean(binary[[i]][,4])
+}
+
+
+```
+
+
+```{r}
+### Mean variance of calibrated estimator
+mean_var_gaussian <- rep(NA, length(gaussian))
+mean_var_binary <- rep(NA, length(binary))
+for (i in 1:length(gaussian)){
+  mean_var_gaussian[i] = mean(gaussian[[i]][,3])
+}
+
+for (i in 1:length(binary)){
+  mean_var_binary[i] = mean(binary[[i]][,3])
 }
 ```
+
+
+
 
 ```{r}
 plot(rs, var1[,1], col = 2, ylim = c(0, 0.0050), xlab = "correlation between x1 and x2", ylab = "estimated variance", pch = 19)
@@ -66,7 +82,10 @@ points(rs, var1[,2], pch = 19)
 points(est.r, var2[,1], col = 2, pch = 17, xlab = "correlation between x1 and x2", ylab = "estimated variance")
 points(est.r, var2[,2], pch = 17)
 legend("topleft", legend = c("Gaussian: tau.tilde", "Gaussian: tau.raw", 
-                             "Binary: tau.raw","Binary: tau.raw"), col = c(2,1), pch = c(19, 19, 17, 17))
+                             "Binary: tau.tilde","Binary: tau.raw", "Gaussian: mean(var.hat) of cali-estimator", "Binary: mean(var.hat) of cali-estimator"), col = c(2,1, 2,1, 1, 4), pch = c(19, 19, 17, 17, 1, 1))
+
+points(rs, mean_var_gaussian)
+points(est.r, mean_var_binary, col = 4)
 ```
 
 ```{r}
@@ -86,6 +105,7 @@ legend("topright", legend = c("Gaussian", "Binary"), col = c("red","blue"), pch 
 ```
 
 
+
 ### 2. Vary rhos: 1000 data replicates
 
 b <- c(1,3,0.1); sigma <- 1; r <- 0; N <- 1e4
@@ -103,12 +123,24 @@ colnames(var1) <- c("gamma.tilde", "gamma.raw")
 colnames(var2) <- c("gamma.tilde", "gamma.raw")
 
 for (i in 1:length(rhos)){
-  var1[i, ] <- apply(gaussian[[i]], MARGIN = 2, function(x) var(x))
-  var2[i, ] <- apply(binary[[i]], MARGIN = 2, function(x) var(x))
+  var1[i, ] <- apply(gaussian[[i]][,c(1,2)], MARGIN = 2, function(x) var(x))
+  var2[i, ] <- apply(binary[[i]][,c(1,2)], MARGIN = 2, function(x) var(x))
 }
 
 ```
 
+```{r}
+### Mean variance of calibrated estimator
+mean_var_gaussian <- rep(NA, 9)
+mean_var_binary <- rep(NA, 9)
+for (i in 1:9){
+  mean_var_gaussian[i] = mean(gaussian[[i]][,3])
+}
+
+for (i in 1:9){
+  mean_var_binary[i] = mean(binary[[i]][,3])
+}
+```
 
 ```{r}
 plot(rhos, var1[,1], col = 2, ylim = c(0, 0.0090), xlab = "rho: n/N", ylab = "estimated variance", pch = 19)
@@ -116,9 +148,16 @@ points(rhos, var1[,2], pch = 19)
 
 points(rhos, var2[,1], col = 2, pch = 17)
 points(rhos, var2[,2], pch = 17)
+points(rhos, mean_var_gaussian)
+points(rhos, mean_var_binary, col = 4)
+
 legend("topright", legend = c("Gaussian: tau.tilde", "Gaussian: tau.raw", 
-                             "Binary: tau.raw","Binary: tau.raw"), col = c(2,1), pch = c(19, 19, 17, 17))
+                             "Binary: tau.tilde","Binary: tau.raw", "Gaussian: mean(var.hat) of cali-estimator", "Binary: mean(var.hat) of cali-estimator"), col = c(2,1, 2,1, 1, 4), pch = c(19, 19, 17, 17, 1, 1))
+
+
 ```
+
+
 ```{r}
 grid = seq(0, 1, length.out = 100)
 theo = rep(NA, length(grid))
@@ -132,6 +171,8 @@ for (i in 1:length(grid)){
 plot(rhos, 1-var1[,1]/var1[,2], xlab = "rho: n/N", ylab = 'proportion of variance reduction', pch = 19, col = "red",
       xlim = c(0, 1), ylim = c(0, 0.6))
 points(rhos, 1-var2[,1]/var2[,2], pch = 17, col = "blue")
+#points(rhos, 1-mean_var_gaussian/var1[,2], col = 1)
+#points(rhos, 1-mean_var_binary/var2[,2], col = 4)
 lines(grid, theo, lty = 2)
 legend("topright", legend = c("Gaussian", "Binary"), col = c("red","blue"), pch = c(19, 17))
 ```
