@@ -56,10 +56,10 @@ head(y2.raw)
 
 ```{r}
 par(mfrow = c(2,2))
-hist(y1.cali[,1], main = "Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
-hist(y1.raw[,1], main = "Raw estimator of Tj - NTj", xlab = "", breaks  = 20)
-hist(y2.cali[,1], main = "Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
-hist(y2.raw[,1], main = "Raw estimator of Tj - NTj",  xlab = "", breaks  = 20)
+hist(y1.cali[,1], main = "Y1: Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
+hist(y1.raw[,1], main = "Y1: Raw estimator of Tj - NTj", xlab = "", breaks  = 20)
+hist(y2.cali[,1], main = "Y2: Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
+hist(y2.raw[,1], main = "Y2: Raw estimator of Tj - NTj",  xlab = "", breaks  = 20)
 ```
 
 ### Perform different MR methods to assess the causal effect estimate.
