@@ -1,0 +1,92 @@
+---
+title: "Perform MR to assess causal effect estimate"
+author: "Yunqi Yang"
+date: "5/15/2023"
+output: html_document
+---
+
+### Description: 
+
+Perform MR to assess causal effect estimate. We should focus on both effect size estimate and standard error of the causal effect. Here the sample size for external data $N=1e4$ and internal data $n=1e3$. 
+
+```{r}
+library(MendelianRandomization)
+dat = readRDS("./data/realdata.rds")
+source("./code/sim.R")
+```
+
+### Compute raw and calibrated estimator for each SNP
+```{r}
+
+n = 1e3
+p = 1e3
+
+y1.cali <- matrix(NA, nrow = p, ncol = 2)
+y1.raw <- matrix(NA, nrow = p, ncol = 2)
+colnames(y1.cali) <- c("point_estimate", "var_estimate")
+colnames(y1.raw) <- c("point_estimate", "var_estimate")
+
+y2.cali <- matrix(NA, nrow = p, ncol = 2)
+y2.raw <- matrix(NA, nrow = p, ncol = 2)
+colnames(y2.cali) <- c("point_estimate", "var_estimate")
+colnames(y2.raw) <- c("point_estimate", "var_estimate")
+
+  
+for (i in 1:p){
+  dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["T.y1"]][1:n, i], dat[["NT.y1"]][1:n, i]) 
+  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["T.y1"]][, i]) 
+  
+  dat2_valid <- cbind(dat[["pheno"]][1:n,2], dat[["T.y2"]][1:n, i], dat[["NT.y2"]][1:n, i]) 
+  dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["T.y2"]][, i]) 
+  
+  res1 <- calibrated_est(dat1_valid, dat1_ext)
+  res2 <- calibrated_est(dat2_valid, dat2_ext)
+  
+  y1.cali[i, ] = c(res1$tau_cal, res1$var_tau_cal)
+  y2.cali[i, ] = c(res2$tau_cal, res2$var_tau_cal)
+  y1.raw[i, ] = res1$tau_raw
+  y2.raw[i, ] = res2$tau_raw
+}
+
+head(y1.cali)
+head(y1.raw)
+head(y2.cali)
+head(y2.raw)
+```
+
+```{r}
+par(mfrow = c(2,2))
+hist(y1.cali[,1], main = "Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
+hist(y1.raw[,1], main = "Raw estimator of Tj - NTj", xlab = "", breaks  = 20)
+hist(y2.cali[,1], main = "Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
+hist(y2.raw[,1], main = "Raw estimator of Tj - NTj",  xlab = "", breaks  = 20)
+```
+
+### Perform different MR methods to assess the causal effect estimate.
+```{r}
+
+MRInput.cali <- mr_input(bx = y1.cali[,1],
+                          bxse = y1.cali[,2],
+                          by = y2.cali[,1],
+                          byse = y2.cali[,2])
+
+MRInput.raw <- mr_input(bx = y1.raw[,1],
+                          bxse = y1.raw[,2],
+                          by = y2.raw[,1],
+                          byse = y2.raw[,2])
+
+
+egger.cali <- mr_egger(MRInput.cali)
+egger.raw <- mr_egger(MRInput.raw)
+
+ivw.cali <- mr_ivw(MRInput.cali)
+ivw.raw <- mr_ivw(MRInput.raw)
+```
+
+```{r}
+egger.cali
+egger.raw
+ivw.cali
+ivw.raw
+```
+
