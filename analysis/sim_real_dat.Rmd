@@ -13,13 +13,13 @@ The reason for only use the real MAF, but not the real genotype is the following
 
 1. Not sure how to deal with imputed SNPs when simulating parent-offspring data.
 
-2. Selecting independent SNPs genome-widely is computationally intensive, especially with many individuals, like 4*1e4.  
+2. Selecting independent SNPs genome-widely is computationally intensive, especially with many individuals, like 1e4.  
 
 Therefore, the simulation workflow is as below: 
 
-**Step 1**: Simulate **parents** genotype based on real MAF. Number of SNPs $p = 1000$, sample size = $4*N$. $2*N$ is used for exposure trait $Y_1$, and another $2*N$ is used for outcome trait $Y_2$. 
+**Step 1**: Simulate **parents** genotype based on real MAF. Number of SNPs $p = 1000$, sample size = $2*N$.
 
-**Step 2**: Create **complete offspring data** with sample size $N$ for both exposure and outcome trait. The complete data is data with both transmitted $T$ and non-transmitted ($NT$) alleles. 
+**Step 2**: Create **complete offspring data** with sample size $N$. The complete data is data with both transmitted $T$ and non-transmitted ($NT$) alleles. The external data will be of size $N$ but only have transmitted alleles. The internal data will be of size $n$ and with both $T$ and $NT$. 
 
 **Step 3**: Simulate $Y_1$ and $Y_2$, exposure trait and outcome trait. I set the values for beta as below for now. 
 
@@ -71,34 +71,23 @@ N = 1e4
 p = 1e3
 
 t1 = proc.time()
-# 1. Simulate parents genotype based on true MAF for exposure and outcome trait samples. 
-geno.y1 = matrix(NA, ncol = p, nrow = 2*N)
-geno.y2 = matrix(NA, ncol = p, nrow = 2*N)
+# 1. Simulate parents genotype based on true MAF. 
+geno = matrix(NA, ncol = p, nrow = 2*N)
 for (i in 1:p){
-  geno.y1[,i] <- rbinom(2*N, size = 2, prob = maf[i])
-  geno.y2[,i] <- rbinom(2*N, size = 2, prob = maf[i])
+  geno[,i] <- rbinom(2*N, size = 2, prob = maf[i])
 }
 
 
-# 2. Simulate offspring data for exposure and outcome traits. 
+# 2. Simulate offspring genotype data.
 # N by p matrix
-T.y1 = matrix(NA, ncol = p, nrow = N)
-T.y2 = matrix(NA, ncol = p, nrow = N)
-NT.y1 = matrix(NA, ncol = p, nrow = N)
-NT.y2 = matrix(NA, ncol = p, nrow = N)
-
+trans = matrix(NA, ncol = p, nrow = N)
+nontrans = matrix(NA, ncol = p, nrow = N)
 for (i in 1:N){
-  par1 = geno.y1[2*i-1, ]
-  par2 = geno.y1[2*i, ]
+  par1 = geno[2*i-1, ]
+  par2 = geno[2*i, ]
   offspring <- sim_offspring(par1, par2)
-  T.y1[i, ] <- offspring$offspring.t
-  NT.y1[i, ] <-  offspring$offspring.nt
-  
-  par1 = geno.y2[2*i-1, ]
-  par2 = geno.y2[2*i, ]
-  offspring <- sim_offspring(par1, par2)
-  T.y2[i, ] <- offspring$offspring.t
-  NT.y2[i, ] <-  offspring$offspring.nt
+  trans[i, ] <- offspring$offspring.t
+  nontrans[i, ] <-  offspring$offspring.nt
 }
 t2 = proc.time()
 t2 -t1
@@ -108,11 +97,10 @@ t2 -t1
 ```{r}
 # 4. Simulate trait
 b = 1
-Y1 <- 0.1*rowSums(T.y1) + 0.001*rowSums(NT.y1) + rnorm(N)
-Y2 <- b*Y1 + 0.05*rowSums(T.y2) + 0.001*rowSums(NT.y2) + rnorm(N)
+Y1 <- 0.1*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N)
+Y2 <- b*Y1 + 0.05*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N)
 pheno <- cbind(Y1, Y2)
-dat = list(T.y1 = T.y1, NT.y1 = NT.y1, T.y2 = T.y2, NT.y2 = NT.y2, pheno = pheno)
-
+dat = list(trans = trans, nontrans = nontrans, pheno = pheno)
 saveRDS(dat, "./data/realdata.rds")
 
 ```
