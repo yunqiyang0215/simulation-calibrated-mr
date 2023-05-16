@@ -1,0 +1,126 @@
+---
+title: "Workflow for real data simulation"
+author: "Yunqi Yang"
+date: "5/15/2023"
+output: html_document
+---
+
+### Description: 
+
+Here I describe the steps for doing simulation using minor allele frequency (MAF) from real genotype data from UKB. The MAF is calculated using this file: /project2/mstephens/yunqiyang/calibrated_mr/sim_realdata/geno_individual.R.
+
+The reason for only use the real MAF, but not the real genotype is the following: 
+
+1. Not sure how to deal with imputed SNPs when simulating parent-offspring data.
+
+2. Selecting independent SNPs genome-widely is computationally intensive, especially with many individuals, like 4*1e4.  
+
+Therefore, the simulation workflow is as below: 
+
+**Step 1**: Simulate **parents** genotype based on real MAF. Number of SNPs $p = 1000$, sample size = $4*N$. $2*N$ is used for exposure trait $Y_1$, and another $2*N$ is used for outcome trait $Y_2$. 
+
+**Step 2**: Create **complete offspring data** with sample size $N$ for both exposure and outcome trait. The complete data is data with both transmitted $T$ and non-transmitted ($NT$) alleles. 
+
+**Step 3**: Standardize genotype. (This is an optional step, mainly for the interpretation of heritability. The variance explained by bhat vs. the noise level)
+
+**Step 4**: Simulate $Y_1$ and $Y_2$, exposure trait and outcome trait. I set the values for beta as below for now. 
+
+The effect of genetic nurture is very small. 
+
+$$
+\begin{split}
+b &= 1, \quad\epsilon \sim N(0, 1)\\
+Y_1 &= 0.05T_1+\cdots + 0.05T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
+Y_2 &= b*Y_1 + 0.02T_1 +\cdots+0.02T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
+\end{split}
+$$
+
+```{r}
+### Helper functions to simulate trio data. 
+# @par.allele: allele value of a parent
+sample_allele <- function(par.allele){
+  if (par.allele == 0) val = 0
+  if (par.allele == 2) val = 1
+  if (par.allele == 1) val = sample(c(0, 1), 1)
+  return(val)
+}
+
+# @par1: genotyp of parent 1
+# @par2: genotype of parent 2
+# @return: transmitted and non-transmitted alleles of offspring
+sim_offspring <- function(par1, par2){
+  p = length(par1)
+  offspring.t = rep(NA, p)
+  offspring.nt = rep(NA, p)
+  for (i in 1:p){
+    a1 <- sample_allele(par1[i])
+    a2 <- sample_allele(par2[i])
+    t <- a1 + a2
+    nt <- par1[i] + par2[i] - t
+    offspring.t[i] <- t
+    offspring.nt[i] <- nt
+  }
+  return(list(offspring.t = offspring.t, offspring.nt = offspring.nt))
+}
+```
+
+
+```{r}
+geno_real <- readRDS("./data/geno_individual.rds")
+maf <- colMeans(geno_real)/2
+set.seed(1)
+N = 1e4  
+p = 1e3
+
+t1 = proc.time()
+# 1. Simulate parents genotype based on true MAF for exposure and outcome trait samples. 
+geno.y1 = matrix(NA, ncol = p, nrow = 2*N)
+geno.y2 = matrix(NA, ncol = p, nrow = 2*N)
+for (i in 1:p){
+  geno.y1[,i] <- rbinom(2*N, size = 2, prob = maf[i])
+  geno.y2[,i] <- rbinom(2*N, size = 2, prob = maf[i])
+}
+
+
+# 2. Simulate offspring data for exposure and outcome traits. 
+# N by p matrix
+T.y1 = matrix(NA, ncol = p, nrow = N)
+T.y2 = matrix(NA, ncol = p, nrow = N)
+NT.y1 = matrix(NA, ncol = p, nrow = N)
+NT.y2 = matrix(NA, ncol = p, nrow = N)
+
+for (i in 1:N){
+  par1 = geno.y1[2*i-1, ]
+  par2 = geno.y1[2*i, ]
+  offspring <- sim_offspring(par1, par2)
+  T.y1[i, ] <- offspring$offspring.t
+  NT.y1[i, ] <-  offspring$offspring.nt
+  
+  par1 = geno.y2[2*i-1, ]
+  par2 = geno.y2[2*i, ]
+  offspring <- sim_offspring(par1, par2)
+  T.y2[i, ] <- offspring$offspring.t
+  NT.y2[i, ] <-  offspring$offspring.nt
+}
+t2 = proc.time()
+t2 -t1
+
+```
+
+```{r}
+# 3. standardization
+T.y1 <- apply(T.y1, 2, scale)
+T.y2 <- apply(T.y2, 2,scale)
+NT.y1 <- apply(NT.y1, 2, scale)
+NT.y2 <- apply(NT.y2, 2,scale)
+
+# 4. Simulate trait
+b = 1
+Y1 <- 0.05*rowSums(T.y1) + 0.001*rowSums(NT.y1) + rnorm(N)
+Y2 <- b*Y1 + 0.02*rowSums(T.y2) + 0.001*rowSums(NT.y2) + rnorm(N)
+pheno <- cbind(Y1, Y2)
+dat = list(T.y1 = T.y1, NT.y1 = NT.y1, T.y2 = T.y2, NT.y2 = NT.y2, pheno = pheno)
+
+saveRDS(dat, "./data/realdata.rds")
+
+```
