@@ -18,4 +18,4 @@ Welcome to my research website.
 
 + [Real data simulation](sim_real_dat.html)
 
-+ [CPerform MR](mr_real_dat.html)
++ [Perform MR](mr_real_dat.html)
