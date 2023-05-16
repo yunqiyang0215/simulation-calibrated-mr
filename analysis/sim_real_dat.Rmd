@@ -21,9 +21,7 @@ Therefore, the simulation workflow is as below:
 
 **Step 2**: Create **complete offspring data** with sample size $N$ for both exposure and outcome trait. The complete data is data with both transmitted $T$ and non-transmitted ($NT$) alleles. 
 
-**Step 3**: Standardize genotype. (This is an optional step, mainly for the interpretation of heritability. The variance explained by bhat vs. the noise level)
-
-**Step 4**: Simulate $Y_1$ and $Y_2$, exposure trait and outcome trait. I set the values for beta as below for now. 
+**Step 3**: Simulate $Y_1$ and $Y_2$, exposure trait and outcome trait. I set the values for beta as below for now. 
 
 The effect of genetic nurture is very small. 
 
@@ -108,12 +106,6 @@ t2 -t1
 ```
 
 ```{r}
-# 3. standardization
-T.y1 <- apply(T.y1, 2, scale)
-T.y2 <- apply(T.y2, 2,scale)
-NT.y1 <- apply(NT.y1, 2, scale)
-NT.y2 <- apply(NT.y2, 2,scale)
-
 # 4. Simulate trait
 b = 1
 Y1 <- 0.05*rowSums(T.y1) + 0.001*rowSums(NT.y1) + rnorm(N)
