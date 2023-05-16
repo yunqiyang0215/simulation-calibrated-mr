@@ -108,8 +108,8 @@ t2 -t1
 ```{r}
 # 4. Simulate trait
 b = 1
-Y1 <- 0.05*rowSums(T.y1) + 0.001*rowSums(NT.y1) + rnorm(N)
-Y2 <- b*Y1 + 0.02*rowSums(T.y2) + 0.001*rowSums(NT.y2) + rnorm(N)
+Y1 <- 0.1*rowSums(T.y1) + 0.001*rowSums(NT.y1) + rnorm(N)
+Y2 <- b*Y1 + 0.05*rowSums(T.y2) + 0.001*rowSums(NT.y2) + rnorm(N)
 pheno <- cbind(Y1, Y2)
 dat = list(T.y1 = T.y1, NT.y1 = NT.y1, T.y2 = T.y2, NT.y2 = NT.y2, pheno = pheno)
 
