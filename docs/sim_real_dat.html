@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreefff7a1744a5a34f41ea925d3b2e8c1bbf59ab1fctargetblankfff7a17a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/fff7a1744a5a34f41ea925d3b2e8c1bbf59ab1fc" target="_blank">fff7a17</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeeaad9aa053cb75ce40ee718d1f8601f6c02fbfbdtargetblankeaad9aaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/eaad9aa053cb75ce40ee718d1f8601f6c02fbfbd" target="_blank">eaad9aa</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreefff7a1744a5a34f41ea925d3b2e8c1bbf59ab1fctargetblankfff7a17a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeeaad9aa053cb75ce40ee718d1f8601f6c02fbfbdtargetblankeaad9aaa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/fff7a1744a5a34f41ea925d3b2e8c1bbf59ab1fc" target="_blank">fff7a17</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/eaad9aa053cb75ce40ee718d1f8601f6c02fbfbd" target="_blank">eaad9aa</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -551,6 +551,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/eaad9aa053cb75ce40ee718d1f8601f6c02fbfbd/analysis/sim_real_dat.Rmd" target="_blank">eaad9aa</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-15
+</td>
+<td>
+wflow_publish("analysis/sim_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/29ddf83dd62ce348e681d3e8e551fe5377bf1949/docs/sim_real_dat.html" target="_blank">29ddf83</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -683,11 +717,11 @@ wflow_publish("analysis/sim_real_dat.Rmd")
 <p>The reason for only use the real MAF, but not the real genotype is the following:</p>
 <ol style="list-style-type: decimal">
 <li><p>Not sure how to deal with imputed SNPs when simulating parent-offspring data.</p></li>
-<li><p>Selecting independent SNPs genome-widely is computationally intensive, especially with many individuals, like 4*1e4.</p></li>
+<li><p>Selecting independent SNPs genome-widely is computationally intensive, especially with many individuals, like 1e4.</p></li>
 </ol>
 <p>Therefore, the simulation workflow is as below:</p>
-<p><strong>Step 1</strong>: Simulate <strong>parents</strong> genotype based on real MAF. Number of SNPs <span class="math inline">\(p = 1000\)</span>, sample size = <span class="math inline">\(4*N\)</span>. <span class="math inline">\(2*N\)</span> is used for exposure trait <span class="math inline">\(Y_1\)</span>, and another <span class="math inline">\(2*N\)</span> is used for outcome trait <span class="math inline">\(Y_2\)</span>.</p>
-<p><strong>Step 2</strong>: Create <strong>complete offspring data</strong> with sample size <span class="math inline">\(N\)</span> for both exposure and outcome trait. The complete data is data with both transmitted <span class="math inline">\(T\)</span> and non-transmitted (<span class="math inline">\(NT\)</span>) alleles.</p>
+<p><strong>Step 1</strong>: Simulate <strong>parents</strong> genotype based on real MAF. Number of SNPs <span class="math inline">\(p = 1000\)</span>, sample size = <span class="math inline">\(2*N\)</span>.</p>
+<p><strong>Step 2</strong>: Create <strong>complete offspring data</strong> with sample size <span class="math inline">\(N\)</span>. The complete data is data with both transmitted <span class="math inline">\(T\)</span> and non-transmitted (<span class="math inline">\(NT\)</span>) alleles. The external data will be of size <span class="math inline">\(N\)</span> but only have transmitted alleles. The internal data will be of size <span class="math inline">\(n\)</span> and with both <span class="math inline">\(T\)</span> and <span class="math inline">\(NT\)</span>.</p>
 <p><strong>Step 3</strong>: Simulate <span class="math inline">\(Y_1\)</span> and <span class="math inline">\(Y_2\)</span>, exposure trait and outcome trait. I set the values for beta as below for now.</p>
 <p>The effect of genetic nurture is very small.</p>
 <p><span class="math display">\[
@@ -730,46 +764,34 @@ N = 1e4
 p = 1e3
 
 t1 = proc.time()
-# 1. Simulate parents genotype based on true MAF for exposure and outcome trait samples. 
-geno.y1 = matrix(NA, ncol = p, nrow = 2*N)
-geno.y2 = matrix(NA, ncol = p, nrow = 2*N)
+# 1. Simulate parents genotype based on true MAF. 
+geno = matrix(NA, ncol = p, nrow = 2*N)
 for (i in 1:p){
-  geno.y1[,i] &lt;- rbinom(2*N, size = 2, prob = maf[i])
-  geno.y2[,i] &lt;- rbinom(2*N, size = 2, prob = maf[i])
+  geno[,i] &lt;- rbinom(2*N, size = 2, prob = maf[i])
 }
 
 
-# 2. Simulate offspring data for exposure and outcome traits. 
+# 2. Simulate offspring genotype data.
 # N by p matrix
-T.y1 = matrix(NA, ncol = p, nrow = N)
-T.y2 = matrix(NA, ncol = p, nrow = N)
-NT.y1 = matrix(NA, ncol = p, nrow = N)
-NT.y2 = matrix(NA, ncol = p, nrow = N)
-
+trans = matrix(NA, ncol = p, nrow = N)
+nontrans = matrix(NA, ncol = p, nrow = N)
 for (i in 1:N){
-  par1 = geno.y1[2*i-1, ]
-  par2 = geno.y1[2*i, ]
+  par1 = geno[2*i-1, ]
+  par2 = geno[2*i, ]
   offspring &lt;- sim_offspring(par1, par2)
-  T.y1[i, ] &lt;- offspring$offspring.t
-  NT.y1[i, ] &lt;-  offspring$offspring.nt
-  
-  par1 = geno.y2[2*i-1, ]
-  par2 = geno.y2[2*i, ]
-  offspring &lt;- sim_offspring(par1, par2)
-  T.y2[i, ] &lt;- offspring$offspring.t
-  NT.y2[i, ] &lt;-  offspring$offspring.nt
+  trans[i, ] &lt;- offspring$offspring.t
+  nontrans[i, ] &lt;-  offspring$offspring.nt
 }
 t2 = proc.time()
 t2 -t1</code></pre>
 <pre><code>   user  system elapsed 
- 96.727   2.548 101.586 </code></pre>
+ 63.064   2.071  77.624 </code></pre>
 <pre class="r"><code># 4. Simulate trait
 b = 1
-Y1 &lt;- 0.1*rowSums(T.y1) + 0.001*rowSums(NT.y1) + rnorm(N)
-Y2 &lt;- b*Y1 + 0.05*rowSums(T.y2) + 0.001*rowSums(NT.y2) + rnorm(N)
+Y1 &lt;- 0.1*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N)
+Y2 &lt;- b*Y1 + 0.05*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N)
 pheno &lt;- cbind(Y1, Y2)
-dat = list(T.y1 = T.y1, NT.y1 = NT.y1, T.y2 = T.y2, NT.y2 = NT.y2, pheno = pheno)
-
+dat = list(trans = trans, nontrans = nontrans, pheno = pheno)
 saveRDS(dat, &quot;./data/realdata.rds&quot;)</code></pre>
 <br>
 <p>
