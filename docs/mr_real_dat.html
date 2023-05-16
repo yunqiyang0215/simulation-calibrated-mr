@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree8fa3ed3d2068d1e73f45c76f0350956e41b05c3btargetblank8fa3ed3a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/8fa3ed3d2068d1e73f45c76f0350956e41b05c3b" target="_blank">8fa3ed3</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree8b572a268ba35aac732667ae901b18d2a2d4ceabtargetblank8b572a2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/8b572a268ba35aac732667ae901b18d2a2d4ceab" target="_blank">8b572a2</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree8fa3ed3d2068d1e73f45c76f0350956e41b05c3btargetblank8fa3ed3a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree8b572a268ba35aac732667ae901b18d2a2d4ceabtargetblank8b572a2a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/8fa3ed3d2068d1e73f45c76f0350956e41b05c3b" target="_blank">8fa3ed3</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/8b572a268ba35aac732667ae901b18d2a2d4ceab" target="_blank">8b572a2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -504,12 +504,10 @@ Untracked files:
     Untracked:  analysis/check_var_reduction.Rmd
     Untracked:  data/gaussian_rho.R
     Untracked:  data/gaussian_rho1.rds
-    Untracked:  data/geno_individual.rds
-    Untracked:  data/realdata.rds
 
 Unstaged changes:
     Modified:   analysis/empirical_var_reduction.Rmd
-    Modified:   code/sim.R
+    Modified:   data/realdata.rds
     Modified:   data/simulation202304/binary_r.rds
     Modified:   data/simulation202304/binary_rho.rds
     Modified:   data/simulation202304/gaussian_r.rds
@@ -552,6 +550,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8b572a268ba35aac732667ae901b18d2a2d4ceab/analysis/mr_real_dat.Rmd" target="_blank">8b572a2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-15
+</td>
+<td>
+wflow_publish("analysis/mr_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/8ae0fa6d84330bf02f2b0f2806225fd5b7c77fa5/docs/mr_real_dat.html" target="_blank">8ae0fa6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-15
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -617,42 +649,79 @@ for (i in 1:p){
 
 head(y1.cali)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]    0.152441979  0.003780546
-[2,]    0.091367290  0.004966262
-[3,]    0.059529758  0.007502603
-[4,]    0.037870210  0.004219232
-[5,]    0.005007194  0.003889350
-[6,]   -0.012124313  0.003366885</code></pre>
+[1,]     0.20521351  0.008630291
+[2,]     0.15724694  0.011576556
+[3,]     0.05363640  0.017692320
+[4,]     0.08045774  0.009798932
+[5,]     0.02362155  0.009230539
+[6,]     0.04251493  0.007790993</code></pre>
 <pre class="r"><code>head(y1.raw)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]     0.15555576   0.15555576
-[2,]     0.05767470   0.05767470
-[3,]     0.14186953   0.14186953
-[4,]    -0.05446907  -0.05446907
-[5,]    -0.05606831  -0.05606831
-[6,]    -0.08859037  -0.08859037</code></pre>
+[1,]     0.28791738   0.28791738
+[2,]     0.09024728   0.09024728
+[3,]     0.23091091   0.23091091
+[4,]    -0.05950607  -0.05950607
+[5,]    -0.06524129  -0.06524129
+[6,]    -0.04931061  -0.04931061</code></pre>
 <pre class="r"><code>head(y2.cali)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]    -0.03546743  0.006294283
-[2,]    -0.06675629  0.009374459
-[3,]     0.22269277  0.012041577
-[4,]     0.11928168  0.005905915
-[5,]     0.05013959  0.006712116
-[6,]     0.02366262  0.006203919</code></pre>
+[1,]   -0.005424837   0.01302866
+[2,]   -0.034354525   0.01990419
+[3,]    0.416932176   0.02447715
+[4,]    0.165312944   0.01265551
+[5,]    0.120092840   0.01427000
+[6,]    0.068580960   0.01338770</code></pre>
 <pre class="r"><code>head(y2.raw)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]    -0.10949761  -0.10949761
-[2,]     0.02841466   0.02841466
-[3,]     0.40132506   0.40132506
-[4,]     0.14875216   0.14875216
-[5,]     0.16199956   0.16199956
-[6,]     0.06156362   0.06156362</code></pre>
+[1,]    -0.07921504  -0.07921504
+[2,]     0.09972350   0.09972350
+[3,]     0.66543208   0.66543208
+[4,]     0.17820704   0.17820704
+[5,]     0.32908327   0.32908327
+[6,]     0.13552637   0.13552637</code></pre>
 <pre class="r"><code>par(mfrow = c(2,2))
-hist(y1.cali[,1], main = &quot;Calibrated estimator of Tj - NTj&quot;, xlab = &quot;&quot;, breaks  = 20)
-hist(y1.raw[,1], main = &quot;Raw estimator of Tj - NTj&quot;, xlab = &quot;&quot;, breaks  = 20)
-hist(y2.cali[,1], main = &quot;Calibrated estimator of Tj - NTj&quot;, xlab = &quot;&quot;, breaks  = 20)
-hist(y2.raw[,1], main = &quot;Raw estimator of Tj - NTj&quot;,  xlab = &quot;&quot;, breaks  = 20)</code></pre>
+hist(y1.cali[,1], main = &quot;Y1: Calibrated estimator of Tj - NTj&quot;, xlab = &quot;&quot;, breaks  = 20)
+hist(y1.raw[,1], main = &quot;Y1: Raw estimator of Tj - NTj&quot;, xlab = &quot;&quot;, breaks  = 20)
+hist(y2.cali[,1], main = &quot;Y2: Calibrated estimator of Tj - NTj&quot;, xlab = &quot;&quot;, breaks  = 20)
+hist(y2.raw[,1], main = &quot;Y2: Raw estimator of Tj - NTj&quot;,  xlab = &quot;&quot;, breaks  = 20)</code></pre>
 <p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8ae0fa6d84330bf02f2b0f2806225fd5b7c77fa5/docs/figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" target="_blank">8ae0fa6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-15
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="perform-different-mr-methods-to-assess-the-causal-effect-estimate." class="section level3">
 <h3>Perform different MR methods to assess the causal effect estimate.</h3>
@@ -680,13 +749,13 @@ MR-Egger method
 Number of Variants =  1000 
 
 ------------------------------------------------------------------
-      Method Estimate Std Error  95% CI       p-value
-    MR-Egger    0.093     0.058 -0.021, 0.207   0.111
- (intercept)    0.004     0.005 -0.006, 0.014   0.425
+      Method Estimate Std Error 95% CI       p-value
+    MR-Egger    0.135     0.052 0.033, 0.237   0.010
+ (intercept)    0.017     0.008 0.002, 0.031   0.028
 ------------------------------------------------------------------
-Residual Standard Error :  10.573 
-Heterogeneity test statistic = 111574.2499 on 998 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 98.9%</code></pre>
+Residual Standard Error :  7.439 
+Heterogeneity test statistic = 55224.5264 on 998 degrees of freedom, (p-value = 0.0000)
+I^2_GX statistic: 97.9%</code></pre>
 <pre class="r"><code>egger.raw</code></pre>
 <pre><code>
 MR-Egger method
@@ -696,11 +765,12 @@ Number of Variants =  1000
 
 ------------------------------------------------------------------
       Method Estimate Std Error  95% CI       p-value
-    MR-Egger   -0.005     0.004 -0.013, 0.004   0.271
- (intercept)    0.000     0.000  0.000, 0.001   0.305
+    MR-Egger   -0.001     0.001 -0.003, 0.000   0.090
+ (intercept)    0.000     0.000  0.000, 0.001   0.047
 ------------------------------------------------------------------
-Residual Standard Error :  1.000 
-Heterogeneity test statistic = 998.7819 on 998 degrees of freedom, (p-value = 0.4871)
+Residual Standard Error :  0.999 
+Residual standard error is set to 1 in calculation of confidence interval when its estimate is less than 1.
+Heterogeneity test statistic = 995.8721 on 998 degrees of freedom, (p-value = 0.5131)
 I^2_GX statistic: 0.0%</code></pre>
 <pre class="r"><code>ivw.cali</code></pre>
 <pre><code>
@@ -711,10 +781,10 @@ Number of Variants : 1000
 
 ------------------------------------------------------------------
  Method Estimate Std Error 95% CI       p-value
-    IVW    0.130     0.034 0.063, 0.197   0.000
+    IVW    0.229     0.030 0.170, 0.287   0.000
 ------------------------------------------------------------------
-Residual standard error =  10.572 
-Heterogeneity test statistic (Cochran&#39;s Q) = 111645.2867 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 99.1%. </code></pre>
+Residual standard error =  7.453 
+Heterogeneity test statistic (Cochran&#39;s Q) = 55490.2488 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 98.2%. </code></pre>
 <pre class="r"><code>ivw.raw</code></pre>
 <pre><code>
 Inverse-variance weighted method
@@ -724,10 +794,10 @@ Number of Variants : 1000
 
 ------------------------------------------------------------------
  Method Estimate Std Error  95% CI       p-value
-    IVW   -0.001     0.001 -0.003, 0.002   0.685
+    IVW    0.000     0.001 -0.001, 0.001   0.669
 ------------------------------------------------------------------
 Residual standard error =  1.000 
-Heterogeneity test statistic (Cochran&#39;s Q) = 999.8352 on 999 degrees of freedom, (p-value = 0.4866). I^2 = 0.1%. </code></pre>
+Heterogeneity test statistic (Cochran&#39;s Q) = 999.8167 on 999 degrees of freedom, (p-value = 0.4868). I^2 = 0.1%. </code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
