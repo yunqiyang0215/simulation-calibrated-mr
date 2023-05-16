@@ -15,3 +15,7 @@ Welcome to my research website.
 + [Check variance reduction: Binomial case](sim_binomial.html)
 
 + [Check variance reduction empirically](empirical_var_reduction.html)
+
++ [Real data simulation](sim_real_dat.html)
+
++ [CPerform MR](mr_real_dat.html)
