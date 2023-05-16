@@ -28,8 +28,8 @@ The effect of genetic nurture is very small.
 $$
 \begin{split}
 b &= 1, \quad\epsilon \sim N(0, 1)\\
-Y_1 &= 0.05T_1+\cdots + 0.05T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
-Y_2 &= b*Y_1 + 0.02T_1 +\cdots+0.02T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
+Y_1 &= 0.1T_1+\cdots + 0.1T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
+Y_2 &= b*Y_1 + 0.05T_1 +\cdots+0.05T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
 \end{split}
 $$
 
