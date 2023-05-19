@@ -33,11 +33,11 @@ colnames(y2.raw) <- c("point_estimate", "var_estimate")
 
   
 for (i in 1:p){
-  dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["T.y1"]][1:n, i], dat[["NT.y1"]][1:n, i]) 
-  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["T.y1"]][, i]) 
+  dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["trans"]][1:n, i], dat[["nontrans"]][1:n, i]) 
+  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["trans"]][, i]) 
   
-  dat2_valid <- cbind(dat[["pheno"]][(1+1e3):(n+1e3),2], dat[["T.y2"]][(1+1e3):(n+1e3), i], dat[["NT.y2"]][(1+1e3):(n+1e3), i]) 
-  dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["T.y2"]][, i]) 
+  dat2_valid <- cbind(dat[["pheno"]][(1+1e3):(n+1e3),2], dat[["trans"]][(1+1e3):(n+1e3), i], dat[["nontrans"]][(1+1e3):(n+1e3), i]) 
+  dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["trans"]][, i]) 
   
   res1 <- calibrated_est(dat1_valid, dat1_ext)
   res2 <- calibrated_est(dat2_valid, dat2_ext)
