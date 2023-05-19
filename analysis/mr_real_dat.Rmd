@@ -33,19 +33,19 @@ colnames(y2.raw) <- c("point_estimate", "var_estimate")
 
   
 for (i in 1:p){
-  dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["trans"]][1:n, i], dat[["nontrans"]][1:n, i]) 
-  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["trans"]][, i]) 
+  dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["T.y1"]][1:n, i], dat[["NT.y1"]][1:n, i]) 
+  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["T.y1"]][, i]) 
   
-  dat2_valid <- cbind(dat[["pheno"]][(1+1e3):(n+1e3),2], dat[["trans"]][(1+1e3):(n+1e3), i], dat[["nontrans"]][(1+1e3):(n+1e3), i]) 
-  dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["trans"]][, i]) 
+  dat2_valid <- cbind(dat[["pheno"]][(1+1e3):(n+1e3),2], dat[["T.y2"]][(1+1e3):(n+1e3), i], dat[["NT.y2"]][(1+1e3):(n+1e3), i]) 
+  dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["T.y2"]][, i]) 
   
   res1 <- calibrated_est(dat1_valid, dat1_ext)
   res2 <- calibrated_est(dat2_valid, dat2_ext)
   
   y1.cali[i, ] = c(res1$tau_cal, res1$var_tau_cal)
   y2.cali[i, ] = c(res2$tau_cal, res2$var_tau_cal)
-  y1.raw[i, ] = res1$tau_raw
-  y2.raw[i, ] = res2$tau_raw
+  y1.raw[i, ] = c(res1$tau_raw, res1$var_tau_raw)
+  y2.raw[i, ] = c(res2$tau_raw, res2$var_tau_raw)
 }
 
 head(y1.cali)
@@ -54,12 +54,13 @@ head(y2.cali)
 head(y2.raw)
 ```
 
-```{r}
-par(mfrow = c(2,2))
-hist(y1.cali[,1], main = "Y1: Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
-hist(y1.raw[,1], main = "Y1: Raw estimator of Tj - NTj", xlab = "", breaks  = 20)
-hist(y2.cali[,1], main = "Y2: Calibrated estimator of Tj - NTj", xlab = "", breaks  = 20)
-hist(y2.raw[,1], main = "Y2: Raw estimator of Tj - NTj",  xlab = "", breaks  = 20)
+```{r }
+par(mfrow = c(1,2))
+plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator",  main = "SNP variance: exposure trait")
+abline(a = 0, b = 1, col = "red")
+
+plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
+abline(a = 0, b = 1, col = "red")
 ```
 
 ### Perform different MR methods to assess the causal effect estimate.
