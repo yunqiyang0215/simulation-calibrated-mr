@@ -101,6 +101,6 @@ calibrated_est <- function(data_valid,data_ext){
   bhat <- coef(mod_int)[-1]
   tau_raw <- bhat[1] - bhat[2]
   var_tau_cal <- (V_hat[1, 1] - V_hat[1,2]^2/V_hat[2,2])/n
-  return (list(tau_cal = tau_cal, tau_raw = tau_raw, var_tau_cal = var_tau_cal))
+  return(list(tau_cal = tau_cal, tau_raw = tau_raw, var_tau_cal = var_tau_cal, var_tau_raw = V_hat[1,1]))
 }
 
