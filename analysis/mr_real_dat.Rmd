@@ -62,6 +62,9 @@ abline(a = 0, b = 1, col = "red")
 plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
 abline(a = 0, b = 1, col = "red")
 ```
+```{r}
+sum(y2.cali[,2] < y2.raw[,2])
+```
 
 ### Perform different MR methods to assess the causal effect estimate.
 ```{r}
