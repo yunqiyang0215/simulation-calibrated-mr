@@ -72,6 +72,7 @@ p = 1e3
 
 t1 = proc.time()
 # 1. Simulate parents genotype based on true MAF. 
+# Independent bernoulli trials. That is, the two alleles of parents are independent.
 geno = matrix(NA, ncol = p, nrow = 2*N)
 for (i in 1:p){
   geno[,i] <- rbinom(2*N, size = 2, prob = maf[i])
