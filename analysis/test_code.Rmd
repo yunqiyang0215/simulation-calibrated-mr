@@ -1,0 +1,70 @@
+---
+title: "Test revised implementation"
+author: "Yunqi Yang"
+date: "6/13/2023"
+output: html_document
+---
+
+```{r}
+source("./code/sim.R")
+source("./code/calibrated_mr.R")
+dat = readRDS("./data/realdata.rds")
+```
+
+### Data example:
+
+Test old implementation and new implementation on 1000 SNPs. All results are equal.
+```{r}
+# Old implementation
+n = 1e3
+p = 1e3
+res.old <- matrix(NA, ncol  = 4, nrow = p)
+res.new <- matrix(NA, ncol = 4, nrow = p)
+
+for (i in 1:p){
+  
+  dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["trans"]][1:n, i], dat[["nontrans"]][1:n, i]) 
+  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["trans"]][, i]) 
+  
+  # old implementation
+  res1 <- calibrated_est(dat1_valid, dat1_ext)
+  res.old[i, ] = unlist(res1)
+  
+  # New implementation
+  N = 1e4
+  coef_ext <- compute_sumstat(dat1_ext[,1], dat1_ext[,2])$bhat
+  res_int <- compute_sumstat(dat1_valid[,1], dat1_valid[,2])
+  res_int_adj <- compute_adj_sumstat(dat1_valid[,1], dat1_valid[,2], dat1_valid[,3])
+  res2 <- calibrated_estimator(dat1_valid, N, res_int$resid, res_int_adj$resid, res_int$bhat, res_int_adj$bhat, coef_ext)
+  res.new[i, ] = unlist(res2)
+}
+```
+
+```{r}
+all.equal(res.new, res.old)
+```
+
+#### Data example 2
+
+Result here are not the same. This is because in calibrated_est(), it automatically assumes the internal data is the first $n$ samples of external data. This is wrong. 
+```{r}
+i = 1
+dat2_valid <- cbind(dat[["pheno"]][(1+1e3):(n+1e3),2], dat[["trans"]][(1+1e3):(n+1e3), i], dat[["nontrans"]][(1+1e3):(n+1e3), i]) 
+dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["trans"]][, i]) 
+```
+
+```{r}
+# Old implementation
+res1 <- calibrated_est(dat2_valid, dat2_ext)
+res1
+
+# New implementation
+N = 1e4
+coef_ext <- compute_sumstat(dat2_ext[,1], dat2_ext[,2])$bhat
+res_int <- compute_sumstat(dat2_valid[,1], dat2_valid[,2])
+res_int_adj <- compute_adj_sumstat(dat2_valid[,1], dat2_valid[,2], dat2_valid[,3])
+res2 <- calibrated_estimator(dat2_valid, N, res_int$resid, res_int_adj$resid, res_int$bhat, res_int_adj$bhat, coef_ext)
+res2
+```
+
+
