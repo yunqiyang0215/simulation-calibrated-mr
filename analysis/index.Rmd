@@ -10,6 +10,8 @@ editor_options:
 
 Welcome to my research website.
 
++ [Test revised calibarted-mr code](test_code.html)
+
 + [Check variance reduction: Gaussian case](sim_gaussian_res.html)
 
 + [Check variance reduction: Binomial case](sim_binomial.html)
