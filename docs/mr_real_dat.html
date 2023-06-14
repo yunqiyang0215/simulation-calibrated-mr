@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0febe6b9cde8c240fd6cda052485d9e964d2ea4btargetblank0febe6ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0febe6b9cde8c240fd6cda052485d9e964d2ea4b" target="_blank">0febe6b</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree77ce4f5afdb62de4eeffddffe01132072718f68etargetblank77ce4f5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/77ce4f5afdb62de4eeffddffe01132072718f68e" target="_blank">77ce4f5</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0febe6b9cde8c240fd6cda052485d9e964d2ea4btargetblank0febe6ba" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree77ce4f5afdb62de4eeffddffe01132072718f68etargetblank77ce4f5a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0febe6b9cde8c240fd6cda052485d9e964d2ea4b" target="_blank">0febe6b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/77ce4f5afdb62de4eeffddffe01132072718f68e" target="_blank">77ce4f5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -535,6 +535,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/77ce4f5afdb62de4eeffddffe01132072718f68e/analysis/mr_real_dat.Rmd" target="_blank">77ce4f5</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+<td>
+wflow_publish("analysis/mr_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/a6a61c1ab1c35621f1e3b2a0130ec35885deecaa/docs/mr_real_dat.html" target="_blank">a6a61c1</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -843,13 +877,35 @@ head(y1.cali)</code></pre>
 [4,]    0.432684563   0.03501042
 [5,]    0.208951281   0.03613458
 [6,]    0.403257798   0.03561577</code></pre>
+</div>
+<div id="calculate-z-scores" class="section level3">
+<h3>Calculate z-scores</h3>
+<pre class="r"><code>z2p &lt;- function(zscore){
+  pval &lt;- pnorm(zscore, mean = 0, sd = 1, lower.tail = FALSE)*2
+  return(pval)
+}</code></pre>
+<pre class="r"><code>z1.cali = y1.cali[,1]/sqrt(y1.cali[,2])
+z1.raw = y1.raw[,1]/sqrt(y1.raw[,2])
+z2.cali = y2.cali[,1]/sqrt(y2.cali[,2])
+z2.raw = y2.raw[,1]/sqrt(y2.raw[,2])
+
+p1.cali = z2p(z1.cali)
+p1.raw = z2p(z1.raw)
+p2.cali = z2p(z2.cali)
+p2.raw = z2p(z2.raw)</code></pre>
+<pre class="r"><code>par(mfrow = c(2,2))
+plot(-log10(p1.cali), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;calibrated exposure&quot;)
+plot(-log10(p2.cali), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;calibrated outcome&quot;)
+plot(-log10(p1.raw), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;raw exposure&quot;)
+plot(-log10(p2.raw), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;raw outcome&quot;)</code></pre>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>par(mfrow = c(1,2))
 plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;,  main = &quot;SNP variance: exposure trait&quot;)
 abline(a = 0, b = 1, col = &quot;red&quot;)
 
 plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;, main = &quot;SNP variance: outcome trait&quot;)
 abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
-<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="perform-different-mr-methods-to-assess-the-causal-effect-estimate." class="section level3">
 <h3>Perform different MR methods to assess the causal effect estimate.</h3>
