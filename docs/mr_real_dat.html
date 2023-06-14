@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-06-13
+<strong>Last updated:</strong> 2023-06-14
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree407b0c8243d0d61e39131f0a3f832d66457b2f2dtargetblank407b0c8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/407b0c8243d0d61e39131f0a3f832d66457b2f2d" target="_blank">407b0c8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7f826b6c2031cbf03adf7a39538e19c23c1da527targetblank7f826b6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7f826b6c2031cbf03adf7a39538e19c23c1da527" target="_blank">7f826b6</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree407b0c8243d0d61e39131f0a3f832d66457b2f2dtargetblank407b0c8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7f826b6c2031cbf03adf7a39538e19c23c1da527targetblank7f826b6a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/407b0c8243d0d61e39131f0a3f832d66457b2f2d" target="_blank">407b0c8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7f826b6c2031cbf03adf7a39538e19c23c1da527" target="_blank">7f826b6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -535,6 +535,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7f826b6c2031cbf03adf7a39538e19c23c1da527/analysis/mr_real_dat.Rmd" target="_blank">7f826b6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-14
+</td>
+<td>
+wflow_publish("analysis/mr_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/ab096e94e3d201e407ba4f19342847635d30e32a/docs/mr_real_dat.html" target="_blank">ab096e9</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -839,7 +873,7 @@ dat = readRDS(&quot;./data/realdata.rds&quot;)
 source(&quot;./code/calibrated_mr.R&quot;)</code></pre>
 </div>
 <div id="compute-raw-and-calibrated-estimator-for-each-snp-adjusted-for-non-transmitted-allele" class="section level3">
-<h3>Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele</h3>
+<h3>1. Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele</h3>
 <pre class="r"><code>n = 1e3
 p = 1e3
 N = 1e4
@@ -911,9 +945,121 @@ head(y1.cali)</code></pre>
 [4,]    0.432684563   0.03501042
 [5,]    0.208951281   0.03613458
 [6,]    0.403257798   0.03561577</code></pre>
+<pre class="r"><code>par(mfrow = c(1,2))
+plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;,  main = &quot;SNP variance: exposure trait&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+
+plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;, main = &quot;SNP variance: outcome trait&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0bc4ce79ce79c0891db0602e2567c43e86b71359/docs/figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" target="_blank">0bc4ce7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a6a61c1ab1c35621f1e3b2a0130ec35885deecaa/docs/figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" target="_blank">a6a61c1</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="check-variance-reduction-is-similar-to-previous-simulation-results-on-single-snp" class="section level3">
+<h3>2. Check variance reduction is similar to previous simulation results on single SNP</h3>
+<p>See <a href="https://yunqiyang0215.github.io/simulation-calibrated-mr/empirical_var_reduction.html" class="uri">https://yunqiyang0215.github.io/simulation-calibrated-mr/empirical_var_reduction.html</a></p>
+<p>The variance reduction formula is: <span class="math display">\[
+VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}.
+\]</span></p>
+<p>In this case, <span class="math inline">\(T\)</span> and <span class="math inline">\(NT\)</span> are independent, so <span class="math inline">\(r=0\)</span>. <span class="math inline">\(\sigma^2=1, \rho=0.1\)</span>. <span class="math inline">\(\beta_2=0.001\)</span>. Therefore, VR = 0.4499996.</p>
+<p>This is a rough sanity check. The variance reduction here agrees with the theoretical value, even though SNPs are not iid.</p>
+<pre class="r"><code>par(mfrow = c(1,2))
+vr1 = (y1.raw[,2] - y1.cali[,2])/y1.raw[,2]
+vr2 = (y2.raw[,2] - y2.cali[,2])/y2.raw[,2]
+hist(vr1, breaks = 20, main = &quot;variance reduction&quot;, xlab = &quot;exposure trait&quot;)
+abline(v = mean(vr1), col = &quot;blue&quot;)
+abline(v = 0.4499996, col = &quot;red&quot;)
+
+hist(vr2, breaks = 20, main = &quot;variance reduction&quot;, xlab = &quot;exposure trait&quot;)
+abline(v = mean(vr2), col = &quot;blue&quot;)
+abline(v = 0.4499996, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ab096e94e3d201e407ba4f19342847635d30e32a/docs/figure/mr_real_dat.Rmd/unnamed-chunk-5-1.png" target="_blank">ab096e9</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="compute-unadjusted-snp-effect-size-standard-errors" class="section level3">
-<h3>Compute unadjusted SNP effect size &amp; standard errors</h3>
+<h3>3. Compute unadjusted SNP effect size &amp; standard errors</h3>
 <p>This is just to calculate GWAS summary stat from external data.</p>
 <pre class="r"><code>n = 1e3
 p = 1e3
@@ -934,16 +1080,9 @@ for (i in 1:p){
   y1[i, ] = c(summary(fit1)$coef[2,1], summary(fit1)$coef[2,2])
   y2[i, ] = c(summary(fit2)$coef[2,1], summary(fit2)$coef[2,2])
 }</code></pre>
-<pre class="r"><code>par(mfrow = c(1,2))
-plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;,  main = &quot;SNP variance: exposure trait&quot;)
-abline(a = 0, b = 1, col = &quot;red&quot;)
-
-plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;, main = &quot;SNP variance: outcome trait&quot;)
-abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
-<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="calculate-z-scores" class="section level3">
-<h3>Calculate z-scores</h3>
+<h3>4. Calculate z-scores</h3>
 <pre class="r"><code>z2p &lt;- function(zscore){
   pval &lt;- pnorm(zscore, mean = 0, sd = 1, lower.tail = FALSE)*2
   return(pval)
@@ -969,14 +1108,51 @@ plot(-log10(p1.cali), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main
 plot(-log10(p2.cali), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;calibrated outcome&quot;)
 plot(-log10(p1.raw), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;raw exposure&quot;)
 plot(-log10(p2.raw), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;raw outcome&quot;)</code></pre>
-<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
+Past versions of unnamed-chunk-9-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ab096e94e3d201e407ba4f19342847635d30e32a/docs/figure/mr_real_dat.Rmd/unnamed-chunk-9-1.png" target="_blank">ab096e9</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>par(mfrow = c(1,2))
 plot(-log10(p1), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;unadjusted exposure&quot;)
 plot(-log10(p2), pch = 20, cex = 0.8, ylab = &quot;-log10(pval)&quot;, main = &quot;unadjusted outcome&quot;)</code></pre>
-<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="perform-different-mr-methods-to-assess-the-causal-effect-estimate." class="section level3">
-<h3>Perform different MR methods to assess the causal effect estimate.</h3>
+<h3>5. Perform different MR methods to assess the causal effect estimate.</h3>
 <pre class="r"><code>MRInput.cali &lt;- mr_input(bx = y1.cali[,1],
                           bxse = sqrt(y1.cali[,2]),
                           by = y2.cali[,1],
