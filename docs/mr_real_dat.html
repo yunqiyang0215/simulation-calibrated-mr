@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-05-30
+<strong>Last updated:</strong> 2023-06-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree72e026d26c5e34ecea9bec5d1cb95fbdda8999d8targetblank72e026da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/72e026d26c5e34ecea9bec5d1cb95fbdda8999d8" target="_blank">72e026d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0febe6b9cde8c240fd6cda052485d9e964d2ea4btargetblank0febe6ba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0febe6b9cde8c240fd6cda052485d9e964d2ea4b" target="_blank">0febe6b</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree72e026d26c5e34ecea9bec5d1cb95fbdda8999d8targetblank72e026da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0febe6b9cde8c240fd6cda052485d9e964d2ea4btargetblank0febe6ba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/72e026d26c5e34ecea9bec5d1cb95fbdda8999d8" target="_blank">72e026d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0febe6b9cde8c240fd6cda052485d9e964d2ea4b" target="_blank">0febe6b</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -494,6 +494,9 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   analysis/sim_real_dat.Rmd
 
 </code></pre>
 <p>
@@ -532,6 +535,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0febe6b9cde8c240fd6cda052485d9e964d2ea4b/analysis/mr_real_dat.Rmd" target="_blank">0febe6b</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-13
+</td>
+<td>
+wflow_publish("analysis/mr_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/2be54c1ef2dfb671ea865bddce5db72205ce2ff4/docs/mr_real_dat.html" target="_blank">2be54c1</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-05-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -731,12 +768,13 @@ wflow_publish("analysis/mr_real_dat.Rmd")
 <p>Perform MR to assess causal effect estimate. We should focus on both effect size estimate and standard error of the causal effect. Here the sample size for external data <span class="math inline">\(N=1e4\)</span> and internal data <span class="math inline">\(n=1e3\)</span>.</p>
 <pre class="r"><code>library(MendelianRandomization)
 dat = readRDS(&quot;./data/realdata.rds&quot;)
-source(&quot;./code/sim.R&quot;)</code></pre>
+source(&quot;./code/calibrated_mr.R&quot;)</code></pre>
 </div>
 <div id="compute-raw-and-calibrated-estimator-for-each-snp" class="section level3">
 <h3>Compute raw and calibrated estimator for each SNP</h3>
 <pre class="r"><code>n = 1e3
 p = 1e3
+N = 1e4
 
 y1.cali &lt;- matrix(NA, nrow = p, ncol = 2)
 y1.raw &lt;- matrix(NA, nrow = p, ncol = 2)
@@ -746,18 +784,26 @@ colnames(y1.raw) &lt;- c(&quot;point_estimate&quot;, &quot;var_estimate&quot;)
 y2.cali &lt;- matrix(NA, nrow = p, ncol = 2)
 y2.raw &lt;- matrix(NA, nrow = p, ncol = 2)
 colnames(y2.cali) &lt;- c(&quot;point_estimate&quot;, &quot;var_estimate&quot;)
-colnames(y2.raw) &lt;- c(&quot;point_estimate&quot;, &quot;var_estimate&quot;)
-
-  
-for (i in 1:p){
+colnames(y2.raw) &lt;- c(&quot;point_estimate&quot;, &quot;var_estimate&quot;)</code></pre>
+<pre class="r"><code>for (i in 1:p){
   dat1_valid &lt;- cbind(dat[[&quot;pheno&quot;]][1:n,1], dat[[&quot;trans&quot;]][1:n, i], dat[[&quot;nontrans&quot;]][1:n, i]) 
   dat1_ext &lt;- cbind(dat[[&quot;pheno&quot;]][,1], dat[[&quot;trans&quot;]][, i]) 
   
+  coef_ext &lt;- compute_sumstat(dat1_ext[,1], dat1_ext[,2])$bhat
+  res_int &lt;- compute_sumstat(dat1_valid[,1], dat1_valid[,2])
+  res_int_adj &lt;- compute_adj_sumstat(dat1_valid[,1], dat1_valid[,2], dat1_valid[,3])
+  res1 &lt;- calibrated_estimator(dat1_valid, N, res_int$resid, res_int_adj$resid, res_int$bhat, res_int_adj$bhat, coef_ext)
+
+  
+  # Select different samples for outcome trait. 
   dat2_valid &lt;- cbind(dat[[&quot;pheno&quot;]][(1+1e3):(n+1e3),2], dat[[&quot;trans&quot;]][(1+1e3):(n+1e3), i], dat[[&quot;nontrans&quot;]][(1+1e3):(n+1e3), i]) 
   dat2_ext &lt;- cbind(dat[[&quot;pheno&quot;]][, 2], dat[[&quot;trans&quot;]][, i]) 
   
-  res1 &lt;- calibrated_est(dat1_valid, dat1_ext)
-  res2 &lt;- calibrated_est(dat2_valid, dat2_ext)
+  coef_ext &lt;- compute_sumstat(dat2_ext[,1], dat2_ext[,2])$bhat
+  res_int &lt;- compute_sumstat(dat2_valid[,1], dat2_valid[,2])
+  res_int_adj &lt;- compute_adj_sumstat(dat2_valid[,1], dat2_valid[,2], dat2_valid[,3])
+  res2 &lt;- calibrated_estimator(dat2_valid, N, res_int$resid, res_int_adj$resid, res_int$bhat, res_int_adj$bhat, coef_ext)
+  
   
   y1.cali[i, ] = c(res1$tau_cal, res1$var_tau_cal)
   y2.cali[i, ] = c(res2$tau_cal, res2$var_tau_cal)
@@ -783,12 +829,12 @@ head(y1.cali)</code></pre>
 [6,]     0.12136977   0.01616087</code></pre>
 <pre class="r"><code>head(y2.cali)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]   -0.008610658   0.03776768
-[2,]   -0.066776279   0.04602766
-[3,]    0.321915647   0.06389781
-[4,]    0.433934819   0.03499103
-[5,]    0.195457097   0.03601158
-[6,]    0.391261368   0.03545755</code></pre>
+[1,]   -0.007635524   0.02112290
+[2,]    0.143783181   0.02707866
+[3,]    0.011293817   0.03211023
+[4,]    0.234090945   0.01796442
+[5,]   -0.052220899   0.01841792
+[6,]    0.204296647   0.01893981</code></pre>
 <pre class="r"><code>head(y2.raw)</code></pre>
 <pre><code>     point_estimate var_estimate
 [1,]   -0.009268334   0.03776789
@@ -803,90 +849,7 @@ abline(a = 0, b = 1, col = &quot;red&quot;)
 
 plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;, main = &quot;SNP variance: outcome trait&quot;)
 abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
-<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a7ce35233c7fa3aef391de03953976e0de444a30/docs/figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" target="_blank">a7ce352</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-05-19
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d70844d8a41cb399860fbd56e40aba7750d92d60/docs/figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" target="_blank">d70844d</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-05-19
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7927163a27f60064b62909bc826cacadf3cf07ae/docs/figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" target="_blank">7927163</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-05-15
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/48ec1a1c43342b13bdff37aedb987981c89a6887/docs/figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" target="_blank">48ec1a1</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-05-15
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8ae0fa6d84330bf02f2b0f2806225fd5b7c77fa5/docs/figure/mr_real_dat.Rmd/unnamed-chunk-3-1.png" target="_blank">8ae0fa6</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-05-15
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>sum(y2.cali[,2] &lt; y2.raw[,2])</code></pre>
-<pre><code>[1] 1000</code></pre>
+<p><img src="figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="perform-different-mr-methods-to-assess-the-causal-effect-estimate." class="section level3">
 <h3>Perform different MR methods to assess the causal effect estimate.</h3>
@@ -915,11 +878,11 @@ Number of Variants =  1000
 
 ------------------------------------------------------------------
       Method Estimate Std Error 95% CI       p-value
-    MR-Egger    0.458     0.088 0.285, 0.631   0.000
- (intercept)    0.054     0.013 0.030, 0.079   0.000
+    MR-Egger    0.496     0.069 0.361, 0.631   0.000
+ (intercept)    0.047     0.010 0.028, 0.067   0.000
 ------------------------------------------------------------------
-Residual Standard Error :  4.660 
-Heterogeneity test statistic = 21668.2115 on 998 degrees of freedom, (p-value = 0.0000)
+Residual Standard Error :  6.630 
+Heterogeneity test statistic = 43871.6268 on 998 degrees of freedom, (p-value = 0.0000)
 I^2_GX statistic: 98.2%</code></pre>
 <pre class="r"><code>egger.raw</code></pre>
 <pre><code>
@@ -945,10 +908,10 @@ Number of Variants : 1000
 
 ------------------------------------------------------------------
  Method Estimate Std Error 95% CI       p-value
-    IVW    0.766     0.052 0.664, 0.868   0.000
+    IVW    0.764     0.041 0.684, 0.844   0.000
 ------------------------------------------------------------------
-Residual standard error =  4.700 
-Heterogeneity test statistic (Cochran&#39;s Q) = 22069.3060 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 95.5%. </code></pre>
+Residual standard error =  6.703 
+Heterogeneity test statistic (Cochran&#39;s Q) = 44884.9712 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 97.8%. </code></pre>
 <pre class="r"><code>ivw.raw</code></pre>
 <pre><code>
 Inverse-variance weighted method
