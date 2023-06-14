@@ -15,7 +15,7 @@ dat = readRDS("./data/realdata.rds")
 source("./code/calibrated_mr.R")
 ```
 
-### Compute raw and calibrated estimator for each SNP
+### Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele
 ```{r}
 n = 1e3
 p = 1e3
@@ -66,8 +66,41 @@ head(y2.cali)
 head(y2.raw)
 ```
 
-### Calculate z-scores 
+### Compute unadjusted SNP effect size & standard errors 
 
+This is just to calculate GWAS summary stat from external data. 
+```{r}
+n = 1e3
+p = 1e3
+N = 1e4
+
+y1 <- matrix(NA, nrow = p, ncol = 2)
+y2 <- matrix(NA, nrow = p, ncol = 2)
+
+colnames(y1) <- c("point_estimate", "std.error")
+colnames(y2) <- c("point_estimate", "std.error")
+
+for (i in 1:p){
+  dat1_ext <- cbind(dat[["pheno"]][,1], dat[["trans"]][, i]) 
+  dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["trans"]][, i]) 
+  fit1 <- lm(dat1_ext[,1] ~ dat1_ext[,2])
+  fit2 <- lm(dat2_ext[,1] ~ dat2_ext[,2])
+  
+  y1[i, ] = c(summary(fit1)$coef[2,1], summary(fit1)$coef[2,2])
+  y2[i, ] = c(summary(fit2)$coef[2,1], summary(fit2)$coef[2,2])
+}
+```
+
+```{r }
+par(mfrow = c(1,2))
+plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator",  main = "SNP variance: exposure trait")
+abline(a = 0, b = 1, col = "red")
+
+plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
+abline(a = 0, b = 1, col = "red")
+```
+
+### Calculate z-scores 
 ```{r}
 z2p <- function(zscore){
   pval <- pnorm(zscore, mean = 0, sd = 1, lower.tail = FALSE)*2
@@ -81,10 +114,17 @@ z1.raw = y1.raw[,1]/sqrt(y1.raw[,2])
 z2.cali = y2.cali[,1]/sqrt(y2.cali[,2])
 z2.raw = y2.raw[,1]/sqrt(y2.raw[,2])
 
+z1 = y1[, 1]/y1[,2]
+z2 = y2[, 1]/y2[,2]
+  
+  
 p1.cali = z2p(z1.cali)
 p1.raw = z2p(z1.raw)
 p2.cali = z2p(z2.cali)
 p2.raw = z2p(z2.raw)
+
+p1 = z2p(z1)
+p2 = z2p(z2)
 ```
 
 ```{r}
@@ -96,27 +136,28 @@ plot(-log10(p2.raw), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "raw out
 ```
 
 
-```{r }
+```{r}
 par(mfrow = c(1,2))
-plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator",  main = "SNP variance: exposure trait")
-abline(a = 0, b = 1, col = "red")
+plot(-log10(p1), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted exposure")
+plot(-log10(p2), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted outcome")
 
-plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
-abline(a = 0, b = 1, col = "red")
 ```
+
+
+
 
 ### Perform different MR methods to assess the causal effect estimate.
 ```{r}
 
 MRInput.cali <- mr_input(bx = y1.cali[,1],
-                          bxse = y1.cali[,2],
+                          bxse = sqrt(y1.cali[,2]),
                           by = y2.cali[,1],
-                          byse = y2.cali[,2])
+                          byse = sqrt(y2.cali[,2]))
 
 MRInput.raw <- mr_input(bx = y1.raw[,1],
-                          bxse = y1.raw[,2],
+                          bxse = sqrt(y1.raw[,2]),
                           by = y2.raw[,1],
-                          byse = y2.raw[,2])
+                          byse = sqrt(y2.raw[,2]))
 
 
 egger.cali <- mr_egger(MRInput.cali)
@@ -133,3 +174,15 @@ ivw.cali
 ivw.raw
 ```
 
+```{r}
+
+MRInput <- mr_input(bx = y1[,1],
+                          bxse = y1[,2],
+                          by = y2[,1],
+                          byse = y2[,2])
+egger <- mr_egger(MRInput)
+ivw <- mr_ivw(MRInput)
+
+egger
+ivw
+```
