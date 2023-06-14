@@ -12,14 +12,14 @@ Perform MR to assess causal effect estimate. We should focus on both effect size
 ```{r}
 library(MendelianRandomization)
 dat = readRDS("./data/realdata.rds")
-source("./code/sim.R")
+source("./code/calibrated_mr.R")
 ```
 
 ### Compute raw and calibrated estimator for each SNP
 ```{r}
-
 n = 1e3
 p = 1e3
+N = 1e4
 
 y1.cali <- matrix(NA, nrow = p, ncol = 2)
 y1.raw <- matrix(NA, nrow = p, ncol = 2)
@@ -30,17 +30,29 @@ y2.cali <- matrix(NA, nrow = p, ncol = 2)
 y2.raw <- matrix(NA, nrow = p, ncol = 2)
 colnames(y2.cali) <- c("point_estimate", "var_estimate")
 colnames(y2.raw) <- c("point_estimate", "var_estimate")
+```
 
-  
+
+```{r }
 for (i in 1:p){
   dat1_valid <- cbind(dat[["pheno"]][1:n,1], dat[["trans"]][1:n, i], dat[["nontrans"]][1:n, i]) 
   dat1_ext <- cbind(dat[["pheno"]][,1], dat[["trans"]][, i]) 
   
+  coef_ext <- compute_sumstat(dat1_ext[,1], dat1_ext[,2])$bhat
+  res_int <- compute_sumstat(dat1_valid[,1], dat1_valid[,2])
+  res_int_adj <- compute_adj_sumstat(dat1_valid[,1], dat1_valid[,2], dat1_valid[,3])
+  res1 <- calibrated_estimator(dat1_valid, N, res_int$resid, res_int_adj$resid, res_int$bhat, res_int_adj$bhat, coef_ext)
+
+  
+  # Select different samples for outcome trait. 
   dat2_valid <- cbind(dat[["pheno"]][(1+1e3):(n+1e3),2], dat[["trans"]][(1+1e3):(n+1e3), i], dat[["nontrans"]][(1+1e3):(n+1e3), i]) 
   dat2_ext <- cbind(dat[["pheno"]][, 2], dat[["trans"]][, i]) 
   
-  res1 <- calibrated_est(dat1_valid, dat1_ext)
-  res2 <- calibrated_est(dat2_valid, dat2_ext)
+  coef_ext <- compute_sumstat(dat2_ext[,1], dat2_ext[,2])$bhat
+  res_int <- compute_sumstat(dat2_valid[,1], dat2_valid[,2])
+  res_int_adj <- compute_adj_sumstat(dat2_valid[,1], dat2_valid[,2], dat2_valid[,3])
+  res2 <- calibrated_estimator(dat2_valid, N, res_int$resid, res_int_adj$resid, res_int$bhat, res_int_adj$bhat, coef_ext)
+  
   
   y1.cali[i, ] = c(res1$tau_cal, res1$var_tau_cal)
   y2.cali[i, ] = c(res2$tau_cal, res2$var_tau_cal)
@@ -54,6 +66,10 @@ head(y2.cali)
 head(y2.raw)
 ```
 
+
+
+
+
 ```{r }
 par(mfrow = c(1,2))
 plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator",  main = "SNP variance: exposure trait")
@@ -61,9 +77,6 @@ abline(a = 0, b = 1, col = "red")
 
 plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
 abline(a = 0, b = 1, col = "red")
-```
-```{r}
-sum(y2.cali[,2] < y2.raw[,2])
 ```
 
 ### Perform different MR methods to assess the causal effect estimate.
