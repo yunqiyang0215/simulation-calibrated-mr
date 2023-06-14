@@ -66,8 +66,34 @@ head(y2.cali)
 head(y2.raw)
 ```
 
+### Calculate z-scores 
 
+```{r}
+z2p <- function(zscore){
+  pval <- pnorm(zscore, mean = 0, sd = 1, lower.tail = FALSE)*2
+  return(pval)
+}
+```
 
+```{r}
+z1.cali = y1.cali[,1]/sqrt(y1.cali[,2])
+z1.raw = y1.raw[,1]/sqrt(y1.raw[,2])
+z2.cali = y2.cali[,1]/sqrt(y2.cali[,2])
+z2.raw = y2.raw[,1]/sqrt(y2.raw[,2])
+
+p1.cali = z2p(z1.cali)
+p1.raw = z2p(z1.raw)
+p2.cali = z2p(z2.cali)
+p2.raw = z2p(z2.raw)
+```
+
+```{r}
+par(mfrow = c(2,2))
+plot(-log10(p1.cali), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "calibrated exposure")
+plot(-log10(p2.cali), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "calibrated outcome")
+plot(-log10(p1.raw), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "raw exposure")
+plot(-log10(p2.raw), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "raw outcome")
+```
 
 
 ```{r }
