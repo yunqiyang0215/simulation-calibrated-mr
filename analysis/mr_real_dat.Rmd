@@ -15,7 +15,7 @@ dat = readRDS("./data/realdata.rds")
 source("./code/calibrated_mr.R")
 ```
 
-### Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele
+### 1. Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele
 ```{r}
 n = 1e3
 p = 1e3
@@ -66,7 +66,43 @@ head(y2.cali)
 head(y2.raw)
 ```
 
-### Compute unadjusted SNP effect size & standard errors 
+```{r }
+par(mfrow = c(1,2))
+plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator",  main = "SNP variance: exposure trait")
+abline(a = 0, b = 1, col = "red")
+
+plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
+abline(a = 0, b = 1, col = "red")
+```
+
+
+### 2. Check variance reduction is similar to previous simulation results on single SNP
+
+See https://yunqiyang0215.github.io/simulation-calibrated-mr/empirical_var_reduction.html
+
+The variance reduction formula is:
+$$
+VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}.
+$$
+
+
+In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=1, \rho=0.1$. $\beta_2=0.001$. Therefore, VR = 0.4499996.
+
+This is a rough sanity check. The variance reduction here agrees with the theoretical value, even though SNPs are not iid. 
+```{r}
+par(mfrow = c(1,2))
+vr1 = (y1.raw[,2] - y1.cali[,2])/y1.raw[,2]
+vr2 = (y2.raw[,2] - y2.cali[,2])/y2.raw[,2]
+hist(vr1, breaks = 20, main = "variance reduction", xlab = "exposure trait")
+abline(v = mean(vr1), col = "blue")
+abline(v = 0.4499996, col = "red")
+
+hist(vr2, breaks = 20, main = "variance reduction", xlab = "exposure trait")
+abline(v = mean(vr2), col = "blue")
+abline(v = 0.4499996, col = "red")
+```
+
+### 3. Compute unadjusted SNP effect size & standard errors 
 
 This is just to calculate GWAS summary stat from external data. 
 ```{r}
@@ -91,16 +127,8 @@ for (i in 1:p){
 }
 ```
 
-```{r }
-par(mfrow = c(1,2))
-plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator",  main = "SNP variance: exposure trait")
-abline(a = 0, b = 1, col = "red")
 
-plot(y2.cali[,2], y2.raw[,2], pch = 20, xlab = "calibrated estimator", ylab = "raw estimator", main = "SNP variance: outcome trait")
-abline(a = 0, b = 1, col = "red")
-```
-
-### Calculate z-scores 
+### 4. Calculate z-scores 
 ```{r}
 z2p <- function(zscore){
   pval <- pnorm(zscore, mean = 0, sd = 1, lower.tail = FALSE)*2
@@ -146,9 +174,8 @@ plot(-log10(p2), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted 
 
 
 
-### Perform different MR methods to assess the causal effect estimate.
+### 5. Perform different MR methods to assess the causal effect estimate.
 ```{r}
-
 MRInput.cali <- mr_input(bx = y1.cali[,1],
                           bxse = sqrt(y1.cali[,2]),
                           by = y2.cali[,1],
