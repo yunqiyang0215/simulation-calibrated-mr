@@ -86,20 +86,21 @@ VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}.
 $$
 
 
-In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=1, \rho=0.1$. $\beta_2=0.001$. Therefore, VR = 0.4499996.
+In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=0.01, \rho=0.1$. $\beta_2=0.001$. Therefore, VR = 0.4499955.
 
 This is a rough sanity check. The variance reduction here agrees with the theoretical value, even though SNPs are not iid. 
 ```{r}
+v = (1-0.1)/2*0.01/(0.01+0.001^2)
 par(mfrow = c(1,2))
 vr1 = (y1.raw[,2] - y1.cali[,2])/y1.raw[,2]
 vr2 = (y2.raw[,2] - y2.cali[,2])/y2.raw[,2]
 hist(vr1, breaks = 20, main = "variance reduction", xlab = "exposure trait")
 abline(v = mean(vr1), col = "blue")
-abline(v = 0.4499996, col = "red")
+abline(v = v, col = "red")
 
 hist(vr2, breaks = 20, main = "variance reduction", xlab = "exposure trait")
 abline(v = mean(vr2), col = "blue")
-abline(v = 0.4499996, col = "red")
+abline(v = v, col = "red")
 ```
 
 ### 3. Compute unadjusted SNP effect size & standard errors 
@@ -110,11 +111,10 @@ n = 1e3
 p = 1e3
 N = 1e4
 
-y1 <- matrix(NA, nrow = p, ncol = 2)
-y2 <- matrix(NA, nrow = p, ncol = 2)
-
-colnames(y1) <- c("point_estimate", "std.error")
-colnames(y2) <- c("point_estimate", "std.error")
+y1.ext <- matrix(NA, nrow = p, ncol = 2)
+y2.ext <- matrix(NA, nrow = p, ncol = 2)
+colnames(y1.ext) <- c("point_estimate", "std.error")
+colnames(y2.ext) <- c("point_estimate", "std.error")
 
 for (i in 1:p){
   dat1_ext <- cbind(dat[["pheno"]][,1], dat[["trans"]][, i]) 
@@ -122,10 +122,31 @@ for (i in 1:p){
   fit1 <- lm(dat1_ext[,1] ~ dat1_ext[,2])
   fit2 <- lm(dat2_ext[,1] ~ dat2_ext[,2])
   
-  y1[i, ] = c(summary(fit1)$coef[2,1], summary(fit1)$coef[2,2])
-  y2[i, ] = c(summary(fit2)$coef[2,1], summary(fit2)$coef[2,2])
+  y1.ext[i, ] = c(summary(fit1)$coef[2,1], summary(fit1)$coef[2,2])
+  y2.ext[i, ] = c(summary(fit2)$coef[2,1], summary(fit2)$coef[2,2])
 }
 ```
+
+
+Unadjusted internal data. 
+```{r}
+y1.int <- matrix(NA, nrow = p, ncol = 2)
+y2.int <- matrix(NA, nrow = p, ncol = 2)
+
+colnames(y1.int) <- c("point_estimate", "std.error")
+colnames(y2.int) <- c("point_estimate", "std.error")
+
+for (i in 1:p){
+  dat1_int <- cbind(dat[["pheno"]][1:n,1], dat[["trans"]][1:n, i]) 
+  dat2_int <- cbind(dat[["pheno"]][(1e3+1):(1e3+n), 2], dat[["trans"]][(1e3+1):(1e3+n), i]) 
+  fit1 <- lm(dat1_int[,1] ~ dat1_int[,2])
+  fit2 <- lm(dat2_int[,1] ~ dat2_int[,2])
+  
+  y1.int[i, ] = c(summary(fit1)$coef[2,1], summary(fit1)$coef[2,2])
+  y2.int[i, ] = c(summary(fit2)$coef[2,1], summary(fit2)$coef[2,2])
+}
+```
+
 
 
 ### 4. Calculate z-scores 
@@ -142,17 +163,21 @@ z1.raw = y1.raw[,1]/sqrt(y1.raw[,2])
 z2.cali = y2.cali[,1]/sqrt(y2.cali[,2])
 z2.raw = y2.raw[,1]/sqrt(y2.raw[,2])
 
-z1 = y1[, 1]/y1[,2]
-z2 = y2[, 1]/y2[,2]
-  
+z1.ext = y1.ext[, 1]/y1.ext[,2]
+z2.ext = y2.ext[, 1]/y2.ext[,2]
+z1.int = y1.int[, 1]/y1.int[,2]
+z2.int = y2.int[, 1]/y2.int[,2]
+
   
 p1.cali = z2p(z1.cali)
 p1.raw = z2p(z1.raw)
 p2.cali = z2p(z2.cali)
 p2.raw = z2p(z2.raw)
 
-p1 = z2p(z1)
-p2 = z2p(z2)
+p1.ext = z2p(z1.ext)
+p2.ext = z2p(z2.ext)
+p1.int = z2p(z1.int)
+p2.int = z2p(z2.int)
 ```
 
 ```{r}
@@ -165,10 +190,11 @@ plot(-log10(p2.raw), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "raw out
 
 
 ```{r}
-par(mfrow = c(1,2))
-plot(-log10(p1), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted exposure")
-plot(-log10(p2), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted outcome")
-
+par(mfrow = c(2,2))
+plot(-log10(p1.ext), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted exposure: ext")
+plot(-log10(p2.ext), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted outcome: ext")
+plot(-log10(p1.int), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted exposure: int")
+plot(-log10(p2.int), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjusted outcome: int")
 ```
 
 
@@ -203,13 +229,29 @@ ivw.raw
 
 ```{r}
 
-MRInput <- mr_input(bx = y1[,1],
-                          bxse = y1[,2],
-                          by = y2[,1],
-                          byse = y2[,2])
-egger <- mr_egger(MRInput)
-ivw <- mr_ivw(MRInput)
+MRInput <- mr_input(bx = y1.ext[,1],
+                          bxse = y1.ext[,2],
+                          by = y2.ext[,1],
+                          byse = y2.ext[,2])
 
-egger
-ivw
+egger.ext <- mr_egger(MRInput)
+ivw.ext <- mr_ivw(MRInput)
+
+
+MRInput <- mr_input(bx = y1.int[,1],
+                          bxse = y1.int[,2],
+                          by = y2.int[,1],
+                          byse = y2.int[,2])
+
+egger.int <- mr_egger(MRInput)
+ivw.int <- mr_ivw(MRInput)
+
 ```
+
+```{r}
+egger.ext
+ivw.ext
+egger.int
+ivw.int
+```
+
