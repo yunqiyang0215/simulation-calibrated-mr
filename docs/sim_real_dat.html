@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef7d84a2bf3bcbf19cdffbed4f510ba2b7f8b9630targetblankf7d84a2a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f7d84a2bf3bcbf19cdffbed4f510ba2b7f8b9630" target="_blank">f7d84a2</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea13cbee6c781267b9999f65b1dc0b499342ada9ftargetblanka13cbeea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a13cbee6c781267b9999f65b1dc0b499342ada9f" target="_blank">a13cbee</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef7d84a2bf3bcbf19cdffbed4f510ba2b7f8b9630targetblankf7d84a2a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea13cbee6c781267b9999f65b1dc0b499342ada9ftargetblanka13cbeea" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f7d84a2bf3bcbf19cdffbed4f510ba2b7f8b9630" target="_blank">f7d84a2</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a13cbee6c781267b9999f65b1dc0b499342ada9f" target="_blank">a13cbee</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -496,7 +496,7 @@ Ignored files:
     Ignored:    .Rproj.user/
 
 Unstaged changes:
-    Modified:   analysis/mr_real_dat.Rmd
+    Modified:   data/realdata.rds
 
 </code></pre>
 <p>
@@ -535,6 +535,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a13cbee6c781267b9999f65b1dc0b499342ada9f/analysis/sim_real_dat.Rmd" target="_blank">a13cbee</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-21
+</td>
+<td>
+wflow_publish("analysis/sim_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/9099de9bfc9eca15f3026829f48ae5e78c87aece/docs/sim_real_dat.html" target="_blank">9099de9</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-06-21
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -830,8 +864,8 @@ wflow_publish("analysis/sim_real_dat.Rmd")
 <p><span class="math display">\[
 \begin{split}
 b &amp;= 1, \quad\epsilon \sim N(0, 0.01)\\
-Y_1 &amp;= 0.1T_1+\cdots + 0.1T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
-Y_2 &amp;= b*Y_1 + 0.05T_1 +\cdots+0.05T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
+Y_1 &amp;= 0.5T_1+\cdots + 0.5T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
+Y_2 &amp;= b*Y_1 + 0.1T_1 +\cdots+0.1T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
 \end{split}
 \]</span></p>
 <pre class="r"><code>### Helper functions to simulate trio data. 
@@ -889,11 +923,11 @@ for (i in 1:N){
 t2 = proc.time()
 t2 -t1</code></pre>
 <pre><code>   user  system elapsed 
- 49.951   1.284  58.569 </code></pre>
+ 47.230   1.031  49.602 </code></pre>
 <pre class="r"><code># 4. Simulate trait
 b = 1
-Y1 &lt;- 0.1*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.1)
-Y2 &lt;- b*Y1 + 0.05*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N, 0, 0.01)
+Y1 &lt;- 0.5*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.01)
+Y2 &lt;- b*Y1 + 0.1*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N, 0, 0.01)
 pheno &lt;- cbind(Y1, Y2)
 dat = list(trans = trans, nontrans = nontrans, pheno = pheno)
 saveRDS(dat, &quot;./data/realdata.rds&quot;)</code></pre>
