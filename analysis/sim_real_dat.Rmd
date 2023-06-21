@@ -28,8 +28,8 @@ The effect of genetic nurture is very small.
 $$
 \begin{split}
 b &= 1, \quad\epsilon \sim N(0, 0.01)\\
-Y_1 &= 0.1T_1+\cdots + 0.1T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
-Y_2 &= b*Y_1 + 0.05T_1 +\cdots+0.05T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
+Y_1 &= 0.5T_1+\cdots + 0.5T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
+Y_2 &= b*Y_1 + 0.1T_1 +\cdots+0.1T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
 \end{split}
 $$
 
@@ -98,8 +98,8 @@ t2 -t1
 ```{r}
 # 4. Simulate trait
 b = 1
-Y1 <- 0.1*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.1)
-Y2 <- b*Y1 + 0.05*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N, 0, 0.01)
+Y1 <- 0.5*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.01)
+Y2 <- b*Y1 + 0.1*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N, 0, 0.01)
 pheno <- cbind(Y1, Y2)
 dat = list(trans = trans, nontrans = nontrans, pheno = pheno)
 saveRDS(dat, "./data/realdata.rds")
