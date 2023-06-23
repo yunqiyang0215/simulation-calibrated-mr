@@ -86,11 +86,11 @@ VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}.
 $$
 
 
-In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=0.01, \rho=0.1$. $\beta_2=0.001$. Therefore, VR = 0.4499955.
+In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=0.001, \rho=0.1$. $\beta_2=0.001$. Therefore, VR = 0.4499955.
 
 This is a rough sanity check. The variance reduction here agrees with the theoretical value, even though SNPs are not iid. 
 ```{r}
-v = (1-0.1)/2*0.01/(0.01+0.001^2)
+v = (1-0.1)/2*0.001/(0.001+0.001^2)
 par(mfrow = c(1,2))
 vr1 = (y1.raw[,2] - y1.cali[,2])/y1.raw[,2]
 vr2 = (y2.raw[,2] - y2.cali[,2])/y2.raw[,2]
@@ -198,9 +198,8 @@ plot(-log10(p2.int), pch = 20, cex = 0.8, ylab = "-log10(pval)", main = "unadjus
 ```
 
 
-
-
 ### 5. Perform different MR methods to assess the causal effect estimate.
+
 ```{r}
 MRInput.cali <- mr_input(bx = y1.cali[,1],
                           bxse = sqrt(y1.cali[,2]),
@@ -253,5 +252,33 @@ egger.ext
 ivw.ext
 egger.int
 ivw.int
+```
+
+### 5. Use mr.raps
+
+#
+```{r}
+library(mr.raps)
+```
+
+```{r}
+res.cali = mr.raps.mle(y1.cali[,1], y2.cali[,1], sqrt(y1.cali[,2]), sqrt(y2.cali[,2]))
+res.raw = mr.raps.mle(y1.raw[,1], y2.raw[,1], sqrt(y1.raw[,2]), sqrt(y2.raw[,2]))
+res.ext = mr.raps.mle(y1.ext[,1], y2.ext[,1], y1.ext[,2], y2.ext[,2])
+res.int = mr.raps.mle(y1.int[,1], y2.int[,1], y1.int[,2], y2.int[,2])
+```
+
+```{r}
+res.cali$beta.hat
+res.raw$beta.hat
+res.ext$beta.hat
+res.int$beta.hat
+```
+
+```{r}
+res.cali$beta.se
+res.raw$beta.se
+res.ext$beta.se
+res.int$beta.se
 ```
 
