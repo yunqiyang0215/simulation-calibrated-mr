@@ -86,11 +86,11 @@ VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}.
 $$
 
 
-In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=0.001, \rho=0.1$. $\beta_2=0.001$. Therefore, VR = 0.4499955.
+In this case, $T$ and $NT$ are independent, so $r=0$. $\sigma^2=0.01, \rho=0.1$. $\beta_2=0.001$. 
 
 This is a rough sanity check. The variance reduction here agrees with the theoretical value, even though SNPs are not iid. 
 ```{r}
-v = (1-0.1)/2*0.001/(0.001+0.001^2)
+v = (1-0.1)/2*0.01/(0.01+0.001^2)
 par(mfrow = c(1,2))
 vr1 = (y1.raw[,2] - y1.cali[,2])/y1.raw[,2]
 vr2 = (y2.raw[,2] - y2.cali[,2])/y2.raw[,2]
