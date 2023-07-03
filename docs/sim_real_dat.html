@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree65d334d03ce3ce6c5f1199d5eab3451f1d1b9432targetblank65d334da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/65d334d03ce3ce6c5f1199d5eab3451f1d1b9432" target="_blank">65d334d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeec2832d7cb701da39d1abc6baba180ed53240ee1targetblankec2832da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ec2832d7cb701da39d1abc6baba180ed53240ee1" target="_blank">ec2832d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree65d334d03ce3ce6c5f1199d5eab3451f1d1b9432targetblank65d334da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeec2832d7cb701da39d1abc6baba180ed53240ee1targetblankec2832da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/65d334d03ce3ce6c5f1199d5eab3451f1d1b9432" target="_blank">65d334d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ec2832d7cb701da39d1abc6baba180ed53240ee1" target="_blank">ec2832d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -495,6 +495,10 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/.DS_Store
+
+Unstaged changes:
+    Modified:   analysis/mr_real_dat.Rmd
+    Modified:   data/realdata.rds
 
 </code></pre>
 <p>
@@ -533,6 +537,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ec2832d7cb701da39d1abc6baba180ed53240ee1/analysis/sim_real_dat.Rmd" target="_blank">ec2832d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+<td>
+wflow_publish("analysis/sim_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/ddf405ed14b2f33db14cc7754fae46a3a1efeeab/docs/sim_real_dat.html" target="_blank">ddf405e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1134,7 +1172,7 @@ sim_offspring &lt;- function(par1, par2){
 maf &lt;- colMeans(geno_real)/2
 set.seed(1)
 N = 1e4  
-p = 1e3
+p = 20
 
 t1 = proc.time()
 # 1. Simulate parents genotype based on true MAF. 
@@ -1159,7 +1197,7 @@ for (i in 1:N){
 t2 = proc.time()
 t2 -t1</code></pre>
 <pre><code>   user  system elapsed 
- 47.804   1.130  50.636 </code></pre>
+  1.252   0.050   1.351 </code></pre>
 <pre class="r"><code># 4. Simulate trait
 b = 1
 Y1 &lt;- 0.1*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.01)
