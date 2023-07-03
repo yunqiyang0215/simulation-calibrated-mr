@@ -18,7 +18,7 @@ source("./code/calibrated_mr.R")
 ### 1. Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele
 ```{r}
 n = 1e3
-p = 1e3
+p = 20
 N = 1e4
 
 y1.cali <- matrix(NA, nrow = p, ncol = 2)
@@ -108,7 +108,7 @@ abline(v = v, col = "red")
 This is just to calculate GWAS summary stat from external data. 
 ```{r}
 n = 1e3
-p = 1e3
+p = 20
 N = 1e4
 
 y1.ext <- matrix(NA, nrow = p, ncol = 2)
