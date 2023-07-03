@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeddf405ed14b2f33db14cc7754fae46a3a1efeeabtargetblankddf405ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ddf405ed14b2f33db14cc7754fae46a3a1efeeab" target="_blank">ddf405e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree1cc07984a956c22b8bfc03bf42a9ebd0756dd65ftargetblank1cc0798a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/1cc07984a956c22b8bfc03bf42a9ebd0756dd65f" target="_blank">1cc0798</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeddf405ed14b2f33db14cc7754fae46a3a1efeeabtargetblankddf405ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree1cc07984a956c22b8bfc03bf42a9ebd0756dd65ftargetblank1cc0798a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ddf405ed14b2f33db14cc7754fae46a3a1efeeab" target="_blank">ddf405e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/1cc07984a956c22b8bfc03bf42a9ebd0756dd65f" target="_blank">1cc0798</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -536,6 +536,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/1cc07984a956c22b8bfc03bf42a9ebd0756dd65f/analysis/mr_real_dat.Rmd" target="_blank">1cc0798</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+<td>
+wflow_publish("analysis/mr_real_dat.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/e50c1e23bd07ba73fdc135e6e2886860ac65a389/docs/mr_real_dat.html" target="_blank">e50c1e2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -995,7 +1029,7 @@ source(&quot;./code/calibrated_mr.R&quot;)</code></pre>
 <div id="compute-raw-and-calibrated-estimator-for-each-snp-adjusted-for-non-transmitted-allele" class="section level3">
 <h3>1. Compute raw and calibrated estimator for each SNP, adjusted for non-transmitted allele</h3>
 <pre class="r"><code>n = 1e3
-p = 1e3
+p = 20
 N = 1e4
 
 y1.cali &lt;- matrix(NA, nrow = p, ncol = 2)
@@ -1035,36 +1069,36 @@ colnames(y2.raw) &lt;- c(&quot;point_estimate&quot;, &quot;var_estimate&quot;)</
 
 head(y1.cali)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]     0.02858987  0.008251232
-[2,]     0.28470052  0.010723705
-[3,]     0.24249740  0.013478461
-[4,]     0.11576882  0.006495168
-[5,]     0.13428251  0.007697184
-[6,]     0.05745558  0.006890793</code></pre>
+[1,]     0.09247034 0.0001555709
+[2,]     0.10775249 0.0002191213
+[3,]     0.10284770 0.0002711008
+[4,]     0.10732097 0.0001635584
+[5,]     0.09347871 0.0001655761
+[6,]     0.11132310 0.0001262836</code></pre>
 <pre class="r"><code>head(y1.raw)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]    -0.06858143   0.01352137
-[2,]     0.14906782   0.02109488
-[3,]     0.20311065   0.02315417
-[4,]     0.07292596   0.01263729
-[5,]     0.28597289   0.01404199
-[6,]     0.12107652   0.01301547</code></pre>
+[1,]     0.07780502 0.0002761682
+[2,]     0.09538983 0.0003689797
+[3,]     0.11146265 0.0005391000
+[4,]     0.10640455 0.0002949118
+[5,]     0.08075448 0.0002806793
+[6,]     0.11717572 0.0002479496</code></pre>
 <pre class="r"><code>head(y2.cali)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]    0.034746193  0.007572439
-[2,]    0.119159719  0.009689170
-[3,]    0.063297686  0.011667730
-[4,]    0.213763622  0.006424290
-[5,]    0.009304065  0.006651448
-[6,]    0.194384426  0.006958857</code></pre>
+[1,]     0.09810310 0.0002081092
+[2,]     0.11557334 0.0002737561
+[3,]     0.09104187 0.0003713862
+[4,]     0.11095673 0.0001510204
+[5,]     0.09056032 0.0001830246
+[6,]     0.09920661 0.0001698816</code></pre>
 <pre class="r"><code>head(y2.raw)</code></pre>
 <pre><code>     point_estimate var_estimate
-[1,]     0.02840348   0.01303271
-[2,]     0.07410956   0.01643543
-[3,]     0.27748694   0.02303272
-[4,]     0.33078456   0.01261604
-[5,]     0.16351772   0.01280932
-[6,]     0.34244276   0.01246650</code></pre>
+[1,]     0.08046419 0.0003433912
+[2,]     0.11342793 0.0004545035
+[3,]     0.10356091 0.0006610495
+[4,]     0.10844907 0.0002962539
+[5,]     0.10961033 0.0003157545
+[6,]     0.09535980 0.0003313843</code></pre>
 <pre class="r"><code>par(mfrow = c(1,2))
 plot(y1.cali[,2], y1.raw[,2], pch = 20, xlab = &quot;calibrated estimator&quot;, ylab = &quot;raw estimator&quot;,  main = &quot;SNP variance: exposure trait&quot;)
 abline(a = 0, b = 1, col = &quot;red&quot;)
@@ -1094,6 +1128,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e50c1e23bd07ba73fdc135e6e2886860ac65a389/docs/figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" target="_blank">e50c1e2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/4b2d87a51aeca97362cbea58f09ed0572db958ed/docs/figure/mr_real_dat.Rmd/unnamed-chunk-4-1.png" target="_blank">4b2d87a</a>
@@ -1209,6 +1254,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e50c1e23bd07ba73fdc135e6e2886860ac65a389/docs/figure/mr_real_dat.Rmd/unnamed-chunk-5-1.png" target="_blank">e50c1e2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/4b2d87a51aeca97362cbea58f09ed0572db958ed/docs/figure/mr_real_dat.Rmd/unnamed-chunk-5-1.png" target="_blank">4b2d87a</a>
 </td>
 <td>
@@ -1271,7 +1327,7 @@ yunqiyang0215
 <h3>3. Compute unadjusted SNP effect size &amp; standard errors</h3>
 <p>This is just to calculate GWAS summary stat from external data.</p>
 <pre class="r"><code>n = 1e3
-p = 1e3
+p = 20
 N = 1e4
 
 y1.ext &lt;- matrix(NA, nrow = p, ncol = 2)
@@ -1361,6 +1417,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e50c1e23bd07ba73fdc135e6e2886860ac65a389/docs/figure/mr_real_dat.Rmd/unnamed-chunk-10-1.png" target="_blank">e50c1e2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/4b2d87a51aeca97362cbea58f09ed0572db958ed/docs/figure/mr_real_dat.Rmd/unnamed-chunk-10-1.png" target="_blank">4b2d87a</a>
 </td>
 <td>
@@ -1437,6 +1504,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e50c1e23bd07ba73fdc135e6e2886860ac65a389/docs/figure/mr_real_dat.Rmd/unnamed-chunk-11-1.png" target="_blank">e50c1e2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-03
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/4b2d87a51aeca97362cbea58f09ed0572db958ed/docs/figure/mr_real_dat.Rmd/unnamed-chunk-11-1.png" target="_blank">4b2d87a</a>
 </td>
 <td>
@@ -1496,57 +1574,59 @@ ivw.raw &lt;- mr_ivw(MRInput.raw)</code></pre>
 MR-Egger method
 (variants uncorrelated, random-effect model)
 
-Number of Variants =  1000 
+Number of Variants =  20 
 
 ------------------------------------------------------------------
-      Method Estimate Std Error 95% CI       p-value
-    MR-Egger    0.368     0.045 0.279, 0.457   0.000
- (intercept)    0.027     0.006 0.014, 0.040   0.000
+      Method Estimate Std Error  95% CI       p-value
+    MR-Egger    0.688     0.373 -0.043, 1.418   0.065
+ (intercept)    0.031     0.038 -0.042, 0.105   0.403
 ------------------------------------------------------------------
-Residual Standard Error :  1.146 
-Heterogeneity test statistic = 1309.8084 on 998 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 0.0%</code></pre>
+Residual Standard Error :  0.970 
+Residual standard error is set to 1 in calculation of confidence interval when its estimate is less than 1.
+Heterogeneity test statistic = 16.9296 on 18 degrees of freedom, (p-value = 0.5279)
+I^2_GX statistic: 58.4%</code></pre>
 <pre class="r"><code>egger.raw</code></pre>
 <pre><code>
 MR-Egger method
 (variants uncorrelated, random-effect model)
 
-Number of Variants =  1000 
+Number of Variants =  20 
 
 ------------------------------------------------------------------
       Method Estimate Std Error  95% CI       p-value
-    MR-Egger    0.257     0.050  0.159, 0.355   0.000
- (intercept)    0.014     0.008 -0.002, 0.031   0.089
+    MR-Egger    0.401     0.334 -0.254, 1.057   0.230
+ (intercept)    0.065     0.031  0.004, 0.127   0.037
 ------------------------------------------------------------------
-Residual Standard Error :  1.143 
-Heterogeneity test statistic = 1303.7963 on 998 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 0.0%</code></pre>
+Residual Standard Error :  1.127 
+Heterogeneity test statistic = 22.8819 on 18 degrees of freedom, (p-value = 0.1952)
+I^2_GX statistic: 27.7%</code></pre>
 <pre class="r"><code>ivw.cali</code></pre>
 <pre><code>
 Inverse-variance weighted method
 (variants uncorrelated, random-effect model)
 
-Number of Variants : 1000 
+Number of Variants : 20 
 
 ------------------------------------------------------------------
  Method Estimate Std Error 95% CI       p-value
-    IVW    0.522     0.026 0.470, 0.574   0.000
+    IVW    0.998     0.033 0.934, 1.062   0.000
 ------------------------------------------------------------------
-Residual standard error =  1.155 
-Heterogeneity test statistic (Cochran&#39;s Q) = 1332.3705 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 25.0%. </code></pre>
+Residual standard error =  0.963 
+Residual standard error is set to 1 in calculation of confidence interval when its estimate is less than 1.
+Heterogeneity test statistic (Cochran&#39;s Q) = 17.6296 on 19 degrees of freedom, (p-value = 0.5473). I^2 = 0.0%. </code></pre>
 <pre class="r"><code>ivw.raw</code></pre>
 <pre><code>
 Inverse-variance weighted method
 (variants uncorrelated, random-effect model)
 
-Number of Variants : 1000 
+Number of Variants : 20 
 
 ------------------------------------------------------------------
  Method Estimate Std Error 95% CI       p-value
-    IVW    0.325     0.030 0.267, 0.384   0.000
+    IVW    1.089     0.057 0.977, 1.201   0.000
 ------------------------------------------------------------------
-Residual standard error =  1.144 
-Heterogeneity test statistic (Cochran&#39;s Q) = 1307.5692 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 23.6%. </code></pre>
+Residual standard error =  1.222 
+Heterogeneity test statistic (Cochran&#39;s Q) = 28.3931 on 19 degrees of freedom, (p-value = 0.0761). I^2 = 33.1%. </code></pre>
 <pre class="r"><code>MRInput &lt;- mr_input(bx = y1.ext[,1],
                           bxse = y1.ext[,2],
                           by = y2.ext[,1],
@@ -1568,59 +1648,60 @@ ivw.int &lt;- mr_ivw(MRInput)</code></pre>
 MR-Egger method
 (variants uncorrelated, random-effect model)
 
-Number of Variants =  1000 
+Number of Variants =  20 
 
 ------------------------------------------------------------------
       Method Estimate Std Error  95% CI       p-value
-    MR-Egger    1.020     0.032  0.957, 1.083   0.000
- (intercept)    0.000     0.003 -0.007, 0.007   0.999
+    MR-Egger    1.009     0.202  0.613, 1.406   0.000
+ (intercept)    0.001     0.020 -0.038, 0.040   0.958
 ------------------------------------------------------------------
-Residual Standard Error :  0.005 
+Residual Standard Error :  0.043 
 Residual standard error is set to 1 in calculation of confidence interval when its estimate is less than 1.
-Heterogeneity test statistic = 0.0286 on 998 degrees of freedom, (p-value = 1.0000)
-I^2_GX statistic: 34.2%</code></pre>
+Heterogeneity test statistic = 0.0335 on 18 degrees of freedom, (p-value = 1.0000)
+I^2_GX statistic: 93.3%</code></pre>
 <pre class="r"><code>ivw.ext</code></pre>
 <pre><code>
 Inverse-variance weighted method
 (variants uncorrelated, random-effect model)
 
-Number of Variants : 1000 
+Number of Variants : 20 
 
 ------------------------------------------------------------------
  Method Estimate Std Error 95% CI       p-value
-    IVW    1.020     0.010 1.001, 1.039   0.000
+    IVW    1.020     0.010 1.001, 1.040   0.000
 ------------------------------------------------------------------
-Residual standard error =  0.005 
+Residual standard error =  0.044 
 Residual standard error is set to 1 in calculation of confidence interval when its estimate is less than 1.
-Heterogeneity test statistic (Cochran&#39;s Q) = 0.0286 on 999 degrees of freedom, (p-value = 1.0000). I^2 = 0.0%. </code></pre>
+Heterogeneity test statistic (Cochran&#39;s Q) = 0.0363 on 19 degrees of freedom, (p-value = 1.0000). I^2 = 0.0%. </code></pre>
 <pre class="r"><code>egger.int</code></pre>
 <pre><code>
 MR-Egger method
 (variants uncorrelated, random-effect model)
 
-Number of Variants =  1000 
+Number of Variants =  20 
 
 ------------------------------------------------------------------
-      Method Estimate Std Error 95% CI       p-value
-    MR-Egger    0.262     0.048 0.168, 0.356   0.000
- (intercept)    0.039     0.007 0.026, 0.052   0.000
+      Method Estimate Std Error  95% CI       p-value
+    MR-Egger    0.457     0.281 -0.094, 1.007   0.104
+ (intercept)    0.062     0.026  0.011, 0.113   0.017
 ------------------------------------------------------------------
-Residual Standard Error :  1.201 
-Heterogeneity test statistic = 1440.3265 on 998 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 0.0%</code></pre>
+Residual Standard Error :  0.960 
+Residual standard error is set to 1 in calculation of confidence interval when its estimate is less than 1.
+Heterogeneity test statistic = 16.6035 on 18 degrees of freedom, (p-value = 0.5505)
+I^2_GX statistic: 43.5%</code></pre>
 <pre class="r"><code>ivw.int</code></pre>
 <pre><code>
 Inverse-variance weighted method
 (variants uncorrelated, random-effect model)
 
-Number of Variants : 1000 
+Number of Variants : 20 
 
 ------------------------------------------------------------------
  Method Estimate Std Error 95% CI       p-value
-    IVW    0.491     0.027 0.437, 0.544   0.000
+    IVW    1.122     0.037 1.049, 1.195   0.000
 ------------------------------------------------------------------
-Residual standard error =  1.221 
-Heterogeneity test statistic (Cochran&#39;s Q) = 1488.6292 on 999 degrees of freedom, (p-value = 0.0000). I^2 = 32.9%. </code></pre>
+Residual standard error =  1.083 
+Heterogeneity test statistic (Cochran&#39;s Q) = 22.2967 on 19 degrees of freedom, (p-value = 0.2697). I^2 = 14.8%. </code></pre>
 </div>
 <div id="use-mr.raps" class="section level3">
 <h3>5. Use mr.raps</h3>
@@ -1633,21 +1714,21 @@ res.raw = mr.raps.mle(y1.raw[,1], y2.raw[,1], sqrt(y1.raw[,2]), sqrt(y2.raw[,2])
 res.ext = mr.raps.mle(y1.ext[,1], y2.ext[,1], y1.ext[,2], y2.ext[,2])
 res.int = mr.raps.mle(y1.int[,1], y2.int[,1], y1.int[,2], y2.int[,2])</code></pre>
 <pre class="r"><code>res.cali$beta.hat</code></pre>
-<pre><code>[1] 0.9725981</code></pre>
+<pre><code>[1] 1.007799</code></pre>
 <pre class="r"><code>res.raw$beta.hat</code></pre>
-<pre><code>[1] 0.9926336</code></pre>
+<pre><code>[1] 1.116756</code></pre>
 <pre class="r"><code>res.ext$beta.hat</code></pre>
-<pre><code>[1] 1.019992</code></pre>
+<pre><code>[1] 1.020156</code></pre>
 <pre class="r"><code>res.int$beta.hat</code></pre>
-<pre><code>[1] 0.9891981</code></pre>
+<pre><code>[1] 1.131444</code></pre>
 <pre class="r"><code>res.cali$beta.se</code></pre>
-<pre><code>[1] 0.05800221</code></pre>
+<pre><code>[1] 0.04548178</code></pre>
 <pre class="r"><code>res.raw$beta.se</code></pre>
-<pre><code>[1] 0.09417457</code></pre>
+<pre><code>[1] 0.06990572</code></pre>
 <pre class="r"><code>res.ext$beta.se</code></pre>
-<pre><code>[1] 0.0147921</code></pre>
+<pre><code>[1] 0.01409829</code></pre>
 <pre class="r"><code>res.int$beta.se</code></pre>
-<pre><code>[1] 0.05495103</code></pre>
+<pre><code>[1] 0.05057459</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
