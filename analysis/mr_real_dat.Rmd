@@ -154,7 +154,7 @@ for (i in 1:p){
 ### 4. Calculate z-scores 
 ```{r}
 z2p <- function(zscore){
-  pval <- pnorm(zscore, mean = 0, sd = 1, lower.tail = FALSE)*2
+  pval <- pnorm(abs(zscore), mean = 0, sd = 1, lower.tail = FALSE)*2
   return(pval)
 }
 ```
