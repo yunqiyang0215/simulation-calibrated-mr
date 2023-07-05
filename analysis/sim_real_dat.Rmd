@@ -17,17 +17,17 @@ The reason for only use the real MAF, but not the real genotype is the following
 
 Therefore, the simulation workflow is as below: 
 
-**Step 1**: Simulate **parents** genotype based on real MAF. Number of SNPs $p = 1000$, sample size = $2*N$.
+**Step 1**: Simulate **parents** genotype based on real MAF. Number of SNPs $p = 100$, sample size = $2*N$.
 
 **Step 2**: Create **complete offspring data** with sample size $N$. The complete data is data with both transmitted $T$ and non-transmitted ($NT$) alleles. The external data will be of size $N$ but only have transmitted alleles. The internal data will be of size $n$ and with both $T$ and $NT$. 
 
-**Step 3**: Simulate $Y_1$ and $Y_2$, exposure trait and outcome trait. I set the values for beta as below for now. 
+**Step 3**: Simulate $Y_1$ and $Y_2$, exposure trait and outcome trait. We use the projection equation as the true data generating process. We simulate the effect of transmitted alleles on $Y_1$ from $b_j\sim N(0,1), j = 1,\cdots, p$. The effect of non-transmitted alleles on $Y_1=0.001$. For $Y_2$, the projection on $T, NT = 0.001$.  
 
 The effect of genetic nurture is very small. 
 
 $$
 \begin{split}
-b &= 1, \quad\epsilon \sim N(0, 0.01)\\
+b &= 1, \quad\epsilon \sim N(0, 0.1)\\
 Y_1 &= 0.1T_1+\cdots + 0.1T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon\\
 Y_2 &= b*Y_1 + 0.001T_1 +\cdots+0.001T_p + 0.001NT_1 +\cdots+ 0.001NT_p + \epsilon
 \end{split}
@@ -68,7 +68,7 @@ geno_real <- readRDS("./data/geno_individual.rds")
 maf <- colMeans(geno_real)/2
 set.seed(1)
 N = 1e4  
-p = 20
+p = 100
 
 t1 = proc.time()
 # 1. Simulate parents genotype based on true MAF. 
@@ -97,9 +97,11 @@ t2 -t1
 
 ```{r}
 # 4. Simulate trait
+set.seed(1)
 b = 1
-Y1 <- 0.1*rowSums(trans) + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.01)
-Y2 <- b*Y1 + 0.001*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N, 0, 0.01)
+b.trans = rnorm(p)
+Y1 <- trans %*% b.trans + 0.001*rowSums(nontrans) + rnorm(N, 0, 0.1)
+Y2 <- b*Y1 + 0.001*rowSums(trans) + 0.001*rowSums(trans) + rnorm(N, 0, 0.1)
 pheno <- cbind(Y1, Y2)
 dat = list(trans = trans, nontrans = nontrans, pheno = pheno)
 saveRDS(dat, "./data/realdata.rds")
