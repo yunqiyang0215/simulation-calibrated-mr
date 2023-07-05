@@ -111,7 +111,6 @@ abline(v = v, col = "red")
 This is just to calculate GWAS summary stat from external data. 
 ```{r}
 n = 1e3
-p = 20
 N = 1e4
 
 y1.ext <- matrix(NA, nrow = p, ncol = 2)
