@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree392473387bdb72d81944f5c8b0a39fec6e5eef0btargetblank3924733a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/392473387bdb72d81944f5c8b0a39fec6e5eef0b" target="_blank">3924733</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb0f460d19e587545119f613d90ff9e086d748d89targetblankb0f460da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b0f460d19e587545119f613d90ff9e086d748d89" target="_blank">b0f460d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree392473387bdb72d81944f5c8b0a39fec6e5eef0btargetblank3924733a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb0f460d19e587545119f613d90ff9e086d748d89targetblankb0f460da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/392473387bdb72d81944f5c8b0a39fec6e5eef0b" target="_blank">3924733</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b0f460d19e587545119f613d90ff9e086d748d89" target="_blank">b0f460d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -536,6 +536,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/b0f460d19e587545119f613d90ff9e086d748d89/analysis/mr_result.Rmd" target="_blank">b0f460d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+<td>
+wflow_publish("analysis/mr_result.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/75a766c00d3547ed22ed8fc9b68e71736c9a8c60/docs/mr_result.html" target="_blank">75a766c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -599,7 +633,7 @@ wflow_publish("analysis/mr_result.Rmd")
 out_NT_effect = c(0.1, 0.5)
 method = c(&quot;calibrated&quot;, &quot;adj_uncalibrated&quot;, &quot;unadj_ext&quot;, &quot;unadj_int&quot;)
 mr_method = c(&quot;eggr&quot;, &quot;ivw&quot;, &quot;mr.raps&quot;)</code></pre>
-<pre class="r"><code>par(mfrow = c(2,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+<pre class="r"><code>par(mfrow = c(3,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 for (i in 1:length(exp_NT_effect)){
   for (j in 1:length(out_NT_effect)){
     res = dat[dat$simulate.exp_NT_effect == exp_NT_effect[i] &amp; dat$simulate.out_NT_effect == out_NT_effect[j] &amp; dat$mr.mr_method == &quot;eggr&quot;, ]
@@ -637,6 +671,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/75a766c00d3547ed22ed8fc9b68e71736c9a8c60/docs/figure/mr_result.Rmd/unnamed-chunk-3-1.png" target="_blank">75a766c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-3-1.png" target="_blank">2462bd7</a>
 </td>
 <td>
@@ -650,45 +695,7 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-3-2.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
-Past versions of unnamed-chunk-3-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-3-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-3-2.png" target="_blank">2462bd7</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-07-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>par(mfrow = c(2,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+<pre class="r"><code>par(mfrow = c(3,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 for (i in 1:length(exp_NT_effect)){
   for (j in 1:length(out_NT_effect)){
     res = dat[dat$simulate.exp_NT_effect == exp_NT_effect[i] &amp; dat$simulate.out_NT_effect == out_NT_effect[j] &amp; dat$mr.mr_method == &quot;mr.raps&quot;, ]
@@ -726,6 +733,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/75a766c00d3547ed22ed8fc9b68e71736c9a8c60/docs/figure/mr_result.Rmd/unnamed-chunk-4-1.png" target="_blank">75a766c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-4-1.png" target="_blank">2462bd7</a>
 </td>
 <td>
@@ -739,45 +757,7 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
-Past versions of unnamed-chunk-4-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-4-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-4-2.png" target="_blank">2462bd7</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2023-07-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>par(mfrow = c(2,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+<pre class="r"><code>par(mfrow = c(3,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 # c(bottom, left, top, right)
 
 
@@ -818,7 +798,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-5-1.png" target="_blank">2462bd7</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/75a766c00d3547ed22ed8fc9b68e71736c9a8c60/docs/figure/mr_result.Rmd/unnamed-chunk-5-1.png" target="_blank">75a766c</a>
 </td>
 <td>
 yunqiyang0215
@@ -827,36 +807,9 @@ yunqiyang0215
 2023-07-20
 </td>
 </tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-5-2.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
-Past versions of unnamed-chunk-5-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-5-2.png" target="_blank">2462bd7</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-5-1.png" target="_blank">2462bd7</a>
 </td>
 <td>
 yunqiyang0215
