@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9c13f1e1bb8e50ae76cefae194b53b58c609c623targetblank9c13f1ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9c13f1e1bb8e50ae76cefae194b53b58c609c623" target="_blank">9c13f1e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree392473387bdb72d81944f5c8b0a39fec6e5eef0btargetblank3924733a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/392473387bdb72d81944f5c8b0a39fec6e5eef0b" target="_blank">3924733</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9c13f1e1bb8e50ae76cefae194b53b58c609c623targetblank9c13f1ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree392473387bdb72d81944f5c8b0a39fec6e5eef0btargetblank3924733a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9c13f1e1bb8e50ae76cefae194b53b58c609c623" target="_blank">9c13f1e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/392473387bdb72d81944f5c8b0a39fec6e5eef0b" target="_blank">3924733</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -541,6 +541,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/392473387bdb72d81944f5c8b0a39fec6e5eef0b/analysis/mr_result.Rmd" target="_blank">3924733</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+<td>
+wflow_publish("analysis/mr_result.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/mr_result.html" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9c13f1e1bb8e50ae76cefae194b53b58c609c623/analysis/mr_result.Rmd" target="_blank">9c13f1e</a>
 </td>
 <td>
@@ -562,7 +596,7 @@ wflow_publish("analysis/mr_result.Rmd")
 </div>
 <pre class="r"><code>dat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/mr_comparison.rds&quot;)</code></pre>
 <pre class="r"><code>exp_NT_effect = c(0, 0.001, 0.01)
-out_NT_effect = c(0.001, 0.01, 0.1, 0.5)
+out_NT_effect = c(0.1, 0.5)
 method = c(&quot;calibrated&quot;, &quot;adj_uncalibrated&quot;, &quot;unadj_ext&quot;, &quot;unadj_int&quot;)
 mr_method = c(&quot;eggr&quot;, &quot;ivw&quot;, &quot;mr.raps&quot;)</code></pre>
 <pre class="r"><code>par(mfrow = c(2,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
@@ -575,10 +609,85 @@ for (i in 1:length(exp_NT_effect)){
             res$mr.point_est[res$fit.method == &quot;unadj_int&quot;]
             )
     group = c(rep(&quot;cali&quot;, 50), rep(&quot;uncali&quot;, 50), rep(&quot;ext&quot;, 50), rep(&quot;int&quot;, 50))
-    boxplot(val ~ group, main = paste0(&quot;egger: exp =&quot;, exp_NT_effect[i], &quot;; out =&quot;, out_NT_effect[j]))
+    boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;egger: exp =&quot;, exp_NT_effect[i], &quot;; out =&quot;, out_NT_effect[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /><img src="figure/mr_result.Rmd/unnamed-chunk-3-2.png" width="768" style="display: block; margin: auto;" /><img src="figure/mr_result.Rmd/unnamed-chunk-3-3.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-3-1.png" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-3-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-3-2.png" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>par(mfrow = c(2,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 for (i in 1:length(exp_NT_effect)){
   for (j in 1:length(out_NT_effect)){
@@ -589,10 +698,85 @@ for (i in 1:length(exp_NT_effect)){
             res$mr.point_est[res$fit.method == &quot;unadj_int&quot;]
             )
     group = c(rep(&quot;cali&quot;, 50), rep(&quot;uncali&quot;, 50), rep(&quot;ext&quot;, 50), rep(&quot;int&quot;, 50))
-    boxplot(val ~ group, main = paste0(&quot;mr.raps: exp =&quot;, exp_NT_effect[i], &quot;; out =&quot;, out_NT_effect[j]))
+    boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;mr.raps: exp =&quot;, exp_NT_effect[i], &quot;; out =&quot;, out_NT_effect[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /><img src="figure/mr_result.Rmd/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /><img src="figure/mr_result.Rmd/unnamed-chunk-4-3.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-4-1.png" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-2">
+Past versions of unnamed-chunk-4-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-4-2.png" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>par(mfrow = c(2,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 # c(bottom, left, top, right)
 
@@ -609,7 +793,82 @@ for (i in 1:length(exp_NT_effect)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;IVW: exp =&quot;, exp_NT_effect[i], &quot;; out =&quot;, out_NT_effect[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /><img src="figure/mr_result.Rmd/unnamed-chunk-5-2.png" width="768" style="display: block; margin: auto;" /><img src="figure/mr_result.Rmd/unnamed-chunk-5-3.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-5-1.png" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-5-2.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-2">
+Past versions of unnamed-chunk-5-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2462bd7c5f2e22f31e73da236c9d889837c7273f/docs/figure/mr_result.Rmd/unnamed-chunk-5-2.png" target="_blank">2462bd7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-20
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
