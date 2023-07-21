@@ -11,7 +11,7 @@ dat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/mr_c
 
 ```{r}
 exp_NT_effect = c(0, 0.001, 0.01)
-out_NT_effect = c(0.001, 0.01, 0.1, 0.5)
+out_NT_effect = c(0.1, 0.5)
 method = c("calibrated", "adj_uncalibrated", "unadj_ext", "unadj_int")
 mr_method = c("eggr", "ivw", "mr.raps")
 
@@ -28,7 +28,7 @@ for (i in 1:length(exp_NT_effect)){
             res$mr.point_est[res$fit.method == "unadj_int"]
             )
     group = c(rep("cali", 50), rep("uncali", 50), rep("ext", 50), rep("int", 50))
-    boxplot(val ~ group, main = paste0("egger: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
   }
 }
 ```
@@ -44,7 +44,7 @@ for (i in 1:length(exp_NT_effect)){
             res$mr.point_est[res$fit.method == "unadj_int"]
             )
     group = c(rep("cali", 50), rep("uncali", 50), rep("ext", 50), rep("int", 50))
-    boxplot(val ~ group, main = paste0("mr.raps: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("mr.raps: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
   }
 }
 ```
