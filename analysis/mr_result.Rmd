@@ -10,64 +10,61 @@ dat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/mr_c
 ```
 
 ```{r}
-exp_NT_effect = c(0, 0.001, 0.01)
-out_NT_effect = c(0.1, 0.5)
+r1 = c(0, 0.05, 0.1, 0.5) # Y.pa contribution to exposure trait
+r2 = c(0.1, 0.5, 1) # Y.pa contribution to outcome trait
 method = c("calibrated", "adj_uncalibrated", "unadj_ext", "unadj_int")
 mr_method = c("eggr", "ivw", "mr.raps")
 
 ```
 
 ```{r fig.width=8, fig.height=10}
-par(mfrow = c(3,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
-for (i in 1:length(exp_NT_effect)){
-  for (j in 1:length(out_NT_effect)){
-    res = dat[dat$simulate.exp_NT_effect == exp_NT_effect[i] & dat$simulate.out_NT_effect == out_NT_effect[j] & dat$mr.mr_method == "eggr", ]
+par(mfrow = c(4,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+n_rep = 100
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$simulate.r1 == r1[i] & dat$simulate.r2 == r2[j] & dat$mr.mr_method == "eggr", ]
     val = c(res$mr.point_est[res$fit.method == "calibrated"], 
             res$mr.point_est[res$fit.method == "adj_uncalibrated"],
             res$mr.point_est[res$fit.method == "unadj_ext"],
             res$mr.point_est[res$fit.method == "unadj_int"]
             )
-    group = c(rep("cali", 50), rep("uncali", 50), rep("ext", 50), rep("int", 50))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
+    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", r1[i], "; out =", r2[j]))
+  }
+}
+```
+
+
+```{r fig.width=8, fig.height=10}
+par(mfrow = c(4,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+n_rep = 100
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$simulate.r1 == r1[i] & dat$simulate.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
+    val = c(res$mr.point_est[res$fit.method == "calibrated"], 
+            res$mr.point_est[res$fit.method == "adj_uncalibrated"],
+            res$mr.point_est[res$fit.method == "unadj_ext"],
+            res$mr.point_est[res$fit.method == "unadj_int"]
+            )
+    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", r1[i], "; out =", r2[j]))
   }
 }
 ```
 
 ```{r fig.width=8, fig.height=10}
-par(mfrow = c(3,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
-for (i in 1:length(exp_NT_effect)){
-  for (j in 1:length(out_NT_effect)){
-    res = dat[dat$simulate.exp_NT_effect == exp_NT_effect[i] & dat$simulate.out_NT_effect == out_NT_effect[j] & dat$mr.mr_method == "mr.raps", ]
+par(mfrow = c(4,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+n_rep = 100
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$simulate.r1 == r1[i] & dat$simulate.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
     val = c(res$mr.point_est[res$fit.method == "calibrated"], 
             res$mr.point_est[res$fit.method == "adj_uncalibrated"],
             res$mr.point_est[res$fit.method == "unadj_ext"],
             res$mr.point_est[res$fit.method == "unadj_int"]
             )
-    group = c(rep("cali", 50), rep("uncali", 50), rep("ext", 50), rep("int", 50))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("mr.raps: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
+    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", r1[i], "; out =", r2[j]))
   }
 }
 ```
-
-```{r fig.width=8, fig.height=10}
-par(mfrow = c(3,2), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
-# c(bottom, left, top, right)
-
-
-for (i in 1:length(exp_NT_effect)){
-  for (j in 1:length(out_NT_effect)){
-    res = dat[dat$simulate.exp_NT_effect == exp_NT_effect[i] & dat$simulate.out_NT_effect == out_NT_effect[j] & dat$mr.mr_method == "ivw", ]
-    val = c(res$mr.point_est[res$fit.method == "calibrated"], 
-            res$mr.point_est[res$fit.method == "adj_uncalibrated"],
-            res$mr.point_est[res$fit.method == "unadj_ext"],
-            res$mr.point_est[res$fit.method == "unadj_int"]
-            )
-    group = c(rep("cali", 50), rep("uncali", 50), rep("ext", 50), rep("int", 50))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("IVW: exp =", exp_NT_effect[i], "; out =", out_NT_effect[j]))
-  }
-}
-
-
-```
-
-
