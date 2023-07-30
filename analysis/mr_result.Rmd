@@ -47,7 +47,7 @@ for (i in 1:length(r1)){
             res$mr.point_est[res$fit.method == "unadj_int"]
             )
     group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", r1[i], "; out =", r2[j]))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("ivw: exp =", r1[i], "; out =", r2[j]))
   }
 }
 ```
@@ -64,7 +64,7 @@ for (i in 1:length(r1)){
             res$mr.point_est[res$fit.method == "unadj_int"]
             )
     group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("egger: exp =", r1[i], "; out =", r2[j]))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("mr.raps: exp =", r1[i], "; out =", r2[j]))
   }
 }
 ```
