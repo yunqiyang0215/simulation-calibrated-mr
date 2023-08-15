@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-07-30
+<strong>Last updated:</strong> 2023-08-15
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeac63611b1075b6bf9b57936dcc8c22f35e1f67detargetblankac63611a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ac63611b1075b6bf9b57936dcc8c22f35e1f67de" target="_blank">ac63611</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreed1b50e1cba9a2cfd7aa4115889f7efaad2a29eb5targetblankd1b50e1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/d1b50e1cba9a2cfd7aa4115889f7efaad2a29eb5" target="_blank">d1b50e1</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeac63611b1075b6bf9b57936dcc8c22f35e1f67detargetblankac63611a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreed1b50e1cba9a2cfd7aa4115889f7efaad2a29eb5targetblankd1b50e1a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ac63611b1075b6bf9b57936dcc8c22f35e1f67de" target="_blank">ac63611</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/d1b50e1cba9a2cfd7aa4115889f7efaad2a29eb5" target="_blank">d1b50e1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -494,12 +494,11 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
     Ignored:    data/.DS_Store
 
-Untracked files:
-    Untracked:  analysis/simulate_from_par_pheno.Rmd
-
 Unstaged changes:
+    Modified:   analysis/empirical_var_reduction.Rmd
     Modified:   analysis/mr_real_dat.Rmd
     Modified:   analysis/sim_real_dat.Rmd
 
@@ -540,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d1b50e1cba9a2cfd7aa4115889f7efaad2a29eb5/analysis/mr_result.Rmd" target="_blank">d1b50e1</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-08-15
+</td>
+<td>
+wflow_publish("analysis/mr_result.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/f9a79c1de34d04f87149e6a743e969718c781eab/docs/mr_result.html" target="_blank">f9a79c1</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-07-30
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -871,11 +904,11 @@ wflow_publish("analysis/mr_result.Rmd")
 </div>
 </div>
 <pre class="r"><code>dat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/mr_comparison.rds&quot;)</code></pre>
-<pre class="r"><code>r1 = c(0, 0.05, 0.1, 0.5) # Y.pa contribution to exposure trait
-r2 = c(0.1, 0.5, 1) # Y.pa contribution to outcome trait
+<pre class="r"><code>r1 = unique(dat$simulate.r1) # Y.pa contribution to exposure trait
+r2 = unique(dat$simulate.r2) # Y.pa contribution to outcome trait
 method = c(&quot;calibrated&quot;, &quot;adj_uncalibrated&quot;, &quot;unadj_ext&quot;, &quot;unadj_int&quot;)
 mr_method = c(&quot;eggr&quot;, &quot;ivw&quot;, &quot;mr.raps&quot;)</code></pre>
-<pre class="r"><code>par(mfrow = c(4,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+<pre class="r"><code>par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 n_rep = 100
 for (i in 1:length(r1)){
   for (j in 1:length(r2)){
@@ -889,7 +922,7 @@ for (i in 1:length(r1)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;egger: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-3-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
 Past versions of unnamed-chunk-3-1.png
@@ -993,7 +1026,7 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>par(mfrow = c(4,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+<pre class="r"><code>par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 n_rep = 100
 for (i in 1:length(r1)){
   for (j in 1:length(r2)){
@@ -1007,7 +1040,7 @@ for (i in 1:length(r1)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;ivw: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-4-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
 Past versions of unnamed-chunk-4-1.png
@@ -1133,7 +1166,7 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>par(mfrow = c(4,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+<pre class="r"><code>par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 n_rep = 100
 for (i in 1:length(r1)){
   for (j in 1:length(r2)){
@@ -1147,7 +1180,7 @@ for (i in 1:length(r1)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;mr.raps: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_result.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result.Rmd/unnamed-chunk-5-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
 Past versions of unnamed-chunk-5-1.png
