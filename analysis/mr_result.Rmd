@@ -5,6 +5,14 @@ date: "8/15/2023"
 output: html_document
 ---
 
+#### Result summary
+
+1. mr-egger: results for calibrated estimator is relatively robust, $\sim 0.9$.
+For using standard GWAS summary stat, when $r_1$ and $r_2$ relatively small, estimate are unbiased and have small variance. When $r_1$ or $r_2$ become larger, variance increases, also most of time, biased up. 
+
+2. mr.raps: results for calibrated estimator are unbiased. GWAS summary stat from external become worse as $r_1$ or $r_2$ increase. 
+
+
 ```{r}
 dat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/simulation/mr_comparison.rds")
 ```
