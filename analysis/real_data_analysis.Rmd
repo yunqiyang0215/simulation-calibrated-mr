@@ -11,7 +11,7 @@ library(GRAPPLE)
 library(MendelianRandomization)
 ```
 
-
+### 1. BMI on education attainment
 
 ```{r}
 
@@ -23,6 +23,10 @@ plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/re
 data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
 
+```
+
+```{r}
+max(data.list$marker.data$selection_pvals)
 ```
 
 ```{r}
@@ -48,3 +52,174 @@ res.mrraps$beta.hat
 res.mrraps$beta.se
 ```
 
+```{r}
+
+means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
+ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
+ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
+
+# Create a vector for group names (optional)
+groups <- c("ivw", "egger", "mr.raps")
+
+# Create an empty scatter plot
+plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(min(ci.lower), max(ci.upper) + 0.1),
+     xlab = "Group", ylab = "Value", main = "BMI on EA")
+
+# Add point estimates as points
+points(1:length(means), means, pch = 19, col = "blue")
+
+# Add confidence intervals as line segments
+segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = "red")
+
+# Add group names to the x-axis (optional)
+axis(1, at = 1:length(means), labels = groups)
+
+# Add a legend
+legend("topright", legend = c("Point Estimate", "Confidence Interval"), 
+       pch = c(19, NA), col = c("blue", "red"), lty = c(NA, 1), bty = "n")
+
+
+```
+
+
+
+### 2. BMI on T2D
+
+```{r}
+
+sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv"
+exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv"
+out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-ukb.csv"
+plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
+
+data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
+                      plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
+
+```
+
+```{r}
+max(data.list$marker.data$selection_pvals)
+```
+
+```{r}
+MRInput <- mr_input(bx = data.list$marker.data$gamma_exp1,
+                    bxse = data.list$marker.data$se_exp1,
+                    by = data.list$marker.data$gamma_out1,
+                    byse = data.list$marker.data$se_out1)
+```
+
+```{r}
+res.egger <- mr_egger(MRInput)
+res.ivw <- mr_ivw(MRInput)
+res.egger
+res.ivw
+```
+
+```{r}
+res.mrraps = mr.raps.mle(data.list$marker.data$gamma_exp1,
+                         data.list$marker.data$gamma_out1, 
+                         data.list$marker.data$se_exp1, 
+                         data.list$marker.data$se_out1)
+res.mrraps$beta.hat
+res.mrraps$beta.se
+```
+
+```{r}
+
+means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
+ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
+ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
+
+# Create a vector for group names (optional)
+groups <- c("ivw", "egger", "mr.raps")
+
+# Create an empty scatter plot
+plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(0, 0.02),
+     xlab = "Group", ylab = "Value", main = "BMI on T2D")
+
+# Add point estimates as points
+points(1:length(means), means, pch = 19, col = "blue")
+
+# Add confidence intervals as line segments
+segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = "red")
+
+# Add group names to the x-axis (optional)
+axis(1, at = 1:length(means), labels = groups)
+
+# Add a legend
+legend("topright", legend = c("Point Estimate", "Confidence Interval"), 
+       pch = c(19, NA), col = c("blue", "red"), lty = c(NA, 1), bty = "n")
+
+
+```
+
+
+### 3. height on EA
+
+```{r}
+
+sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/height-ukb.csv"
+exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/Height-giant14.csv"
+out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/EA.csv"
+plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
+
+data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
+                      plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
+
+```
+
+```{r}
+max(data.list$marker.data$selection_pvals)
+```
+
+```{r}
+MRInput <- mr_input(bx = data.list$marker.data$gamma_exp1,
+                    bxse = data.list$marker.data$se_exp1,
+                    by = data.list$marker.data$gamma_out1,
+                    byse = data.list$marker.data$se_out1)
+```
+
+```{r}
+res.egger <- mr_egger(MRInput)
+res.ivw <- mr_ivw(MRInput)
+res.egger
+res.ivw
+```
+
+```{r}
+res.mrraps = mr.raps.mle(data.list$marker.data$gamma_exp1,
+                         data.list$marker.data$gamma_out1, 
+                         data.list$marker.data$se_exp1, 
+                         data.list$marker.data$se_out1)
+res.mrraps$beta.hat
+res.mrraps$beta.se
+```
+
+```{r}
+
+means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
+ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
+ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
+
+# Create a vector for group names (optional)
+groups <- c("ivw", "egger", "mr.raps")
+
+# Create an empty scatter plot
+plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(min(ci.lower), max(ci.upper) + 0.1),
+     xlab = "Group", ylab = "Value", main = "height on EA")
+
+# Add point estimates as points
+points(1:length(means), means, pch = 19, col = "blue")
+
+# Add confidence intervals as line segments
+segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = "red")
+
+# Add group names to the x-axis (optional)
+axis(1, at = 1:length(means), labels = groups)
+
+# Add a legend
+legend("topright", legend = c("Point Estimate", "Confidence Interval"), 
+       pch = c(19, NA), col = c("blue", "red"), lty = c(NA, 1), bty = "n")
+
+
+```
