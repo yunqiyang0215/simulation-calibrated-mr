@@ -24,5 +24,6 @@ Welcome to my research website.
 
 + [Simulating from Y.pa](simulate_from_par_pheno.html)
 
-
 + [MR comparison](mr_result.html)
+
++ [Real data analysis](real_data_analysis.html)
