@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree92da0f138c32a75167acc333d88d11479eba912btargetblank92da0f1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/92da0f138c32a75167acc333d88d11479eba912b" target="_blank">92da0f1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree30c37cc10b386ce5c87c379fa8e7c32e07fce53etargetblank30c37cca"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/30c37cc10b386ce5c87c379fa8e7c32e07fce53e" target="_blank">30c37cc</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree92da0f138c32a75167acc333d88d11479eba912btargetblank92da0f1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree30c37cc10b386ce5c87c379fa8e7c32e07fce53etargetblank30c37cca" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/92da0f138c32a75167acc333d88d11479eba912b" target="_blank">92da0f1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/30c37cc10b386ce5c87c379fa8e7c32e07fce53e" target="_blank">30c37cc</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -539,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/30c37cc10b386ce5c87c379fa8e7c32e07fce53e/analysis/real_data_analysis.Rmd" target="_blank">30c37cc</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-09-13
+</td>
+<td>
+wflow_publish("analysis/real_data_analysis.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/0fb732fa612d6e66e74b7832a20d3cb4da6bdd09/docs/real_data_analysis.html" target="_blank">0fb732f</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-09-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -604,251 +638,204 @@ library(MendelianRandomization)</code></pre>
 <h3>1. BMI on education attainment</h3>
 <pre class="r"><code>sel.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv&quot;
 exp.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv&quot;
-out.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/EA.csv&quot;
+out.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt&quot;
 plink_refdat &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref&quot;
 
 data.list &lt;- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = &#39;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink&#39;)</code></pre>
 <pre><code>[1] &quot;loading data for selection: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv ...&quot;
 [1] &quot;loading data from exposure: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv ...&quot;
-[1] &quot;loading data from outcome: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/EA.csv ...&quot;
+[1] &quot;loading data from outcome: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt ...&quot;
 [1] &quot;Start clumping using PLINK ...&quot;</code></pre>
 <pre><code>Loading required package: data.table</code></pre>
-<pre><code>[1] &quot;30 independent genetic instruments extracted. Done!&quot;</code></pre>
-<pre class="r"><code>max(data.list$marker.data$selection_pvals)</code></pre>
-<pre><code>[1] 8.246e-06</code></pre>
-<pre class="r"><code>MRInput &lt;- mr_input(bx = data.list$marker.data$gamma_exp1,
-                    bxse = data.list$marker.data$se_exp1,
-                    by = data.list$marker.data$gamma_out1,
-                    byse = data.list$marker.data$se_out1)</code></pre>
-<pre class="r"><code>res.egger &lt;- mr_egger(MRInput)
-res.ivw &lt;- mr_ivw(MRInput)
-res.egger</code></pre>
-<pre><code>
-MR-Egger method
-(variants uncorrelated, random-effect model)
+<pre><code>[1] &quot;117 independent genetic instruments extracted. Done!&quot;</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pval_threshold = c(1e-4, 1e-6, 1e-8)
+for (i in 1:length(pval_threshold)){
+  dat = data.list$data[data.list$data$selection_pvals &lt; pval_threshold[i], ]
+  MRInput &lt;- mr_input(bx = dat$gamma_exp1,
+                    bxse = dat$se_exp1,
+                    by = dat$gamma_out1,
+                    byse = dat$se_out1)
+  
+  res.egger &lt;- mr_egger(MRInput)
+  res.ivw &lt;- mr_ivw(MRInput)
+  res.mrraps = mr.raps.mle(dat$gamma_exp1,
+                         dat$gamma_out1, 
+                         dat$se_exp1, 
+                         dat$se_out1)
+  
 
-Number of Variants =  22 
+  means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
+  ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
+  ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
+    
+  # Create a vector for group names (optional)
+  groups &lt;- c(&quot;ivw&quot;, &quot;egger&quot;, &quot;mr.raps&quot;)
+  plot(1:length(means), means, type = &quot;n&quot;, xaxt = &quot;n&quot;, ylim = c(min(ci.lower), max(ci.upper) + 0.1),
+         xlab = &quot;Group&quot;, ylab = &quot;Value&quot;, main = &quot;BMI on EA&quot;)
 
-------------------------------------------------------------------
-      Method Estimate Std Error  95% CI       p-value
-    MR-Egger    0.154     0.287 -0.408, 0.715   0.591
- (intercept)   -0.011     0.006 -0.023, 0.002   0.089
-------------------------------------------------------------------
-Residual Standard Error :  5.461 
-Heterogeneity test statistic = 596.3457 on 20 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 42.5%</code></pre>
-<pre class="r"><code>res.ivw</code></pre>
-<pre><code>
-Inverse-variance weighted method
-(variants uncorrelated, random-effect model)
+  points(1:length(means), means, pch = 19, col = &quot;blue&quot;)
 
-Number of Variants : 22 
+  # Add confidence intervals as line segments
+  segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = &quot;red&quot;)
+    
+  # Add group names to the x-axis (optional)
+  axis(1, at = 1:length(means), labels = groups)
+    
+  # Add a legend
+  legend(&quot;topright&quot;, legend = c(&quot;Point Estimate&quot;, &quot;Confidence Interval&quot;), 
+           pch = c(19, NA), col = c(&quot;blue&quot;, &quot;red&quot;), lty = c(NA, 1), bty = &quot;n&quot;)
 
-------------------------------------------------------------------
- Method Estimate Std Error  95% CI        p-value
-    IVW   -0.312     0.089 -0.487, -0.137   0.000
-------------------------------------------------------------------
-Residual standard error =  5.702 
-Heterogeneity test statistic (Cochran&#39;s Q) = 682.8441 on 21 degrees of freedom, (p-value = 0.0000). I^2 = 96.9%. </code></pre>
-<pre class="r"><code>res.mrraps = mr.raps.mle(data.list$marker.data$gamma_exp1,
-                         data.list$marker.data$gamma_out1, 
-                         data.list$marker.data$se_exp1, 
-                         data.list$marker.data$se_out1)
-res.mrraps$beta.hat</code></pre>
-<pre><code>[1] -0.5825774</code></pre>
-<pre class="r"><code>res.mrraps$beta.se</code></pre>
-<pre><code>[1] 0.02894203</code></pre>
-<pre class="r"><code>means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
-ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
-ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
-
-# Create a vector for group names (optional)
-groups &lt;- c(&quot;ivw&quot;, &quot;egger&quot;, &quot;mr.raps&quot;)
-
-# Create an empty scatter plot
-plot(1:length(means), means, type = &quot;n&quot;, xaxt = &quot;n&quot;, ylim = c(min(ci.lower), max(ci.upper) + 0.1),
-     xlab = &quot;Group&quot;, ylab = &quot;Value&quot;, main = &quot;BMI on EA&quot;)
-
-# Add point estimates as points
-points(1:length(means), means, pch = 19, col = &quot;blue&quot;)
-
-# Add confidence intervals as line segments
-segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = &quot;red&quot;)
-
-# Add group names to the x-axis (optional)
-axis(1, at = 1:length(means), labels = groups)
-
-# Add a legend
-legend(&quot;topright&quot;, legend = c(&quot;Point Estimate&quot;, &quot;Confidence Interval&quot;), 
-       pch = c(19, NA), col = c(&quot;blue&quot;, &quot;red&quot;), lty = c(NA, 1), bty = &quot;n&quot;)</code></pre>
-<p><img src="figure/real_data_analysis.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+}</code></pre>
+<p><img src="figure/real_data_analysis.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="bmi-on-t2d" class="section level3">
 <h3>2. BMI on T2D</h3>
 <pre class="r"><code>sel.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv&quot;
 exp.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv&quot;
-out.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-ukb.csv&quot;
+out.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-diagram12-Im.csv&quot;
 plink_refdat &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref&quot;
 
 data.list &lt;- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = &#39;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink&#39;)</code></pre>
 <pre><code>[1] &quot;loading data for selection: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv ...&quot;
 [1] &quot;loading data from exposure: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv ...&quot;
-[1] &quot;loading data from outcome: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-ukb.csv ...&quot;
+[1] &quot;loading data from outcome: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-diagram12-Im.csv ...&quot;
 [1] &quot;Start clumping using PLINK ...&quot;
-[1] &quot;118 independent genetic instruments extracted. Done!&quot;</code></pre>
-<pre class="r"><code>max(data.list$marker.data$selection_pvals)</code></pre>
-<pre><code>[1] 9.955e-06</code></pre>
-<pre class="r"><code>MRInput &lt;- mr_input(bx = data.list$marker.data$gamma_exp1,
-                    bxse = data.list$marker.data$se_exp1,
-                    by = data.list$marker.data$gamma_out1,
-                    byse = data.list$marker.data$se_out1)</code></pre>
-<pre class="r"><code>res.egger &lt;- mr_egger(MRInput)
-res.ivw &lt;- mr_ivw(MRInput)
-res.egger</code></pre>
-<pre><code>
-MR-Egger method
-(variants uncorrelated, random-effect model)
+[1] &quot;116 independent genetic instruments extracted. Done!&quot;</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pval_threshold = c(1e-4, 1e-6, 1e-8)
+for (i in 1:length(pval_threshold)){
+  dat = data.list$data[data.list$data$selection_pvals &lt; pval_threshold[i], ]
+  MRInput &lt;- mr_input(bx = dat$gamma_exp1,
+                    bxse = dat$se_exp1,
+                    by = dat$gamma_out1,
+                    byse = dat$se_out1)
+  
+  res.egger &lt;- mr_egger(MRInput)
+  res.ivw &lt;- mr_ivw(MRInput)
+  res.mrraps = mr.raps.mle(dat$gamma_exp1,
+                         dat$gamma_out1, 
+                         dat$se_exp1, 
+                         dat$se_out1)
+  
 
-Number of Variants =  279 
+  means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
+  ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
+  ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
+    
+  # Create a vector for group names (optional)
+  groups &lt;- c(&quot;ivw&quot;, &quot;egger&quot;, &quot;mr.raps&quot;)
+  plot(1:length(means), means, type = &quot;n&quot;, xaxt = &quot;n&quot;, ylim = c(0, 0.02),
+         xlab = &quot;Group&quot;, ylab = &quot;Value&quot;, main = &quot;BMI on T2D&quot;)
 
-------------------------------------------------------------------
-      Method Estimate Std Error 95% CI       p-value
-    MR-Egger    0.008     0.002 0.004, 0.013   0.000
- (intercept)    0.000     0.000 0.000, 0.000   0.126
-------------------------------------------------------------------
-Residual Standard Error :  1.385 
-Heterogeneity test statistic = 531.0688 on 277 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 77.0%</code></pre>
-<pre class="r"><code>res.ivw</code></pre>
-<pre><code>
-Inverse-variance weighted method
-(variants uncorrelated, random-effect model)
+  points(1:length(means), means, pch = 19, col = &quot;blue&quot;)
 
-Number of Variants : 279 
+  # Add confidence intervals as line segments
+  segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = &quot;red&quot;)
+    
+  # Add group names to the x-axis (optional)
+  axis(1, at = 1:length(means), labels = groups)
+    
+  # Add a legend
+  legend(&quot;topright&quot;, legend = c(&quot;Point Estimate&quot;, &quot;Confidence Interval&quot;), 
+           pch = c(19, NA), col = c(&quot;blue&quot;, &quot;red&quot;), lty = c(NA, 1), bty = &quot;n&quot;)
 
-------------------------------------------------------------------
- Method Estimate Std Error 95% CI       p-value
-    IVW    0.005     0.001 0.004, 0.007   0.000
-------------------------------------------------------------------
-Residual standard error =  1.388 
-Heterogeneity test statistic (Cochran&#39;s Q) = 535.5554 on 278 degrees of freedom, (p-value = 0.0000). I^2 = 48.1%. </code></pre>
-<pre class="r"><code>res.mrraps = mr.raps.mle(data.list$marker.data$gamma_exp1,
-                         data.list$marker.data$gamma_out1, 
-                         data.list$marker.data$se_exp1, 
-                         data.list$marker.data$se_out1)
-res.mrraps$beta.hat</code></pre>
-<pre><code>[1] 0.00552083</code></pre>
-<pre class="r"><code>res.mrraps$beta.se</code></pre>
-<pre><code>[1] 0.0006292597</code></pre>
-<pre class="r"><code>means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
-ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
-ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
-
-# Create a vector for group names (optional)
-groups &lt;- c(&quot;ivw&quot;, &quot;egger&quot;, &quot;mr.raps&quot;)
-
-# Create an empty scatter plot
-plot(1:length(means), means, type = &quot;n&quot;, xaxt = &quot;n&quot;, ylim = c(0, 0.02),
-     xlab = &quot;Group&quot;, ylab = &quot;Value&quot;, main = &quot;BMI on T2D&quot;)
-
-# Add point estimates as points
-points(1:length(means), means, pch = 19, col = &quot;blue&quot;)
-
-# Add confidence intervals as line segments
-segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = &quot;red&quot;)
-
-# Add group names to the x-axis (optional)
-axis(1, at = 1:length(means), labels = groups)
-
-# Add a legend
-legend(&quot;topright&quot;, legend = c(&quot;Point Estimate&quot;, &quot;Confidence Interval&quot;), 
-       pch = c(19, NA), col = c(&quot;blue&quot;, &quot;red&quot;), lty = c(NA, 1), bty = &quot;n&quot;)</code></pre>
-<p><img src="figure/real_data_analysis.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+}</code></pre>
+<p><img src="figure/real_data_analysis.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
 </div>
 <div id="height-on-ea" class="section level3">
 <h3>3. height on EA</h3>
 <pre class="r"><code>sel.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/height-ukb.csv&quot;
 exp.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/Height-giant14.csv&quot;
-out.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/EA.csv&quot;
+out.file &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt&quot;
 plink_refdat &lt;- &quot;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref&quot;
 
 data.list &lt;- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = &#39;/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink&#39;)</code></pre>
 <pre><code>[1] &quot;loading data for selection: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/height-ukb.csv ...&quot;
 [1] &quot;loading data from exposure: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/Height-giant14.csv ...&quot;
-[1] &quot;loading data from outcome: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/EA.csv ...&quot;
+[1] &quot;loading data from outcome: /Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt ...&quot;
 [1] &quot;Start clumping using PLINK ...&quot;
-[1] &quot;262 independent genetic instruments extracted. Done!&quot;</code></pre>
-<pre class="r"><code>max(data.list$marker.data$selection_pvals)</code></pre>
-<pre><code>[1] 9.3e-06</code></pre>
-<pre class="r"><code>MRInput &lt;- mr_input(bx = data.list$marker.data$gamma_exp1,
-                    bxse = data.list$marker.data$se_exp1,
-                    by = data.list$marker.data$gamma_out1,
-                    byse = data.list$marker.data$se_out1)</code></pre>
-<pre class="r"><code>res.egger &lt;- mr_egger(MRInput)
-res.ivw &lt;- mr_ivw(MRInput)
-res.egger</code></pre>
-<pre><code>
-MR-Egger method
-(variants uncorrelated, random-effect model)
+[1] &quot;1239 independent genetic instruments extracted. Done!&quot;</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pval_threshold = c(1e-4, 1e-6, 1e-8)
+for (i in 1:length(pval_threshold)){
+  dat = data.list$data[data.list$data$selection_pvals &lt; pval_threshold[i], ]
+  MRInput &lt;- mr_input(bx = dat$gamma_exp1,
+                    bxse = dat$se_exp1,
+                    by = dat$gamma_out1,
+                    byse = dat$se_out1)
+  
+  res.egger &lt;- mr_egger(MRInput)
+  res.ivw &lt;- mr_ivw(MRInput)
+  res.mrraps = mr.raps.mle(dat$gamma_exp1,
+                         dat$gamma_out1, 
+                         dat$se_exp1, 
+                         dat$se_out1)
+  
 
-Number of Variants =  93 
+  means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
+  ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
+  ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
+    
+  # Create a vector for group names (optional)
+  groups &lt;- c(&quot;ivw&quot;, &quot;egger&quot;, &quot;mr.raps&quot;)
+  plot(1:length(means), means, type = &quot;n&quot;, xaxt = &quot;n&quot;, ylim = c(0, 0.02),
+         xlab = &quot;Group&quot;, ylab = &quot;Value&quot;, main = &quot;Height on EA&quot;)
 
-------------------------------------------------------------------
-      Method Estimate Std Error  95% CI       p-value
-    MR-Egger    0.090     0.077 -0.062, 0.241   0.247
- (intercept)    0.001     0.002 -0.002, 0.005   0.445
-------------------------------------------------------------------
-Residual Standard Error :  5.062 
-Heterogeneity test statistic = 2332.0528 on 91 degrees of freedom, (p-value = 0.0000)
-I^2_GX statistic: 89.7%</code></pre>
-<pre class="r"><code>res.ivw</code></pre>
-<pre><code>
-Inverse-variance weighted method
-(variants uncorrelated, random-effect model)
+  points(1:length(means), means, pch = 19, col = &quot;blue&quot;)
 
-Number of Variants : 93 
+  # Add confidence intervals as line segments
+  segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = &quot;red&quot;)
+    
+  # Add group names to the x-axis (optional)
+  axis(1, at = 1:length(means), labels = groups)
+    
+  # Add a legend
+  legend(&quot;topright&quot;, legend = c(&quot;Point Estimate&quot;, &quot;Confidence Interval&quot;), 
+           pch = c(19, NA), col = c(&quot;blue&quot;, &quot;red&quot;), lty = c(NA, 1), bty = &quot;n&quot;)
 
-------------------------------------------------------------------
- Method Estimate Std Error 95% CI       p-value
-    IVW    0.143     0.032 0.080, 0.207   0.000
-------------------------------------------------------------------
-Residual standard error =  5.051 
-Heterogeneity test statistic (Cochran&#39;s Q) = 2346.9993 on 92 degrees of freedom, (p-value = 0.0000). I^2 = 96.1%. </code></pre>
-<pre class="r"><code>res.mrraps = mr.raps.mle(data.list$marker.data$gamma_exp1,
-                         data.list$marker.data$gamma_out1, 
-                         data.list$marker.data$se_exp1, 
-                         data.list$marker.data$se_out1)
-res.mrraps$beta.hat</code></pre>
-<pre><code>[1] 0.2322865</code></pre>
-<pre class="r"><code>res.mrraps$beta.se</code></pre>
-<pre><code>[1] 0.006565183</code></pre>
-<pre class="r"><code>means = c(res.ivw@Estimate, res.egger@Estimate, res.mrraps$beta.hat)
-ci.lower = c(res.ivw@CILower, res.egger@CILower.Est, res.mrraps$beta.hat - 1.96*res.mrraps$beta.se)
-ci.upper = c(res.ivw@CIUpper, res.egger@CIUpper.Est, res.mrraps$beta.hat + 1.96*res.mrraps$beta.se) 
-
-# Create a vector for group names (optional)
-groups &lt;- c(&quot;ivw&quot;, &quot;egger&quot;, &quot;mr.raps&quot;)
-
-# Create an empty scatter plot
-plot(1:length(means), means, type = &quot;n&quot;, xaxt = &quot;n&quot;, ylim = c(min(ci.lower), max(ci.upper) + 0.1),
-     xlab = &quot;Group&quot;, ylab = &quot;Value&quot;, main = &quot;height on EA&quot;)
-
-# Add point estimates as points
-points(1:length(means), means, pch = 19, col = &quot;blue&quot;)
-
-# Add confidence intervals as line segments
-segments(1:length(means), ci.lower, 1:length(means), ci.upper, col = &quot;red&quot;)
-
-# Add group names to the x-axis (optional)
-axis(1, at = 1:length(means), labels = groups)
-
-# Add a legend
-legend(&quot;topright&quot;, legend = c(&quot;Point Estimate&quot;, &quot;Confidence Interval&quot;), 
-       pch = c(19, NA), col = c(&quot;blue&quot;, &quot;red&quot;), lty = c(NA, 1), bty = &quot;n&quot;)</code></pre>
-<p><img src="figure/real_data_analysis.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
+}</code></pre>
+<p><img src="figure/real_data_analysis.Rmd/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0fb732fa612d6e66e74b7832a20d3cb4da6bdd09/docs/figure/real_data_analysis.Rmd/unnamed-chunk-7-1.png" target="_blank">0fb732f</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-09-13
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
