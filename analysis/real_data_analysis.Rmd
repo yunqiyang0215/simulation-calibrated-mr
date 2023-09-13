@@ -1,0 +1,50 @@
+---
+title: "MR: real data"
+author: "Yunqi Yang"
+date: "9/13/2023"
+output: html_document
+---
+
+```{r}
+library(mr.raps)
+library(GRAPPLE)
+library(MendelianRandomization)
+```
+
+
+
+```{r}
+
+sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv"
+exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv"
+out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/EA.csv"
+plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
+
+data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
+                      plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
+
+```
+
+```{r}
+MRInput <- mr_input(bx = data.list$marker.data$gamma_exp1,
+                    bxse = data.list$marker.data$se_exp1,
+                    by = data.list$marker.data$gamma_out1,
+                    byse = data.list$marker.data$se_out1)
+```
+
+```{r}
+res.egger <- mr_egger(MRInput)
+res.ivw <- mr_ivw(MRInput)
+res.egger
+res.ivw
+```
+
+```{r}
+res.mrraps = mr.raps.mle(data.list$marker.data$gamma_exp1,
+                         data.list$marker.data$gamma_out1, 
+                         data.list$marker.data$se_exp1, 
+                         data.list$marker.data$se_out1)
+res.mrraps$beta.hat
+res.mrraps$beta.se
+```
+
