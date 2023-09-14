@@ -50,7 +50,7 @@ for (i in 1:length(pval_threshold)){
   # Create a vector for group names (optional)
   groups <- c("ivw", "egger", "mr.raps")
   plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(min(ci.lower), max(ci.upper) + 0.1),
-         xlab = "Group", ylab = "Value", main = "BMI on EA")
+         xlab = "Group", ylab = "Value", main = paste0("BMI on EA: pval=",pval_threshold[i]))
 
   points(1:length(means), means, pch = 19, col = "blue")
 
@@ -108,8 +108,8 @@ for (i in 1:length(pval_threshold)){
     
   # Create a vector for group names (optional)
   groups <- c("ivw", "egger", "mr.raps")
-  plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(0, 0.02),
-         xlab = "Group", ylab = "Value", main = "BMI on T2D")
+  plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(-2, 2),
+         xlab = "Group", ylab = "Value", main = paste0("BMI on T2D: pval=",pval_threshold[i])) 
 
   points(1:length(means), means, pch = 19, col = "blue")
 
@@ -166,8 +166,8 @@ for (i in 1:length(pval_threshold)){
     
   # Create a vector for group names (optional)
   groups <- c("ivw", "egger", "mr.raps")
-  plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(0, 0.02),
-         xlab = "Group", ylab = "Value", main = "Height on EA")
+  plot(1:length(means), means, type = "n", xaxt = "n", ylim = c(-0.02, 0.1),
+         xlab = "Group", ylab = "Value", main = paste0("Height on EA: pval=",pval_threshold[i]))
 
   points(1:length(means), means, pch = 19, col = "blue")
 
