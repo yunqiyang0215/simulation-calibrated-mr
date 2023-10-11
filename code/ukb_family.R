@@ -19,16 +19,24 @@ rk2 = 1/(2^(3/2))
 r1 = 0.0012
 r2 = 0.365
 
+# check unique pairs: 107161. Data total row = 107161
+dim(unique(dat[,c(1,2)]))
+# id1 is in increasing order
+all(diff(dat[, 1]) >= 0)
 
+
+
+# In total, 22646 unique sibling pairs. About 21338 unique ids
 indx = which(r1 <= dat$IBS0 & dat$IBS0 <= r2 & dat$Kinship <= rk2 & dat$Kinship >= rk1)
 sib = dat[indx, ]
 
-
+# In total, 6263 rows
 indx = which(dat$IBS0 <= r1 & dat$Kinship <= rk2 & dat$Kinship >= rk1)
 trio = dat[indx, ]
 
 # Creat parent offspring pair
 family3 = c()
+id_unique = unique(c(trio$ID1, trio$ID2))
 for (i in 1:length(id_unique)){
   id = id_unique[i]
   sub = trio[which(trio$ID1 == id | trio$ID2 == id), ]
@@ -40,6 +48,8 @@ for (i in 1:length(id_unique)){
   }
 }
 
+# In total, get 1320 families. UKBiobank paper reports 1,066 sets of trios (two parents and an offspring)
+# See https://www.nature.com/articles/s41586-018-0579-z
 colnames(family3) = c("ID.par1", "ID.par2", "ID.child")
 rownames(family3) = NULL
 
