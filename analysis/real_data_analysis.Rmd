@@ -132,8 +132,8 @@ for (i in 1:length(pval_threshold)){
 
 ```{r}
 
-sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/height-ukb.csv"
-exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/Height-giant14.csv"
+sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/Height-giant14.csv"
+exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/height-ukb.csv"
 out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt"
 plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
 
