@@ -5,6 +5,42 @@ date: "1/19/2024"
 output: html_document
 ---
 
+### Simulation model and setting:
+
+1. $p = 10$
+
+2. $b, b_p$ are fixed. 
+
+$$
+\begin{split}
+b^p&\sim N(0, 1),\quad \epsilon\sim N(0, 1)\\
+Y^p &= G^pb^p+\epsilon
+\end{split}
+$$
+
+**Children exposure & outcome traits**
+
+$\beta$ denotes the causal effect. $T$ denotes transmitted allelle matrix, and $NT$ denotes non-transmitted allele matrix. 
+$$
+\begin{split}
+\beta & =1\\
+b&\sim N(0, 1), \quad \epsilon\sim N(0, 1)\\
+Y_1 &= Tb + r_1(Y^m+Y^f) + \epsilon\\
+Y_2 &= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
+\end{split}
+$$
+
+```{r eval = FALSE}
+set.seed(1)
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+
+#beta: 1
+#r1: -0.2, -0.1, 0, 0.05, 0.1, 0.5
+#r2: -0.5, -0.1, 0.1, 0.5, 1
+```
+
+### Simulation results
 ```{r}
 res = readRDS("./data/simulation202401/res.rds")
 
