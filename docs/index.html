@@ -305,7 +305,7 @@ $(document).ready(function () {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2023-09-13
+<strong>Last updated:</strong> 2024-01-19
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -336,16 +336,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree3ca56daa104a0fa2ae86e2837079159fd87f96fetargetblank3ca56daa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/3ca56daa104a0fa2ae86e2837079159fd87f96fe" target="_blank">3ca56da</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb7d1b1926de040ddeb55fefdd2192e0d81b10671targetblankb7d1b19a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b7d1b1926de040ddeb55fefdd2192e0d81b10671" target="_blank">b7d1b19</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree3ca56daa104a0fa2ae86e2837079159fd87f96fetargetblank3ca56daa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb7d1b1926de040ddeb55fefdd2192e0d81b10671targetblankb7d1b19a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/3ca56daa104a0fa2ae86e2837079159fd87f96fe" target="_blank">3ca56da</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b7d1b1926de040ddeb55fefdd2192e0d81b10671" target="_blank">b7d1b19</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -358,10 +358,18 @@ Ignored files:
     Ignored:    analysis/.DS_Store
     Ignored:    data/.DS_Store
 
+Untracked files:
+    Untracked:  code/.ipynb_checkpoints/
+    Untracked:  code/basic_calculator.ipynb
+    Untracked:  data/mr_snps.csv
+    Untracked:  data/snp_list.txt
+
 Unstaged changes:
     Modified:   analysis/empirical_var_reduction.Rmd
     Modified:   analysis/mr_real_dat.Rmd
+    Modified:   analysis/real_data_analysis.Rmd
     Modified:   analysis/sim_real_dat.Rmd
+    Modified:   code/find_families.ipynb
 
 </code></pre>
 <p>
@@ -400,6 +408,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/b7d1b1926de040ddeb55fefdd2192e0d81b10671/analysis/index.Rmd" target="_blank">b7d1b19</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-19
+</td>
+<td>
+wflow_publish("analysis/index.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/0c4e60853570e5e03e470d250eb447967f264efd/docs/index.html" target="_blank">0c4e608</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2023-09-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -747,7 +789,6 @@ Start workflowr project.
 </div>
 </div>
 </div>
-<p>Welcome to my research website.</p>
 <ul>
 <li><p><a href="test_code.html">Test revised calibarted-mr code</a></p></li>
 <li><p><a href="sim_gaussian_res.html">Check variance reduction: Gaussian case</a></p></li>
@@ -758,6 +799,10 @@ Start workflowr project.
 <li><p><a href="simulate_from_par_pheno.html">Simulating from Y.pa</a></p></li>
 <li><p><a href="mr_result.html">MR comparison</a></p></li>
 <li><p><a href="real_data_analysis.html">Real data analysis</a></p></li>
+</ul>
+<p>Simulation using ukb real genotype</p>
+<ul>
+<li><a href="ukb_calibration.html">Calibration result</a></li>
 </ul>
 
 
