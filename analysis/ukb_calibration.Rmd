@@ -1,0 +1,64 @@
+---
+title: "ukb_calibration"
+author: "Yunqi Yang"
+date: "1/19/2024"
+output: html_document
+---
+
+```{r}
+res = readRDS("./data/simulation202401/res.rds")
+
+res$sim_data.r1
+res$sim_data.r2
+
+r1 = c(-0.2, -0.1, 0, 0.05, 0.1, 0.5)
+r2 = c(-0.5, -0.1, 0.1, 0.5, 1)
+
+setting = c()
+for (i in 1:length(r2)){
+  for (j in 1:length(r1)){
+    s = paste0( "r2=", r2[i], ",r1=", r1[j])
+    setting = c(setting, s)
+  }
+}
+```
+
+```{r fig.height=8, fig.width=8}
+par(mfrow = c(3,4))
+for (i in 1:length(setting)){
+  dat = res$calibration.Y1_cali[[i]]
+  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
+  plot(var_reduction, ylab = setting[i], main = "Exposure trait")
+}
+```
+```{r fig.height=8, fig.width=8}
+par(mfrow = c(3,4))
+for (i in 1:length(setting)){
+  dat = res$calibration.Y2_cali[[i]]
+  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
+  plot(var_reduction, ylab = setting[i], main = "Outcome trait")
+}
+```
+
+```{r }
+dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
+for (i in 1:length(setting)){
+  dat = res$calibration.Y1_cali[[i]]
+  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
+  dat_var_reduction[, i] = var_reduction
+}
+
+boxplot(dat_var_reduction, main = "exposure trait")
+```
+
+```{r }
+dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
+for (i in 1:length(setting)){
+  dat = res$calibration.Y2_cali[[i]]
+  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
+  dat_var_reduction[, i] = var_reduction
+}
+
+boxplot(dat_var_reduction, main = "outcome trait")
+```
+
