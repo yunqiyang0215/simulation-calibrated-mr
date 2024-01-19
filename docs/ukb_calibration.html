@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb57fec8667a39ddabe63d5965df4b444299c2f45targetblankb57fec8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b57fec8667a39ddabe63d5965df4b444299c2f45" target="_blank">b57fec8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0375f640dfda8421fb7ef7daf21964405e3f497etargetblank0375f64a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0375f640dfda8421fb7ef7daf21964405e3f497e" target="_blank">0375f64</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb57fec8667a39ddabe63d5965df4b444299c2f45targetblankb57fec8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0375f640dfda8421fb7ef7daf21964405e3f497etargetblank0375f64a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b57fec8667a39ddabe63d5965df4b444299c2f45" target="_blank">b57fec8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0375f640dfda8421fb7ef7daf21964405e3f497e" target="_blank">0375f64</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -501,11 +501,11 @@ Untracked files:
     Untracked:  code/.ipynb_checkpoints/
     Untracked:  code/basic_calculator.ipynb
     Untracked:  data/mr_snps.csv
-    Untracked:  data/simulation202401/
     Untracked:  data/snp_list.txt
 
 Unstaged changes:
     Modified:   analysis/empirical_var_reduction.Rmd
+    Modified:   analysis/index.Rmd
     Modified:   analysis/mr_real_dat.Rmd
     Modified:   analysis/real_data_analysis.Rmd
     Modified:   analysis/sim_real_dat.Rmd
@@ -548,6 +548,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0375f640dfda8421fb7ef7daf21964405e3f497e/analysis/ukb_calibration.Rmd" target="_blank">0375f64</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-19
+</td>
+<td>
+wflow_publish("analysis/ukb_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/e7e9a86133c8722ea345e001f4e3d52cb062a5af/docs/ukb_calibration.html" target="_blank">e7e9a86</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -606,6 +640,37 @@ wflow_publish("analysis/ukb_calibration.Rmd")
 </div>
 </div>
 </div>
+<div id="simulation-model-and-setting" class="section level3">
+<h3>Simulation model and setting:</h3>
+<ol style="list-style-type: decimal">
+<li><p><span class="math inline">\(p = 10\)</span></p></li>
+<li><p><span class="math inline">\(b, b_p\)</span> are fixed.</p></li>
+</ol>
+<p><span class="math display">\[
+\begin{split}
+b^p&amp;\sim N(0, 1),\quad \epsilon\sim N(0, 1)\\
+Y^p &amp;= G^pb^p+\epsilon
+\end{split}
+\]</span></p>
+<p><strong>Children exposure &amp; outcome traits</strong></p>
+<p><span class="math inline">\(\beta\)</span> denotes the causal effect. <span class="math inline">\(T\)</span> denotes transmitted allelle matrix, and <span class="math inline">\(NT\)</span> denotes non-transmitted allele matrix. <span class="math display">\[
+\begin{split}
+\beta &amp; =1\\
+b&amp;\sim N(0, 1), \quad \epsilon\sim N(0, 1)\\
+Y_1 &amp;= Tb + r_1(Y^m+Y^f) + \epsilon\\
+Y_2 &amp;= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
+\end{split}
+\]</span></p>
+<pre class="r"><code>set.seed(1)
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+
+#beta: 1
+#r1: -0.2, -0.1, 0, 0.05, 0.1, 0.5
+#r2: -0.5, -0.1, 0.1, 0.5, 1</code></pre>
+</div>
+<div id="simulation-results" class="section level3">
+<h3>Simulation results</h3>
 <pre class="r"><code>res = readRDS(&quot;./data/simulation202401/res.rds&quot;)
 
 r1 = c(-0.2, -0.1, 0, 0.05, 0.1, 0.5)
@@ -623,126 +688,6 @@ for (i in 1:length(setting)){
   dat = res$calibration.Y1_cali[[i]]
   var_reduction = (dat[,4] - dat[, 3])/dat[,4]
   plot(var_reduction, ylab = setting[i], main = &quot;Exposure trait&quot;)
-}</code></pre>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-2-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
-Past versions of unnamed-chunk-2-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/72d9f9c65cbde5c78834b6044550087f1ed68396/docs/figure/ukb_calibration.Rmd/unnamed-chunk-2-1.png" target="_blank">72d9f9c</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-01-19
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-2-2.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-2">
-Past versions of unnamed-chunk-2-2.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/72d9f9c65cbde5c78834b6044550087f1ed68396/docs/figure/ukb_calibration.Rmd/unnamed-chunk-2-2.png" target="_blank">72d9f9c</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-01-19
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-2-3.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-3">
-Past versions of unnamed-chunk-2-3.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-3" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/72d9f9c65cbde5c78834b6044550087f1ed68396/docs/figure/ukb_calibration.Rmd/unnamed-chunk-2-3.png" target="_blank">72d9f9c</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-01-19
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>par(mfrow = c(3,4))
-for (i in 1:length(setting)){
-  dat = res$calibration.Y2_cali[[i]]
-  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
-  plot(var_reduction, ylab = setting[i], main = &quot;Outcome trait&quot;)
 }</code></pre>
 <p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
@@ -858,15 +803,13 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
+<pre class="r"><code>par(mfrow = c(3,4))
 for (i in 1:length(setting)){
-  dat = res$calibration.Y1_cali[[i]]
+  dat = res$calibration.Y2_cali[[i]]
   var_reduction = (dat[,4] - dat[, 3])/dat[,4]
-  dat_var_reduction[, i] = var_reduction
-}
-
-boxplot(dat_var_reduction, main = &quot;exposure trait&quot;)</code></pre>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+  plot(var_reduction, ylab = setting[i], main = &quot;Outcome trait&quot;)
+}</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
 Past versions of unnamed-chunk-4-1.png
@@ -904,14 +847,15 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-4-2.png" width="768" style="display: block; margin: auto;" /><img src="figure/ukb_calibration.Rmd/unnamed-chunk-4-3.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
 for (i in 1:length(setting)){
-  dat = res$calibration.Y2_cali[[i]]
+  dat = res$calibration.Y1_cali[[i]]
   var_reduction = (dat[,4] - dat[, 3])/dat[,4]
   dat_var_reduction[, i] = var_reduction
 }
 
-boxplot(dat_var_reduction, main = &quot;outcome trait&quot;)</code></pre>
+boxplot(dat_var_reduction, main = &quot;exposure trait&quot;)</code></pre>
 <p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -950,6 +894,15 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<pre class="r"><code>dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
+for (i in 1:length(setting)){
+  dat = res$calibration.Y2_cali[[i]]
+  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
+  dat_var_reduction[, i] = var_reduction
+}
+
+boxplot(dat_var_reduction, main = &quot;outcome trait&quot;)</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -987,6 +940,7 @@ loaded via a namespace (and not attached):
 [33] whisker_0.4      promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.5 
 [37] httpuv_1.6.3     utf8_1.2.2       stringi_1.7.5    cachem_1.0.6    
 [41] crayon_1.4.1    </code></pre>
+</div>
 </div>
 
 
