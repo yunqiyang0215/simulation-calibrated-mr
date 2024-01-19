@@ -8,7 +8,6 @@ editor_options:
   chunk_output_type: console
 ---
 
-Welcome to my research website.
 
 + [Test revised calibarted-mr code](test_code.html)
 
@@ -27,3 +26,8 @@ Welcome to my research website.
 + [MR comparison](mr_result.html)
 
 + [Real data analysis](real_data_analysis.html)
+
+Simulation using ukb real genotype
+
++ [Calibration result](ukb_calibration.html)
+
