@@ -34,14 +34,94 @@ $$
 set.seed(1)
 b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
 bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-
-#beta: 1
-#r1: -0.2, -0.1, 0, 0.05, 0.1, 0.5
-#r2: -0.5, -0.1, 0.1, 0.5, 1
 ```
 
 ### Simulation results
 ```{r}
+res = readRDS("./data/simulation202401/res.rds")
+res.Y1 = res[[1]]
+res.Y2 = res[[2]]
+```
+
+```{r}
+p = 10
+set.seed(1)
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+```
+
+```{r}
+combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
+  res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
+  dat_combined = do.call(rbind, res)
+  return(dat_combined)
+}
+```
+
+```{r fig.width=10, fig.height = 6}
+par(mfrow = c(1,2))
+r1 = unique(res.Y1$sim_data.r1)
+for (k in 1:length(r1)){
+  cond_indx = which(res.Y1$sim_data.r1 == r1[k])
+  
+  ### Plot mean
+  snp_dat_list = lapply(1:p, function(i) combine_single_snp_stat(cond_indx, i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  # Add true b to plot
+  b.true <- unlist(lapply(1:p, function(i) rep(b[i],2)))
+  empirical_var = apply(dat_estimator, 2, var)
+  points(1:ncol(dat_estimator), b.true, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "True effect size"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+
+# Plot variance
+  
+  ### Plot variance
+  snp_dat_list = lapply(1:p, function(i) combine_single_snp_stat(cond_indx, i, data.list =res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+  
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          main = paste0("Exposure trait, r1=", r1[k]),
+          ylim = c(0, 0.06),
+          xlab = "",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+}
+
+```
+
+
+
+
+
+
+
+
+```{r eval = FALSE}
 res = readRDS("./data/simulation202401/res.rds")
 
 r1 = c(-0.2, -0.1, 0, 0.05, 0.1, 0.5)
@@ -54,26 +134,13 @@ for (i in 1:length(r2)){
     setting = c(setting, s)
   }
 }
-```
 
-```{r fig.height=8, fig.width=8}
-par(mfrow = c(3,4))
 for (i in 1:length(setting)){
   dat = res$calibration.Y1_cali[[i]]
   var_reduction = (dat[,4] - dat[, 3])/dat[,4]
   plot(var_reduction, ylab = setting[i], main = "Exposure trait")
 }
-```
-```{r fig.height=8, fig.width=8}
-par(mfrow = c(3,4))
-for (i in 1:length(setting)){
-  dat = res$calibration.Y2_cali[[i]]
-  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
-  plot(var_reduction, ylab = setting[i], main = "Outcome trait")
-}
-```
 
-```{r }
 dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
 for (i in 1:length(setting)){
   dat = res$calibration.Y1_cali[[i]]
@@ -82,16 +149,8 @@ for (i in 1:length(setting)){
 }
 
 boxplot(dat_var_reduction, main = "exposure trait")
+
 ```
 
-```{r }
-dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
-for (i in 1:length(setting)){
-  dat = res$calibration.Y2_cali[[i]]
-  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
-  dat_var_reduction[, i] = var_reduction
-}
 
-boxplot(dat_var_reduction, main = "outcome trait")
-```
 
