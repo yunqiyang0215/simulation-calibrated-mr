@@ -69,7 +69,7 @@ for (i in 1:p){
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
   boxplot(dat_estimator,
           #main = paste0("Exposure trait, r1=", r1[k]),
-          xlab = "",
+          xlab = "r1",
           ylab = "(un)calibrated estimator",
           col = colors,
           outpch = 20, # This changes the outlier point type to solid circle
@@ -94,7 +94,7 @@ for (i in 1:p){
   boxplot(dat_estimator_var,
           #main = paste0("Exposure trait, r1=", r1[k]),
           ylim = c(0, 0.03),
-          xlab = "",
+          xlab = "r1",
           ylab = "Variance of (un)calibrated estimator",
           col = colors,
           outpch = 20, 
