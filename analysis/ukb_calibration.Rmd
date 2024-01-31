@@ -20,7 +20,7 @@ $$
 
 **Children exposure & outcome traits**
 
-$\beta$ denotes the causal effect. $T$ denotes transmitted allelle matrix, and $NT$ denotes non-transmitted allele matrix. 
+$\beta$ denotes the causal effect. $T$ denotes transmitted allele matrix, and $NT$ denotes non-transmitted allele matrix. 
 $$
 \begin{split}
 \beta & =1\\
