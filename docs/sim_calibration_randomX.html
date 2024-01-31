@@ -12,7 +12,7 @@
 
 <meta name="date" content="2024-01-31" />
 
-<title>sim_calibration_randomX</title>
+<title>Calibration result: random genotype</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -361,7 +361,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">sim_calibration_randomX</h1>
+<h1 class="title toc-ignore">Calibration result: random genotype</h1>
 <h4 class="date">2024-01-31</h4>
 
 </div>
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreee6693c9a8ee2055b7e5ca6e19b0816c93efccfe8targetblanke6693c9a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree5f640e9953c2576b956d6c07f217fec4e9ed624atargetblank5f640e9a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/e6693c9a8ee2055b7e5ca6e19b0816c93efccfe8" target="_blank">e6693c9</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/5f640e9953c2576b956d6c07f217fec4e9ed624a" target="_blank">5f640e9</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreee6693c9a8ee2055b7e5ca6e19b0816c93efccfe8targetblanke6693c9a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree5f640e9953c2576b956d6c07f217fec4e9ed624atargetblank5f640e9a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/e6693c9a8ee2055b7e5ca6e19b0816c93efccfe8" target="_blank">e6693c9</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/5f640e9953c2576b956d6c07f217fec4e9ed624a" target="_blank">5f640e9</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -608,6 +608,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/5f640e9953c2576b956d6c07f217fec4e9ed624a/analysis/sim_calibration_randomX.Rmd" target="_blank">5f640e9</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+<td>
+wflow_publish("analysis/sim_calibration_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/sim_calibration_randomX.html" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e6693c9a8ee2055b7e5ca6e19b0816c93efccfe8/analysis/sim_calibration_randomX.Rmd" target="_blank">e6693c9</a>
 </td>
 <td>
@@ -627,6 +661,13 @@ wflow_publish("analysis/sim_calibration_randomX.Rmd")
 </div>
 </div>
 </div>
+<p>Description: Simulation result for calibration. The simulation model
+is the same as <a
+href="https://yunqiyang0215.github.io/simulation-calibrated-mr/ukb_calibration.html"
+class="uri">https://yunqiyang0215.github.io/simulation-calibrated-mr/ukb_calibration.html</a>.
+Instead of using real genotype from UKB, we simulate genotype using UKB
+allele frequency in each simulation replicates. Therefore, genotype is
+random in this case.</p>
 <pre class="r"><code>res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/mr_dsc20230727/res.rds&quot;)</code></pre>
 <pre class="r"><code>combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
   res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
@@ -685,7 +726,386 @@ for (i in 1:p){
   r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
   axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
 }</code></pre>
-<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-2.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-3.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-4.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-5.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-6.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-7.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-8.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-9.png" width="960" style="display: block; margin: auto;" /><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-10.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-1.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-2.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-2">
+Past versions of unnamed-chunk-3-2.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-2.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-3.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-3">
+Past versions of unnamed-chunk-3-3.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-3.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-4.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-4">
+Past versions of unnamed-chunk-3-4.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-4.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-5.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-5">
+Past versions of unnamed-chunk-3-5.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-5.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-6.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-6">
+Past versions of unnamed-chunk-3-6.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-6.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-7.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-7">
+Past versions of unnamed-chunk-3-7.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-7.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-8.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-8">
+Past versions of unnamed-chunk-3-8.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-8.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-9.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-9">
+Past versions of unnamed-chunk-3-9.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-9" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-9.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-10.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-10">
+Past versions of unnamed-chunk-3-10.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-10" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/321e81a94a6a1c0a7703c58766a69d43a7930137/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-3-10.png" target="_blank">321e81a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-01-31
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
