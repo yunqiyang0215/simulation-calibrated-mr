@@ -1,8 +1,11 @@
 ---
-title: "sim_calibration_randomX"
+title: "Calibration result: random genotype"
 output: html_document
 date: '2024-01-31'
 ---
+
+Description: Simulation result for calibration. The simulation model is the same as https://yunqiyang0215.github.io/simulation-calibrated-mr/ukb_calibration.html. Instead of using real genotype from UKB, we simulate genotype using UKB allele frequency in each simulation replicates. Therefore, genotype is random in this case. 
+
 
 ```{r}
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/mr_dsc20230727/res.rds")
