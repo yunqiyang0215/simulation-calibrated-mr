@@ -1,0 +1,75 @@
+---
+title: "sim_calibration_randomX"
+output: html_document
+date: '2024-01-31'
+---
+
+```{r}
+res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/mr_dsc20230727/res.rds")
+```
+
+```{r}
+combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
+  res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
+  dat_combined = do.call(rbind, res)
+  return(dat_combined)
+}
+```
+
+
+```{r fig.width=10, fig.height=6}
+
+par(mfrow = c(1,2))
+r1 = unique(res$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "r1",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical mean"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.var.raw")))
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+    
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          #ylim = c(0, 0.06),
+          xlab = "r1",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  r_values <- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}
+```
+
