@@ -31,3 +31,5 @@ Simulation using ukb real genotype
 
 + [Calibration result](ukb_calibration.html)
 
++ [Calibration result: random X](sim_calibration_randomX.html)
+
