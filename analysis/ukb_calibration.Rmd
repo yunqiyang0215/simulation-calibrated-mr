@@ -1,15 +1,17 @@
 ---
-title: "ukb_calibration"
+title: "Calibration result on UKB genotyp"
 author: "Yunqi Yang"
-date: "1/19/2024"
+date: "02/01/2024"
 output: html_document
 ---
 
-### Simulation model and setting:
+### 1. Simulation model and setting:
 
 1. $p = 10$
 
 2. $b, b_p$ are fixed. 
+
+3. Model to simulate parents' phenotype:
 
 $$
 \begin{split}
@@ -18,9 +20,7 @@ Y^p &= G^pb^p+\epsilon
 \end{split}
 $$
 
-**Children exposure & outcome traits**
-
-$\beta$ denotes the causal effect. $T$ denotes transmitted allele matrix, and $NT$ denotes non-transmitted allele matrix. 
+4. Model to simulate children's exposure & outcome traits: $\beta$ denotes the causal effect. $T$ denotes transmitted allele matrix, and $NT$ denotes non-transmitted allele matrix. 
 $$
 \begin{split}
 \beta & =1\\
