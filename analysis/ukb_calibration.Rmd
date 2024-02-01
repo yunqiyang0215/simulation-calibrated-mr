@@ -113,7 +113,7 @@ for (i in 1:p){
 
 ```
 
-```{r fig.width=10, fig.height=20}
+```{r fig.width=10, fig.height=30}
 par(mfrow = c(10,2))
 r1 = unique(res.Y1$sim_data.r1)
 
