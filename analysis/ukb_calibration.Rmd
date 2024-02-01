@@ -29,25 +29,18 @@ Y_1 &= Tb + r_1(Y^m+Y^f) + \epsilon\\
 Y_2 &= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
 \end{split}
 $$
-
 ```{r eval = FALSE}
 set.seed(1)
-b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-```
-
-### Simulation results
-```{r}
-res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds")
-res.Y1 = res[[1]]
-res.Y2 = res[[2]]
-```
-
-```{r}
 p = 10
-set.seed(1)
 b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
 bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+```
+
+```{r}
+res1 = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/simulation202401/res.rds") # previous simulation result
+res2 = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds") # current result
+res.Y1 = res1[[1]]
+res2.Y1 = res2[[1]]
 ```
 
 ```{r}
@@ -58,12 +51,16 @@ combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names)
 }
 ```
 
-```{r fig.width=10, fig.height=6}
-par(mfrow = c(1,2))
-r1 = unique(res.Y1$sim_data.r1)
 
+### 1. Previous simulation results
+
+```{r fig.width=8, fig.height=40}
+
+par(mfrow = c(10,2))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
@@ -93,7 +90,7 @@ for (i in 1:p){
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
   boxplot(dat_estimator_var,
           #main = paste0("Exposure trait, r1=", r1[k]),
-          ylim = c(0, 0.06),
+          ylim = c(0, max(dat_estimator_var) + 0.01),
           xlab = "r1",
           ylab = "Variance of (un)calibrated estimator",
           col = colors,
@@ -113,12 +110,24 @@ for (i in 1:p){
 
 ```
 
-```{r fig.width=10, fig.height=40}
+
+### 2. Current simulation results
+
+#### 2.1 Multiple effects:
+
+```{r eval = FALSE}
+set.seed(1)
+p = 10
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+```
+
+```{r fig.width=8, fig.height=40}
 par(mfrow = c(10,2))
-r1 = unique(res.Y1$sim_data.r1)
+r1 = unique(res2.Y1$sim_data.r1)
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] & res2.Y1$sim_effect.effect_type == "multiple"), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
@@ -142,7 +151,64 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] & res2.Y1$sim_effect.effect_type == "multiple"), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+    
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          ylim = c(0, 0.06),
+          xlab = "r1",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  r_values <- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}
+
+```
+
+```{r fig.width=10, fig.height=40}
+par(mfrow = c(10,2))
+r1 = unique(res2.Y1$sim_data.r1)
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] & res2.Y1$sim_effect.effect_type == "single"), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "r1",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical mean"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] & res2.Y1$sim_effect.effect_type == "single"), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
+  
+  
   dat_estimator_var <- do.call(cbind, snp_dat_list)
     
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
