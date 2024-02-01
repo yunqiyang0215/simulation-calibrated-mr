@@ -11,8 +11,9 @@
 
 <meta name="author" content="Yunqi Yang" />
 
+<meta name="date" content="2024-02-01" />
 
-<title>ukb_calibration</title>
+<title>Calibration result on UKB genotyp</title>
 
 <script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -361,9 +362,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">ukb_calibration</h1>
+<h1 class="title toc-ignore">Calibration result on UKB genotyp</h1>
 <h4 class="author">Yunqi Yang</h4>
-<h4 class="date">1/19/2024</h4>
+<h4 class="date">02/01/2024</h4>
 
 </div>
 
@@ -549,15 +550,15 @@ data/simulation202401/res.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree30ae8748d4ddb8b93ddeef36fdb0cb225095d3cetargetblank30ae874a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreee989b7ce39ba9d5d216cf155bdead09b4f0af306targetblanke989b7ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/30ae8748d4ddb8b93ddeef36fdb0cb225095d3ce" target="_blank">30ae874</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/e989b7ce39ba9d5d216cf155bdead09b4f0af306" target="_blank">e989b7c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree30ae8748d4ddb8b93ddeef36fdb0cb225095d3cetargetblank30ae874a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreee989b7ce39ba9d5d216cf155bdead09b4f0af306targetblanke989b7ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -567,7 +568,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/30ae8748d4ddb8b93ddeef36fdb0cb225095d3ce" target="_blank">30ae874</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/e989b7ce39ba9d5d216cf155bdead09b4f0af306" target="_blank">e989b7c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -629,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e989b7ce39ba9d5d216cf155bdead09b4f0af306/analysis/ukb_calibration.Rmd" target="_blank">e989b7c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+wflow_publish("analysis/ukb_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/0909559782651aa43c2ef4a3a58301ef9ba10166/docs/ukb_calibration.html" target="_blank">0909559</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1130,10 +1165,11 @@ wflow_publish("analysis/ukb_calibration.Rmd")
 </div>
 </div>
 <div id="simulation-model-and-setting" class="section level3">
-<h3>Simulation model and setting:</h3>
+<h3>1. Simulation model and setting:</h3>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(p = 10\)</span></p></li>
 <li><p><span class="math inline">\(b, b_p\)</span> are fixed.</p></li>
+<li><p>Model to simulate parents’ phenotype:</p></li>
 </ol>
 <p><span class="math display">\[
 \begin{split}
@@ -1141,18 +1177,20 @@ b^p&amp;\sim N(0, 1),\quad \epsilon\sim N(0, 1)\\
 Y^p &amp;= G^pb^p+\epsilon
 \end{split}
 \]</span></p>
-<p><strong>Children exposure &amp; outcome traits</strong></p>
-<p><span class="math inline">\(\beta\)</span> denotes the causal effect.
-<span class="math inline">\(T\)</span> denotes transmitted allele
-matrix, and <span class="math inline">\(NT\)</span> denotes
-non-transmitted allele matrix. <span class="math display">\[
+<ol start="4" style="list-style-type: decimal">
+<li>Model to simulate children’s exposure &amp; outcome traits: <span
+class="math inline">\(\beta\)</span> denotes the causal effect. <span
+class="math inline">\(T\)</span> denotes transmitted allele matrix, and
+<span class="math inline">\(NT\)</span> denotes non-transmitted allele
+matrix. <span class="math display">\[
 \begin{split}
 \beta &amp; =1\\
 b&amp;\sim N(0, 1), \quad \epsilon\sim N(0, 1)\\
 Y_1 &amp;= Tb + r_1(Y^m+Y^f) + \epsilon\\
 Y_2 &amp;= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
 \end{split}
-\]</span></p>
+\]</span></li>
+</ol>
 <pre class="r"><code>#res1 = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/simulation202401/res.rds&quot;) # previous simulation result
 res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds&quot;) # current result
 res.Y1 = res[[1]]</code></pre>
@@ -1245,6 +1283,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0909559782651aa43c2ef4a3a58301ef9ba10166/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">0909559</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">cc3ea41</a>
@@ -1376,6 +1425,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0909559782651aa43c2ef4a3a58301ef9ba10166/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">0909559</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">cc3ea41</a>
