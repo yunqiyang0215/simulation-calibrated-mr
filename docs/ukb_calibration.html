@@ -549,15 +549,15 @@ data/simulation202401/res.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0df308988b718faf7fb7c1ccf64821b8402b9214targetblank0df3089a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree30ae8748d4ddb8b93ddeef36fdb0cb225095d3cetargetblank30ae874a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0df308988b718faf7fb7c1ccf64821b8402b9214" target="_blank">0df3089</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/30ae8748d4ddb8b93ddeef36fdb0cb225095d3ce" target="_blank">30ae874</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0df308988b718faf7fb7c1ccf64821b8402b9214targetblank0df3089a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree30ae8748d4ddb8b93ddeef36fdb0cb225095d3cetargetblank30ae874a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -567,7 +567,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0df308988b718faf7fb7c1ccf64821b8402b9214" target="_blank">0df3089</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/30ae8748d4ddb8b93ddeef36fdb0cb225095d3ce" target="_blank">30ae874</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -629,6 +629,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/30ae8748d4ddb8b93ddeef36fdb0cb225095d3ce/analysis/ukb_calibration.Rmd" target="_blank">30ae874</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+wflow_publish("analysis/ukb_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/ukb_calibration.html" target="_blank">cc3ea41</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1119,27 +1153,27 @@ Y_1 &amp;= Tb + r_1(Y^m+Y^f) + \epsilon\\
 Y_2 &amp;= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
 \end{split}
 \]</span></p>
-<pre class="r"><code>set.seed(1)
-p = 10
-b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)</code></pre>
-<pre class="r"><code>res1 = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/simulation202401/res.rds&quot;) # previous simulation result
-res2 = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds&quot;) # current result
-res.Y1 = res1[[1]]
-res2.Y1 = res2[[1]]</code></pre>
+<pre class="r"><code>#res1 = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/simulation202401/res.rds&quot;) # previous simulation result
+res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds&quot;) # current result
+res.Y1 = res[[1]]</code></pre>
 <pre class="r"><code>combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
   res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
   dat_combined = do.call(rbind, res)
   return(dat_combined)
 }</code></pre>
 </div>
-<div id="previous-simulation-results" class="section level3">
-<h3>1. Previous simulation results</h3>
+<div id="multiple-effects" class="section level3">
+<h3>1. Multiple effects:</h3>
+<pre class="r"><code>set.seed(1)
+p = 10
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)</code></pre>
 <pre class="r"><code>par(mfrow = c(10,2))
 r1 = unique(res.Y1$sim_data.r1)
 p = 10
+
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1163,13 +1197,15 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  
+  
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
     
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
   boxplot(dat_estimator_var,
           #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
-          ylim = c(0, max(dat_estimator_var) + 0.01),
+          ylim = c(0, max(dat_estimator_var)+0.01),
           xlab = &quot;r1&quot;,
           ylab = &quot;Variance of (un)calibrated estimator&quot;,
           col = colors,
@@ -1211,6 +1247,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">cc3ea41</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f71295dcde89f3cba7525a47443430e3f0c51c50/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">f71295d</a>
 </td>
 <td>
@@ -1247,19 +1294,17 @@ yunqiyang0215
 </div>
 </div>
 </div>
-<div id="current-simulation-results" class="section level3">
-<h3>2. Current simulation results</h3>
-<div id="multiple-effects" class="section level4">
-<h4>2.1 Multiple effects:</h4>
+<div id="single-effect" class="section level3">
+<h3>2. Single effect:</h3>
 <pre class="r"><code>set.seed(1)
-p = 10
-b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)</code></pre>
+b = bp = matrix(rep(0, p), ncol = 1, nrow = p)
+b[1,1] = rnorm(1)
+bp[1,1] = rnorm(1)</code></pre>
 <pre class="r"><code>par(mfrow = c(10,2))
-r1 = unique(res2.Y1$sim_data.r1)
+r1 = unique(res.Y1$sim_data.r1)
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] &amp; res2.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1283,13 +1328,15 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] &amp; res2.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  
+  
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
     
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
   boxplot(dat_estimator_var,
           #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
-          ylim = c(0, 0.06),
+          ylim = c(0, max(dat_estimator_var)+0.01),
           xlab = &quot;r1&quot;,
           ylab = &quot;Variance of (un)calibrated estimator&quot;,
           col = colors,
@@ -1329,6 +1376,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">cc3ea41</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2c2f133aefb758099f4e24e8d4b0737f29316810/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">2c2f133</a>
@@ -1399,141 +1457,6 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>par(mfrow = c(10,2))
-r1 = unique(res2.Y1$sim_data.r1)
-
-for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] &amp; res2.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
-
-  dat_estimator &lt;- do.call(cbind, snp_dat_list)
-  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
-  boxplot(dat_estimator,
-          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
-          xlab = &quot;r1&quot;,
-          ylab = &quot;(un)calibrated estimator&quot;,
-          col = colors,
-          outpch = 20, # This changes the outlier point type to solid circle
-          outcex = 0.5,
-          xaxt = &quot;n&quot;)
-  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = &quot;red2&quot;)
-  legend(&quot;topright&quot;,
-       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical mean&quot;),
-       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
-       pch = c(NA, NA, 4),  
-       col = c(NA, NA, &quot;red2&quot;),  
-       cex = 0.6)  
-  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
-
-  
-  ### Plot variance
-  empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res2.Y1$sim_data.r1 == r1[k] &amp; res2.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res2.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
-  
-  
-  dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
-    
-  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
-  boxplot(dat_estimator_var,
-          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
-          ylim = c(0, 0.06),
-          xlab = &quot;r1&quot;,
-          ylab = &quot;Variance of (un)calibrated estimator&quot;,
-          col = colors,
-          outpch = 20, 
-          outcex = 0.5,
-          xaxt = &quot;n&quot;)
-  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
-  legend(&quot;topright&quot;,
-       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical variance&quot;),
-       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
-       pch = c(NA, NA, 4),  
-       col = c(NA, NA, &quot;red2&quot;),  
-       cex = 0.6)  
-  r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
-  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
-}</code></pre>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>par(mfrow = c(1,2))
-r1 = unique(res.Y1$sim_data.r1)
-for (k in 1:length(r1)){
-  cond_indx = which(res.Y1$sim_data.r1 == r1[k])
-  
-  ### Plot mean
-  snp_dat_list = lapply(1:p, function(i) 
-  
-  dat_estimator &lt;- do.call(cbind, snp_dat_list)
-  print(dat_estimator)
-  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
-  boxplot(dat_estimator,
-          main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
-          xlab = &quot;&quot;,
-          ylab = &quot;(un)calibrated estimator&quot;,
-          col = colors,
-          outpch = 20, # This changes the outlier point type to solid circle
-          outcex = 0.5,
-          xaxt = &quot;n&quot;)
-  # Add true b to plot
-  b.true &lt;- unlist(lapply(1:p, function(i) rep(b[i],2)))
-  empirical_var = apply(dat_estimator, 2, var)
-  points(1:ncol(dat_estimator), b.true, pch = 4, cex = 0.8, col = &quot;red2&quot;)
-  legend(&quot;topright&quot;,
-       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;True effect size&quot;),
-       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
-       pch = c(NA, NA, 4),  
-       col = c(NA, NA, &quot;red2&quot;),  
-       cex = 0.6)  
-
-# Plot variance
-  
-  ### Plot variance
-  snp_dat_list = lapply(1:p, function(i) combine_single_snp_stat(cond_indx, i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
-  dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
-  
-  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
-  boxplot(dat_estimator_var,
-          main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
-          ylim = c(0, 0.06),
-          xlab = &quot;&quot;,
-          ylab = &quot;Variance of (un)calibrated estimator&quot;,
-          col = colors,
-          outpch = 20, 
-          outcex = 0.5,
-          xaxt = &quot;n&quot;)
-  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
-  legend(&quot;topright&quot;,
-       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical variance&quot;),
-       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
-       pch = c(NA, NA, 4),  
-       col = c(NA, NA, &quot;red2&quot;),  
-       cex = 0.6)  
-}</code></pre>
-<pre class="r"><code>res = readRDS(&quot;./data/simulation202401/res.rds&quot;)
-
-r1 = c(-0.2, -0.1, 0, 0.05, 0.1, 0.5)
-r2 = c(-0.5, -0.1, 0.1, 0.5, 1)
-
-setting = c()
-for (i in 1:length(r2)){
-  for (j in 1:length(r1)){
-    s = paste0( &quot;r2=&quot;, r2[i], &quot;,r1=&quot;, r1[j])
-    setting = c(setting, s)
-  }
-}
-
-for (i in 1:length(setting)){
-  dat = res$calibration.Y1_cali[[i]]
-  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
-  plot(var_reduction, ylab = setting[i], main = &quot;Exposure trait&quot;)
-}
-
-dat_var_reduction = matrix(NA, ncol = length(res$calibration.Y1_cali), nrow = 10)
-for (i in 1:length(setting)){
-  dat = res$calibration.Y1_cali[[i]]
-  var_reduction = (dat[,4] - dat[, 3])/dat[,4]
-  dat_var_reduction[, i] = var_reduction
-}
-
-boxplot(dat_var_reduction, main = &quot;exposure trait&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1575,7 +1498,6 @@ loaded via a namespace (and not attached):
 [37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
 [41] ellipsis_0.3.2   httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   
 [45] crayon_1.5.1    </code></pre>
-</div>
 </div>
 </div>
 
