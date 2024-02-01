@@ -14,7 +14,7 @@
 
 <title>ukb_calibration</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -39,7 +39,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -76,6 +76,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -96,6 +97,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -321,7 +325,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -366,7 +370,9 @@ div.tocify {
 
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span>
 </button>
 </p>
 <div id="workflowr-report" class="collapse">
@@ -375,7 +381,9 @@ div.tocify {
 <a data-toggle="tab" href="#summary">Summary</a>
 </li>
 <li>
-<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -384,17 +392,27 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-01-31
+<strong>Last updated:</strong> 2024-02-01
 </p>
 <p>
-<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 0
 </p>
 <p>
-<strong>Knit directory:</strong> <code>simulation-calibrated-mr/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+<strong>Knit directory:</strong> <code>simulation-calibrated-mr/</code>
+<span class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
 </p>
 <hr>
 </div>
@@ -403,117 +421,149 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div id="strongRMarkdownfilestronguptodate"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
 </p>
 </div>
 <div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230217code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20230217)</code> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230217code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20230217)</code> </a>
 </p>
 </div>
-<div id="strongSeedstrongcodesetseed20230217code" class="panel-collapse collapse">
+<div id="strongSeedstrongcodesetseed20230217code"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>The command <code>set.seed(20230217)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+<p>The command <code>set.seed(20230217)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
 </p>
 </div>
-<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
 </p>
 </div>
 <div id="strongCachestrongnone" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
 </p>
 </div>
 <div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea66fcc48c9fe233e65109f14b9edf77cb1c81b06targetblanka66fcc4a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a66fcc48c9fe233e65109f14b9edf77cb1c81b06" target="_blank">a66fcc4</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreebf44204738b3ddddd93906be93c7c40aaa3b6c11targetblankbf44204a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/bf44204738b3ddddd93906be93c7c40aaa3b6c11" target="_blank">bf44204</a>
+</a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea66fcc48c9fe233e65109f14b9edf77cb1c81b06targetblanka66fcc4a" class="panel-collapse collapse">
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreebf44204738b3ddddd93906be93c7c40aaa3b6c11targetblankbf44204a"
+class="panel-collapse collapse">
 <div class="panel-body">
 <p>
-Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a66fcc48c9fe233e65109f14b9edf77cb1c81b06" target="_blank">a66fcc4</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/bf44204738b3ddddd93906be93c7c40aaa3b6c11" target="_blank">bf44204</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
 </p>
 <p>
-Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/.DS_Store
-    Ignored:    data/.DS_Store
-
-Untracked files:
-    Untracked:  code/.ipynb_checkpoints/
-    Untracked:  code/basic_calculator.ipynb
-    Untracked:  data/mr_snps.csv
-    Untracked:  data/snp_list.txt
-
-Unstaged changes:
-    Modified:   analysis/empirical_var_reduction.Rmd
-    Modified:   analysis/index.Rmd
-    Modified:   analysis/mr_real_dat.Rmd
-    Modified:   analysis/real_data_analysis.Rmd
-    Modified:   analysis/sim_real_dat.Rmd
-    Modified:   code/find_families.ipynb
 
 </code></pre>
 <p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
 </p>
 </div>
 </div>
@@ -524,7 +574,12 @@ Note that any generated files, e.g. HTML, png, CSS, etc., are not included in t
 <div id="versions" class="tab-pane fade">
 
 <p>
-These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ukb_calibration.Rmd</code>) and HTML (<code>docs/ukb_calibration.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/ukb_calibration.Rmd</code>) and
+HTML (<code>docs/ukb_calibration.html</code>) files. If you’ve
+configured a remote Git repository (see <code>?wflow_git_remote</code>),
+click on the hyperlinks in the table below to view the files as they
+were in that past version.
 </p>
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
@@ -548,6 +603,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/bf44204738b3ddddd93906be93c7c40aaa3b6c11/analysis/ukb_calibration.Rmd" target="_blank">bf44204</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+wflow_publish("analysis/ukb_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/45e43d5eb4b17720b11097c2f22587787df7c8b4/docs/ukb_calibration.html" target="_blank">45e43d5</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-31
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -857,7 +946,10 @@ Y^p &amp;= G^pb^p+\epsilon
 \end{split}
 \]</span></p>
 <p><strong>Children exposure &amp; outcome traits</strong></p>
-<p><span class="math inline">\(\beta\)</span> denotes the causal effect. <span class="math inline">\(T\)</span> denotes transmitted allele matrix, and <span class="math inline">\(NT\)</span> denotes non-transmitted allele matrix. <span class="math display">\[
+<p><span class="math inline">\(\beta\)</span> denotes the causal effect.
+<span class="math inline">\(T\)</span> denotes transmitted allele
+matrix, and <span class="math inline">\(NT\)</span> denotes
+non-transmitted allele matrix. <span class="math display">\[
 \begin{split}
 \beta &amp; =1\\
 b&amp;\sim N(0, 1), \quad \epsilon\sim N(0, 1)\\
@@ -871,7 +963,7 @@ bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)</code></pre>
 </div>
 <div id="simulation-results" class="section level3">
 <h3>Simulation results</h3>
-<pre class="r"><code>res = readRDS(&quot;./data/simulation202401/res.rds&quot;)
+<pre class="r"><code>res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds&quot;)
 res.Y1 = res[[1]]
 res.Y2 = res[[2]]</code></pre>
 <pre class="r"><code>p = 10
@@ -887,7 +979,7 @@ bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)</code></pre>
 r1 = unique(res.Y1$sim_data.r1)
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1688,6 +1780,107 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<pre class="r"><code>par(mfrow = c(5,2))
+r1 = unique(res.Y1$sim_data.r1)
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+
+  dat_estimator &lt;- do.call(cbind, snp_dat_list)
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
+          xlab = &quot;r1&quot;,
+          ylab = &quot;(un)calibrated estimator&quot;,
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  legend(&quot;topright&quot;,
+       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical mean&quot;),
+       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, &quot;red2&quot;),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
+    
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
+          ylim = c(0, 0.06),
+          xlab = &quot;r1&quot;,
+          ylab = &quot;Variance of (un)calibrated estimator&quot;,
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  legend(&quot;topright&quot;,
+       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical variance&quot;),
+       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, &quot;red2&quot;),  
+       cex = 0.6)  
+  r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f71295dcde89f3cba7525a47443430e3f0c51c50/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">f71295d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/606e07cf98f2bca2dc628bbe493a3fe2ccf6c820/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">606e07c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-6-2.png" width="960" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>par(mfrow = c(1,2))
 r1 = unique(res.Y1$sim_data.r1)
 for (k in 1:length(r1)){
@@ -1772,47 +1965,51 @@ boxplot(dat_var_reduction, main = &quot;exposure trait&quot;)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
-<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.1 (2021-08-10)
-Platform: x86_64-apple-darwin20.6.0 (64-bit)
-Running under: macOS Monterey 12.0.1
+<pre><code>R version 4.2.0 (2022-04-22)
+Platform: x86_64-pc-linux-gnu (64-bit)
+Running under: CentOS Linux 7 (Core)
 
 Matrix products: default
-BLAS:   /usr/local/Cellar/openblas/0.3.18/lib/libopenblasp-r0.3.18.dylib
-LAPACK: /usr/local/Cellar/r/4.1.1_1/lib/R/lib/libRlapack.dylib
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
 
 locale:
-[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+ [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C           
+ [4] LC_COLLATE=C         LC_MONETARY=C        LC_MESSAGES=C       
+ [7] LC_PAPER=C           LC_NAME=C            LC_ADDRESS=C        
+[10] LC_TELEPHONE=C       LC_MEASUREMENT=C     LC_IDENTIFICATION=C 
 
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.6.2
+[1] workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        pillar_1.6.4     compiler_4.1.1  
- [5] bslib_0.4.1      later_1.3.0      jquerylib_0.1.4  git2r_0.28.0    
- [9] tools_4.1.1      digest_0.6.28    jsonlite_1.7.2   evaluate_0.14   
-[13] lifecycle_1.0.3  tibble_3.1.5     pkgconfig_2.0.3  rlang_1.1.1     
-[17] cli_3.6.1        rstudioapi_0.13  yaml_2.2.1       xfun_0.27       
-[21] fastmap_1.1.0    stringr_1.4.0    knitr_1.36       fs_1.5.0        
-[25] vctrs_0.6.3      sass_0.4.4       rprojroot_2.0.2  glue_1.4.2      
-[29] R6_2.5.1         fansi_0.5.0      rmarkdown_2.11   magrittr_2.0.1  
-[33] whisker_0.4      promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.5 
-[37] httpuv_1.6.3     utf8_1.2.2       stringi_1.7.5    cachem_1.0.6    
-[41] crayon_1.4.1    </code></pre>
+ [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.3.1      compiler_4.2.0  
+ [5] pillar_1.7.0     later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
+ [9] tools_4.2.0      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
+[13] evaluate_0.15    tibble_3.1.7     lifecycle_1.0.1  pkgconfig_2.0.3 
+[17] rlang_1.0.2      cli_3.3.0        rstudioapi_0.13  yaml_2.3.5      
+[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.4.0   
+[25] knitr_1.39       sass_0.4.1       fs_1.5.2         vctrs_0.4.1     
+[29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.8.0  
+[33] fansi_1.0.3      rmarkdown_2.14   callr_3.7.3      magrittr_2.0.3  
+[37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
+[41] ellipsis_0.3.2   httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   
+[45] crayon_1.5.1    </code></pre>
 </div>
 </div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->
