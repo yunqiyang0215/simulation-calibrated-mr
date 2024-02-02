@@ -393,7 +393,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-02-01
+<strong>Last updated:</strong> 2024-02-02
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -550,15 +550,15 @@ data/simulation202401/res.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreee989b7ce39ba9d5d216cf155bdead09b4f0af306targetblanke989b7ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree21593809643fc7a6d8a96c797ff1fb9732782e9atargetblank2159380a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/e989b7ce39ba9d5d216cf155bdead09b4f0af306" target="_blank">e989b7c</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/21593809643fc7a6d8a96c797ff1fb9732782e9a" target="_blank">2159380</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreee989b7ce39ba9d5d216cf155bdead09b4f0af306targetblanke989b7ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree21593809643fc7a6d8a96c797ff1fb9732782e9atargetblank2159380a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -568,7 +568,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/e989b7ce39ba9d5d216cf155bdead09b4f0af306" target="_blank">e989b7c</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/21593809643fc7a6d8a96c797ff1fb9732782e9a" target="_blank">2159380</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -630,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/21593809643fc7a6d8a96c797ff1fb9732782e9a/analysis/ukb_calibration.Rmd" target="_blank">2159380</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-02
+</td>
+<td>
+wflow_publish("analysis/ukb_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/c9a61b3e26d726d5d902f672d68cb9efc49ff803/docs/ukb_calibration.html" target="_blank">c9a61b3</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1165,7 +1199,7 @@ wflow_publish("analysis/ukb_calibration.Rmd")
 </div>
 </div>
 <div id="simulation-model-and-setting" class="section level3">
-<h3>1. Simulation model and setting:</h3>
+<h3>Simulation model and setting:</h3>
 <ol style="list-style-type: decimal">
 <li><p><span class="math inline">\(p = 10\)</span></p></li>
 <li><p><span class="math inline">\(b, b_p\)</span> are fixed.</p></li>
@@ -1200,8 +1234,8 @@ res.Y1 = res[[1]]</code></pre>
   return(dat_combined)
 }</code></pre>
 </div>
-<div id="multiple-effects" class="section level3">
-<h3>1. Multiple effects:</h3>
+<div id="multiple-effects-without-resampling" class="section level3">
+<h3>1. Multiple effects without resampling:</h3>
 <pre class="r"><code>set.seed(1)
 p = 10
 b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
@@ -1211,7 +1245,7 @@ r1 = unique(res.Y1$sim_data.r1)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1235,7 +1269,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
   
   
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
@@ -1343,17 +1377,18 @@ yunqiyang0215
 </div>
 </div>
 </div>
-<div id="single-effect" class="section level3">
-<h3>2. Single effect:</h3>
+<div id="multiple-effects-with-resampling" class="section level3">
+<h3>2. Multiple effects with resampling</h3>
 <pre class="r"><code>set.seed(1)
-b = bp = matrix(rep(0, p), ncol = 1, nrow = p)
-b[1,1] = rnorm(1)
-bp[1,1] = rnorm(1)</code></pre>
+p = 10
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)</code></pre>
 <pre class="r"><code>par(mfrow = c(10,2))
 r1 = unique(res.Y1$sim_data.r1)
+p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == TRUE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1377,7 +1412,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == TRUE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
   
   
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
@@ -1517,6 +1552,67 @@ yunqiyang0215
 </table>
 </div>
 </div>
+</div>
+<div id="single-effect" class="section level3">
+<h3>3. Single effect:</h3>
+<pre class="r"><code>set.seed(1)
+b = bp = matrix(rep(0, p), ncol = 1, nrow = p)
+b[1,1] = rnorm(1)
+bp[1,1] = rnorm(1)</code></pre>
+<pre class="r"><code>par(mfrow = c(10,2))
+r1 = unique(res.Y1$sim_data.r1)
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+
+  dat_estimator &lt;- do.call(cbind, snp_dat_list)
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
+          xlab = &quot;r1&quot;,
+          ylab = &quot;(un)calibrated estimator&quot;,
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  legend(&quot;topright&quot;,
+       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical mean&quot;),
+       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, &quot;red2&quot;),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  
+  
+  dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
+    
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
+          ylim = c(0, max(dat_estimator_var)+0.01),
+          xlab = &quot;r1&quot;,
+          ylab = &quot;Variance of (un)calibrated estimator&quot;,
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  legend(&quot;topright&quot;,
+       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical variance&quot;),
+       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, &quot;red2&quot;),  
+       cex = 0.6)  
+  r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
