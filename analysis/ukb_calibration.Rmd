@@ -29,6 +29,20 @@ Y_1 &= Tb + r_1(Y^m+Y^f) + \epsilon\\
 Y_2 &= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
 \end{split}
 $$
+If we write $G^p$ as $T+NT$, then we have:
+
+$$
+\begin{split}
+Y1 = \sum_j^p\Big[(b^p_jr_1+b_j)T_j+r_1b_j^pNT_j\Big]+\epsilon^p+\epsilon
+\end{split}
+$$
+If we assume $y=\beta_0 + \beta_1x_1 + \beta_2x_2 +\epsilon$ is the true model. $[x_1, x_2]$ follows normal distribution and $\epsilon\sim N(0, \sigma^2)$. The theoretical variance reduction under Gaussian X is as below, where $\rho$ is the ratio of sample size between internal complete data and external incomplete data, and $r$ is the correlation between $x_1$ and $x_2$. 
+
+$$
+\begin{split}
+VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}
+\end{split}
+$$
 
 
 ```{r}
@@ -114,6 +128,56 @@ for (i in 1:p){
 
 ```
 
+```{r fig.width=14, fig.height=6}
+par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple" & res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction <- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list <- lapply(1:length(r1), function(k) {
+  stats <- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple" & res.Y1$sim_data.resample == FALSE), i, data.list = res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw"))
+  variance_reduction <- (stats[, "var_tau_raw"] - stats[,"var_tau_cal"]) / stats[, "var_tau_raw"]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction <- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = "r1",
+          ylab = "Variance Reduction",
+          ylim = c(0, max(dat_variance_reduction) + 0.1),
+          col = "lightblue",  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = "red2")
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend("topright", 
+       legend = c("Simulated Variance Reduction", "Empirical Variance Reduction"),
+       col = c("lightblue", "red2"),
+       pch = c(15, 4),
+       cex = 0.8)
+}
+
+```
+
 
 ### 2. Multiple effects with resampling 
 
@@ -182,6 +246,55 @@ for (i in 1:p){
 
 ```
 
+```{r fig.width=14, fig.height=6}
+par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple" & res.Y1$sim_data.resample == TRUE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction <- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list <- lapply(1:length(r1), function(k) {
+  stats <- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple" & res.Y1$sim_data.resample == TRUE), i, data.list = res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw"))
+  variance_reduction <- (stats[, "var_tau_raw"] - stats[,"var_tau_cal"]) / stats[, "var_tau_raw"]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction <- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = "r1",
+          ylab = "Variance Reduction",
+          ylim = c(-0.05, max(dat_variance_reduction) + 0.1),
+          col = "lightblue",  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = "red2")
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend("topright", 
+       legend = c("Simulated Variance Reduction", "Empirical Variance Reduction"),
+       col = c("lightblue", "red2"),
+       pch = c(15, 4),
+       cex = 0.8)
+}
+
+```
 
 
 ### 3. Single effect:
@@ -200,7 +313,8 @@ par(mfrow = c(10,2))
 r1 = unique(res.Y1$sim_data.r1)
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single" &
+                                                                                  res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
@@ -224,7 +338,8 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single"
+                                                                                & res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
   
   
   dat_estimator_var <- do.call(cbind, snp_dat_list)
@@ -255,7 +370,55 @@ for (i in 1:p){
 
 
 
+```{r fig.width=14, fig.height=6}
+par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
 
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single" & res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction <- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list <- lapply(1:length(r1), function(k) {
+  stats <- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "single" & res.Y1$sim_data.resample == FALSE), i, data.list = res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw"))
+  variance_reduction <- (stats[, "var_tau_raw"] - stats[,"var_tau_cal"]) / stats[, "var_tau_raw"]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction <- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = "r1",
+          ylab = "Variance Reduction",
+          ylim = c(0.2, max(dat_variance_reduction) + 0.2),
+          col = "lightblue",  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = "red2")
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend("topright", 
+       legend = c("Simulated Variance Reduction", "Empirical Variance Reduction"),
+       col = c("lightblue", "red2"),
+       pch = c(15, 4),
+       cex = 0.8)
+}
+
+```
 
 
 
