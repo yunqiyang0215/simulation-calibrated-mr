@@ -19,7 +19,7 @@ p = ncol(trans.all)
 cor = unlist(lapply(1:p, function(i) cor(nontrans.all[, i], trans.all[, i])))
 
 
-hist(cor)
+hist(cor, main = "Correlation between T and NT")
 q25 <- quantile(cor, 0.25)
 m <- mean(cor)
 q75 <- quantile(cor, 0.75)
