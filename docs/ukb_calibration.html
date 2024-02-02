@@ -550,15 +550,15 @@ data/simulation202401/res.rds
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree21593809643fc7a6d8a96c797ff1fb9732782e9atargetblank2159380a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeceb1829a6717d18ac359d4e5a3d9399d5916d66ftargetblankceb1829a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/21593809643fc7a6d8a96c797ff1fb9732782e9a" target="_blank">2159380</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ceb1829a6717d18ac359d4e5a3d9399d5916d66f" target="_blank">ceb1829</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree21593809643fc7a6d8a96c797ff1fb9732782e9atargetblank2159380a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeceb1829a6717d18ac359d4e5a3d9399d5916d66ftargetblankceb1829a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -568,7 +568,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/21593809643fc7a6d8a96c797ff1fb9732782e9a" target="_blank">2159380</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/ceb1829a6717d18ac359d4e5a3d9399d5916d66f" target="_blank">ceb1829</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -630,6 +630,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ceb1829a6717d18ac359d4e5a3d9399d5916d66f/analysis/ukb_calibration.Rmd" target="_blank">ceb1829</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-02
+</td>
+<td>
+wflow_publish("analysis/ukb_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/34580ca84c94fc5e8c0366f5f81672f60d25c7bb/docs/ukb_calibration.html" target="_blank">34580ca</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-02
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1223,8 +1257,29 @@ b&amp;\sim N(0, 1), \quad \epsilon\sim N(0, 1)\\
 Y_1 &amp;= Tb + r_1(Y^m+Y^f) + \epsilon\\
 Y_2 &amp;= \beta Y_1 + r_2(Y^m + Y^f) + \epsilon
 \end{split}
-\]</span></li>
+\]</span> If we write <span class="math inline">\(G^p\)</span> as <span
+class="math inline">\(T+NT\)</span>, then we have:</li>
 </ol>
+<p><span class="math display">\[
+\begin{split}
+Y1 =
+\sum_j^p\Big[(b^p_jr_1+b_j)T_j+r_1b_j^pNT_j\Big]+\epsilon^p+\epsilon
+\end{split}
+\]</span> If we assume <span class="math inline">\(y=\beta_0 +
+\beta_1x_1 + \beta_2x_2 +\epsilon\)</span> is the true model. <span
+class="math inline">\([x_1, x_2]\)</span> follows normal distribution
+and <span class="math inline">\(\epsilon\sim N(0, \sigma^2)\)</span>.
+The theoretical variance reduction under Gaussian X is as below, where
+<span class="math inline">\(\rho\)</span> is the ratio of sample size
+between internal complete data and external incomplete data, and <span
+class="math inline">\(r\)</span> is the correlation between <span
+class="math inline">\(x_1\)</span> and <span
+class="math inline">\(x_2\)</span>.</p>
+<p><span class="math display">\[
+\begin{split}
+VR = \frac{(1-r)(1-\rho)}{2}\frac{\sigma^2}{\sigma^2+(1-r^2)\beta_2^2}
+\end{split}
+\]</span></p>
 <pre class="r"><code>#res1 = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/simulation202401/res.rds&quot;) # previous simulation result
 res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/sim202401/res.rds&quot;) # current result
 res.Y1 = res[[1]]</code></pre>
@@ -1319,6 +1374,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/34580ca84c94fc5e8c0366f5f81672f60d25c7bb/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">34580ca</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-02
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0909559782651aa43c2ef4a3a58301ef9ba10166/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">0909559</a>
 </td>
 <td>
@@ -1364,6 +1430,178 @@ yunqiyang0215
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/72d9f9c65cbde5c78834b6044550087f1ed68396/docs/figure/ukb_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">72d9f9c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  
+
+  dat_estimator &lt;- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali &lt;- empirical_var[c(TRUE, FALSE)]
+  var_raw &lt;- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction &lt;- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list &lt;- lapply(1:length(r1), function(k) {
+  stats &lt;- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == FALSE), i, data.list = res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;))
+  variance_reduction &lt;- (stats[, &quot;var_tau_raw&quot;] - stats[,&quot;var_tau_cal&quot;]) / stats[, &quot;var_tau_raw&quot;]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction &lt;- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = &quot;r1&quot;,
+          ylab = &quot;Variance Reduction&quot;,
+          ylim = c(0, max(dat_variance_reduction) + 0.1),
+          col = &quot;lightblue&quot;,  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend(&quot;topright&quot;, 
+       legend = c(&quot;Simulated Variance Reduction&quot;, &quot;Empirical Variance Reduction&quot;),
+       col = c(&quot;lightblue&quot;, &quot;red2&quot;),
+       pch = c(15, 4),
+       cex = 0.8)
+}</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">cc3ea41</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/1bdfeea123da60c041af41b5282a2a1535ed8779/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">1bdfeea</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/1e07f904235a8216b3ae4aaad7fcf6c7c7b6a1cf/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">1e07f90</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/b071d6d2af596ddd67da31f43d3e4c8cf868ed96/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">b071d6d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-26
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/3c65f87a0877e3e936649d9b7e6fbc5d58986a2c/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">3c65f87</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c161d6b87d8ee5887beeeec255d2735159e39aee/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">c161d6b</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f71295dcde89f3cba7525a47443430e3f0c51c50/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">f71295d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-25
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/606e07cf98f2bca2dc628bbe493a3fe2ccf6c820/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">606e07c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-01-19
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/72d9f9c65cbde5c78834b6044550087f1ed68396/docs/figure/ukb_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">72d9f9c</a>
 </td>
 <td>
 yunqiyang0215
@@ -1437,13 +1675,13 @@ for (i in 1:p){
   r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
   axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
 }</code></pre>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-7-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div id="fig-unnamed-chunk-7-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1462,7 +1700,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0909559782651aa43c2ef4a3a58301ef9ba10166/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">0909559</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0909559782651aa43c2ef4a3a58301ef9ba10166/docs/figure/ukb_calibration.Rmd/unnamed-chunk-7-1.png" target="_blank">0909559</a>
 </td>
 <td>
 yunqi yang
@@ -1473,7 +1711,7 @@ yunqi yang
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">cc3ea41</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cc3ea41d9abfc38c4adbd03edf59707530dac00a/docs/figure/ukb_calibration.Rmd/unnamed-chunk-7-1.png" target="_blank">cc3ea41</a>
 </td>
 <td>
 yunqi yang
@@ -1482,70 +1720,88 @@ yunqi yang
 2024-02-01
 </td>
 </tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == TRUE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  
+
+  dat_estimator &lt;- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali &lt;- empirical_var[c(TRUE, FALSE)]
+  var_raw &lt;- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction &lt;- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list &lt;- lapply(1:length(r1), function(k) {
+  stats &lt;- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;multiple&quot; &amp; res.Y1$sim_data.resample == TRUE), i, data.list = res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;))
+  variance_reduction &lt;- (stats[, &quot;var_tau_raw&quot;] - stats[,&quot;var_tau_cal&quot;]) / stats[, &quot;var_tau_raw&quot;]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction &lt;- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = &quot;r1&quot;,
+          ylab = &quot;Variance Reduction&quot;,
+          ylim = c(-0.05, max(dat_variance_reduction) + 0.1),
+          col = &quot;lightblue&quot;,  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend(&quot;topright&quot;, 
+       legend = c(&quot;Simulated Variance Reduction&quot;, &quot;Empirical Variance Reduction&quot;),
+       col = c(&quot;lightblue&quot;, &quot;red2&quot;),
+       pch = c(15, 4),
+       cex = 0.8)
+}</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-8-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2c2f133aefb758099f4e24e8d4b0737f29316810/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">2c2f133</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/34580ca84c94fc5e8c0366f5f81672f60d25c7bb/docs/figure/ukb_calibration.Rmd/unnamed-chunk-8-1.png" target="_blank">34580ca</a>
 </td>
 <td>
 yunqi yang
 </td>
 <td>
-2024-02-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/aa14137c86691efd36b3c71eb284984d2bc373ba/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">aa14137</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-02-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b30a39cf658cb41c165e597948127cf5808c70f/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">2b30a39</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-02-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/1bdfeea123da60c041af41b5282a2a1535ed8779/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">1bdfeea</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-02-01
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f71295dcde89f3cba7525a47443430e3f0c51c50/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">f71295d</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-01-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/606e07cf98f2bca2dc628bbe493a3fe2ccf6c820/docs/figure/ukb_calibration.Rmd/unnamed-chunk-6-1.png" target="_blank">606e07c</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-01-19
+2024-02-02
 </td>
 </tr>
 </tbody>
@@ -1563,7 +1819,8 @@ bp[1,1] = rnorm(1)</code></pre>
 r1 = unique(res.Y1$sim_data.r1)
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot; &amp;
+                                                                                  res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1587,7 +1844,8 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot;
+                                                                                &amp; res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;)))
   
   
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
@@ -1612,7 +1870,54 @@ for (i in 1:p){
   r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
   axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
 }</code></pre>
-<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-10-1.png" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot; &amp; res.Y1$sim_data.resample == FALSE), i, data.list =res.Y1$calibration.Y1_cali, column_names = c(&quot;tau_cal&quot;, &quot;tau_raw&quot;)))
+  
+
+  dat_estimator &lt;- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali &lt;- empirical_var[c(TRUE, FALSE)]
+  var_raw &lt;- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction &lt;- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list &lt;- lapply(1:length(r1), function(k) {
+  stats &lt;- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] &amp; res.Y1$sim_effect.effect_type == &quot;single&quot; &amp; res.Y1$sim_data.resample == FALSE), i, data.list = res.Y1$calibration.Y1_cali, column_names = c(&quot;var_tau_cal&quot;, &quot;var_tau_raw&quot;))
+  variance_reduction &lt;- (stats[, &quot;var_tau_raw&quot;] - stats[,&quot;var_tau_cal&quot;]) / stats[, &quot;var_tau_raw&quot;]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction &lt;- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = &quot;r1&quot;,
+          ylab = &quot;Variance Reduction&quot;,
+          ylim = c(0.2, max(dat_variance_reduction) + 0.2),
+          col = &quot;lightblue&quot;,  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend(&quot;topright&quot;, 
+       legend = c(&quot;Simulated Variance Reduction&quot;, &quot;Empirical Variance Reduction&quot;),
+       col = c(&quot;lightblue&quot;, &quot;red2&quot;),
+       pch = c(15, 4),
+       cex = 0.8)
+}</code></pre>
+<p><img src="figure/ukb_calibration.Rmd/unnamed-chunk-11-1.png" width="1344" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
