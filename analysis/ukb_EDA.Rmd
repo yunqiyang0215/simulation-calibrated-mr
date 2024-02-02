@@ -1,0 +1,50 @@
+---
+title: "EDA on UKB trio data"
+output: html_document
+date: '2024-02-02'
+---
+
+```{r}
+# Load real data
+dat_int = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/dat_int.rds")
+dat_child = dat_int[[1]]
+dat_par = dat_int[[2]]
+trans.all = dat_child[, c(2:1199)]
+nontrans.all = dat_child[, c(1200: 2397)]
+```
+
+### 1. Check correlation between T and NT
+```{r}
+p = ncol(trans.all)
+cor = unlist(lapply(1:p, function(i) cor(nontrans.all[, i], trans.all[, i])))
+
+
+hist(cor)
+q25 <- quantile(cor, 0.25)
+m <- mean(cor)
+q75 <- quantile(cor, 0.75)
+
+abline(v = q25, col = "blue", lwd = 2, lty = 2) 
+abline(v = m, col = "red", lwd = 2) 
+abline(v = q75, col = "blue", lwd = 2, lty = 2) 
+legend("topright", legend=c("25th Quantile", "Mean", "75th Quantile"), 
+       col=c("blue", "red", "blue"), lwd=2, lty=c(2,1,2))
+
+```
+
+
+### 2. Check correlation between transmitted alleles
+
+```{r}
+
+corMatrix <- cor(trans.all)
+upperTriValues <- corMatrix[upper.tri(corMatrix, diag = FALSE)]
+hist(upperTriValues, xlab = "correlation", main = "SNP correlations")
+
+```
+
+
+
+
+
+
