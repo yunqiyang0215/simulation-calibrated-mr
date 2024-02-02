@@ -29,6 +29,8 @@ editor_options:
 
 Simulation using ukb real genotype
 
++ [EDA on UKB trio data](ukb_EDA.html)
+
 + [Calibration result](ukb_calibration.html)
 
 + [Calibration result: random X](sim_calibration_randomX.html)
