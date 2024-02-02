@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree036b26370390e4e44f4d1e70c9dd6a8e853bf345targetblank036b263a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree18786dde388b74dd785575b8fd844c25008e8572targetblank18786dda">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/036b26370390e4e44f4d1e70c9dd6a8e853bf345" target="_blank">036b263</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/18786dde388b74dd785575b8fd844c25008e8572" target="_blank">18786dd</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree036b26370390e4e44f4d1e70c9dd6a8e853bf345targetblank036b263a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree18786dde388b74dd785575b8fd844c25008e8572targetblank18786dda"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/036b26370390e4e44f4d1e70c9dd6a8e853bf345" target="_blank">036b263</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/18786dde388b74dd785575b8fd844c25008e8572" target="_blank">18786dd</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -610,6 +610,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/18786dde388b74dd785575b8fd844c25008e8572/analysis/ukb_EDA.Rmd" target="_blank">18786dd</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+wflow_publish("analysis/ukb_EDA.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/568dd8b592f3128b9dced7bc708038c2486217ba/docs/ukb_EDA.html" target="_blank">568dd8b</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/036b26370390e4e44f4d1e70c9dd6a8e853bf345/analysis/ukb_EDA.Rmd" target="_blank">036b263</a>
 </td>
 <td>
@@ -641,7 +675,7 @@ nontrans.all = dat_child[, c(1200: 2397)]</code></pre>
 cor = unlist(lapply(1:p, function(i) cor(nontrans.all[, i], trans.all[, i])))
 
 
-hist(cor)
+hist(cor, main = &quot;Correlation between T and NT&quot;)
 q25 &lt;- quantile(cor, 0.25)
 m &lt;- mean(cor)
 q75 &lt;- quantile(cor, 0.75)
@@ -652,6 +686,43 @@ abline(v = q75, col = &quot;blue&quot;, lwd = 2, lty = 2)
 legend(&quot;topright&quot;, legend=c(&quot;25th Quantile&quot;, &quot;Mean&quot;, &quot;75th Quantile&quot;), 
        col=c(&quot;blue&quot;, &quot;red&quot;, &quot;blue&quot;), lwd=2, lty=c(2,1,2))</code></pre>
 <p><img src="figure/ukb_EDA.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
+Past versions of unnamed-chunk-2-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/568dd8b592f3128b9dced7bc708038c2486217ba/docs/figure/ukb_EDA.Rmd/unnamed-chunk-2-1.png" target="_blank">568dd8b</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="check-correlation-between-transmitted-alleles"
 class="section level3">
@@ -660,6 +731,43 @@ class="section level3">
 upperTriValues &lt;- corMatrix[upper.tri(corMatrix, diag = FALSE)]
 hist(upperTriValues, xlab = &quot;correlation&quot;, main = &quot;SNP correlations&quot;)</code></pre>
 <p><img src="figure/ukb_EDA.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/568dd8b592f3128b9dced7bc708038c2486217ba/docs/figure/ukb_EDA.Rmd/unnamed-chunk-3-1.png" target="_blank">568dd8b</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
