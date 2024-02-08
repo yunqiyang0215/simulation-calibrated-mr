@@ -33,7 +33,7 @@ If we write $G^p$ as $T+NT$, then we have:
 
 $$
 \begin{split}
-Y1 = \sum_j^p\Big[(b^p_jr_1+b_j)T_j+r_1b_j^pNT_j\Big]+\epsilon^p+\epsilon
+Y_1 = \sum_j^p\Big[(b^p_jr_1+b_j)T_j+r_1b_j^pNT_j\Big]+\epsilon^p+\epsilon
 \end{split}
 $$
 If we assume $y=\beta_0 + \beta_1x_1 + \beta_2x_2 +\epsilon$ is the true model. $[x_1, x_2]$ follows normal distribution and $\epsilon\sim N(0, \sigma^2)$. The theoretical variance reduction under Gaussian X is as below, where $\rho$ is the ratio of sample size between internal complete data and external incomplete data, and $r$ is the correlation between $x_1$ and $x_2$. 
