@@ -19,7 +19,7 @@ combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names)
 }
 ```
 
-### 1. Compare calibrated estimator vs. raw estimator
+### 1. Compare calibrated estimator vs. raw estimator (Exposure trait)
 
 ```{r fig.width=8, fig.height=40}
 
@@ -78,7 +78,7 @@ for (i in 1:p){
 ```
 
 
-### 2. Compare variance reduction
+### 2. Compare variance reduction (Exposure trait)
 
 ```{r fig.width=14, fig.height=6}
 
@@ -132,3 +132,226 @@ for (i in 1:p){
 
 
 
+ 
+ 
+ 
+### 3. Compare calibrated estimator vs. raw estimator (Outcome trait)
+
+```{r fig.width=8, fig.height=40}
+
+par(mfrow = c(10,2))
+r1 = unique(res$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "r1",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical mean"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw")))
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+    
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          #ylim = c(0, 0.06),
+          xlab = "r1",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  r_values <- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}
+```
+
+
+```{r fig.width=8, fig.height=40}
+
+par(mfrow = c(10,2))
+r2 = unique(res$sim_data.r2)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "r2",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical mean"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r2)), labels=r2)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw")))
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+    
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          #ylim = c(0, 0.06),
+          xlab = "r2",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  r_values <- r2
+  axis(1, at=seq(1.5, by=2, length.out=length(r2)), labels=r2)
+}
+```
+
+
+
+### 4. Compare variance reduction (Outcome trait)
+
+```{r fig.width=14, fig.height=6}
+
+par(mfrow = c(2,5))
+r1 = unique(res$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction <- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list <- lapply(1:length(r1), function(k) {
+  stats <- combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw"))
+  variance_reduction <- (stats[,"Y2.var.raw"] - stats[,"Y2.cali.var"]) / stats[,"Y2.var.raw"]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction <- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = "r1",
+          ylab = "Variance Reduction",
+          ylim = c(min(dat_variance_reduction) - 0.01, max(dat_variance_reduction) + 0.1),
+          col = "lightblue",  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = "red2")
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend("topright", 
+       legend = c("Simulated Variance Reduction", "Empirical Variance Reduction"),
+       col = c("lightblue", "red2"),
+       pch = c(15, 4),
+       cex = 0.8)
+}
+```
+
+```{r fig.width=14, fig.height=6}
+
+par(mfrow = c(2,5))
+r2 = unique(res$sim_data.r2)
+p = 10
+
+for (i in 1:p){
+  
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction <- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list <- lapply(1:length(r2), function(k) {
+  stats <- combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw"))
+  variance_reduction <- (stats[,"Y2.var.raw"] - stats[,"Y2.cali.var"]) / stats[,"Y2.var.raw"]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction <- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = "r2",
+          ylab = "Variance Reduction",
+          ylim = c(min(dat_variance_reduction) - 0.01, max(dat_variance_reduction) + 0.1),
+          col = "lightblue",  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = "red2")
+  axis(1, at=seq(1.5, by=2, length.out=length(r2)), labels=r2)
+  legend("topright", 
+       legend = c("Simulated Variance Reduction", "Empirical Variance Reduction"),
+       col = c("lightblue", "red2"),
+       pch = c(15, 4),
+       cex = 0.8)
+}
+```
+
+ 
