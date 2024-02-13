@@ -17,7 +17,7 @@ mr_method = c("eggr", "ivw", "mr.raps")
 ```
 
 ### 1. IVW
-```{r fig.height=10, fig.width=10}
+```{r fig.height=20, fig.width=20}
 par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 
 n_rep = 50
@@ -64,7 +64,7 @@ points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = "
 
 ### 2. mr.raps
 
-```{r fig.height=10, fig.width=10}
+```{r fig.height=20, fig.width=20}
 par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 
 n_rep = 50
