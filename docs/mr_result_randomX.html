@@ -523,15 +523,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree36a28209a3991f5f5a682ce5a5246afa26b1c549targetblank36a2820a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb44820a227a02308cf2cecad732d12932accc9dbtargetblankb44820aa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/36a28209a3991f5f5a682ce5a5246afa26b1c549" target="_blank">36a2820</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b44820a227a02308cf2cecad732d12932accc9db" target="_blank">b44820a</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree36a28209a3991f5f5a682ce5a5246afa26b1c549targetblank36a2820a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb44820a227a02308cf2cecad732d12932accc9dbtargetblankb44820aa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -541,7 +541,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/36a28209a3991f5f5a682ce5a5246afa26b1c549" target="_blank">36a2820</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b44820a227a02308cf2cecad732d12932accc9db" target="_blank">b44820a</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -608,6 +608,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/b44820a227a02308cf2cecad732d12932accc9db/analysis/mr_result_randomX.Rmd" target="_blank">b44820a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-12
+</td>
+<td>
+wflow_publish("analysis/mr_result_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/139a79c84056f6fa82aabe7d26ba5209226e9167/docs/mr_result_randomX.html" target="_blank">139a79c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/36a28209a3991f5f5a682ce5a5246afa26b1c549/analysis/mr_result_randomX.Rmd" target="_blank">36a2820</a>
 </td>
 <td>
@@ -650,7 +684,44 @@ for (i in 1:length(r1)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;ivw: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]), width = c(0.3, 0.3))
   }
 }</code></pre>
-<p><img src="figure/mr_result_randomX.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result_randomX.Rmd/unnamed-chunk-3-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/139a79c84056f6fa82aabe7d26ba5209226e9167/docs/figure/mr_result_randomX.Rmd/unnamed-chunk-3-1.png" target="_blank">139a79c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <div id="compute-variance-reduction" class="section level4">
 <h4>Compute variance reduction</h4>
 <pre class="r"><code>aggregated_data &lt;- data.frame(var_reduction = numeric(), combination = factor())
@@ -669,6 +740,43 @@ for(i in 1:length(r1)) {
 boxplot(var_reduction ~ combination, data = aggregated_data, xlab = &quot;r1, r2 value&quot;, ylab = &quot;Variance Reduction&quot;,main = &quot;Variance Reduction: IVW&quot;, las = 2, cex.axis = 0.7, ylim = c(-0.5, 0.8)) 
 points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = &quot;red&quot;, pch = 4)</code></pre>
 <p><img src="figure/mr_result_randomX.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/139a79c84056f6fa82aabe7d26ba5209226e9167/docs/figure/mr_result_randomX.Rmd/unnamed-chunk-4-1.png" target="_blank">139a79c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="mr.raps" class="section level3">
@@ -689,7 +797,44 @@ for (i in 1:length(r1)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;mr.raps: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]), width = c(0.3, 0.3))
   }
 }</code></pre>
-<p><img src="figure/mr_result_randomX.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result_randomX.Rmd/unnamed-chunk-5-1.png" width="1920" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/139a79c84056f6fa82aabe7d26ba5209226e9167/docs/figure/mr_result_randomX.Rmd/unnamed-chunk-5-1.png" target="_blank">139a79c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>aggregated_data &lt;- data.frame(var_reduction = numeric(), combination = factor())
 
 for(i in 1:length(r1)) {
@@ -706,6 +851,43 @@ for(i in 1:length(r1)) {
 boxplot(var_reduction ~ combination, data = aggregated_data, xlab = &quot;r1, r2 value&quot;, ylab = &quot;Variance Reduction&quot;,main = &quot;Variance Reduction: mr.raps&quot;, las = 2, cex.axis = 0.7, ylim = c(0, 0.75)) 
 points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = &quot;red&quot;, pch = 4)</code></pre>
 <p><img src="figure/mr_result_randomX.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/139a79c84056f6fa82aabe7d26ba5209226e9167/docs/figure/mr_result_randomX.Rmd/unnamed-chunk-6-1.png" target="_blank">139a79c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
