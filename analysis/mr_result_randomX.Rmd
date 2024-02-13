@@ -1,0 +1,104 @@
+---
+title: "Variance reduction on Mendelian Randomization"
+output: html_document
+date: '2024-02-09'
+---
+
+```{r}
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/mr_dsc20230727/res_mr.rds")
+```
+
+```{r}
+r1 = unique(dat$sim_data.r1) # Y.pa contribution to exposure trait
+r2 = unique(dat$sim_data.r2) # Y.pa contribution to outcome trait
+method = c("calibrated", "adj_uncalibrated")
+mr_method = c("eggr", "ivw", "mr.raps")
+
+```
+
+### 1. IVW
+```{r fig.height=10, fig.width=10}
+par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+
+n_rep = 50
+emp_var_reduction = c() 
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
+    cali = res$mr.point_est[res$fit.method == "calibrated"]
+    adj_uncali = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
+    val = c(cali, adj_uncali)
+    reduction = (var(adj_uncali) - var(cali))/var(adj_uncali)
+    emp_var_reduction = c(emp_var_reduction, reduction)
+    group = c(rep("cali", n_rep), rep("uncali", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("ivw: exp =", r1[i], "; out =", r2[j]), width = c(0.3, 0.3))
+  }
+}
+```
+
+
+
+#### Compute variance reduction
+
+```{r}
+
+aggregated_data <- data.frame(var_reduction = numeric(), combination = factor())
+
+for(i in 1:length(r1)) {
+  for(j in 1:length(r2)) {
+    res <- dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
+    cali = (res$mr.stderr[res$fit.method == "calibrated"])^2
+    adj_uncali = (res$mr.stderr[res$fit.method == "adj_uncalibrated"])^2
+    var_reduction <- (adj_uncali - cali)/adj_uncali
+    label <- paste(r1[i], r2[j], sep = ",")
+    aggregated_data <- rbind(aggregated_data, data.frame(var_reduction = var_reduction, combination = factor(label)))
+  }
+}
+
+boxplot(var_reduction ~ combination, data = aggregated_data, xlab = "r1, r2 value", ylab = "Variance Reduction",main = "Variance Reduction: IVW", las = 2, cex.axis = 0.7, ylim = c(-0.5, 0.8)) 
+points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = "red", pch = 4)
+
+```
+
+
+
+### 2. mr.raps
+
+```{r fig.height=10, fig.width=10}
+par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+
+n_rep = 50
+emp_var_reduction = c() 
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
+    cali = res$mr.point_est[res$fit.method == "calibrated"]
+    adj_uncali = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
+    val = c(cali, adj_uncali)
+    reduction = (var(adj_uncali) - var(cali))/var(adj_uncali)
+    emp_var_reduction = c(emp_var_reduction, reduction)
+    group = c(rep("cali", n_rep), rep("uncali", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("mr.raps: exp =", r1[i], "; out =", r2[j]), width = c(0.3, 0.3))
+  }
+}
+```
+
+```{r}
+
+aggregated_data <- data.frame(var_reduction = numeric(), combination = factor())
+
+for(i in 1:length(r1)) {
+  for(j in 1:length(r2)) {
+    res <- dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
+    cali = (res$mr.stderr[res$fit.method == "calibrated"])^2
+    adj_uncali = (res$mr.stderr[res$fit.method == "adj_uncalibrated"])^2
+    var_reduction <- (adj_uncali - cali)/adj_uncali
+    label <- paste(r1[i], r2[j], sep = ",")
+    aggregated_data <- rbind(aggregated_data, data.frame(var_reduction = var_reduction, combination = factor(label)))
+  }
+}
+
+boxplot(var_reduction ~ combination, data = aggregated_data, xlab = "r1, r2 value", ylab = "Variance Reduction",main = "Variance Reduction: mr.raps", las = 2, cex.axis = 0.7, ylim = c(0, 0.75)) 
+points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = "red", pch = 4)
+
+```
