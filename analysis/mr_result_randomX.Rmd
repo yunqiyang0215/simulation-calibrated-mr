@@ -16,47 +16,98 @@ mr_method = c("eggr", "ivw", "mr.raps")
 
 ```
 
-### 1. IVW
-```{r fig.height=20, fig.width=20}
-par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
-
-n_rep = 50
-emp_var_reduction = c() 
-for (i in 1:length(r1)){
-  for (j in 1:length(r2)){
-    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
-    cali = res$mr.point_est[res$fit.method == "calibrated"]
-    adj_uncali = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
-    val = c(cali, adj_uncali)
-    reduction = (var(adj_uncali) - var(cali))/var(adj_uncali)
-    emp_var_reduction = c(emp_var_reduction, reduction)
-    group = c(rep("cali", n_rep), rep("uncali", n_rep))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("ivw: exp =", r1[i], "; out =", r2[j]), width = c(0.3, 0.3))
-  }
-}
-```
-
-
-
-#### Compute variance reduction
+### 1. IVW:
 
 ```{r}
 
-aggregated_data <- data.frame(var_reduction = numeric(), combination = factor())
+aggregated_data <- data.frame(cali_point = numeric(), adj_uncali_point = numeric(),
+                              cali = numeric(), adj_uncali = numeric(), 
+                              emp_var_cali = numeric(), emp_var_adj_uncali = numeric(), 
+                              var_reduction = numeric(), emp_var_reduction = numeric(), combination = factor())
 
 for(i in 1:length(r1)) {
   for(j in 1:length(r2)) {
     res <- dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
+    cali_point = res$mr.point_est[res$fit.method == "calibrated"]
+    adj_uncali_point = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
     cali = (res$mr.stderr[res$fit.method == "calibrated"])^2
     adj_uncali = (res$mr.stderr[res$fit.method == "adj_uncalibrated"])^2
+    
+    # These empirical values are the same across replicates 
+    emp_var_cali = var(cali_point)
+    emp_var_adj_uncali = var(adj_uncali_point)
+    emp_var_reduction <- (emp_var_adj_uncali - emp_var_cali)/emp_var_adj_uncali
+    
     var_reduction <- (adj_uncali - cali)/adj_uncali
     label <- paste(r1[i], r2[j], sep = ",")
-    aggregated_data <- rbind(aggregated_data, data.frame(var_reduction = var_reduction, combination = factor(label)))
+    aggregated_data <- rbind(aggregated_data, data.frame(cali_point = cali_point, adj_uncali_point = adj_uncali_point,
+                                                         cali = cali, adj_uncali = adj_uncali, emp_var_cali = emp_var_cali,
+                                                         emp_var_adj_uncali = emp_var_adj_uncali, var_reduction =  var_reduction,
+                                                         emp_var_reduction = emp_var_reduction, combination = factor(label)))
   }
 }
 
-boxplot(var_reduction ~ combination, data = aggregated_data, xlab = "r1, r2 value", ylab = "Variance Reduction",main = "Variance Reduction: IVW", las = 2, cex.axis = 0.7, ylim = c(-0.5, 0.8)) 
-points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = "red", pch = 4)
+```
+
+
+#### (1) Boxplot for point estimate 
+```{r}
+
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate")
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, 
+        col = "lightblue", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+boxplot(adj_uncali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, 
+        col = "lightcoral", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+legend("topright", legend = c("Calibrated estimator", "Uncalibrated estimator"), fill = c("lightblue", "lightcoral"), bty = "n", cex = 0.8)
+
+```
+
+
+#### (2) Boxplot for estimated variance & empirical variance
+
+```{r}
+emp_var_means <- aggregate(cbind(emp_var_cali, emp_var_adj_uncali) ~ combination, data = aggregated_data, FUN = mean)
+```
+
+```{r fig.width=10, fig.height = 5}
+
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")], na.rm = TRUE), xaxt = "n", main = "Variance of Calibrated vs UnCalibrated Estimators")
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+boxplot(cali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "#76B7B2", add = TRUE, ylim = range(aggregated_data$cali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+boxplot(adj_uncali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, col = "gold", add = TRUE, ylim = range(aggregated_data$adj_uncali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+
+# Adding empirical variance points
+points(1:length(levels(emp_var_means$combination)) - 0.2, emp_var_means$emp_var_cali, pch = 4, col = "red", xlab = "")
+points(1:length(levels(emp_var_means$combination)) + 0.2, emp_var_means$emp_var_adj_uncali, pch = 4, col = "red", xlab = "")
+
+legend("topright", legend = c("Variance of calibrated estimator", "Variance of uncalibrated estimator", "Empirical Variance"), fill = c("#76B7B2", "gold", "red"), bty = "n", cex = 0.8)
+
+```
+
+#### (3) Boxplot for variance reduction
+
+```{r}
+# Calculate mean variance reduction by combination
+emp_var_reduction <- aggregate(emp_var_reduction ~ combination, data = aggregated_data, FUN = mean)
+
+# Plotting setup
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance Reduction", 
+     xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), 
+     ylim = c(-1.05, 0.83), xaxt = "n", main = "Variance Reduction")
+
+# Add boxplot for variance reduction
+boxplot(var_reduction ~ combination, data = aggregated_data, 
+        at = 1:length(levels(aggregated_data$combination)) - 0.2, 
+        col = "#76B7B2", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+
+
+# Add custom axis labels
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+points(1:length(levels(emp_var_reduction$combination)) - 0.2, emp_var_reduction$emp_var_reduction, pch = 4, col = "red")
 
 ```
 
@@ -64,41 +115,97 @@ points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = "
 
 ### 2. mr.raps
 
-```{r fig.height=20, fig.width=20}
-par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
-
-n_rep = 50
-emp_var_reduction = c() 
-for (i in 1:length(r1)){
-  for (j in 1:length(r2)){
-    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
-    cali = res$mr.point_est[res$fit.method == "calibrated"]
-    adj_uncali = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
-    val = c(cali, adj_uncali)
-    reduction = (var(adj_uncali) - var(cali))/var(adj_uncali)
-    emp_var_reduction = c(emp_var_reduction, reduction)
-    group = c(rep("cali", n_rep), rep("uncali", n_rep))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("mr.raps: exp =", r1[i], "; out =", r2[j]), width = c(0.3, 0.3))
-  }
-}
-```
-
 ```{r}
 
-aggregated_data <- data.frame(var_reduction = numeric(), combination = factor())
+aggregated_data <- data.frame(cali_point = numeric(), adj_uncali_point = numeric(),
+                              cali = numeric(), adj_uncali = numeric(), 
+                              emp_var_cali = numeric(), emp_var_adj_uncali = numeric(), 
+                              var_reduction = numeric(), emp_var_reduction = numeric(), combination = factor())
 
 for(i in 1:length(r1)) {
   for(j in 1:length(r2)) {
     res <- dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
+    cali_point = res$mr.point_est[res$fit.method == "calibrated"]
+    adj_uncali_point = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
     cali = (res$mr.stderr[res$fit.method == "calibrated"])^2
     adj_uncali = (res$mr.stderr[res$fit.method == "adj_uncalibrated"])^2
+    
+    # These empirical values are the same across replicates 
+    emp_var_cali = var(cali_point)
+    emp_var_adj_uncali = var(adj_uncali_point)
+    emp_var_reduction <- (emp_var_adj_uncali - emp_var_cali)/emp_var_adj_uncali
+    
     var_reduction <- (adj_uncali - cali)/adj_uncali
     label <- paste(r1[i], r2[j], sep = ",")
-    aggregated_data <- rbind(aggregated_data, data.frame(var_reduction = var_reduction, combination = factor(label)))
+    aggregated_data <- rbind(aggregated_data, data.frame(cali_point = cali_point, adj_uncali_point = adj_uncali_point,
+                                                         cali = cali, adj_uncali = adj_uncali, emp_var_cali = emp_var_cali,
+                                                         emp_var_adj_uncali = emp_var_adj_uncali, var_reduction =  var_reduction,
+                                                         emp_var_reduction = emp_var_reduction, combination = factor(label)))
   }
 }
 
-boxplot(var_reduction ~ combination, data = aggregated_data, xlab = "r1, r2 value", ylab = "Variance Reduction",main = "Variance Reduction: mr.raps", las = 2, cex.axis = 0.7, ylim = c(0, 0.75)) 
-points(1:length(unique(aggregated_data$combination)), emp_var_reduction, col = "red", pch = 4)
+```
+
+
+#### (1) Boxplot for point estimate 
+```{r}
+
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate")
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, 
+        col = "lightblue", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+boxplot(adj_uncali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, 
+        col = "lightcoral", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+legend("topright", legend = c("Calibrated estimator", "Uncalibrated estimator"), fill = c("lightblue", "lightcoral"), bty = "n", cex = 0.8)
 
 ```
+
+
+#### (2) Boxplot for estimated variance & empirical variance
+
+```{r}
+emp_var_means <- aggregate(cbind(emp_var_cali, emp_var_adj_uncali) ~ combination, data = aggregated_data, FUN = mean)
+```
+
+```{r fig.width=10, fig.height = 5}
+
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")], na.rm = TRUE), xaxt = "n", main = "Variance of Calibrated vs UnCalibrated Estimators")
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+boxplot(cali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "#76B7B2", add = TRUE, ylim = range(aggregated_data$cali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+boxplot(adj_uncali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, col = "gold", add = TRUE, ylim = range(aggregated_data$adj_uncali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+
+# Adding empirical variance points
+points(1:length(levels(emp_var_means$combination)) - 0.2, emp_var_means$emp_var_cali, pch = 4, col = "red", xlab = "")
+points(1:length(levels(emp_var_means$combination)) + 0.2, emp_var_means$emp_var_adj_uncali, pch = 4, col = "red", xlab = "")
+
+legend("topright", legend = c("Variance of calibrated estimator", "Variance of uncalibrated estimator", "Empirical Variance"), fill = c("#76B7B2", "gold", "red"), bty = "n", cex = 0.8)
+
+```
+
+#### (3) Boxplot for variance reduction
+
+```{r}
+# Calculate mean variance reduction by combination
+emp_var_reduction <- aggregate(emp_var_reduction ~ combination, data = aggregated_data, FUN = mean)
+
+# Plotting setup
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance Reduction", 
+     xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), 
+     ylim = c(0, 0.83), xaxt = "n", main = "Variance Reduction")
+
+# Add boxplot for variance reduction
+boxplot(var_reduction ~ combination, data = aggregated_data, 
+        at = 1:length(levels(aggregated_data$combination)) - 0.2, 
+        col = "#76B7B2", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+
+
+# Add custom axis labels
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+points(1:length(levels(emp_var_reduction$combination)) - 0.2, emp_var_reduction$emp_var_reduction, pch = 4, col = "red")
+
+```
+
+
