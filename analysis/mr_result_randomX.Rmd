@@ -54,7 +54,7 @@ for(i in 1:length(r1)) {
 #### (1) Boxplot for point estimate 
 ```{r}
 
-plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate")
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate: IVW")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, 
@@ -72,9 +72,8 @@ legend("topright", legend = c("Calibrated estimator", "Uncalibrated estimator"),
 emp_var_means <- aggregate(cbind(emp_var_cali, emp_var_adj_uncali) ~ combination, data = aggregated_data, FUN = mean)
 ```
 
-```{r fig.width=10, fig.height = 5}
-
-plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")], na.rm = TRUE), xaxt = "n", main = "Variance of Calibrated vs UnCalibrated Estimators")
+```{r  }
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")], na.rm = TRUE), xaxt = "n", main = "Variance of MR estimates")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "#76B7B2", add = TRUE, ylim = range(aggregated_data$cali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
@@ -84,7 +83,7 @@ boxplot(adj_uncali ~ combination, data = aggregated_data, at = 1:length(levels(a
 points(1:length(levels(emp_var_means$combination)) - 0.2, emp_var_means$emp_var_cali, pch = 4, col = "red", xlab = "")
 points(1:length(levels(emp_var_means$combination)) + 0.2, emp_var_means$emp_var_adj_uncali, pch = 4, col = "red", xlab = "")
 
-legend("topright", legend = c("Variance of calibrated estimator", "Variance of uncalibrated estimator", "Empirical Variance"), fill = c("#76B7B2", "gold", "red"), bty = "n", cex = 0.8)
+legend("topright", legend = c("Calibrated", "Uncalibrated", "Empirical Variance"), fill = c("#76B7B2", "gold", "red"), bty = "n", cex = 0.8)
 
 ```
 
@@ -151,7 +150,7 @@ for(i in 1:length(r1)) {
 #### (1) Boxplot for point estimate 
 ```{r}
 
-plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate")
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate: mr.raps")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, 
@@ -169,7 +168,7 @@ legend("topright", legend = c("Calibrated estimator", "Uncalibrated estimator"),
 emp_var_means <- aggregate(cbind(emp_var_cali, emp_var_adj_uncali) ~ combination, data = aggregated_data, FUN = mean)
 ```
 
-```{r fig.width=10, fig.height = 5}
+```{r }
 
 plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")], na.rm = TRUE), xaxt = "n", main = "Variance of Calibrated vs UnCalibrated Estimators")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
@@ -181,7 +180,7 @@ boxplot(adj_uncali ~ combination, data = aggregated_data, at = 1:length(levels(a
 points(1:length(levels(emp_var_means$combination)) - 0.2, emp_var_means$emp_var_cali, pch = 4, col = "red", xlab = "")
 points(1:length(levels(emp_var_means$combination)) + 0.2, emp_var_means$emp_var_adj_uncali, pch = 4, col = "red", xlab = "")
 
-legend("topright", legend = c("Variance of calibrated estimator", "Variance of uncalibrated estimator", "Empirical Variance"), fill = c("#76B7B2", "gold", "red"), bty = "n", cex = 0.8)
+legend("topright", legend = c("Calibrated", "Uncalibrated", "Empirical Variance"), fill = c("#76B7B2", "gold", "red"), bty = "n", cex = 0.8)
 
 ```
 
