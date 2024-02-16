@@ -16,6 +16,7 @@ mr_method = c("eggr", "ivw", "mr.raps")
 
 ```
 
+
 ### 1. IVW:
 
 ```{r}
