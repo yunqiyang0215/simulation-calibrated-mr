@@ -1,0 +1,143 @@
+---
+title: "Calibration result: fixed X"
+output: html_document
+date: '2024-02-16'
+---
+
+
+### Description:
+
+The simulation setting is the same as https://yunqiyang0215.github.io/simulation-calibrated-mr/ukb_calibration.html. Here we use resampling scheme and change the way of estimating external coefficient. 
+
+
+
+```{r}
+res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim202402_fixedX/res.rds") 
+res.Y1 = res[[1]]
+```
+
+```{r}
+combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
+  res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
+  dat_combined = do.call(rbind, res)
+  return(dat_combined)
+}
+```
+
+
+### 1. Multiple effects with resampling 
+
+```{r eval = FALSE}
+set.seed(1)
+p = 10
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+```
+
+```{r fig.width=8, fig.height=40}
+par(mfrow = c(10,2))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k]  & res.Y1$sim_effect.effect_type == "multiple"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "r1",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical mean"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw")))
+  
+  
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+    
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          ylim = c(0, max(dat_estimator_var)+0.01),
+          xlab = "r1",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  r_values <- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}
+
+```
+
+```{r fig.width=14, fig.height=6}
+par(mfrow = c(2,5))
+r1 = unique(res.Y1$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple"), i, data.list =res.Y1$calibration.Y1_cali, column_names = c("tau_cal", "tau_raw")))
+  
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  
+  # Separate var_cali and var_raw values
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_var_reduction <- (var_raw - var_cali) / var_raw
+
+  
+  # Calculate variance reduction
+  snp_dat_list <- lapply(1:length(r1), function(k) {
+  stats <- combine_single_snp_stat(which(res.Y1$sim_data.r1 == r1[k] & res.Y1$sim_effect.effect_type == "multiple"), i, data.list = res.Y1$calibration.Y1_cali, column_names = c("var_tau_cal", "var_tau_raw"))
+  variance_reduction <- (stats[, "var_tau_raw"] - stats[,"var_tau_cal"]) / stats[, "var_tau_raw"]
+  return(variance_reduction)
+})
+
+  # Combine the data
+  dat_variance_reduction <- do.call(cbind, snp_dat_list)
+  
+  # Boxplot for variance reduction
+  boxplot(dat_variance_reduction,
+          xlab = "r1",
+          ylab = "Variance Reduction",
+          ylim = c(-0.05, max(dat_variance_reduction) + 0.1),
+          col = "lightblue",  
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  
+
+  points(1:length(empirical_var_reduction), empirical_var_reduction, pch = 4, cex = 0.8, col = "red2")
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+  legend("topright", 
+       legend = c("Simulated Variance Reduction", "Empirical Variance Reduction"),
+       col = c("lightblue", "red2"),
+       pch = c(15, 4),
+       cex = 0.8)
+}
+
+```
