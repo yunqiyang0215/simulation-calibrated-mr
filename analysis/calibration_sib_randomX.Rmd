@@ -53,19 +53,19 @@ for (i in 1:p){
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
   snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.std", "Y1.raw.std")))
-  dat_estimator_var <- do.call(cbind, snp_dat_list)
+  dat_estimator_std <- do.call(cbind, snp_dat_list)
     
-  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
-  boxplot(dat_estimator_var^2,
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_std))
+  boxplot(dat_estimator_std^2,
 
-          ylim = c(0, max(dat_estimator_var^2, empirical_var)+0.005),
+          ylim = c(0, max(dat_estimator_std^2, empirical_var)+0.005),
           xlab = "r1",
           ylab = "Variance of (un)calibrated estimator",
           col = colors,
           outpch = 20, 
           outcex = 0.5,
           xaxt = "n")
-  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  points(1:ncol(dat_estimator_std), empirical_var, pch = 4, cex = 0.8, col = "red2")
   legend("topright",
        legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
        fill = c("lightblue", "gold1", NA),  
