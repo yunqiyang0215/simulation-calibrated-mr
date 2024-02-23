@@ -523,15 +523,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef054bece2beb17f5a51f9a99cdb6eaf879377f8ctargetblankf054beca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea44769eff0fb218360f4987a818bb8ff4e6134b4targetblanka44769ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f054bece2beb17f5a51f9a99cdb6eaf879377f8c" target="_blank">f054bec</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a44769eff0fb218360f4987a818bb8ff4e6134b4" target="_blank">a44769e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef054bece2beb17f5a51f9a99cdb6eaf879377f8ctargetblankf054beca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea44769eff0fb218360f4987a818bb8ff4e6134b4targetblanka44769ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -541,7 +541,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f054bece2beb17f5a51f9a99cdb6eaf879377f8c" target="_blank">f054bec</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a44769eff0fb218360f4987a818bb8ff4e6134b4" target="_blank">a44769e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -558,7 +558,6 @@ were generated:
 Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
 
 </code></pre>
 <p>
@@ -605,6 +604,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a44769eff0fb218360f4987a818bb8ff4e6134b4/analysis/calibration_sib_randomX.Rmd" target="_blank">a44769e</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-23
+</td>
+<td>
+wflow_publish("analysis/calibration_sib_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/f35a1c6560821e8ce7cf471e58b3981c18031dd4/docs/calibration_sib_randomX.html" target="_blank">f35a1c6</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -676,19 +709,19 @@ for (i in 1:p){
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
   snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.std&quot;, &quot;Y1.raw.std&quot;)))
-  dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
+  dat_estimator_std &lt;- do.call(cbind, snp_dat_list)
     
-  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
-  boxplot(dat_estimator_var^2,
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_std))
+  boxplot(dat_estimator_std^2,
 
-          ylim = c(0, max(dat_estimator_var^2, empirical_var)+0.005),
+          ylim = c(0, max(dat_estimator_std^2, empirical_var)+0.005),
           xlab = &quot;r1&quot;,
           ylab = &quot;Variance of (un)calibrated estimator&quot;,
           col = colors,
           outpch = 20, 
           outcex = 0.5,
           xaxt = &quot;n&quot;)
-  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  points(1:ncol(dat_estimator_std), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
   legend(&quot;topright&quot;,
        legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical variance&quot;),
        fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
@@ -699,6 +732,43 @@ for (i in 1:p){
   axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
 }</code></pre>
 <p><img src="figure/calibration_sib_randomX.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f35a1c6560821e8ce7cf471e58b3981c18031dd4/docs/figure/calibration_sib_randomX.Rmd/unnamed-chunk-3-1.png" target="_blank">f35a1c6</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
