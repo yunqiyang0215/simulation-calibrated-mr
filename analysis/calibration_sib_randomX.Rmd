@@ -1,0 +1,83 @@
+---
+title: "Calibration result on sibling data: random genotype"
+output: html_document
+date: '2024-01-31'
+---
+
+Description: Simulation result for calibration. The simulation model is the same as https://yunqiyang0215.github.io/simulation-calibrated-mr/ukb_calibration.html. Instead of using real genotype from UKB, we simulate genotype using UKB allele frequency in each simulation replicates. Therefore, genotype is random in this case. 
+
+
+```{r}
+res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/202402/res.rds")
+```
+
+```{r}
+combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
+  res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
+  dat_combined = do.call(rbind, res)
+  return(dat_combined)
+}
+```
+
+### 1. Compare calibrated estimator vs. raw estimator (Exposure trait)
+
+```{r fig.width=8, fig.height=40}
+
+par(mfrow = c(10,2))
+r1 = unique(res$sim_data.r1)
+p = 10
+
+for (i in 1:p){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0("Exposure trait, r1=", r1[k]),
+          xlab = "r1",
+          ylab = "(un)calibrated estimator",
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical mean"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.std", "Y1.raw.std")))
+  dat_estimator_var <- do.call(cbind, snp_dat_list)
+    
+  colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var^2,
+
+          ylim = c(0, max(dat_estimator_var^2, empirical_var)+0.005),
+          xlab = "r1",
+          ylab = "Variance of (un)calibrated estimator",
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = "n")
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = "red2")
+  legend("topright",
+       legend = c("Calibrated Estimator", "Uncalibrated Estimator", "Empirical variance"),
+       fill = c("lightblue", "gold1", NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, "red2"),  
+       cex = 0.6)  
+  r_values <- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}
+```
+
+
+
+
+ 
