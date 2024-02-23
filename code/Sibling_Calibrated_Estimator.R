@@ -2,48 +2,6 @@ library(mvtnorm)
 
 
 ##' Generate (Y, X, F_ind) such that each family has exactly two individuals
-##'
-##' @param sigma_esp: standard deviation of noise epsilon
-##' @param eps_cor: correlation of noise within a family
-##' @param sigma_x: standard deviation of X
-##' @param sigma_f: standard deviation of f
-##' @param rho: correlation between X and f
-##' @param beta: true linear model coefficient
-##' @param K: number of families
-##'
-generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
-                          sigma_f = 1, rho = .3, beta = 1, K = 1000, seed = 123){
-  set.seed(seed)
-  # Compute the covariance matrix for (X_{k1}, X_{k2}, f_k)
-  Sigma = rbind(c(sigma_x^2, 0,  rho * sigma_x * sigma_f),
-                c(0, sigma_x^2,  rho * sigma_x * sigma_f),
-                c(sigma_x * sigma_f * rho,  sigma_x * sigma_f * rho, sigma_f^2))
-
-  # Generate X, f
-  x1_x2_f = rmvnorm(K, sigma = Sigma)
-  x_1 = x1_x2_f[, 1]
-  x_2 = x1_x2_f[, 2]
-  f = x1_x2_f[, 3]
-
-  # Generate noise
-  noise = rmvnorm(K, sigma = rbind( c(sigma_eps^2, sigma_eps^2 * eps_cor), c(sigma_eps^2 * eps_cor, sigma_eps^2) ))
-
-  # Generate Y
-  y_1 = beta * x_1 + f + noise[, 1]
-  y_2 = beta * x_2 + f + noise[, 2]
-  Y = c(y_1, y_2)
-  X = c(x_1, x_2)
-
-  F_ind = c(1:K, 1:K)
-
-  return(list(Y = Y, X = X, F_ind = F_ind))
-
-}
-
-library(mvtnorm)
-
-
-##' Generate (Y, X, F_ind) such that each family has exactly two individuals
 ##' 
 ##' @param sigma_esp: standard deviation of noise epsilon
 ##' @param eps_cor: correlation of noise within a family
