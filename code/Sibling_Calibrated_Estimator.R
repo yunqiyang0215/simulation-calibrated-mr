@@ -90,22 +90,21 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var){
   
   # Compute the incorrect model for internal data
   
-  alpha_int = lm(Y ~  X)$coefficients[2]
-  
+  alpha_int = lm( Y ~  X)$coefficients[2]
   # Compute the C_{22}, C_{33}, C_{23}
   
   M = max(F_size)
   
   correct_var = rep( 0 , M)
-  incorrect_var = rep( 0, M)
-  correct_incorrect_cov = rep( 0, M)
+  incorrect_var = list()
+  correct_incorrect_cov = list()
   
   # Consider each family size separately
   for(m in 2:M){
     
     # Only look at family of size m
     X_sub = X[F_size == m]
-    resid_sub = Y[F_size == m] - alpha_int * X_sub
+    resid_sub = Y[F_size == m] - mean(Y) - alpha_int * X_sub
     
     X_tilde_sub = X_tilde[F_size == m]
     resid_tilde_sub = Y_tilde[F_size == m] - beta_int * X_tilde_sub
@@ -113,35 +112,47 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var){
     prod = resid_sub * X_sub
     prod_tilde = resid_tilde_sub * X_tilde_sub
     
+  
+      
     # This is for C22
     correct_var[m] = var(tapply(prod_tilde, F_ind[F_size == m], sum))
     # This is for C33
-    incorrect_var[m] = var(tapply(prod, F_ind[F_size == m], sum))
+    C33_11 = var(tapply(resid_sub, F_ind[F_size == m], sum))
+    C33_22 = var(tapply(prod, F_ind[F_size == m], sum))
+    C33_12 = cov(tapply(prod, F_ind[F_size == m], sum), tapply(resid_sub, F_ind[F_size == m], sum) )
+    incorrect_var[[m]]= rbind(c(C33_11, C33_12), c(C33_12, C33_22))
+    
     # This is for C23
-    correct_incorrect_cov[m] = cov(tapply(prod, F_ind[F_size == m], sum), tapply(prod_tilde, F_ind[F_size == m], sum) )
+    C23_1 = cov(tapply(prod_tilde, F_ind[F_size == m], sum), tapply(resid_sub, F_ind[F_size == m], sum) )
+    C23_2 = cov(tapply(prod_tilde, F_ind[F_size == m], sum), tapply(prod, F_ind[F_size == m], sum) )
+    correct_incorrect_cov[[m]] = c(C23_1, C23_2) 
+    
   }  
   
   C22 = 0
-  C33 = 0
-  C23 = 0
+  C33 = matrix(rep(0, 4), 2, 2)
+  C23 = c(0, 0)
   for(i in 1:K){
     C22 = C22 + correct_var[size_dic[i]]
-    C33 = C33 + incorrect_var[size_dic[i]]
-    C23 = C23 + correct_incorrect_cov[size_dic[i]]
+    C33 = C33 + incorrect_var[[size_dic[i]]]
+    C23 = C23 + correct_incorrect_cov[[size_dic[i]]]
   }
   
-  C22_const =  N / ( (N - K)^2 * sigma_x^4 )
-  C33_const = 1 / (N * (sigma_x^2 + mu_x^2)^2)
+  const1 = sum(X_tilde^2)
+  C22 = N* C22 *(const1)^(-2)
   
-  C22 = C22 * C22_const
-  C33 = C33 * C33_const
-  C23 = C23 * sqrt(C22_const * C33_const)
   
+  
+  design = t(cbind(rep(1, N), X)) %*% cbind(rep(1, N), X)
+  C33 = (solve(design) %*% C33 %*% solve(design) )[2, 2] * N
+  C23 = (const1^(-1) * C23 %*% solve(design) )[2] * N
+  
+
   # Compute the final calibrated estimator
   beta_cal = beta_int + C23 / ( N * alpha_ext_var + C33) * (alpha_ext - alpha_int)
   beta_cal_var = (C22 - C23^2 / (N * alpha_ext_var + C33) ) / N
-  return(list(beta_cal  = beta_cal, beta_cal_sd = sqrt(beta_cal_var), beta_int = beta_int, 
-              beta_int_sd = sqrt(C22/N), alpha_int = alpha_int))
+  return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int, 
+              beta_int_var = (C22/N)))
 }
 
 
