@@ -151,7 +151,7 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var){
   # Compute the final calibrated estimator
   beta_cal = beta_int + C23 / ( N * alpha_ext_var + C33) * (alpha_ext - alpha_int)
   beta_cal_var = (C22 - C23^2 / (N * alpha_ext_var + C33) ) / N
-  return(list(beta_cal  = beta_cal, beta_cal_var = var(beta_cal_var), beta_int = beta_int, 
+  return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int, 
               beta_int_var = (C22/N)))
 }
 
