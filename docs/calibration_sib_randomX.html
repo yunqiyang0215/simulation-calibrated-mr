@@ -14,8 +14,8 @@
 
 <title>Calibration result on sibling data: random genotype</title>
 
-<script src="site_libs/header-attrs-2.9/header-attrs.js"></script>
-<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<script src="site_libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
@@ -39,7 +39,7 @@
 <link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
 <link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
 
-<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
 <style type="text/css">
 div.section {
@@ -76,6 +76,7 @@ if (window.hljs) {
 
 
 
+
 <style type = "text/css">
 .main-container {
   max-width: 940px;
@@ -96,6 +97,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -321,7 +325,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -403,10 +407,10 @@ title="This is the local directory in which the code in this file was executed."
 </span>
 </p>
 <p>
-This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
 analysis was created with <a
-  href="https://github.com/jdblischak/workflowr">workflowr</a> (version
-1.6.2). The <em>Checks</em> tab describes the reproducibility checks
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.0). The <em>Checks</em> tab describes the reproducibility checks
 that were applied when the results were created. The <em>Past
 versions</em> tab lists the development history.
 </p>
@@ -519,15 +523,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree380c82425c9a465de83752c72fd63a794957b584targetblank380c824a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree42d0387451823498a6d09ae0e4a4cfe3763259fftargetblank42d0387a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/380c82425c9a465de83752c72fd63a794957b584" target="_blank">380c824</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/42d0387451823498a6d09ae0e4a4cfe3763259ff" target="_blank">42d0387</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree380c82425c9a465de83752c72fd63a794957b584targetblank380c824a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree42d0387451823498a6d09ae0e4a4cfe3763259fftargetblank42d0387a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -537,7 +541,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/380c82425c9a465de83752c72fd63a794957b584" target="_blank">380c824</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/42d0387451823498a6d09ae0e4a4cfe3763259ff" target="_blank">42d0387</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -552,6 +556,7 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
 </code></pre>
@@ -599,6 +604,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/42d0387451823498a6d09ae0e4a4cfe3763259ff/analysis/calibration_sib_randomX.Rmd" target="_blank">42d0387</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-25
+</td>
+<td>
+wflow_publish("analysis/calibration_sib_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/5d291dc002fdfac94d898ae0d724715dc7f2d4d1/docs/calibration_sib_randomX.html" target="_blank">5d291dc</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -708,12 +747,13 @@ random in this case.</p>
 class="section level3">
 <h3>1. Compare calibrated estimator vs. raw estimator (Exposure
 trait)</h3>
+<div id="parameters-p-10-and-sig-1" class="section level4">
+<h4>Parameters: p = 10 and sig = 1</h4>
 <pre class="r"><code>par(mfrow = c(10,2))
 r1 = unique(res$sim_data.r1)
-p = 10
 
-for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
+for (i in 1:5){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$sim_effect.p == 10 &amp; res$sim_data.sig == 1), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -737,7 +777,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.raw.var&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$sim_effect.p == 10 &amp; res$sim_data.sig == 1), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.raw.var&quot;)))
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
     
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
@@ -785,6 +825,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/5d291dc002fdfac94d898ae0d724715dc7f2d4d1/docs/figure/calibration_sib_randomX.Rmd/unnamed-chunk-3-1.png" target="_blank">5d291dc</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f35a1c6560821e8ce7cf471e58b3981c18031dd4/docs/figure/calibration_sib_randomX.Rmd/unnamed-chunk-3-1.png" target="_blank">f35a1c6</a>
 </td>
 <td>
@@ -798,6 +849,60 @@ yunqi yang
 </table>
 </div>
 </div>
+</div>
+<div id="parameters-p-10-and-sig-10" class="section level4">
+<h4>Parameters: p = 10 and sig = 10</h4>
+<pre class="r"><code>par(mfrow = c(10,2))
+r1 = unique(res$sim_data.r1)
+for (i in 1:5){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$sim_effect.p == 10 &amp; res$sim_data.sig == 10), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
+
+  dat_estimator &lt;- do.call(cbind, snp_dat_list)
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
+  boxplot(dat_estimator,
+          #main = paste0(&quot;Exposure trait, r1=&quot;, r1[k]),
+          xlab = &quot;r1&quot;,
+          ylab = &quot;(un)calibrated estimator&quot;,
+          col = colors,
+          outpch = 20, # This changes the outlier point type to solid circle
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  points(1:ncol(dat_estimator), colMeans(dat_estimator), pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  legend(&quot;topright&quot;,
+       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical mean&quot;),
+       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, &quot;red2&quot;),  
+       cex = 0.6)  
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+
+  
+  ### Plot variance
+  empirical_var = apply(dat_estimator, 2, var)
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$sim_effect.p == 10 &amp; res$sim_data.sig == 10), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.raw.var&quot;)))
+  dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
+    
+  colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
+  boxplot(dat_estimator_var,
+
+          ylim = c(0, max(dat_estimator_var, empirical_var)+0.005),
+          xlab = &quot;r1&quot;,
+          ylab = &quot;Variance of (un)calibrated estimator&quot;,
+          col = colors,
+          outpch = 20, 
+          outcex = 0.5,
+          xaxt = &quot;n&quot;)
+  points(1:ncol(dat_estimator_var), empirical_var, pch = 4, cex = 0.8, col = &quot;red2&quot;)
+  legend(&quot;topright&quot;,
+       legend = c(&quot;Calibrated Estimator&quot;, &quot;Uncalibrated Estimator&quot;, &quot;Empirical variance&quot;),
+       fill = c(&quot;lightblue&quot;, &quot;gold1&quot;, NA),  
+       pch = c(NA, NA, 4),  
+       col = c(NA, NA, &quot;red2&quot;),  
+       cex = 0.6)  
+  r_values &lt;- c(-0.20, -0.10, 0.00, 0.05, 0.10, 0.50) 
+  axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
+}</code></pre>
+<p><img src="figure/calibration_sib_randomX.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -807,13 +912,12 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.1.0 (2021-05-18)
+<pre><code>R version 4.2.0 (2022-04-22)
 Platform: x86_64-pc-linux-gnu (64-bit)
 Running under: CentOS Linux 7 (Core)
 
 Matrix products: default
-BLAS:   /software/R-4.1.0-no-openblas-el7-x86_64/lib64/R/lib/libRblas.so
-LAPACK: /software/R-4.1.0-no-openblas-el7-x86_64/lib64/R/lib/libRlapack.so
+BLAS/LAPACK: /software/openblas-0.3.13-el7-x86_64/lib/libopenblas_haswellp-r0.3.13.so
 
 locale:
  [1] LC_CTYPE=en_US.UTF-8 LC_NUMERIC=C         LC_TIME=C           
@@ -825,27 +929,29 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.6.2
+[1] workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.6       highr_0.9        pillar_1.6.1     compiler_4.1.0  
- [5] bslib_0.4.2      later_1.2.0      jquerylib_0.1.4  git2r_0.28.0    
- [9] tools_4.1.0      digest_0.6.27    jsonlite_1.7.2   evaluate_0.14   
-[13] lifecycle_1.0.3  tibble_3.1.2     pkgconfig_2.0.3  rlang_1.1.1     
-[17] cli_3.6.1        rstudioapi_0.13  yaml_2.2.1       xfun_0.24       
-[21] fastmap_1.1.0    stringr_1.4.0    knitr_1.33       fs_1.5.0        
-[25] vctrs_0.3.8      sass_0.4.0       rprojroot_2.0.2  glue_1.4.2      
-[29] R6_2.5.0         fansi_0.5.0      rmarkdown_2.9    magrittr_2.0.1  
-[33] whisker_0.4      promises_1.2.0.1 ellipsis_0.3.2   htmltools_0.5.5 
-[37] httpuv_1.6.1     utf8_1.2.1       stringi_1.6.2    cachem_1.0.5    
-[41] crayon_1.4.1    </code></pre>
+ [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.3.1      compiler_4.2.0  
+ [5] pillar_1.7.0     later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
+ [9] tools_4.2.0      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
+[13] evaluate_0.15    tibble_3.1.7     lifecycle_1.0.1  pkgconfig_2.0.3 
+[17] rlang_1.0.2      cli_3.3.0        rstudioapi_0.13  yaml_2.3.5      
+[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.4.0   
+[25] knitr_1.39       sass_0.4.1       fs_1.5.2         vctrs_0.4.1     
+[29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.8.0  
+[33] fansi_1.0.3      rmarkdown_2.14   callr_3.7.3      magrittr_2.0.3  
+[37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
+[41] ellipsis_0.3.2   httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   
+[45] crayon_1.5.1    </code></pre>
+</div>
 </div>
 </div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
 TeX fonts only; see
-http://docs.mathjax.org/en/latest/configuration.html.  This will make
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
 the presentation more consistent at the cost of the webpage sometimes
 taking slightly longer to load. Note that this only works because the
 footer is added to webpages before the MathJax javascript. -->
