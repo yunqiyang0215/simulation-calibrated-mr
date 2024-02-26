@@ -167,7 +167,7 @@ for (i in 1:5){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 10 & res$sim_data.sig == 10), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.raw.var")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 100 & res$sim_data.sig == 1), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.raw.var")))
   dat_estimator_var <- do.call(cbind, snp_dat_list)
     
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
