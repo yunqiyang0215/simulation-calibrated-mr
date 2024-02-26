@@ -9,6 +9,7 @@ Description: Simulation result for calibration. The simulation model is the same
 
 ```{r}
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/202402/res.rds")
+res.sub = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/202402/res.sub.rds")
 ```
 
 ```{r}
@@ -19,9 +20,32 @@ combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names)
 }
 ```
 
-### 1. Compare calibrated estimator vs. raw estimator (Exposure trait)
+### 1. Check correlations when r1 = 0 and r2 = 0.1
 
-#### 1.1 Parameters: p = 10 and sig = 1
+```{r fig.width=6, fig.height=10}
+par(mfrow = c(4,2))
+p = c(10, 100)
+sig = c(1, 10)
+for (i in 1:length(p)){
+  for (j in 1:length(sig)){
+    indx = which(res.sub$sim_data.sig == sig[j] & res.sub$sim_effect.p == p[i])
+    corr1 = sapply(indx, function(i) cor(res.sub$sim_data.dat[[i]]$pheno1[, 1], res.sub$sim_data.dat[[i]]$pheno2[, 1]))
+    corr2 = sapply(indx, function(i) cor(res.sub$sim_data.dat[[i]]$pheno1[, 2], res.sub$sim_data.dat[[i]]$pheno2[, 2]))
+    hist(corr1, main = paste0("Correlation pheno1:", "p=", p[i], ",sigma=", sig[j]), xlab = "")
+    hist(corr2, main = paste0("Correlation pheno2:", "p=", p[i], ",sigma=", sig[j]), xlab = "")
+  }
+}
+
+
+
+
+```
+
+
+
+### 2. Compare calibrated estimator vs. raw estimator (Exposure trait)
+
+#### 2.1 Parameters: p = 10 and sig = 1
 
 ```{r fig.width=8, fig.height=20}
 
@@ -79,7 +103,7 @@ for (i in 1:5){
 ```
 
 
-#### 1.2 Parameters: p = 10 and sig = 10
+#### 2.2 Parameters: p = 10 and sig = 10
 
 ```{r fig.width=8, fig.height=20}
 
@@ -136,7 +160,7 @@ for (i in 1:5){
 ```
 
  
-#### 1.3 Parameters: p = 100 and sig = 1
+#### 2.3 Parameters: p = 100 and sig = 1
 
 ```{r fig.width=8, fig.height=20}
 
@@ -191,3 +215,6 @@ for (i in 1:5){
   axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
 }
 ```
+
+
+
