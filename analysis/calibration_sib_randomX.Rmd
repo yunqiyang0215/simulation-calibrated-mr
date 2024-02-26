@@ -20,7 +20,9 @@ combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names)
 }
 ```
 
-### 1. Check correlations when r1 = 0 and r2 = 0.1
+### 1. Check correlations:
+
+#### 1.1 Phenotype correlation when r1 = 0 and r2 = 0.1
 
 ```{r fig.width=6, fig.height=10}
 par(mfrow = c(4,2))
@@ -40,6 +42,7 @@ for (i in 1:length(p)){
 
 
 ```
+
 
 
 
