@@ -123,7 +123,7 @@ calibrated_est_trio_2 <- function(data_int,rho_shared,alpha_ext,sd_alpha_ext){
   tau_cal <-  tau_raw -
     V_hat[1,2]/V_hat[2,2]*(as.vector(mod_unadjusted$coef)[2] - alpha_ext)
   var_tau_cal <- V_hat[1,1] - V_hat[1,2]^2/V_hat[2,2]
-  return (list("Raw Estimator" = tau_raw, "raw_variance" = V_hat[1,1], "calibrated_est" = tau_cal,"variance" = var_tau_cal))
+  return (list("raw_est" = tau_raw, "raw_variance" = V_hat[1,1], "calibrated_est" = tau_cal,"cali_variance" = var_tau_cal))
 }
 
 # @param data_int: n by 3 matrix of internal full data, (Y1, X1, X2)
