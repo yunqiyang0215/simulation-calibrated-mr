@@ -176,7 +176,7 @@ calibrated_estimator_logistic <- function(data_int, rho_shared, N, alpha_ext, sd
   tau_cal <-  tau_raw -
     V_hat[1,2]/V_hat[2,2]*(as.vector(mod_unadjusted$coef)[2] - alpha_ext)
   var_tau_cal <- (1/n)*(V_hat[1,1] - V_hat[1,2]^2/V_hat[2,2])
-  return (list("Raw Estimator" = tau_raw,"raw_variance" = V_hat[1,1]/n,"calibrated_est" = tau_cal,"variance" = var_tau_cal))
+  return (list("raw_est" = tau_raw,"raw_variance" = V_hat[1,1]/n,"calibrated_est" = tau_cal,"cali_variance" = var_tau_cal))
 }
 
 
