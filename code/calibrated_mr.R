@@ -1,13 +1,16 @@
-
 # @param Y: a vector contains response variable values
 # @param X1: a vector contains transmitted allele values
 compute_sumstat <- function(Y, X1){
   n <- length(Y)
-  mod <- lm(Y ~ X1)
-  resid <- mod$residuals
-  bhat <- mod$coef[2]
-  return(list(bhat = bhat, resid = resid))
+  fit <- lm(Y ~ X1)
+  fit_summary = summary(fit)
+  
+  bhat = fit_summary$coefficients[2, "Estimate"]
+  std = fit_summary$coefficients[2, "Std. Error"]
+  resid <- fit$residuals
+  return(list(bhat = bhat, std = std, resid = resid))
 }
+
 
 # @param Y: a vector contains response variable values
 # @param X1: a vector contains transmitted allele values
