@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-02-08
+<strong>Last updated:</strong> 2024-03-08
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreefd97225757ffa0d5948b1adaa2bccb5c41f3404etargetblankfd97225a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree2bd8e98487f26e7d9604988ad5ee0cbd3df687b4targetblank2bd8e98a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/fd97225757ffa0d5948b1adaa2bccb5c41f3404e" target="_blank">fd97225</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/2bd8e98487f26e7d9604988ad5ee0cbd3df687b4" target="_blank">2bd8e98</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreefd97225757ffa0d5948b1adaa2bccb5c41f3404etargetblankfd97225a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree2bd8e98487f26e7d9604988ad5ee0cbd3df687b4targetblank2bd8e98a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/fd97225757ffa0d5948b1adaa2bccb5c41f3404e" target="_blank">fd97225</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/2bd8e98487f26e7d9604988ad5ee0cbd3df687b4" target="_blank">2bd8e98</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -555,8 +555,12 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+
+Unstaged changes:
+    Modified:   analysis/calibration_sib_randomX.Rmd
 
 </code></pre>
 <p>
@@ -603,6 +607,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2bd8e98487f26e7d9604988ad5ee0cbd3df687b4/analysis/sim_calibration_randomX.Rmd" target="_blank">2bd8e98</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-08
+</td>
+<td>
+wflow_publish("analysis/sim_calibration_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/bfcc99a8e5546585e55ec49f672b53d576738911/docs/sim_calibration_randomX.html" target="_blank">bfcc99a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -768,7 +806,7 @@ r1 = unique(res$sim_data.r1)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -792,7 +830,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.var.raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.var.raw&quot;)))
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
     
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
@@ -874,7 +912,7 @@ p = 10
 
 for (i in 1:p){
   
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali&quot;, &quot;Y1.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   empirical_var = apply(dat_estimator, 2, var)
@@ -887,7 +925,7 @@ for (i in 1:p){
   
   # Calculate variance reduction
   snp_dat_list &lt;- lapply(1:length(r1), function(k) {
-  stats &lt;- combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.var.raw&quot;))
+  stats &lt;- combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y1.cali.var&quot;, &quot;Y1.var.raw&quot;))
   variance_reduction &lt;- (stats[,&quot;Y1.var.raw&quot;] - stats[,&quot;Y1.cali.var&quot;]) / stats[,&quot;Y1.var.raw&quot;]
   return(variance_reduction)
 })
@@ -962,7 +1000,7 @@ r1 = unique(res$sim_data.r1)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -986,7 +1024,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali.var&quot;, &quot;Y2.var.raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali.var&quot;, &quot;Y2.var.raw&quot;)))
   dat_estimator_var &lt;- do.call(cbind, snp_dat_list)
     
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator_var))
@@ -1010,12 +1048,49 @@ for (i in 1:p){
   axis(1, at=seq(1.5, by=2, length.out=length(r1)), labels=r1)
 }</code></pre>
 <p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/bfcc99a8e5546585e55ec49f672b53d576738911/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-5-1.png" target="_blank">bfcc99a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>par(mfrow = c(10,2))
 r2 = unique(res$sim_data.r2)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   colors &lt;- rep(c(&quot;lightblue&quot;, &quot;gold1&quot;), length.out = ncol(dat_estimator))
@@ -1063,6 +1138,43 @@ for (i in 1:p){
   axis(1, at=seq(1.5, by=2, length.out=length(r2)), labels=r2)
 }</code></pre>
 <p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
+Past versions of unnamed-chunk-6-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-6-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/bfcc99a8e5546585e55ec49f672b53d576738911/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-6-1.png" target="_blank">bfcc99a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="compare-variance-reduction-outcome-trait"
 class="section level3">
@@ -1073,7 +1185,7 @@ p = 10
 
 for (i in 1:p){
   
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   empirical_var = apply(dat_estimator, 2, var)
@@ -1086,7 +1198,7 @@ for (i in 1:p){
   
   # Calculate variance reduction
   snp_dat_list &lt;- lapply(1:length(r1), function(k) {
-  stats &lt;- combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali.var&quot;, &quot;Y2.var.raw&quot;))
+  stats &lt;- combine_single_snp_stat(which(res$sim_data.r1 == r1[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali.var&quot;, &quot;Y2.var.raw&quot;))
   variance_reduction &lt;- (stats[,&quot;Y2.var.raw&quot;] - stats[,&quot;Y2.cali.var&quot;]) / stats[,&quot;Y2.var.raw&quot;]
   return(variance_reduction)
 })
@@ -1114,13 +1226,50 @@ for (i in 1:p){
        cex = 0.8)
 }</code></pre>
 <p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-7-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/bfcc99a8e5546585e55ec49f672b53d576738911/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-7-1.png" target="_blank">bfcc99a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>par(mfrow = c(2,5))
 r2 = unique(res$sim_data.r2)
 p = 10
 
 for (i in 1:p){
   
-  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali&quot;, &quot;Y2.raw&quot;)))
 
   dat_estimator &lt;- do.call(cbind, snp_dat_list)
   empirical_var = apply(dat_estimator, 2, var)
@@ -1133,7 +1282,7 @@ for (i in 1:p){
   
   # Calculate variance reduction
   snp_dat_list &lt;- lapply(1:length(r2), function(k) {
-  stats &lt;- combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali.var&quot;, &quot;Y2.var.raw&quot;))
+  stats &lt;- combine_single_snp_stat(which(res$sim_data.r2 == r2[k] &amp; res$fit.method == &quot;calibrated&quot;), i, data.list = res$fit.sumstat, column_names = c(&quot;Y2.cali.var&quot;, &quot;Y2.var.raw&quot;))
   variance_reduction &lt;- (stats[,&quot;Y2.var.raw&quot;] - stats[,&quot;Y2.cali.var&quot;]) / stats[,&quot;Y2.var.raw&quot;]
   return(variance_reduction)
 })
@@ -1161,6 +1310,43 @@ for (i in 1:p){
        cex = 0.8)
 }</code></pre>
 <p><img src="figure/sim_calibration_randomX.Rmd/unnamed-chunk-8-1.png" width="1344" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/bfcc99a8e5546585e55ec49f672b53d576738911/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-8-1.png" target="_blank">bfcc99a</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
