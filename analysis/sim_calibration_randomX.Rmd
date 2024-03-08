@@ -28,7 +28,7 @@ r1 = unique(res$sim_data.r1)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
@@ -52,7 +52,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.var.raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.var.raw")))
   dat_estimator_var <- do.call(cbind, snp_dat_list)
     
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
@@ -88,7 +88,7 @@ p = 10
 
 for (i in 1:p){
   
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   empirical_var = apply(dat_estimator, 2, var)
@@ -101,7 +101,7 @@ for (i in 1:p){
   
   # Calculate variance reduction
   snp_dat_list <- lapply(1:length(r1), function(k) {
-  stats <- combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.var.raw"))
+  stats <- combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y1.cali.var", "Y1.var.raw"))
   variance_reduction <- (stats[,"Y1.var.raw"] - stats[,"Y1.cali.var"]) / stats[,"Y1.var.raw"]
   return(variance_reduction)
 })
@@ -144,7 +144,7 @@ r1 = unique(res$sim_data.r1)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
@@ -168,7 +168,7 @@ for (i in 1:p){
   
   ### Plot variance
   empirical_var = apply(dat_estimator, 2, var)
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw")))
   dat_estimator_var <- do.call(cbind, snp_dat_list)
     
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator_var))
@@ -201,7 +201,7 @@ r2 = unique(res$sim_data.r2)
 p = 10
 
 for (i in 1:p){
-  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   colors <- rep(c("lightblue", "gold1"), length.out = ncol(dat_estimator))
@@ -262,7 +262,7 @@ p = 10
 
 for (i in 1:p){
   
-  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   empirical_var = apply(dat_estimator, 2, var)
@@ -275,7 +275,7 @@ for (i in 1:p){
   
   # Calculate variance reduction
   snp_dat_list <- lapply(1:length(r1), function(k) {
-  stats <- combine_single_snp_stat(which(res$sim_data.r1 == r1[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw"))
+  stats <- combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw"))
   variance_reduction <- (stats[,"Y2.var.raw"] - stats[,"Y2.cali.var"]) / stats[,"Y2.var.raw"]
   return(variance_reduction)
 })
@@ -312,7 +312,7 @@ p = 10
 
 for (i in 1:p){
   
-  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
+  snp_dat_list = lapply(1:length(r2), function(k) combine_single_snp_stat(which(res$sim_data.r2 == r2[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali", "Y2.raw")))
 
   dat_estimator <- do.call(cbind, snp_dat_list)
   empirical_var = apply(dat_estimator, 2, var)
@@ -325,7 +325,7 @@ for (i in 1:p){
   
   # Calculate variance reduction
   snp_dat_list <- lapply(1:length(r2), function(k) {
-  stats <- combine_single_snp_stat(which(res$sim_data.r2 == r2[k]), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw"))
+  stats <- combine_single_snp_stat(which(res$sim_data.r2 == r2[k] & res$fit.method == "calibrated"), i, data.list = res$fit.sumstat, column_names = c("Y2.cali.var", "Y2.var.raw"))
   variance_reduction <- (stats[,"Y2.var.raw"] - stats[,"Y2.cali.var"]) / stats[,"Y2.var.raw"]
   return(variance_reduction)
 })
