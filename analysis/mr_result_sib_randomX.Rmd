@@ -153,14 +153,24 @@ for(i in 1:length(r1)) {
 plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali_point", "adj_uncali_point")], na.rm = TRUE), xaxt = "n", main = "Point estimate: mr.raps")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
-boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, 
-        col = "lightblue", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "lightblue", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
 boxplot(adj_uncali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, 
         col = "gold", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
 legend("topright", legend = c("Calibrated", "Uncalibrated"), fill = c("lightblue", "gold"), bty = "n", cex = 0.8)
 
 ```
 
+```{r}
+
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = c(-5, 5), xaxt = "n", main = "Point estimate: mr.raps")
+axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
+
+boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "lightblue", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+boxplot(adj_uncali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, 
+        col = "gold", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
+legend("topright", legend = c("Calibrated", "Uncalibrated"), fill = c("lightblue", "gold"), bty = "n", cex = 0.8)
+
+```
 
 #### (2) Boxplot for estimated variance & empirical variance
 
@@ -170,7 +180,7 @@ emp_var_means <- aggregate(cbind(emp_var_cali, emp_var_adj_uncali) ~ combination
 
 ```{r }
 
-plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")], na.rm = TRUE), xaxt = "n", main = "Variance of MR estimates")
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = c(-1, 10), xaxt = "n", main = "Variance of MR estimates")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "#76B7B2", add = TRUE, ylim = range(aggregated_data$cali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
