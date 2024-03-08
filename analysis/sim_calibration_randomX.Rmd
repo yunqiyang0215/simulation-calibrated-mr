@@ -354,4 +354,24 @@ for (i in 1:p){
 }
 ```
 
- 
+### 5. Compare results with G & Gpa model
+```{r}
+indx1 = which(res$sim_data.r1 == 0.5 & res$fit.method == "calibrated")
+indx2 = which(res$sim_data.r1 == 0.5 & res$fit.method == "calibrated_model_G")
+```
+
+```{r}
+print(res$fit.sumstat[[indx1[1]]])
+print(res$fit.sumstat[[indx2[1]]])
+```
+
+
+```{r}
+indx1 = which(res$sim_data.r1 == -0.2 & res$fit.method == "calibrated")
+indx2 = which(res$sim_data.r1 == -0.2 & res$fit.method == "calibrated_model_G")
+```
+
+```{r}
+print(res$fit.sumstat[[indx1[1]]])
+print(res$fit.sumstat[[indx2[1]]])
+```
