@@ -35,9 +35,15 @@ Simulation using ukb real genotype
 
 + [Calibration result: ukb trio with resampling](calibration_fixedX.html)
 
+
+Parametric simulation: 
+
 + [Calibration result: random X](sim_calibration_randomX.html)
 
 + [Calibration result on sibling: random X](calibration_sib_randomX.html)
 
 + [MR result: random X](mr_result_randomX.html)
+
++ [MR result on sibling: random X](mr_result_sib_randomX.html)
+
 
