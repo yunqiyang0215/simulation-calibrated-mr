@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0a24191847d0dbe65dffa598ad8452178448d38etargetblank0a24191a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree6fa306b9212c7dca0e29fd4e7b9f7b036fd4ab18targetblank6fa306ba">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0a24191847d0dbe65dffa598ad8452178448d38e" target="_blank">0a24191</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/6fa306b9212c7dca0e29fd4e7b9f7b036fd4ab18" target="_blank">6fa306b</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0a24191847d0dbe65dffa598ad8452178448d38etargetblank0a24191a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree6fa306b9212c7dca0e29fd4e7b9f7b036fd4ab18targetblank6fa306ba"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0a24191847d0dbe65dffa598ad8452178448d38e" target="_blank">0a24191</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/6fa306b9212c7dca0e29fd4e7b9f7b036fd4ab18" target="_blank">6fa306b</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -607,6 +607,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/6fa306b9212c7dca0e29fd4e7b9f7b036fd4ab18/analysis/sim_calibration_randomX.Rmd" target="_blank">6fa306b</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-08
+</td>
+<td>
+wflow_publish("analysis/sim_calibration_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/e533459dcc11bfb22f860296db221255d90c142a/docs/sim_calibration_randomX.html" target="_blank">e533459</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1229,6 +1263,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e533459dcc11bfb22f860296db221255d90c142a/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-6-1.png" target="_blank">e533459</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-08
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/533df271828f21b39b2df8f601e86fd2f5f5932f/docs/figure/sim_calibration_randomX.Rmd/unnamed-chunk-6-1.png" target="_blank">533df27</a>
 </td>
 <td>
@@ -1447,6 +1492,105 @@ yunqi yang
 </table>
 </div>
 </div>
+</div>
+<div id="compare-results-with-g-gpa-model" class="section level3">
+<h3>5. Compare results with G &amp; Gpa model</h3>
+<pre class="r"><code>indx1 = which(res$sim_data.r1 == 0.5 &amp; res$fit.method == &quot;calibrated&quot;)
+indx2 = which(res$sim_data.r1 == 0.5 &amp; res$fit.method == &quot;calibrated_model_G&quot;)</code></pre>
+<pre class="r"><code>print(res$fit.sumstat[[indx1[1]]])</code></pre>
+<pre><code>         Y1.cali Y1.cali.var     Y1.raw Y1.var.raw    Y2.cali Y2.cali.var
+ [1,] -0.4998234  0.01130158 -0.4490129 0.01961229 -0.4208972 0.011235953
+ [2,]  0.4151608  0.01719350  0.5262868 0.03103474  0.3253599 0.014971917
+ [3,] -0.9320440  0.02021262 -0.8140907 0.03730652 -1.1257069 0.021781649
+ [4,]  1.5927027  0.01009357  1.6686999 0.01580708  1.7302738 0.010026892
+ [5,]  0.1276677  0.01041280  0.1115967 0.01843456  0.3816972 0.011669667
+ [6,] -0.8476055  0.01092834 -0.8128070 0.01927049 -0.8400578 0.008677204
+ [7,]  0.5250101  0.01045492  0.5518627 0.02019351  0.4576528 0.009571069
+ [8,]  0.9001707  0.01446379  0.8610870 0.02627961  0.6913867 0.014673739
+ [9,]  0.8092235  0.01171816  0.6498481 0.02104144  0.6694644 0.011723584
+[10,] -0.5032202  0.01543584 -0.4649234 0.02760780 -0.3486756 0.015944312
+          Y2.raw Y2.var.raw
+ [1,] -0.3422438 0.02023908
+ [2,]  0.3453328 0.02546399
+ [3,] -1.1008914 0.03704955
+ [4,]  1.6904340 0.01603111
+ [5,]  0.3739060 0.02008229
+ [6,] -0.8693698 0.01665373
+ [7,]  0.5993090 0.01794024
+ [8,]  0.7316203 0.02563469
+ [9,]  0.7845762 0.01970416
+[10,] -0.4741405 0.02790518</code></pre>
+<pre class="r"><code>print(res$fit.sumstat[[indx2[1]]])</code></pre>
+<pre><code>         Y1.cali Y1.cali.var     Y1.raw Y1.var.raw    Y2.cali Y2.cali.var
+ [1,] -0.4993957    11.37153 -0.4490129   19.61229 -0.4211073   11.211905
+ [2,]  0.4150669    17.18181  0.5262868   31.03474  0.3254279   15.007645
+ [3,] -0.9318319    20.24335 -0.8140907   37.30652 -1.1257351   21.764297
+ [4,]  1.5935636    10.15829  1.6686999   15.80708  1.7300327   10.063236
+ [5,]  0.1275207    10.48613  0.1115967   18.43456  0.3817517   11.610760
+ [6,] -0.8471638    11.03422 -0.8128070   19.27049 -0.8398640    8.624476
+ [7,]  0.5249337    10.42719  0.5518627   20.19351  0.4567699    9.518910
+ [8,]  0.9002035    14.45388  0.8610870   26.27961  0.6912587   14.638872
+ [9,]  0.8096653    11.69232  0.6498481   21.04144  0.6686727   11.668695
+[10,] -0.5027770    15.57669 -0.4649234   27.60780 -0.3490221   15.977346
+          Y2.raw Y2.var.raw
+ [1,] -0.3422438   20.23908
+ [2,]  0.3453328   25.46399
+ [3,] -1.1008914   37.04955
+ [4,]  1.6904340   16.03111
+ [5,]  0.3739060   20.08229
+ [6,] -0.8693698   16.65373
+ [7,]  0.5993090   17.94024
+ [8,]  0.7316203   25.63469
+ [9,]  0.7845762   19.70416
+[10,] -0.4741405   27.90518</code></pre>
+<pre class="r"><code>indx1 = which(res$sim_data.r1 == -0.2 &amp; res$fit.method == &quot;calibrated&quot;)
+indx2 = which(res$sim_data.r1 == -0.2 &amp; res$fit.method == &quot;calibrated_model_G&quot;)</code></pre>
+<pre class="r"><code>print(res$fit.sumstat[[indx1[1]]])</code></pre>
+<pre><code>         Y1.cali Y1.cali.var     Y1.raw  Y1.var.raw    Y2.cali Y2.cali.var
+ [1,] -0.6015044 0.009465539 -0.6102386 0.017240724 -0.7897958  0.02314314
+ [2,]  0.3044730 0.017209945  0.3248585 0.028222525  0.4957911  0.03574232
+ [3,] -0.7838427 0.018991759 -0.8501461 0.036599911 -0.8760145  0.04511849
+ [4,]  1.5938367 0.005590442  1.6808489 0.009404954  1.6287788  0.01562923
+ [5,]  0.3421413 0.011864578  0.3753555 0.021047076  0.3006814  0.02952699
+ [6,] -0.8487964 0.009602768 -0.8963493 0.018411496 -0.7544201  0.02511231
+ [7,]  0.4118357 0.009765583  0.5047771 0.019113817  0.5404499  0.02456058
+ [8,]  0.7382267 0.013944588  0.7188454 0.025573656  0.6990384  0.03632332
+ [9,]  0.5267632 0.010626279  0.4571129 0.019326907  0.1905275  0.02836094
+[10,] -0.6123190 0.017603252 -0.7316626 0.031617649 -0.4825217  0.03893733
+          Y2.raw Y2.var.raw
+ [1,] -0.7812030 0.03971248
+ [2,]  0.4237515 0.06994800
+ [3,] -0.6362983 0.08060901
+ [4,]  1.5008873 0.02470822
+ [5,]  0.3934630 0.05215066
+ [6,] -0.7571633 0.04403808
+ [7,]  0.6120374 0.04320263
+ [8,]  0.8603756 0.06627134
+ [9,]  0.2976317 0.04995805
+[10,] -0.3718993 0.07150488</code></pre>
+<pre class="r"><code>print(res$fit.sumstat[[indx2[1]]])</code></pre>
+<pre><code>         Y1.cali Y1.cali.var     Y1.raw Y1.var.raw    Y2.cali Y2.cali.var
+ [1,] -0.6015251    9.483934 -0.6102386  17.240724 -0.7897549    23.22184
+ [2,]  0.3046533   17.307373  0.3248585  28.222525  0.4951156    36.06308
+ [3,] -0.7834118   18.877324 -0.8501461  36.599911 -0.8743167    45.36985
+ [4,]  1.5939235    5.594249  1.6808489   9.404954  1.6284473    15.65276
+ [5,]  0.3417569   11.758301  0.3753555  21.047076  0.3005902    29.50474
+ [6,] -0.8486661    9.578627 -0.8963493  18.411496 -0.7544265    25.15631
+ [7,]  0.4104719    9.628402  0.5047771  19.113817  0.5414182    24.81275
+ [8,]  0.7382436   13.934450  0.7188454  25.573656  0.7003230    36.56176
+ [9,]  0.5269512   10.602788  0.4571129  19.326907  0.1905514    28.36576
+[10,] -0.6111023   17.460372 -0.7316626  31.617649 -0.4831555    38.75075
+          Y2.raw Y2.var.raw
+ [1,] -0.7812030   39.71248
+ [2,]  0.4237515   69.94800
+ [3,] -0.6362983   80.60901
+ [4,]  1.5008873   24.70822
+ [5,]  0.3934630   52.15066
+ [6,] -0.7571633   44.03808
+ [7,]  0.6120374   43.20263
+ [8,]  0.8603756   66.27134
+ [9,]  0.2976317   49.95805
+[10,] -0.3718993   71.50488</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
