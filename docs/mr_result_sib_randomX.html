@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree62f28c367cbe1d0da1e94a4ff9e50843aae2fb90targetblank62f28c3a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeefc5338420bddb5bf30c8deb8a3ecbd050d5455atargetblankefc5338a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/62f28c367cbe1d0da1e94a4ff9e50843aae2fb90" target="_blank">62f28c3</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/efc5338420bddb5bf30c8deb8a3ecbd050d5455a" target="_blank">efc5338</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree62f28c367cbe1d0da1e94a4ff9e50843aae2fb90targetblank62f28c3a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeefc5338420bddb5bf30c8deb8a3ecbd050d5455atargetblankefc5338a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/62f28c367cbe1d0da1e94a4ff9e50843aae2fb90" target="_blank">62f28c3</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/efc5338420bddb5bf30c8deb8a3ecbd050d5455a" target="_blank">efc5338</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -606,6 +606,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/efc5338420bddb5bf30c8deb8a3ecbd050d5455a/analysis/mr_result_sib_randomX.Rmd" target="_blank">efc5338</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-10
+</td>
+<td>
+wflow_publish("analysis/mr_result_sib_randomX.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/0b2e127b22b527300540830e9ef39a22a5fc1746/docs/mr_result_sib_randomX.html" target="_blank">0b2e127</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1535,6 +1569,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0b2e127b22b527300540830e9ef39a22a5fc1746/docs/figure/mr_result_sib_randomX.Rmd/unnamed-chunk-21-1.png" target="_blank">0b2e127</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-10
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/04835646870599d14dce4fdf82f1c2ff4b1a2d9f/docs/figure/mr_result_sib_randomX.Rmd/unnamed-chunk-21-1.png" target="_blank">0483564</a>
 </td>
 <td>
@@ -1557,7 +1602,7 @@ emp_var_reduction &lt;- aggregate(emp_var_reduction ~ combination, data = aggreg
 # Plotting setup
 plot(1, type = &quot;n&quot;, xlab = &quot;r1, r2 value&quot;, ylab = &quot;Variance Reduction&quot;, 
      xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), 
-     ylim = c(-1.05, 0.83), xaxt = &quot;n&quot;, main = &quot;Variance Reduction&quot;)
+     ylim = c(-2, 2), xaxt = &quot;n&quot;, main = &quot;Variance Reduction&quot;)
 
 # Add boxplot for variance reduction
 boxplot(var_reduction ~ combination, data = aggregated_data, 
