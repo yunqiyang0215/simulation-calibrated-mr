@@ -365,7 +365,7 @@ emp_var_means <- aggregate(cbind(emp_var_cali, emp_var_adj_uncali) ~ combination
 
 ```{r }
 
-plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = c(-0.05, 0.05), xaxt = "n", main = "Variance of MR estimates")
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c("cali", "adj_uncali", "emp_var_cali", "emp_var_adj_uncali")]), xaxt = "n", main = "Variance of MR estimates")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "#76B7B2", add = TRUE, ylim = range(aggregated_data$cali, na.rm = TRUE), pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
