@@ -390,7 +390,7 @@ emp_var_reduction <- aggregate(emp_var_reduction ~ combination, data = aggregate
 # Plotting setup
 plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance Reduction", 
      xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), 
-     ylim = c(-1.05, 0.83), xaxt = "n", main = "Variance Reduction")
+     ylim = c(-2, 2), xaxt = "n", main = "Variance Reduction")
 
 # Add boxplot for variance reduction
 boxplot(var_reduction ~ combination, data = aggregated_data, 
