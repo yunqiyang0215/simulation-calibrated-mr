@@ -1,0 +1,56 @@
+---
+title: "MR result: compare bias"
+author: "Yunqi Yang"
+date: "8/15/2023"
+output: html_document
+---
+
+## Description:
+
+Compare bias in results for adjusted and unadjusted familial effect.  
+
+```{r}
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/mr_dsc20230727/res_mr.rds")
+```
+
+```{r}
+r1 = unique(dat$sim_data.r1) # Y.pa contribution to exposure trait
+r2 = unique(dat$sim_data.r2) # Y.pa contribution to outcome trait
+method = c("calibrated", "adj_uncalibrated", "unadj_ext", "unadj_int")
+mr_method = c("ivw", "mr.raps")
+
+```
+
+```{r fig.width=12, fig.height=16}
+par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+n_rep = 50
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
+    val = c(res$mr.point_est[res$fit.method == "calibrated"], 
+            res$mr.point_est[res$fit.method == "adj_uncalibrated"],
+            res$mr.point_est[res$fit.method == "unadj_ext"],
+            res$mr.point_est[res$fit.method == "unadj_int"]
+            )
+    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("ivw: exp =", r1[i], "; out =", r2[j]))
+  }
+}
+```
+
+```{r fig.width=12, fig.height=16}
+par(mfrow = c(6,5), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+n_rep = 50
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
+    val = c(res$mr.point_est[res$fit.method == "calibrated"], 
+            res$mr.point_est[res$fit.method == "adj_uncalibrated"],
+            res$mr.point_est[res$fit.method == "unadj_ext"],
+            res$mr.point_est[res$fit.method == "unadj_int"]
+            )
+    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep), rep("int", n_rep))
+    boxplot(val ~ group, ylab = "Point estimate", main = paste0("ivw: exp =", r1[i], "; out =", r2[j]))
+  }
+}
+```
