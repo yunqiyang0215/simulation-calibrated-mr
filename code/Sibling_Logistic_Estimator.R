@@ -3,9 +3,10 @@
 ##' @param X: a vector contains transmitted allele values
 ##' @param F_ind: family index (from 1 to K)
 ##' @param alpha_ext: estimate of alpha from external data
-##' @param alpha_ext_var: variance of alpha from external data divided by external data size
-
-calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var){
+##' @param alpha_ext_var: variance of alpha from external data
+##' @param N_ext: number of samples in external data
+##' 
+calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
   
   # Number of families
   K = max(F_ind)
@@ -30,7 +31,8 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var)
   
   f = family_effect[F_ind]
   
-  
+  # Adjust external variance
+  alpha_ext_var = alpha_ext_var / N_ext
   
   # Compute the incorrect model for internal data
   
