@@ -23,8 +23,6 @@ editor_options:
 
 + [Simulating from Y.pa](simulate_from_par_pheno.html)
 
-+ [MR comparison](mr_result.html)
-
 + [Real data analysis](real_data_analysis.html)
 
 Simulation using ukb real genotype
@@ -43,6 +41,8 @@ Parametric simulation:
 + [Calibration result on sibling: random X](calibration_sib_randomX.html)
 
 + [Calibration result: logistic trio](calibration_logistic_trio.html)
+
++ [MR bias](mr_bias.html)
 
 + [MR result: trio data linear regression](mr_result_randomX.html)
 
