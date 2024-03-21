@@ -44,7 +44,9 @@ Parametric simulation:
 
 + [Calibration result: logistic trio](calibration_logistic_trio.html)
 
-+ [MR result: random X](mr_result_randomX.html)
++ [MR result: trio data linear regression](mr_result_randomX.html)
+
++ [MR result: trio data logistic regression](mr_result_randomX.html)
 
 + [MR result on sibling: random X](mr_result_sib_randomX.html)
 
