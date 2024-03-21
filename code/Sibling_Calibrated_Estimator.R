@@ -46,12 +46,13 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 ##' @param F_ind: family index (from 1 to K)
 ##' @param alpha_ext: estimate of alpha from external data
 ##' @param alpha_ext_var: variance of alpha from external data
+##' @param N_ext: number of samples in external data
 ##' 
-calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var){
+calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
   
   # Correct model Y = beta_0 + beta_1 X + f + epsilon
   # Incorrect model: Y = alpha_0 + alpha_1 X + epsilo
-  
+
   # Number of families
   K = max(F_ind)
   # Number of individuals
@@ -71,6 +72,9 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var){
   mu_x = mean(X)
   sigma_x = sqrt(var(X))
   
+
+  # Adjust external variance
+  alpha_ext_var = alpha_ext_var / N_ext
   
   # Compute the correct model for internal data
   
