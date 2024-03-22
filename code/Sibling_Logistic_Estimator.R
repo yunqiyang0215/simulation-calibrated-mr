@@ -126,3 +126,8 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
   return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), 
               beta_int = beta_int, beta_int_var = (C22/N)))
 }
+
+
+logit <- function(x){
+  return( exp(x)/(1 + exp(x)))
+}
