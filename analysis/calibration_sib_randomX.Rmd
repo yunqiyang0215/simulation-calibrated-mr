@@ -8,8 +8,8 @@ Description: Simulation result for calibration. The simulation model is the same
 
 
 ```{r}
-res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/202402/res.rds")
-res.sub = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/202402/res.sub.rds")
+res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/linear202403/res.rds")
+res.sub = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/linear202403/res.sub.rds")
 ```
 
 ```{r}
@@ -42,7 +42,6 @@ for (i in 1:length(p)){
 
 
 ```
-
 
 
 
