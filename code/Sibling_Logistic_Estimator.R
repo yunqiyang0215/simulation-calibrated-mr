@@ -1,12 +1,13 @@
-##' Compute the calibrated estimator for binary data
+##' Compute the calibrated estimator
 ##' @param Y: a vector contains response variable values
 ##' @param X: a vector contains transmitted allele values
 ##' @param F_ind: family index (from 1 to K)
 ##' @param alpha_ext: estimate of alpha from external data
 ##' @param alpha_ext_var: variance of alpha from external data
 ##' @param N_ext: number of samples in external data
+##' @param overlap_ratio: proportion of internal data from external data
 ##' 
-calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
+calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0){
   
   # Number of families
   K = max(F_ind)
@@ -32,7 +33,7 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
   f = family_effect[F_ind]
   
   # Adjust external variance
-  alpha_ext_var = alpha_ext_var / N_ext
+  C11 = (alpha_ext_var / N_ext) * N
   
   # Compute the incorrect model for internal data
   
@@ -120,12 +121,20 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
   C33 = (solve(D3) %*% C33 %*% solve(D3) )[2,2] / N
   C23 = (solve(D2) %*% C23 %*% solve(D3))[2,2] / N
   
+  # Compute C12, C13
+  
+  C12 = overlap_ratio * C23 * N / N_ext
+  C13 = overlap_ratio * C33 * N / N_ext
+  
+  # Covariance matrix of (alpha_ext - alpha_int, beta_int - beta)
+  result_cov = rbind(c(C11 - 2 * C13+ C33, C12 - C23), c(C12 - C23, C22))
   # Compute the final calibrated estimator
-  beta_cal = beta_int + C23 / ( N * alpha_ext_var + C33) * (alpha_ext - alpha_int)
-  beta_cal_var = (C22 - C23^2 / (N * alpha_ext_var + C33) ) / N
-  return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), 
-              beta_int = beta_int, beta_int_var = (C22/N)))
+  beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
+  beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
+  return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int, 
+              beta_int_var = (C22/N)))
 }
+
 
 
 logit <- function(x){

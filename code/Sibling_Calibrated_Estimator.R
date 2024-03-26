@@ -47,12 +47,13 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 ##' @param alpha_ext: estimate of alpha from external data
 ##' @param alpha_ext_var: variance of alpha from external data
 ##' @param N_ext: number of samples in external data
+##' @param overlap_ratio: proportion of internal data from external data
 ##' 
-calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
+calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0){
   
   # Correct model Y = beta_0 + beta_1 X + f + epsilon
   # Incorrect model: Y = alpha_0 + alpha_1 X + epsilo
-
+  
   # Number of families
   K = max(F_ind)
   # Number of individuals
@@ -72,9 +73,9 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
   mu_x = mean(X)
   sigma_x = sqrt(var(X))
   
-
+  
   # Adjust external variance
-  alpha_ext_var = alpha_ext_var / N_ext
+  C11 = (alpha_ext_var / N_ext) * N
   
   # Compute the correct model for internal data
   
@@ -116,8 +117,8 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
     prod = resid_sub * X_sub
     prod_tilde = resid_tilde_sub * X_tilde_sub
     
-  
-      
+    
+    
     # This is for C22
     correct_var[m] = var(tapply(prod_tilde, F_ind[F_size == m], sum))
     # This is for C33
@@ -151,13 +152,20 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext){
   C33 = (solve(design) %*% C33 %*% solve(design) )[2, 2] * N
   C23 = (const1^(-1) * C23 %*% solve(design) )[2] * N
   
-
+  # Compute C12, C13
+  
+  C12 = overlap_ratio * C23 * N / N_ext
+  C13 = overlap_ratio * C33 * N / N_ext
+  
+  # Covariance matrix of (alpha_ext - alpha_int, beta_int - beta)
+  result_cov = rbind(c(C11 - 2 * C13+ C33, C12 - C23), c(C12 - C23, C22))
   # Compute the final calibrated estimator
-  beta_cal = beta_int + C23 / ( N * alpha_ext_var + C33) * (alpha_ext - alpha_int)
-  beta_cal_var = (C22 - C23^2 / (N * alpha_ext_var + C33) ) / N
+  beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
+  beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
   return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int, 
               beta_int_var = (C22/N)))
 }
+
 
 
 
