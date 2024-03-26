@@ -5,7 +5,7 @@ date: '2024-03-08'
 ---
 
 ```{r}
-dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/202402/res_mr.rds")
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_sibling/linear202403/res_mr.rds")
 ```
 
 ```{r}
