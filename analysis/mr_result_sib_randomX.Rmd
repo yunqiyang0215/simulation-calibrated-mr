@@ -197,7 +197,7 @@ emp_var_reduction <- aggregate(emp_var_reduction ~ combination, data = aggregate
 # Plotting setup
 plot(1, type = "n", xlab = "r1, r2 value", ylab = "Variance Reduction", 
      xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), 
-     ylim = c(-1.05, 0.83), xaxt = "n", main = "Variance Reduction")
+     ylim = c(-0.5, 0.5), xaxt = "n", main = "Variance Reduction")
 
 # Add boxplot for variance reduction
 boxplot(var_reduction ~ combination, data = aggregated_data, 
@@ -346,7 +346,7 @@ for(i in 1:length(r1)) {
 #### (1) Boxplot for point estimate 
 ```{r}
 
-plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = c(-2, 2), xaxt = "n", main = "Point estimate: mr.raps")
+plot(1, type = "n", xlab = "r1, r2 value", ylab = "value", xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = c(-2, 4), xaxt = "n", main = "Point estimate: mr.raps")
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, col = "lightblue", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
