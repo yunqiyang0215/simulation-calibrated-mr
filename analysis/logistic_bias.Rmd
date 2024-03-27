@@ -33,6 +33,6 @@ for (i in 1:length(r1)){
 ```{r}
 colnames(summary) = c("r1", "r2", "p.y1", "p.y2", "var.y1", "var.y2")
 head(summary)
-saveRDS(summary, "/project2/mstephens/yunqiyang/calibrated_mr/simulation_trio/logistic_bias.rds")
+saveRDS(summary, "./data/logistic_bias.rds")
 ```
 
