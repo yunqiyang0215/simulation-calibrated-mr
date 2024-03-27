@@ -1,0 +1,32 @@
+---
+title: "Understanding bias in logistic regression"
+output: html_document
+date: '2024-03-27'
+---
+
+```{r}
+binary_pheno <- readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_trio/logistic202403/binary_pheno.rds")
+```
+
+```{r}
+r1 = unique(binary_pheno$sim_data.r1)
+r2 = unique(binary_pheno$sim_data.r2)
+```
+
+```{r}
+for (i in 1:length(r1)){
+  for (j in 1:length(r2)){
+    indx = which(binary_pheno$sim_data.r1 == r1[i] & binary_pheno$sim_data.r2 == r2[j])
+    p.y1 = sapply(indx, function(x) sum(binary_pheno$sim_data.dat[[x]]$pheno[,1])/nrow(binary_pheno$sim_data.dat[[x]]$pheno))
+
+    p.y2 = sapply(indx, function(x) sum(binary_pheno$sim_data.dat[[x]]$pheno[,2])/nrow(binary_pheno$sim_data.dat[[x]]$pheno))
+
+    var.y1 = sapply(indx, function(x) var(binary_pheno$sim_data.dat[[x]]$pheno[,1]))
+    var.y2 = sapply(indx, function(x) var(binary_pheno$sim_data.dat[[x]]$pheno[,2]))
+    res = c(mean(p.y1), mean(p.y2), mean(var.y1), mean(var.y2))
+    print(paste0("r1=", r1[i], ";r2=", r2[j]))
+    print(res)
+  }
+}
+```
+
