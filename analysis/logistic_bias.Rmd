@@ -14,6 +14,7 @@ r2 = unique(binary_pheno$sim_data.r2)
 ```
 
 ```{r}
+summary = c()
 for (i in 1:length(r1)){
   for (j in 1:length(r2)){
     indx = which(binary_pheno$sim_data.r1 == r1[i] & binary_pheno$sim_data.r2 == r2[j])
@@ -23,10 +24,15 @@ for (i in 1:length(r1)){
 
     var.y1 = sapply(indx, function(x) var(binary_pheno$sim_data.dat[[x]]$pheno[,1]))
     var.y2 = sapply(indx, function(x) var(binary_pheno$sim_data.dat[[x]]$pheno[,2]))
-    res = c(mean(p.y1), mean(p.y2), mean(var.y1), mean(var.y2))
-    print(paste0("r1=", r1[i], ";r2=", r2[j]))
-    print(res)
+    res = c(r1[i], r2[j], mean(p.y1), mean(p.y2), mean(var.y1), mean(var.y2))
+    summary = rbind(summary, res)
   }
 }
+```
+
+```{r}
+colnames(summary) = c("r1", "r2", "p.y1", "p.y2", "var.y1", "var.y2")
+head(summary)
+saveRDS(summary, "/project2/mstephens/yunqiyang/calibrated_mr/simulation_trio/logistic_bias.rds")
 ```
 
