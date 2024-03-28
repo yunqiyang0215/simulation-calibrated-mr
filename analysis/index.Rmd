@@ -42,6 +42,8 @@ Parametric simulation:
 
 + [Calibration result: logistic trio](calibration_logistic_trio.html)
 
++ [Calibration result: logistic sibling](calibration_logistic_sib.html)
+
 + [Understand bias in logistic regression](logistic_bias.html)
 
 + [MR bias](mr_bias.html)
