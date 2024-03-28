@@ -52,6 +52,8 @@ Parametric simulation:
 
 + [MR result: trio data logistic regression](mr_logistic_trio.html)
 
-+ [MR result on sibling: random X](mr_result_sib_randomX.html)
++ [MR result on sibling: linear regression](mr_result_sib_randomX.html)
+
++ [MR result on sibling: logistic regression](mr_result_logistic_sib.html)
 
 
