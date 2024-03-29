@@ -220,3 +220,101 @@ for (i in 1:5){
 
 
 
+
+
+
+
+### 3. Plot vs. phenotypic correlation
+
+#### 3.1 Parameters: p = 10 and sig = 1
+
+```{r}
+r1 = unique(res$sim_data.r1)
+pheno.cors = rep(NA, length(r1))
+for (k in 1:length(r1)){
+  indx = which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 10 & res$sim_data.sig == 1)
+  pheno.cors[k] <- mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1]))
+}
+pheno.cors <- round(pheno.cors, 2)
+
+empirical_vr = matrix(NA, ncol = 5, nrow = 10)
+for (i in 1:10){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 10 & res$sim_data.sig == 1), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_vr[i, ] <- (var_raw - var_cali) / var_raw
+}
+```
+
+
+```{r}
+labels <- pheno.cors
+boxplot(empirical_vr, names = labels, las = 1,
+        main = "Boxplot of Empirical Variance Reduction",
+        xlab = "Phenotypic Correlations", ylab = "Variance Reduction")
+```
+
+#### 3.2 Parameters: p = 10 and sig = 10
+
+```{r}
+r1 = unique(res$sim_data.r1)
+pheno.cors = rep(NA, length(r1))
+for (k in 1:length(r1)){
+  indx = which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 10 & res$sim_data.sig == 10)
+  pheno.cors[k] <- mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1]))
+}
+pheno.cors <- round(pheno.cors, 2)
+
+empirical_vr = matrix(NA, ncol = 5, nrow = 10)
+for (i in 1:10){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 10 & res$sim_data.sig == 10), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_vr[i, ] <- (var_raw - var_cali) / var_raw
+}
+```
+
+
+```{r}
+labels <- pheno.cors
+boxplot(empirical_vr, names = labels, las = 1,
+        main = "Boxplot of Empirical Variance Reduction",
+        xlab = "Phenotypic Correlations", ylab = "Variance Reduction")
+```
+
+
+
+#### 3.3 Parameters: p = 100 and sig = 1
+
+```{r}
+r1 = unique(res$sim_data.r1)
+pheno.cors = rep(NA, length(r1))
+for (k in 1:length(r1)){
+  indx = which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 100 & res$sim_data.sig == 1)
+  pheno.cors[k] <- mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1]))
+}
+pheno.cors <- round(pheno.cors, 2)
+
+empirical_vr = matrix(NA, ncol = 5, nrow = 10)
+for (i in 1:10){
+  snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$sim_effect.p == 100 & res$sim_data.sig == 1), i, data.list = res$fit.sumstat, column_names = c("Y1.cali", "Y1.raw")))
+  dat_estimator <- do.call(cbind, snp_dat_list)
+  empirical_var = apply(dat_estimator, 2, var)
+  var_cali <- empirical_var[c(TRUE, FALSE)]
+  var_raw <- empirical_var[c(FALSE, TRUE)]
+  empirical_vr[i, ] <- (var_raw - var_cali) / var_raw
+}
+```
+
+
+```{r}
+labels <- pheno.cors
+boxplot(empirical_vr, names = labels, las = 1,
+        main = "Boxplot of Empirical Variance Reduction",
+        xlab = "Phenotypic Correlations", ylab = "Variance Reduction")
+```
+
