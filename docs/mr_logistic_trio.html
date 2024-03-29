@@ -392,7 +392,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-03-28
+<strong>Last updated:</strong> 2024-03-29
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -549,15 +549,15 @@ data/logistic_mr_estimate.RData
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9e53538fee6d46695221f796fb18cf9e3d60ab86targetblank9e53538a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea7304451dfe984ea4ff0cc0020972d22842b6e07targetblanka730445a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9e53538fee6d46695221f796fb18cf9e3d60ab86" target="_blank">9e53538</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a7304451dfe984ea4ff0cc0020972d22842b6e07" target="_blank">a730445</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9e53538fee6d46695221f796fb18cf9e3d60ab86targetblank9e53538a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea7304451dfe984ea4ff0cc0020972d22842b6e07targetblanka730445a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -567,7 +567,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9e53538fee6d46695221f796fb18cf9e3d60ab86" target="_blank">9e53538</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a7304451dfe984ea4ff0cc0020972d22842b6e07" target="_blank">a730445</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -634,6 +634,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a7304451dfe984ea4ff0cc0020972d22842b6e07/analysis/mr_logistic_trio.Rmd" target="_blank">a730445</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-29
+</td>
+<td>
+wflow_publish("analysis/mr_logistic_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/f01a76cef0004ccf119ed60d330922643bcca4bd/docs/mr_logistic_trio.html" target="_blank">f01a76c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-28
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -763,6 +797,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f01a76cef0004ccf119ed60d330922643bcca4bd/docs/figure/mr_logistic_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">f01a76c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/30589d7ba66af50b3b74c453cdfce1c65a37339d/docs/figure/mr_logistic_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">30589d7</a>
@@ -923,7 +968,7 @@ for(i in 1:length(r1)) {
 }</code></pre>
 <div id="boxplot-for-point-estimate-1" class="section level4">
 <h4>(1) Boxplot for point estimate</h4>
-<pre class="r"><code>plot(1, type = &quot;n&quot;, xlab = &quot;r1, r2 value&quot;, ylab = &quot;value&quot;, xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = range(aggregated_data[, c(&quot;cali_point&quot;, &quot;adj_uncali_point&quot;)], na.rm = TRUE), xaxt = &quot;n&quot;, main = &quot;Point estimate: mr.raps&quot;)
+<pre class="r"><code>plot(1, type = &quot;n&quot;, xlab = &quot;r1, r2 value&quot;, ylab = &quot;value&quot;, xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), ylim = c(0, 2), xaxt = &quot;n&quot;, main = &quot;Point estimate: mr.raps&quot;)
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
 boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) - 0.2, 
@@ -957,6 +1002,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f01a76cef0004ccf119ed60d330922643bcca4bd/docs/figure/mr_logistic_trio.Rmd/unnamed-chunk-9-1.png" target="_blank">f01a76c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-03-28
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/30589d7ba66af50b3b74c453cdfce1c65a37339d/docs/figure/mr_logistic_trio.Rmd/unnamed-chunk-9-1.png" target="_blank">30589d7</a>
@@ -1026,58 +1082,13 @@ yunqi yang
 </table>
 </div>
 </div>
-</div>
-<div id="boxplot-for-variance-reduction-1" class="section level4">
-<h4>(3) Boxplot for variance reduction</h4>
-<pre class="r"><code>compute_var &lt;- function(g1, g2, x.var, y.var, beta){
-  res1 = (g1^2*y.var + g2^2*x.var + x.var*y.var)/(beta^2*x.var + y.var)^2
-  res2 = (g1^2*y.var + g2^2*x.var)/(beta^2*x.var + y.var)^2
-  return(list(V1 = sum(res1), V2 = sum(res2)))
-}</code></pre>
-<pre class="r"><code>res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/mr_dsc20230727/res.rds&quot;)</code></pre>
-<pre class="r"><code>r1 = unique(res$sim_data.r1)
-r2 = unique(res$sim_data.r2)
-set.seed(1)
-p = 10
-b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
-beta = 1</code></pre>
-<pre class="r"><code>var_mr.raps &lt;- data.frame(mr.var.cali = numeric(), mr.var.raw = numeric(), combination = factor())
-
-for(i in 1:length(r1)) {
-  for(j in 1:length(r2)) {
-    
-    indx = which(res$sim_data.r1 == r1[i] &amp; res$sim_data.r2 == r2[j])
-    sub_res = res$fit.sumstat[indx]
-    combined_data = do.call(cbind, sub_res)
-    
-    Y1.cali.var = apply(combined_data[, which(colnames(combined_data) == &quot;Y1.cali.var&quot;)], 1, mean)
-    Y1.raw.var = apply(combined_data[, which(colnames(combined_data) == &quot;Y1.var.raw&quot;)], 1, mean)
-    Y2.cali.var = apply(combined_data[, which(colnames(combined_data) == &quot;Y2.cali.var&quot;)], 1, mean)
-    Y2.raw.var = apply(combined_data[, which(colnames(combined_data) == &quot;Y2.var.raw&quot;)], 1, mean)
-    
-    # Compute g1, g2
-    g1 = bp*r1[i] + b
-    g2 = beta*(b+r1[i]*bp) + r2[j]*bp
-    
-    res.cali = compute_var(g1, g2, x.var = Y1.cali.var, y.var = Y2.cali.var, beta)
-    res.raw = compute_var(g1, g2, x.var = Y1.raw.var, y.var = Y2.raw.var, beta)
-    mr.var.cali = res.cali$V1/(res.cali$V2^2)
-    mr.var.raw = res.raw$V1/(res.raw$V2^2)
-    
-    label &lt;- paste(r1[i], r2[j], sep = &quot;,&quot;)
-    var_mr.raps &lt;- rbind(var_mr.raps, data.frame(mr.var.cali = mr.var.cali, 
-                                                         mr.var.raw = mr.var.raw,
-                                                         combination = factor(label)))
-  }
-}</code></pre>
 <pre class="r"><code># Calculate mean variance reduction by combination
 emp_var_reduction &lt;- aggregate(emp_var_reduction ~ combination, data = aggregated_data, FUN = mean)
 
 # Plotting setup
 plot(1, type = &quot;n&quot;, xlab = &quot;r1, r2 value&quot;, ylab = &quot;Variance Reduction&quot;, 
      xlim = c(0.5, length(levels(aggregated_data$combination)) + 0.5), 
-     ylim = c(0, 0.83), xaxt = &quot;n&quot;, main = &quot;Variance Reduction&quot;)
+     ylim = c(-1.05, 1), xaxt = &quot;n&quot;, main = &quot;Variance Reduction&quot;)
 
 # Add boxplot for variance reduction
 boxplot(var_reduction ~ combination, data = aggregated_data, 
@@ -1088,49 +1099,8 @@ boxplot(var_reduction ~ combination, data = aggregated_data,
 # Add custom axis labels
 axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggregated_data$combination), las = 2, cex.axis = 0.6)
 
-points(1:length(levels(emp_var_reduction$combination)) - 0.2, emp_var_reduction$emp_var_reduction, pch = 4, col = &quot;red&quot;, cex = 0.5)
-
-points(1:length(levels(emp_var_reduction$combination)) - 0.2, (var_mr.raps$mr.var.raw - var_mr.raps$mr.var.cali)/var_mr.raps$mr.var.raw, pch = 4, col = &quot;gold&quot;, cex = 0.5)
-
-legend(&quot;topright&quot;, legend = c(&quot;theoretical&quot;, &quot;empirical&quot;), fill = c(&quot;gold&quot;, &quot;red&quot;), bty = &quot;n&quot;, cex = 0.8)</code></pre>
-<p><img src="figure/mr_logistic_trio.Rmd/unnamed-chunk-16-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-16-1">
-Past versions of unnamed-chunk-16-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-16-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/30589d7ba66af50b3b74c453cdfce1c65a37339d/docs/figure/mr_logistic_trio.Rmd/unnamed-chunk-16-1.png" target="_blank">30589d7</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-03-21
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+points(1:length(levels(emp_var_reduction$combination)) - 0.2, emp_var_reduction$emp_var_reduction, pch = 4, col = &quot;red&quot;, cex = 0.5)</code></pre>
+<p><img src="figure/mr_logistic_trio.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
