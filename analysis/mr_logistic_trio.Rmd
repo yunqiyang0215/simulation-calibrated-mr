@@ -6,6 +6,7 @@ date: '2024-02-09'
 
 ```{r}
 dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation_trio/logistic202403/res_mr.rds")
+effect.true = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/logistic_mr_estimate.RData")
 ```
 
 ```{r}
@@ -62,6 +63,10 @@ boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(a
 boxplot(adj_uncali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, 
         col = "gold", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
 legend("topright", legend = c("Calibrated", "Uncalibrated"), fill = c("lightblue", "gold"), bty = "n", cex = 0.8)
+
+points_at <- 1:length(levels(aggregated_data$combination))  
+MR_estimate_values <- effect.true$MR_estimate 
+points(points_at, MR_estimate_values, pch = 4, col = "red", cex = 0.6)
 
 ```
 
@@ -158,7 +163,9 @@ boxplot(cali_point ~ combination, data = aggregated_data, at = 1:length(levels(a
 boxplot(adj_uncali_point ~ combination, data = aggregated_data, at = 1:length(levels(aggregated_data$combination)) + 0.2, 
         col = "gold", add = TRUE, pch = 20, cex = 0.5, boxwex = 0.3, xaxt = "n")
 legend("topright", legend = c("Calibrated", "Uncalibrated"), fill = c("lightblue", "gold"), bty = "n", cex = 0.8)
-
+points_at <- 1:length(levels(aggregated_data$combination))  
+MR_estimate_values <- effect.true$MR_estimate 
+points(points_at, MR_estimate_values, pch = 4, col = "red", cex = 0.6)
 ```
 
 
