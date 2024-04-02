@@ -14,15 +14,18 @@ library(MendelianRandomization)
 ### 1. BMI on education attainment
 
 ```{r}
-
-sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv"
-exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv"
+sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv"
+exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv"
 out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt"
-plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
+plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref/data_maf0.01_rs_ref"
 
-data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
+data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.1, 
                       plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
 
+```
+
+```{r}
+write.table(data.list$data, "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/bmi_ea.txt")
 ```
 
 ```{r, fig.width=8, fig.height=6}
@@ -72,15 +75,18 @@ for (i in 1:length(pval_threshold)){
 ### 2. BMI on T2D
 
 ```{r}
-
-sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv"
-exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv"
+sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-giant17eu.csv"
+exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/BMI-ukb.csv"
 out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-diagram12-Im.csv"
-plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
+plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref/data_maf0.01_rs_ref"
 
 data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
 
+```
+
+```{r}
+write.table(data.list$data, "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/bmi_t2d.txt")
 ```
 
 
@@ -126,7 +132,9 @@ for (i in 1:length(pval_threshold)){
 }
 ```
 
-
+```{r}
+write.table(data.list$data, "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/height_ea.txt")
+```
 
 ### 3. height on EA
 
@@ -135,10 +143,14 @@ for (i in 1:length(pval_threshold)){
 sel.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/Height-giant14.csv"
 exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/height-ukb.csv"
 out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt"
-plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref"
+plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref/data_maf0.01_rs_ref"
 
 data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
+
+```
+
+```{r}
 
 ```
 
