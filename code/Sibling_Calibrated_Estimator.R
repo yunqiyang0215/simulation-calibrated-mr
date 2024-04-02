@@ -41,15 +41,18 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 }
 
 ##' Compute the calibrated estimator
-##' @param Y: a vector contains response variable values
-##' @param X: a vector contains transmitted allele values
+##' @param Y: a vector that contains response variable values
+##' @param X: a vector that contains transmitted allele values
+##' @param Z: a matrix that contains other covariates
 ##' @param F_ind: family index (from 1 to K)
 ##' @param alpha_ext: estimate of alpha from external data
 ##' @param alpha_ext_var: variance of alpha from external data
 ##' @param N_ext: number of samples in external data
 ##' @param overlap_ratio: proportion of internal data from external data
+##' @param Z: other covariates (the number of rows should be internal data size)
 ##' 
-calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0){
+calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,  
+                                 overlap_ratio = 0, Z = NULL){
   
   # Correct model Y = beta_0 + beta_1 X + f + epsilon
   # Incorrect model: Y = alpha_0 + alpha_1 X + epsilo
@@ -69,10 +72,6 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, o
     F_size[i] = size_dic[F_ind[i]]
   }
   
-  # Compute the variance and mean of X
-  mu_x = mean(X)
-  sigma_x = sqrt(var(X))
-  
   
   # Adjust external variance
   C11 = (alpha_ext_var / N_ext) * N
@@ -83,74 +82,106 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, o
   # X_tilde = X - X_bar
   # Y_tilde = \beta_1 X_tilde + epsilon
   
+  if(! is.null(Z)){
+    dim_Z = length(Z) / N
+  } else{
+    dim_Z = 0
+  }
   Y_tilde = Y
-  X_tilde = X
-  for(i in 1:K){
-    Y_tilde[ F_ind == i ] = Y_tilde[ F_ind == i ]  - mean(Y_tilde[ F_ind == i ] )
-    X_tilde[ F_ind == i ] = X_tilde[ F_ind == i ]  - mean(X_tilde[ F_ind == i ] )
+  
+  X = matrix(X, N, 1)
+  XZ = cbind(X, Z)
+  XZ_tilde = XZ
+  
+  if(dim_Z != 0){
+    for(i in 1:K){
+      Y_tilde[ F_ind == i ] = Y_tilde[ F_ind == i ]  - mean(Y_tilde[ F_ind == i ] )
+      XZ_tilde[ F_ind == i, ] = sweep(XZ_tilde[ F_ind == i, ], 2, 
+                                      colMeans(XZ_tilde[ F_ind == i, ]), FUN="-")     }
+  } else{
+    for(i in 1:K){
+      Y_tilde[ F_ind == i ] = Y_tilde[ F_ind == i ]  - mean(Y_tilde[ F_ind == i ] )
+      XZ_tilde[ F_ind == i] = XZ_tilde[ F_ind == i]  - mean(XZ_tilde[ F_ind == i] )
+    }
   }
   
-  correct_int = lm(Y_tilde ~ -1 +  X_tilde)
+  XZ = matrix(XZ, ncol = 1 + dim_Z)
+  XZ_tilde = matrix(XZ_tilde, ncol = 1 + dim_Z)
+  
+  
+  correct_int = lm(Y_tilde ~ -1 +  XZ_tilde)
   beta_int = summary(correct_int)$coefficients[1]
   
   # Compute the incorrect model for internal data
   
-  alpha_int = lm( Y ~  X)$coefficients[2]
+  incorrect_int = lm( Y ~  XZ)
+  alpha_int = summary(incorrect_int)$coefficients[2]
   # Compute the C_{22}, C_{33}, C_{23}
   
   M = max(F_size)
   
-  correct_var = rep( 0 , M)
-  incorrect_var = list()
-  correct_incorrect_cov = list()
+  Cs = list()
   
   # Consider each family size separately
   for(m in 2:M){
     
     # Only look at family of size m
-    X_sub = X[F_size == m]
-    resid_sub = Y[F_size == m] - mean(Y) - alpha_int * X_sub
+    XZ_sub = XZ[F_size == m, ]
+    resid_sub = resid(summary(incorrect_int))[F_size == m]
     
-    X_tilde_sub = X_tilde[F_size == m]
-    resid_tilde_sub = Y_tilde[F_size == m] - beta_int * X_tilde_sub
-    
-    prod = resid_sub * X_sub
-    prod_tilde = resid_tilde_sub * X_tilde_sub
+    XZ_tilde_sub = XZ_tilde[F_size == m, ]
+    resid_tilde_sub = resid(summary(correct_int))[F_size == m]
     
     
+    ind_sub = F_ind[F_size == m]
     
-    # This is for C22
-    correct_var[m] = var(tapply(prod_tilde, F_ind[F_size == m], sum))
-    # This is for C33
-    C33_11 = var(tapply(resid_sub, F_ind[F_size == m], sum))
-    C33_22 = var(tapply(prod, F_ind[F_size == m], sum))
-    C33_12 = cov(tapply(prod, F_ind[F_size == m], sum), tapply(resid_sub, F_ind[F_size == m], sum) )
-    incorrect_var[[m]]= rbind(c(C33_11, C33_12), c(C33_12, C33_22))
+    C = cbind(XZ_tilde_sub * resid_tilde_sub, resid_sub, XZ_sub * resid_sub)
     
-    # This is for C23
-    C23_1 = cov(tapply(prod_tilde, F_ind[F_size == m], sum), tapply(resid_sub, F_ind[F_size == m], sum) )
-    C23_2 = cov(tapply(prod_tilde, F_ind[F_size == m], sum), tapply(prod, F_ind[F_size == m], sum) )
-    correct_incorrect_cov[[m]] = c(C23_1, C23_2) 
+    C = t(sapply(unique(ind_sub), 
+                 function(x) colSums(C[which(ind_sub == x), ])))
+    
+    
+    Cs[[m]] = cov(C)
     
   }  
   
-  C22 = 0
-  C33 = matrix(rep(0, 4), 2, 2)
-  C23 = c(0, 0)
+  final_C = matrix(0, 2 * (dim(XZ)[2]) + 1, 2 * (dim(XZ)[2]) + 1)
+  
   for(i in 1:K){
-    C22 = C22 + correct_var[size_dic[i]]
-    C33 = C33 + incorrect_var[[size_dic[i]]]
-    C23 = C23 + correct_incorrect_cov[[size_dic[i]]]
+    final_C = final_C + Cs[[size_dic[i]]]
   }
   
-  const1 = sum(X_tilde^2)
-  C22 = N* C22 *(const1)^(-2)
+  
+  ## Compute covariance components
+  
+  if(! is.null(Z)){
+    const1 = solve(t(XZ_tilde) %*% XZ_tilde)
+    C22 = N* (const1 %*% final_C[(1:(dim_Z + 1)), 1:(dim_Z + 1)] %*% const1)[1, 1]
+    
+    C33 = final_C[(dim_Z + 2):dim(final_C)[2],  (dim_Z + 2):dim(final_C)[2]]
+    design = t(cbind(rep(1, N), XZ)) %*% cbind(rep(1, N), XZ)
+    C33 = (solve(design) %*% C33 %*% solve(design) )[2, 2] * N
+    
+    
+    C23 = final_C[1:(dim_Z + 1),  (dim_Z + 2):dim(final_C)[2]]
+    C23 = ( (const1) %*% C23 %*% solve(design) )[1, 2] * N
+    
+  } else{
+    const1 = solve(t(XZ_tilde) %*% XZ_tilde)
+    C22 = N*  final_C[1, 1] * const1^2
+    
+    C33 = final_C[(dim_Z + 2):dim(final_C)[2],  (dim_Z + 2):dim(final_C)[2]]
+    design = t(cbind(rep(1, N), XZ)) %*% cbind(rep(1, N), XZ)
+    C33 = (solve(design) %*% C33 %*% solve(design) )[2, 2] * N
+    
+    
+    C23 = final_C[1:(dim_Z + 1),  (dim_Z + 2):dim(final_C)[2]]
+    C23 = ((const1) %*% matrix(C23, 1, 2) %*% solve(design) )[1, 2] * N
+    
+    
+  }
   
   
-  
-  design = t(cbind(rep(1, N), X)) %*% cbind(rep(1, N), X)
-  C33 = (solve(design) %*% C33 %*% solve(design) )[2, 2] * N
-  C23 = (const1^(-1) * C23 %*% solve(design) )[2] * N
   
   # Compute C12, C13
   
@@ -165,6 +196,7 @@ calibrated_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, o
   return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int, 
               beta_int_var = (C22/N)))
 }
+
 
 
 
