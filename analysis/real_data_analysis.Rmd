@@ -25,7 +25,7 @@ data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 
 ```
 
 ```{r}
-write.table(data.list$data[, 1], "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/bmi_ea.txt", quote = TRUE, col.names  = FALSE)
+write.table(data.list$data[, 1], "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/bmi_ea.txt", quote = FALSE, col.names  = FALSE, row.names = FALSE)
 ```
 
 ```{r, fig.width=8, fig.height=6}
@@ -86,7 +86,7 @@ data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 
 ```
 
 ```{r}
-write.table(data.list$data[,1], "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/bmi_t2d.txt", quote = TRUE, col.names  = FALSE)
+write.table(data.list$data[,1], "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/bmi_t2d.txt", quote = FALSE, col.names  = FALSE, row.names = FALSE)
 ```
 
 
@@ -148,7 +148,7 @@ data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 
 ```
 
 ```{r}
-write.table(data.list$data[,1], "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/height_ea.txt", quote = TRUE, col.names  = FALSE)
+write.table(data.list$data[,1], "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/dat_ukb/height_ea.txt", quote = FALSE, col.names  = FALSE, row.names = FALSE)
 ```
 
 ```{r, fig.width=8, fig.height=6}
