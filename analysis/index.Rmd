@@ -57,3 +57,8 @@ Parametric simulation:
 + [MR result on sibling: logistic regression](mr_result_logistic_sib.html)
 
 
+Parametric simulation combined:
+
++ [Calibration result: trio data](calibration_trio.html)
+
+
