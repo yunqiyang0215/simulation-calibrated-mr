@@ -129,7 +129,7 @@ for (j in 1:length(sigs)){
   vr <- (empirical_var_raw - empirical_var_cali) / empirical_var_raw
   combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2]))
   plot(x = as.factor(rep(combination_labels, p)), c(vr), type = "p",
-     xaxt = 'n', xlab = "", main = paste0("sigma=", sigs[j]), ylim = c(-0.2, 0.5))
+     xaxt = 'n', xlab = "", main = paste0("sigma=", sigs[j]), ylim = c(-0.2, 0.5), ylab = "empirical VR")
   axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
 }
 
@@ -300,7 +300,7 @@ for (j in 1:length(sigs)){
   vr <- (empirical_var_raw - empirical_var_cali) / empirical_var_raw
   combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2]))
   plot(x = as.factor(rep(combination_labels, p)), c(vr), type = "p",
-     xaxt = 'n', xlab = "", main = paste0("sigma=", sigs[j]), ylim = c(-0.2, 0.5))
+     xaxt = 'n', xlab = "", main = paste0("sigma=", sigs[j]), ylim = c(-0.2, 0.5), ylab = "empirical VR")
   axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
 }
 
