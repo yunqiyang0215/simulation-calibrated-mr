@@ -42,13 +42,17 @@ for (i in 1:p){
 }
 ```
 
-
 ```{r}
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-rownames(vr) = r1
-plot(x = as.factor(rep(rownames(vr), p)), c(vr), xlab = "r1 value", ylab = "Empirical variance reduction")
-```
 
+vr = (empirical_var_raw - empirical_var_cali) / empirical_var_raw
+rownames(vr) = r1
+
+# Create a vector for equally spaced x-values
+x_values = c(1, 2, 3)
+plot(x = rep(x_values, p), y = c(vr), xlab = "r1 value", ylab = "Empirical variance reduction", xaxt="n", pch = 20)
+axis(1, at = x_values, labels = c("0", "0.1", "0.5"))
+
+```
 
 ### 2. Linear regression: outcome trait. 
 
@@ -90,8 +94,9 @@ for (i in 1:p) {
 ```{r}
 vr <- (empirical_var_raw - empirical_var_cali) / empirical_var_raw
 combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2]))
-plot(x = as.factor(rep(combination_labels, p)), c(vr), type = "p",
-     xaxt = 'n', xlab = "", ylab = "Empirical variance reduction")
+x_values = 1:length(combination_labels)
+plot(x = rep(x_values, p), c(vr), type = "p",
+     xaxt = 'n', xlab = "", ylab = "Empirical variance reduction", pch = 20)
 axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
 ```
 
@@ -123,9 +128,13 @@ for (i in 1:p){
 
 
 ```{r}
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+vr = (empirical_var_raw - empirical_var_cali) / empirical_var_raw
 rownames(vr) = r1
-plot(x = as.factor(rep(rownames(vr), p)), c(vr), xlab = "r1 value", ylab = "Empirical variance reduction")
+
+# Create a vector for equally spaced x-values
+x_values = c(1, 2, 3)
+plot(x = rep(x_values, p), y = c(vr), xlab = "r1 value", ylab = "Empirical variance reduction", xaxt="n", pch = 20)
+axis(1, at = x_values, labels = c("0", "0.1", "0.5"))
 ```
 
 
@@ -169,8 +178,9 @@ for (i in 1:p) {
 ```{r}
 vr <- (empirical_var_raw - empirical_var_cali) / empirical_var_raw
 combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2]))
-plot(x = as.factor(rep(combination_labels, p)), c(vr), type = "p",
-     xaxt = 'n', xlab = "", ylab = "Empirical variance reduction")
+x_values = 1:length(combination_labels)
+plot(x = rep(x_values, p), c(vr), type = "p",
+     xaxt = 'n', xlab = "", ylab = "Empirical variance reduction", pch = 20)
 axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
 ```
 
