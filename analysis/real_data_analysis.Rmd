@@ -82,7 +82,7 @@ exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_d
 out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/T2D-diagram12-Im.csv"
 plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref/data_maf0.01_rs_ref"
 
-data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.05, 
+data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
 
 ```
@@ -144,7 +144,7 @@ exp.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_d
 out.file <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/GWAS_EA_excl23andMe.txt"
 plink_refdat <- "/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/data_maf0.01_rs_ref/data_maf0.01_rs_ref"
 
-data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.05, 
+data.list <- getInput(sel.file, exp.file, out.file, plink_refdat, max.p.thres = 0.01, 
                       plink_exe = '/Users/nicholeyang/Downloads/calibrated_estimator/simulation/real_data/plink_mac_20230116/plink')
 
 ```
