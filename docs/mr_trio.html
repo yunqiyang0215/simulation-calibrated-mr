@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec10b3b0601bd3a438501cc92c2b10b1d9bc3dfaftargetblankc10b3b0a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree05a6e2d37dd1a9c93699df9e46cbc1408af7e64etargetblank05a6e2da">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c10b3b0601bd3a438501cc92c2b10b1d9bc3dfaf" target="_blank">c10b3b0</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/05a6e2d37dd1a9c93699df9e46cbc1408af7e64e" target="_blank">05a6e2d</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec10b3b0601bd3a438501cc92c2b10b1d9bc3dfaftargetblankc10b3b0a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree05a6e2d37dd1a9c93699df9e46cbc1408af7e64etargetblank05a6e2da"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c10b3b0601bd3a438501cc92c2b10b1d9bc3dfaf" target="_blank">c10b3b0</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/05a6e2d37dd1a9c93699df9e46cbc1408af7e64e" target="_blank">05a6e2d</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -613,6 +613,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/05a6e2d37dd1a9c93699df9e46cbc1408af7e64e/analysis/mr_trio.Rmd" target="_blank">05a6e2d</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+<td>
+wflow_publish("analysis/mr_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/mr_trio.html" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c10b3b0601bd3a438501cc92c2b10b1d9bc3dfaf/analysis/mr_trio.Rmd" target="_blank">c10b3b0</a>
 </td>
 <td>
@@ -652,7 +686,44 @@ for (i in 1:length(r1)){
     boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;ivw: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_trio.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_trio.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-3-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>par(mfrow = c(3,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
 n_rep = 50
 for (i in 1:length(r1)){
@@ -663,10 +734,47 @@ for (i in 1:length(r1)){
             res$mr.point_est[res$fit.method == &quot;unadj_ext&quot;][1:n_rep]
             )
     group = c(rep(&quot;cali&quot;, n_rep), rep(&quot;uncali&quot;, n_rep), rep(&quot;ext&quot;, n_rep))
-    boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;ivw: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]))
+    boxplot(val ~ group, ylab = &quot;Point estimate&quot;, main = paste0(&quot;mr.raps: exp =&quot;, r1[i], &quot;; out =&quot;, r2[j]))
   }
 }</code></pre>
-<p><img src="figure/mr_trio.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_trio.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="variance-of-mr" class="section level3">
 <h3>2. Variance of MR</h3>
@@ -711,6 +819,43 @@ points(1:length(levels(emp_var_means$combination)) + 0.2, emp_var_means$emp_var_
 
 legend(&quot;topright&quot;, legend = c(&quot;Calibrated&quot;, &quot;Uncalibrated&quot;, &quot;Empirical Variance&quot;), fill = c(&quot;#76B7B2&quot;, &quot;gold&quot;, &quot;red&quot;), bty = &quot;n&quot;, cex = 0.8)</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-7-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Calculate mean variance reduction by combination
 emp_var_reduction1 &lt;- aggregate(emp_var_reduction ~ combination, data = aggregated_data, FUN = mean)
 
@@ -730,6 +875,43 @@ axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggr
 
 points(1:length(levels(emp_var_reduction1$combination)) - 0.2, emp_var_reduction1$emp_var_reduction, pch = 4, col = &quot;red&quot;, cex = 0.5)</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
+Past versions of unnamed-chunk-8-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-8-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-8-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="mr.raps" class="section level4">
 <h4>2.2 mr.raps</h4>
@@ -772,6 +954,43 @@ points(1:length(levels(emp_var_means$combination)) + 0.2, emp_var_means$emp_var_
 
 legend(&quot;topright&quot;, legend = c(&quot;Calibrated&quot;, &quot;Uncalibrated&quot;, &quot;Empirical Variance&quot;), fill = c(&quot;#76B7B2&quot;, &quot;gold&quot;, &quot;red&quot;), bty = &quot;n&quot;, cex = 0.8)</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-11-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code># Calculate mean variance reduction by combination
 emp_var_reduction2 &lt;- aggregate(emp_var_reduction ~ combination, data = aggregated_data, FUN = mean)
 
@@ -790,6 +1009,43 @@ axis(1, at = 1:length(levels(aggregated_data$combination)), labels = levels(aggr
 
 points(1:length(levels(emp_var_reduction2$combination)) - 0.2, emp_var_reduction2$emp_var_reduction, pch = 4, col = &quot;red&quot;, cex = 0.5)</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-12-1">
+Past versions of unnamed-chunk-12-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-12-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-12-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>plot(1:length(levels(emp_var_reduction1$combination)) - 0.2, emp_var_reduction1$emp_var_reduction, pch = 4, col = &quot;black&quot;, cex = 0.5, ylim = c(0.45, 0.65), xaxt = &quot;n&quot;, xlab = &quot;r1,r2 value&quot;, ylab = &quot;empirical variance reduction&quot;)
 
 points(1:length(levels(emp_var_reduction2$combination)) - 0.2, emp_var_reduction2$emp_var_reduction, pch = 4, col = &quot;red&quot;, cex = 0.5)
@@ -797,6 +1053,43 @@ points(1:length(levels(emp_var_reduction2$combination)) - 0.2, emp_var_reduction
 axis(1, at = 1:length(levels(factor(emp_var_reduction1$combination))), labels = levels(factor(emp_var_reduction1$combination)), cex.axis = 0.8, las = 2)
 legend(&quot;topright&quot;, legend = c(&quot;ivw&quot;, &quot;mr.raps&quot;), col = c(&quot;black&quot;, &quot;red&quot;), pch = 4)</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
+Past versions of unnamed-chunk-13-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-13-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/143a9481b19342a254d00e1dbe2c3190d360f5fc/docs/figure/mr_trio.Rmd/unnamed-chunk-13-1.png" target="_blank">143a948</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
