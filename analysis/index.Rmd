@@ -63,4 +63,6 @@ Parametric simulation combined:
 
 + [Calibration result: sibling data](calibration_sibling.html)
 
++ [MR result: trio data](mr_trio.html)
+
 
