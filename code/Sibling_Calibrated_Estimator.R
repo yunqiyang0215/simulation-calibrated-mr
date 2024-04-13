@@ -44,7 +44,7 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 ##' @param Y: a vector that contains response variable values
 ##' @param X: a vector that contains transmitted allele values
 ##' @param Z: a matrix that contains other covariates
-##' @param F_ind: family index (from 1 to K)
+##' @param F_ind: family index 
 ##' @param alpha_ext: estimate of alpha from external data
 ##' @param alpha_ext_var: variance of alpha from external data
 ##' @param N_ext: number of samples in external data
@@ -53,10 +53,14 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 ##' 
 calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,  
                                  overlap_ratio = 0, Z = NULL){
+  # Reindex F_ind to 1:K
+
+  F_ind = match(F_ind, unique(F_ind))
+
   
   # Correct model Y = beta_0 + beta_1 X + f + epsilon
   # Incorrect model: Y = alpha_0 + alpha_1 X + epsilo
-  
+
   # Number of families
   K = max(F_ind)
   # Number of individuals
