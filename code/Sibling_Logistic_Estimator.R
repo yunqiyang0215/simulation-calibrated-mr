@@ -1,13 +1,10 @@
-##' Compute the calibrated estimator
-##' @param Y: a vector contains response variable values
-##' @param X: a vector contains transmitted allele values
-##' @param F_ind: family index (from 1 to K)
-##' @param alpha_ext: estimate of alpha from external data
-##' @param alpha_ext_var: variance of alpha from external data
-##' @param N_ext: number of samples in external data
-##' @param overlap_ratio: proportion of internal data from external data
-##' 
-calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0){
+calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var, N_ext, overlap_ratio = 0,
+                                          Z = NULL){
+  
+  
+  # Reindex F_ind
+  
+  F_ind = match(F_ind, unique(F_ind))
   
   # Number of families
   K = max(F_ind)
@@ -36,30 +33,37 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
   C11 = (alpha_ext_var / N_ext) * N
   
   # Compute the incorrect model for internal data
+  if(is.null(Z)){
+    dim_Z = 0
+  } else{
+    dim_Z = dim(Z)[2]
+  }
+  XZ = cbind(X, Z)
+  XZ = matrix(XZ, ncol = 1 + dim_Z)
   
-  int_mis = summary(glm(Y ~ X, family = binomial(link = "logit")))
   
-  alpha_int = int_mis$coefficients[2]
-  predict_mis = logit( int_mis$coefficients[1] +  int_mis$coefficients[2] * X)
+  int_mis = glm(Y ~ XZ, family = binomial(link = "logit"))
+  alpha_int = as.numeric(int_mis$coefficients[2])
+  
+  predict_mis = logit(predict(int_mis))
+  
   # Compute the correct model for internal data
-  int_cor = summary(glm(Y ~ X + f, family = binomial(link = "logit")))
-  beta_int = int_cor$coefficients[2,1]
-  predict_cor = logit( int_cor$coefficients[1] +  int_cor$coefficients[2] * X 
-                       + int_cor$coefficients[3] * f)
+  int_cor = glm(Y ~ XZ + f, family = binomial(link = "logit"))
+  beta_int = as.numeric(int_cor$coefficients[2])
+  predict_cor = logit(predict(int_cor))
   
   # Compute the variance
   
-  X = cbind(1, X)
-  X_tilde =cbind(X, f)
+  XZ = cbind(1, XZ)
+  XZ_tilde =cbind(XZ, f)
   
-  D2 =  matrix(rep(0, 9), 3, 3)
-  D3 = matrix(rep(0, 4), 2, 2)
+  coef_cor = diag(predict_cor * (1 - predict_cor))
+  coef_mis = diag(predict_mis * (1 - predict_mis))
   
-  for(i in 1:N){
-    D2 = D2 + predict_cor[i] * (1 - predict_cor[i]) *( X_tilde[i, ] %*% t(X_tilde[i, ]))
-    D3 = D3 + predict_mis[i] * (1 - predict_mis[i]) *( X[i, ] %*% t(X[i, ]) )
-  }
+  D2 = t(XZ_tilde) %*% coef_cor %*% XZ_tilde
+  D3 = t(XZ) %*% coef_mis %*% XZ
   
+
   D2 = D2 /  N
   D3 = D3 / N
   
@@ -71,38 +75,43 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
   incorrect_var = list()
   correct_incorrect_cov = list()
   
+  dim_XZ = dim(XZ)[2]
   # Consider each family size separately
   for(m in 2:M){
     
     # Only look at family of size m
-    X_sub = X[F_size == m, ]
+    XZ_sub = XZ[F_size == m, ]
     predict_mis_sub = predict_mis[F_size == m]
     
-    X_tilde_sub = X_tilde[F_size == m, ]
+    XZ_tilde_sub = XZ_tilde[F_size == m, ]
     predict_cor_sub = predict_cor[F_size == m]
     
     Y_sub = Y[F_size == m]
     
-    prod = (Y_sub - predict_mis_sub) * X_sub 
-    prod_tilde =  (Y_sub - predict_cor_sub) * X_tilde_sub
+    prod = (Y_sub - predict_mis_sub) * XZ_sub 
+    prod_tilde =  (Y_sub - predict_cor_sub) * XZ_tilde_sub
     
-    
-    temp1 = (tapply(prod_tilde[,1], F_ind[F_size == m], sum))
-    temp2 = (tapply(prod_tilde[,2], F_ind[F_size == m], sum))
-    temp3 = (tapply(prod_tilde[,3], F_ind[F_size == m], sum))
-    temp4 = tapply(prod[,1], F_ind[F_size == m], sum)
-    temp5 = tapply(prod[,2], F_ind[F_size == m], sum)
-    
-    temp = cov(cbind(temp1, temp2, temp3, temp4, temp5))
-    
+
     # This is for C22
+    est = NULL
     
-    correct_var[[m]] = temp[1:3, 1:3]
+    for(i in 1: (dim_XZ + 1)){
+      est = cbind(est, tapply(prod_tilde[,i], F_ind[F_size == m], sum))
+    }
+    for(i in 1:dim_XZ){
+      est = cbind(est,  tapply(prod[,i], F_ind[F_size == m], sum))
+    }
+    
+    temp = cov(est)
+    
+    
+    correct_var[[m]] = temp[1:(dim_XZ + 1), 1:(dim_XZ + 1)]
+    
     # This is for C33
+    incorrect_var[[m]] = temp[(dim_XZ+2): (2 * dim_XZ + 1), (dim_XZ+2): (2 * dim_XZ + 1)]
     
-    incorrect_var[[m]] = temp[4:5, 4:5]
     # This is for C23
-    correct_incorrect_cov[[m]] = temp[1:3, 4:5]
+    correct_incorrect_cov[[m]] = temp[1:(dim_XZ + 1), (dim_XZ+2):(2 * dim_XZ + 1)]
   }  
   
   
@@ -116,10 +125,13 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
     C23 = C23 + correct_incorrect_cov[[F_size[i]]]
   }
   
+  C22 = C22 / N
+  C33 = C33 / N
+  C23 = C23 /N
   
-  C22 = ( solve(D2) %*% C22 %*% solve(D2) )[2,2] / N
-  C33 = (solve(D3) %*% C33 %*% solve(D3) )[2,2] / N
-  C23 = (solve(D2) %*% C23 %*% solve(D3))[2,2] / N
+  C22 = ( solve(D2) %*% C22 %*% solve(D2) )[2,2] 
+  C33 = (solve(D3) %*% C33 %*% solve(D3) )[2,2] 
+  C23 = (solve(D2) %*% C23 %*% solve(D3))[2,2] 
   
   # Compute C12, C13
   
