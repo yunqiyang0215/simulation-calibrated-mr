@@ -104,7 +104,7 @@ axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_la
 
 ### 3. Logistic regression: exposure trait
 ```{r}
-res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/trio_logistic/res.rds")
+res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/trio_logistic_cutoff1.5/res.rds")
 ```
 
 ```{r }
