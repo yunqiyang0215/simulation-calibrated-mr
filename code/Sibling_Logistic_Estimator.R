@@ -35,6 +35,8 @@ calibrated_logistic_estimator <- function(Y, X, F_ind, alpha_ext, alpha_ext_var,
   # Compute the incorrect model for internal data
   if(is.null(Z)){
     dim_Z = 0
+  } else{
+    dim_Z = dim(Z)[2]
   }
   XZ = cbind(X, Z)
   XZ = matrix(XZ, ncol = 1 + dim_Z)
