@@ -32,7 +32,7 @@ for (i in 1:nrow(combinations)){
 
 ```
 
-```{r fig.height = 4, fig.width=8}
+```{r fig.height = 6, fig.width=8}
 
 means <- colMeans(output)
 ses <- apply(output, 2, sd)
@@ -41,7 +41,7 @@ labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 19,
+plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
      xlab = "", ylab = "Mean Value", main = "MR estimates: IVW", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
@@ -69,7 +69,7 @@ for (i in 1:nrow(combinations)){
 
 ```
 
-```{r fig.height = 4, fig.width=8}
+```{r fig.height = 6, fig.width=8}
 
 means <- colMeans(output)
 ses <- apply(output, 2, sd)
@@ -78,7 +78,7 @@ labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 19,
+plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
      xlab = "", ylab = "Mean Value", main = "MR estimates: mr.raps", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
