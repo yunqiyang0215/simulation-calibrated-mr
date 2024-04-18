@@ -15,38 +15,81 @@ method = c("calibrated_model_T", "adj_uncalibrated", "unadj_ext")
 mr_method = c("ivw", "mr.raps")
 ```
 
-### 1. Plot bias 
-```{r fig.width = 8, fig.height=8}
-par(mfrow = c(3,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
+### 1. IVW
+```{r }
+
 n_rep = 50
-for (i in 1:length(r1)){
-  for (j in 1:length(r2)){
-    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
-    val = c(res$mr.point_est[res$fit.method == "calibrated_model_T"][1:n_rep], 
-            res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:n_rep],
-            res$mr.point_est[res$fit.method == "unadj_ext"][1:n_rep]
-            )
-    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("ivw: exp =", r1[i], "; out =", r2[j]))
-  }
+combinations <- expand.grid(r1 = r1, r2 = r2)
+
+output = c()
+for (i in 1:nrow(combinations)){
+  res = dat[dat$sim_data.r1 == combinations[i, 1] & dat$sim_data.r2 == combinations[i, 2] & dat$mr.mr_method == "ivw", ]
+  val = cbind(res$mr.point_est[res$fit.method == "calibrated_model_T"][1:n_rep],
+              res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:n_rep],
+              res$mr.point_est[res$fit.method == "unadj_ext"][1:n_rep])
+  output = cbind(output, val)
 }
+
 ```
 
-```{r fig.width = 8, fig.height=8}
-par(mfrow = c(3,3), mar = c(4, 5, 3, 2) + 0.1, oma = c(3, 1, 0, 0) + 0.1)
-n_rep = 50
-for (i in 1:length(r1)){
-  for (j in 1:length(r2)){
-    res = dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "mr.raps", ]
-    val = c(res$mr.point_est[res$fit.method == "calibrated_model_T"][1:n_rep], 
-            res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:n_rep],
-            res$mr.point_est[res$fit.method == "unadj_ext"][1:n_rep]
-            )
-    group = c(rep("cali", n_rep), rep("uncali", n_rep), rep("ext", n_rep))
-    boxplot(val ~ group, ylab = "Point estimate", main = paste0("mr.raps: exp =", r1[i], "; out =", r2[j]))
-  }
-}
+```{r fig.height = 4, fig.width=8}
+
+means <- colMeans(output)
+ses <- apply(output, 2, sd)
+ncomb = nrow(combinations)
+labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+  
+plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 19,
+     xlab = "", ylab = "Mean Value", main = "MR estimates: IVW", xaxt = 'n')
+# Add error bars
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty =2, col = "grey")
+
+axis(1, at = c(1:ncomb), labels = labels, las = 2)
+legend("topleft", legend = c("calibrated", "adjuted+uncali", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
 ```
+
+
+### 2. mr.raps
+```{r }
+
+n_rep = 50
+combinations <- expand.grid(r1 = r1, r2 = r2)
+output = c()
+for (i in 1:nrow(combinations)){
+  res = dat[dat$sim_data.r1 == combinations[i, 1] & dat$sim_data.r2 == combinations[i, 2] & dat$mr.mr_method == "mr.raps", ]
+  val = cbind(res$mr.point_est[res$fit.method == "calibrated_model_T"][1:n_rep],
+              res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:n_rep],
+              res$mr.point_est[res$fit.method == "unadj_ext"][1:n_rep])
+  output = cbind(output, val)
+}
+
+```
+
+```{r fig.height = 4, fig.width=8}
+
+means <- colMeans(output)
+ses <- apply(output, 2, sd)
+ncomb = nrow(combinations)
+labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+  
+plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 19,
+     xlab = "", ylab = "Mean Value", main = "MR estimates: mr.raps", xaxt = 'n')
+# Add error bars
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty =2, col = "grey")
+
+axis(1, at = c(1:ncomb), labels = labels, las = 2)
+legend("topleft", legend = c("calibrated", "adjuted+uncali", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
+```
+
+
 
 ### 2. Variance of MR
 
