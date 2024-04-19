@@ -66,3 +66,7 @@ Parametric simulation combined:
 + [MR result: trio data](mr_trio.html)
 
 
+UKB data analysis:
+
++ [bmi on diabetes ](bmi_t2d.html)
+
