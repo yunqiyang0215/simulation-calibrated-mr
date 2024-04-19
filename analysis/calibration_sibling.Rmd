@@ -13,175 +13,80 @@ Parametric simulation result for calibration. Plot empirical variance for each s
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear/res.rds")
 ```
 
-```{r}
-combine_single_snp_stat = function(cond_indx, snp_indx, data.list, column_names){
-  res = lapply(cond_indx, function(ind) data.list[[ind]][snp_indx, column_names])
-  dat_combined = do.call(rbind, res)
-  return(dat_combined)
-}
-```
-
 ### 1. Linear regression: exposure trait. 
-```{r }
-par(mfrow = c(1,2))
-p = 10
-r1 = unique(res$sim_data.r1)
-sigs = c(1, 10)
-
-for(j in 1:2){
-  empirical_var_raw = matrix(NA, ncol = p, nrow = length(r1))
-  empirical_var_cali = matrix(NA, ncol = p, nrow = length(r1))
-  for (i in 1:p){
-
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.raw")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_raw[, i] = apply(dat_estimator, 2, var)
-    
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_cali[, i] = apply(dat_estimator, 2, var)
-  }
-  
-  vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-  rownames(vr) = r1
-  plot(x = as.factor(rep(rownames(vr), p)), c(vr), xlab = "r1 value", ylab = "Empirical variance reduction",
-       main = paste0("sigma=", sigs[j]), ylim = c(0, 0.4))
-  
-}
-
-
-```
-
-```{r }
-p = 10
-r1 = unique(res$sim_data.r1)
-sigs = c(1, 10)
-pheno.cors = c()
-for (j in 1:2){
-  for (k in 1:length(r1)){
-    indx = which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j])
-    pheno.cors <- c(pheno.cors, mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1])))
-    print(paste0("j:",j, ";k:", k))
-  }
-}
-```
-
-```{r  }
-
-empirical_var_raw = c()
-empirical_var_cali = c()
-
-for (j in 1:length(sigs)){
-  for (i in 1:p){
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.raw")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_raw = cbind(empirical_var_raw, apply(dat_estimator, 2, var))
-    
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_cali = cbind(empirical_var_cali, apply(dat_estimator, 2, var))
-  }
-}
-```
 
 ```{r}
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = c(rep(pheno.cors[1:3], p), rep(pheno.cors[4:6], p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+p = 10
+r1 = unique(res$sim_data.r1)
+sigs = unique(res$sim_data.sig)
+combinations = expand.grid(r1 = r1, sigs = sigs)
+ncomb = nrow(combinations)
+combinations$pheno.cor = rep(NA, ncomb)
+
+empirical_var_raw = matrix(NA, ncol = p, nrow = ncomb)
+empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
+
+
+for (i in 1:p){
+  for (k in 1:nrow(combinations)){
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == combinations[k, 2] & res$fit.method == "calibrated")
+    combinations[k, 3] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx], function(x) x[1])))
+    empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y1.raw"])))
+    empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y1.cali"])))
+  }
+}
 ```
 
+
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+```
+
+
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
+```
 
 ### 2. Linear regression: outcome trait. 
 
-```{r }
-par(mfrow = c(1,2))
-p <- 10
-r1 <- unique(res$sim_data.r1)
-r2 <- unique(res$sim_data.r2)
-sigs <- c(1, 10)
-# Create a data frame of all combinations of r1 and r2
-combinations <- expand.grid(r1 = r1, r2 = r2)
+```{r}
+p = 10
+r1 = unique(res$sim_data.r1)
+r2 = unique(res$sim_data.r2)
+sigs = unique(res$sim_data.sig)
+combinations = expand.grid(r1 = r1, r2 = r2, sigs = sigs)
+ncomb = nrow(combinations)
+combinations$pheno.cor = rep(NA, ncomb)
 
-# Initialize the matrices for storing variances
-empirical_var_raw <- matrix(NA, ncol = p, nrow = nrow(combinations))
-empirical_var_cali <- matrix(NA, ncol = p, nrow = nrow(combinations))
+empirical_var_raw = matrix(NA, ncol = p, nrow = ncomb)
+empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
 
-for (j in 1:length(sigs)){
-  for (i in 1:p) {
-    snp_dat_list_raw <- lapply(1:nrow(combinations), function(k) {
-      subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == sigs[j])
-      combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.raw"))
-  })
-  
-  snp_dat_list_cali <- lapply(1:nrow(combinations), function(k) {
-    subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == sigs[j])
-    combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.cali"))
-  })
-  
-  empirical_var_raw[, i] <- unlist(lapply(snp_dat_list_raw, var))
-  empirical_var_cali[, i] <- unlist(lapply(snp_dat_list_cali, var))
+
+for (i in 1:p){
+  for (k in 1:nrow(combinations)){
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.r2 == combinations[k, 2] &
+                       res$sim_data.sig == combinations[k, 3] & res$fit.method == "calibrated")
+    combinations[k, 4] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx], function(x) x[2])))
+    empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y2.raw"])))
+    empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y2.cali"])))
   }
-  vr <- (empirical_var_raw - empirical_var_cali) / empirical_var_raw
-  combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2]))
-  plot(x = as.factor(rep(combination_labels, p)), c(vr), type = "p",
-     xaxt = 'n', xlab = "", main = paste0("sigma=", sigs[j]), ylim = c(-0.2, 0.5), ylab = "empirical VR")
-  axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
 }
-
-
-```
-
-
-```{r}
-par(mfrow = c(1,2))
-p <- 10
-r1 <- unique(res$sim_data.r1)
-r2 <- unique(res$sim_data.r2)
-sigs <- c(1, 10)
-# Create a data frame of all combinations of r1 and r2
-combinations <- expand.grid(r1 = r1, r2 = r2, sigs = sigs)
-
-pheno.cors = c()
-for (i in 1:nrow(combinations)){
-  indx = which(res$sim_data.r1 == combinations[i, 1] & res$sim_data.r2 == combinations[i, 2] &
-                 res$sim_data.sig == combinations[i, 3] & res$fit.method == "calibrated")
-  pheno.cors <- c(pheno.cors, mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1])))
-}
-
-empirical_var_raw = c()
-empirical_var_cali = c()
-for (i in 1:p) {
-  snp_dat_list_raw <- lapply(1:nrow(combinations), function(k) {
-      subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == combinations$sigs[k])
-      combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.raw"))
-  })
-  
-  snp_dat_list_cali <- lapply(1:nrow(combinations), function(k) {
-    subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == combinations$sigs[k])
-    combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.cali"))
-  })
-  
-  empirical_var_raw <- cbind(empirical_var_raw, unlist(lapply(snp_dat_list_raw, var)))
-  empirical_var_cali <- cbind(empirical_var_cali, unlist(lapply(snp_dat_list_cali, var)))
-}
-
 ```
 
 ```{r}
-combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2], ",sig=", x[3]))
+combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(pheno.cors, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+```
+
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
 ```
 
 
@@ -194,162 +99,78 @@ plot(x = rep(pheno.cors, p), y = c(vr), xlab = "phenotypic correlation", ylab = 
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_logistic/res.rds")
 ```
 
-```{r }
-par(mfrow = c(1,2))
+
+```{r}
 p = 10
 r1 = unique(res$sim_data.r1)
-sigs = c(1, 10)
+sigs = unique(res$sim_data.sig)
+combinations = expand.grid(r1 = r1, sigs = sigs)
+ncomb = nrow(combinations)
+combinations$pheno.cor = rep(NA, ncomb)
 
-for(j in 1:2){
-  empirical_var_raw = matrix(NA, ncol = p, nrow = length(r1))
-  empirical_var_cali = matrix(NA, ncol = p, nrow = length(r1))
-  for (i in 1:p){
-
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.raw")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_raw[, i] = apply(dat_estimator, 2, var)
-    
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_cali[, i] = apply(dat_estimator, 2, var)
-  }
-  
-  vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-  rownames(vr) = r1
-  plot(x = as.factor(rep(rownames(vr), p)), c(vr), xlab = "r1 value", ylab = "Empirical variance reduction",
-       main = paste0("sigma=", sigs[j]), ylim = c(-0.1, 0.4))
-  
-}
+empirical_var_raw = matrix(NA, ncol = p, nrow = ncomb)
+empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
 
 
-```
-
-#### Need to output phenotype correlation
-```{r eval = FALSE}
-p = 10
-r1 = unique(res$sim_data.r1)
-sigs = c(1, 10)
-pheno.cors = c()
-for (j in 1:2){
-  for (k in 1:length(r1)){
-    indx = which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j])
-    pheno.cors <- c(pheno.cors, mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1])))
-    print(paste0("j:",j, ";k:", k))
+for (i in 1:p){
+  for (k in 1:nrow(combinations)){
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == combinations[k, 2] & res$fit.method == "calibrated")
+    combinations[k, 3] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx], function(x) x[1])))
+    empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y1.raw"])))
+    empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y1.cali"])))
   }
 }
 ```
 
-```{r  eval = FALSE}
 
-empirical_var_raw = c()
-empirical_var_cali = c()
-
-for (j in 1:length(sigs)){
-  for (i in 1:p){
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.raw")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_raw = cbind(empirical_var_raw, apply(dat_estimator, 2, var))
-    
-    snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated" & res$sim_data.sig == sigs[j]), i, data.list = res$fit.sumstat, column_names = c("Y1.cali")))
-    dat_estimator <- do.call(cbind, snp_dat_list)
-    empirical_var_cali = cbind(empirical_var_cali, apply(dat_estimator, 2, var))
-  }
-}
-
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = c(rep(pheno.cors[1:3], p), rep(pheno.cors[4:6], p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
 ```
 
+
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
+```
 
 ### 4. Logistic regression: outcome trait. 
 
-```{r }
-par(mfrow = c(1,2))
-p <- 10
-r1 <- unique(res$sim_data.r1)
-r2 <- unique(res$sim_data.r2)
-sigs <- c(1, 10)
-# Create a data frame of all combinations of r1 and r2
-combinations <- expand.grid(r1 = r1, r2 = r2)
+```{r}
+p = 10
+r1 = unique(res$sim_data.r1)
+r2 = unique(res$sim_data.r2)
+sigs = unique(res$sim_data.sig)
+combinations = expand.grid(r1 = r1, r2 = r2, sigs = sigs)
+ncomb = nrow(combinations)
+combinations$pheno.cor = rep(NA, ncomb)
 
-# Initialize the matrices for storing variances
-empirical_var_raw <- matrix(NA, ncol = p, nrow = nrow(combinations))
-empirical_var_cali <- matrix(NA, ncol = p, nrow = nrow(combinations))
+empirical_var_raw = matrix(NA, ncol = p, nrow = ncomb)
+empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
 
-for (j in 1:length(sigs)){
-  for (i in 1:p) {
-    snp_dat_list_raw <- lapply(1:nrow(combinations), function(k) {
-      subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == sigs[j])
-      combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.raw"))
-  })
-  
-  snp_dat_list_cali <- lapply(1:nrow(combinations), function(k) {
-    subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == sigs[j])
-    combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.cali"))
-  })
-  
-  empirical_var_raw[, i] <- unlist(lapply(snp_dat_list_raw, var))
-  empirical_var_cali[, i] <- unlist(lapply(snp_dat_list_cali, var))
+
+for (i in 1:p){
+  for (k in 1:nrow(combinations)){
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.r2 == combinations[k, 2] &
+                       res$sim_data.sig == combinations[k, 3] & res$fit.method == "calibrated")
+    combinations[k, 4] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx], function(x) x[2])))
+    empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y2.raw"])))
+    empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx], function(x) x[i, "Y2.cali"])))
   }
-  vr <- (empirical_var_raw - empirical_var_cali) / empirical_var_raw
-  combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2]))
-  plot(x = as.factor(rep(combination_labels, p)), c(vr), type = "p",
-     xaxt = 'n', xlab = "", main = paste0("sigma=", sigs[j]), ylim = c(-0.2, 0.5), ylab = "empirical VR")
-  axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
 }
-
-
 ```
 
-
-```{r eval = FALSE}
-par(mfrow = c(1,2))
-p <- 10
-r1 <- unique(res$sim_data.r1)
-r2 <- unique(res$sim_data.r2)
-sigs <- c(1, 10)
-# Create a data frame of all combinations of r1 and r2
-combinations <- expand.grid(r1 = r1, r2 = r2, sigs = sigs)
-
-pheno.cors = c()
-for (i in 1:nrow(combinations)){
-  indx = which(res$sim_data.r1 == combinations[i, 1] & res$sim_data.r2 == combinations[i, 2] &
-                 res$sim_data.sig == combinations[i, 3] & res$fit.method == "calibrated")
-  pheno.cors <- c(pheno.cors, mean(sapply(res$sim_data.cor_pheno[indx], function(x) x[1])))
-}
-
-empirical_var_raw = c()
-empirical_var_cali = c()
-for (i in 1:p) {
-  snp_dat_list_raw <- lapply(1:nrow(combinations), function(k) {
-      subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == combinations$sigs[k])
-      combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.raw"))
-  })
-  
-  snp_dat_list_cali <- lapply(1:nrow(combinations), function(k) {
-    subset_index <- which(res$sim_data.r1 == combinations$r1[k] & 
-                          res$sim_data.r2 == combinations$r2[k] & 
-                          res$fit.method == "calibrated" &
-                          res$sim_data.sig == combinations$sigs[k])
-    combine_single_snp_stat(subset_index, i, data.list = res$fit.sumstat, column_names = c("Y1.cali"))
-  })
-  
-  empirical_var_raw <- cbind(empirical_var_raw, unlist(lapply(snp_dat_list_raw, var)))
-  empirical_var_cali <- cbind(empirical_var_cali, unlist(lapply(snp_dat_list_cali, var)))
-}
-
-
-combination_labels <- apply(combinations, 1, function(x) paste0("r1=", x[1], ",r2=", x[2], ",sig=", x[3]))
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(pheno.cors, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+```
+
+```{r}
+combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
 ```
 
