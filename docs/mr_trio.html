@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree83db200a821a43e68b7c7a22a90b10709ad4caadtargetblank83db200a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree441c49153f6dcd70b8c2b907d260ac0829a94d95targetblank441c491a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/83db200a821a43e68b7c7a22a90b10709ad4caad" target="_blank">83db200</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/441c49153f6dcd70b8c2b907d260ac0829a94d95" target="_blank">441c491</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree83db200a821a43e68b7c7a22a90b10709ad4caadtargetblank83db200a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree441c49153f6dcd70b8c2b907d260ac0829a94d95targetblank441c491a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/83db200a821a43e68b7c7a22a90b10709ad4caad" target="_blank">83db200</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/441c49153f6dcd70b8c2b907d260ac0829a94d95" target="_blank">441c491</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -607,6 +607,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/441c49153f6dcd70b8c2b907d260ac0829a94d95/analysis/mr_trio.Rmd" target="_blank">441c491</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+<td>
+wflow_publish("analysis/mr_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/091b26da0d9313f43a306b92c23dfee1336cee79/docs/mr_trio.html" target="_blank">091b26d</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -812,7 +846,7 @@ x_pos &lt;- rep(1:ncomb, each = 3)
 x_pos &lt;- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
 plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = &quot;&quot;, ylab = &quot;Mean Value&quot;, main = &quot;MR estimates: IVW&quot;, xaxt = &#39;n&#39;)
+     xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;MR estimates: IVW&quot;, xaxt = &#39;n&#39;)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), ncomb))
@@ -912,7 +946,7 @@ x_pos &lt;- rep(1:ncomb, each = 3)
 x_pos &lt;- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
 plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = &quot;&quot;, ylab = &quot;Mean Value&quot;, main = &quot;MR estimates: mr.raps&quot;, xaxt = &#39;n&#39;)
+     xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;MR estimates: mr.raps&quot;, xaxt = &#39;n&#39;)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), ncomb))
@@ -1324,8 +1358,8 @@ labels = apply(combinations, 1, function(x) paste0(&quot;r1=&quot;,x[1], &quot; 
 x_pos &lt;- rep(1:ncomb, each = 2)
 x_pos &lt;- x_pos + rep(c(-0.2, 0), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = &quot;&quot;, ylab = &quot;Mean Value&quot;, main = &quot;MR estimates: IVW&quot;, xaxt = &#39;n&#39;)
+plot(x = x_pos, y = means, ylim = range(means - 2.1*ses, means + 2.1*ses), pch = 20,
+     xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;MR estimates: IVW&quot;, xaxt = &#39;n&#39;)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 2, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;), ncomb))
@@ -1333,6 +1367,43 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
 axis(1, at = c(1:ncomb), labels = labels, las = 2)
 legend(&quot;topleft&quot;, legend = c(&quot;calibrated&quot;, &quot;adjuted+uncali&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;))</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-19-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-19-1">
+Past versions of unnamed-chunk-19-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-19-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/091b26da0d9313f43a306b92c23dfee1336cee79/docs/figure/mr_trio.Rmd/unnamed-chunk-19-1.png" target="_blank">091b26d</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="mr.raps-2" class="section level3">
 <h3>2. mr.raps</h3>
@@ -1352,8 +1423,8 @@ labels = apply(combinations, 1, function(x) paste0(&quot;r1=&quot;,x[1], &quot; 
 x_pos &lt;- rep(1:ncomb, each = 2)
 x_pos &lt;- x_pos + rep(c(-0.2, 0), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = &quot;&quot;, ylab = &quot;Mean Value&quot;, main = &quot;MR estimates: mr.raps&quot;, xaxt = &#39;n&#39;)
+plot(x = x_pos, y = means, ylim = range(means - 2.1*ses, means + 2.1*ses), pch = 20,
+     xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;MR estimates: mr.raps&quot;, xaxt = &#39;n&#39;)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;), ncomb))
@@ -1361,6 +1432,43 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
 axis(1, at = c(1:ncomb), labels = labels, las = 2)
 legend(&quot;topleft&quot;, legend = c(&quot;calibrated&quot;, &quot;adjuted+uncali&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;))</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-21-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
+Past versions of unnamed-chunk-21-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/091b26da0d9313f43a306b92c23dfee1336cee79/docs/figure/mr_trio.Rmd/unnamed-chunk-21-1.png" target="_blank">091b26d</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
