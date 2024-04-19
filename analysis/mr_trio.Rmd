@@ -280,11 +280,11 @@ labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
 x_pos <- rep(1:ncomb, each = 2)
 x_pos <- x_pos + rep(c(-0.2, 0), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2.1*ses, means + 2.1*ses), pch = 20,
+plot(x = x_pos, y = means, ylim = range(means - 2.2*ses, means + 2.2*ses), pch = 20,
      xlab = "", ylab = "", main = "MR estimates: IVW", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
-       code = 2, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue"), ncomb))
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue"), ncomb))
 
 axis(1, at = c(1:ncomb), labels = labels, las = 2)
 legend("topleft", legend = c("calibrated", "adjuted+uncali"), lty = 1, col = c("coral1", "skyblue"))
@@ -315,7 +315,7 @@ labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
 x_pos <- rep(1:ncomb, each = 2)
 x_pos <- x_pos + rep(c(-0.2, 0), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2.1*ses, means + 2.1*ses), pch = 20,
+plot(x = x_pos, y = means, ylim = range(means - 2.2*ses, means + 2.2*ses), pch = 20,
      xlab = "", ylab = "", main = "MR estimates: mr.raps", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
