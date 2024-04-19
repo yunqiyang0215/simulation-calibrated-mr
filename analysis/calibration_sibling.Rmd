@@ -8,6 +8,17 @@ date: '2024-01-31'
 
 Parametric simulation result for calibration. Plot empirical variance for each snp. Combine 10 SNPs into boxplot. 
 
+Theoretical variance reduction formula:
+
+$$
+VR = \frac{1-\pi}{2}\frac{1-\rho}{1+\pi\rho},
+$$
+$\pi=cor(G,G^{sib})$ and $\rho=Cor(Y, Y^{sib})$.
+
+```{r}
+phe_seq = seq(0, 1, by = 0.01)
+theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq)
+```
 
 ```{r}
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear/res.rds")
@@ -39,9 +50,11 @@ for (i in 1:p){
 
 
 ```{r}
+
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
 
@@ -80,7 +93,8 @@ for (i in 1:p){
 ```{r}
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
 ```{r}
@@ -88,8 +102,6 @@ combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
 plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
 ```
-
-
 
 
 
@@ -126,7 +138,8 @@ for (i in 1:p){
 ```{r}
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
 
@@ -165,7 +178,8 @@ for (i in 1:p){
 ```{r}
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction")
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
 ```{r}
