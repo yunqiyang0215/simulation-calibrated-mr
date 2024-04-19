@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree441c49153f6dcd70b8c2b907d260ac0829a94d95targetblank441c491a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreebabeb48077eab869f00a846fc82ef9c037282dd1targetblankbabeb48a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/441c49153f6dcd70b8c2b907d260ac0829a94d95" target="_blank">441c491</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/babeb48077eab869f00a846fc82ef9c037282dd1" target="_blank">babeb48</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree441c49153f6dcd70b8c2b907d260ac0829a94d95targetblank441c491a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreebabeb48077eab869f00a846fc82ef9c037282dd1targetblankbabeb48a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/441c49153f6dcd70b8c2b907d260ac0829a94d95" target="_blank">441c491</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/babeb48077eab869f00a846fc82ef9c037282dd1" target="_blank">babeb48</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -607,6 +607,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/babeb48077eab869f00a846fc82ef9c037282dd1/analysis/mr_trio.Rmd" target="_blank">babeb48</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+<td>
+wflow_publish("analysis/mr_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/9dc602e5d6f9934800379ebe99c37a4d1236807a/docs/mr_trio.html" target="_blank">9dc602e</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -879,6 +913,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9dc602e5d6f9934800379ebe99c37a4d1236807a/docs/figure/mr_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">9dc602e</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0b524b116d8d78020fd1caa7921a1afab6d56357/docs/figure/mr_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">0b524b1</a>
 </td>
 <td>
@@ -977,6 +1022,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9dc602e5d6f9934800379ebe99c37a4d1236807a/docs/figure/mr_trio.Rmd/unnamed-chunk-6-1.png" target="_blank">9dc602e</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0b524b116d8d78020fd1caa7921a1afab6d56357/docs/figure/mr_trio.Rmd/unnamed-chunk-6-1.png" target="_blank">0b524b1</a>
@@ -1358,11 +1414,11 @@ labels = apply(combinations, 1, function(x) paste0(&quot;r1=&quot;,x[1], &quot; 
 x_pos &lt;- rep(1:ncomb, each = 2)
 x_pos &lt;- x_pos + rep(c(-0.2, 0), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2.1*ses, means + 2.1*ses), pch = 20,
+plot(x = x_pos, y = means, ylim = range(means - 2.2*ses, means + 2.2*ses), pch = 20,
      xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;MR estimates: IVW&quot;, xaxt = &#39;n&#39;)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
-       code = 2, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;), ncomb))
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;), ncomb))
 
 axis(1, at = c(1:ncomb), labels = labels, las = 2)
 legend(&quot;topleft&quot;, legend = c(&quot;calibrated&quot;, &quot;adjuted+uncali&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;))</code></pre>
@@ -1389,6 +1445,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9dc602e5d6f9934800379ebe99c37a4d1236807a/docs/figure/mr_trio.Rmd/unnamed-chunk-19-1.png" target="_blank">9dc602e</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/091b26da0d9313f43a306b92c23dfee1336cee79/docs/figure/mr_trio.Rmd/unnamed-chunk-19-1.png" target="_blank">091b26d</a>
@@ -1423,7 +1490,7 @@ labels = apply(combinations, 1, function(x) paste0(&quot;r1=&quot;,x[1], &quot; 
 x_pos &lt;- rep(1:ncomb, each = 2)
 x_pos &lt;- x_pos + rep(c(-0.2, 0), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2.1*ses, means + 2.1*ses), pch = 20,
+plot(x = x_pos, y = means, ylim = range(means - 2.2*ses, means + 2.2*ses), pch = 20,
      xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;MR estimates: mr.raps&quot;, xaxt = &#39;n&#39;)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
@@ -1454,6 +1521,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9dc602e5d6f9934800379ebe99c37a4d1236807a/docs/figure/mr_trio.Rmd/unnamed-chunk-21-1.png" target="_blank">9dc602e</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/091b26da0d9313f43a306b92c23dfee1336cee79/docs/figure/mr_trio.Rmd/unnamed-chunk-21-1.png" target="_blank">091b26d</a>
