@@ -1,0 +1,104 @@
+---
+title: "ukb real data"
+author: "Yunqi Yang"
+date: "4/18/2024"
+output: html_document
+---
+
+## Description: 
+
+UKB sibling data MR result of bmi on diabetes. 
+
+```{r}
+library(MendelianRandomization)
+library(mr.raps)
+```
+
+```{r}
+res = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/calibration_sumstat.rds")
+ext.bmi = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/external_gwas/bmi_21001_exp_bmi.csv")
+ext.diabtes = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/external_gwas/diabetes_2443_exp_bmi.csv")
+sumstat.adj = res[[1]]
+sumstat = res[[2]]
+```
+
+```{r}
+par(mfrow = c(1,2))
+plot(sumstat.adj[, "Y1.cali"], ext.bmi$beta)
+plot(sumstat.adj[, "Y2.cali"], ext.diabtes$beta)
+```
+
+```{r}
+# Remove NAs
+indx.na = apply(sumstat.adj, 1, function(x) sum(is.na(x))!= 0)
+sumstat.adj = sumstat.adj[-indx.na, ]
+
+indx.na = apply(sumstat, 1, function(x) sum(is.na(x))!= 0)
+sumstat = sumstat[-indx.na, ]
+```
+
+
+### 1. Calibration result
+
+```{r}
+par(mfrow = c(1,2))
+vr.Y1 = (sumstat.adj[, "Y1.raw.var"] - sumstat.adj[, "Y1.cali.var"])/sumstat.adj[, "Y1.raw.var"]
+vr.Y2 = (sumstat.adj[, "Y2.raw.var"] - sumstat.adj[, "Y2.cali.var"])/sumstat.adj[, "Y2.raw.var"]
+hist(vr.Y1, main = "variance reduction for exposure", xlab = "")
+hist(vr.Y2, main = "variance reduction for outcome", xlab = "")
+```
+
+
+### 2. MR result
+
+#### 2.1 IVW
+```{r}
+MRInput <- mr_input(bx = sumstat.adj[, "Y1.cali"],
+                         bxse = sqrt(sumstat.adj[, "Y1.cali.var"]),
+                         by = sumstat.adj[, "Y2.cali"],
+                         byse = sqrt(sumstat.adj[, "Y2.cali.var"]))
+mr.cali = mr_ivw(MRInput)
+
+MRInput <- mr_input(bx = sumstat.adj[, "Y1.raw"],
+                         bxse = sqrt(sumstat.adj[, "Y1.raw.var"]),
+                         by = sumstat.adj[, "Y2.raw"],
+                         byse = sqrt(sumstat.adj[, "Y2.raw.var"]))
+mr.raw = mr_ivw(MRInput)
+
+MRInput <- mr_input(bx = ext.bmi$beta,
+                         bxse = ext.bmi$se,
+                         by = ext.diabtes$beta,
+                         byse = ext.diabtes$se)
+mr.ext = mr_ivw(MRInput)
+
+```
+
+```{r}
+data <- data.frame(
+  group = rep(c("Cali", "Uncali", "Ext"), each=1),
+  estimate = c(mr.cali@Estimate, mr.raw@Estimate, mr.ext@Estimate),
+  stderr = c(mr.cali@StdError, mr.raw@StdError, mr.ext@StdError)
+)
+
+```
+
+```{r}
+# Plot the point estimates
+plot(data$estimate, 
+     pch=16, 
+     ylim=c(min(data$estimate - 2*data$stderr), max(data$estimate + 2*data$stderr)),
+     xaxt='n', 
+     xlab="Group", 
+     ylab="Estimate", 
+     main="MR estimates")
+
+# Add x-axis labels
+axis(1, at=1:3, labels=c("Cali", "Uncali", "ext"))
+
+# Adding error bars
+arrows(x0=1:3, y0=data$estimate - 1.96*data$stderr, 
+       x1=1:3, y1=data$estimate + 1.96*data$stderr, 
+       code=3, angle=90, length=0.1)
+
+```
+
