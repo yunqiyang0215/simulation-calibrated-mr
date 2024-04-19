@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-04-18
+<strong>Last updated:</strong> 2024-04-19
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree5ee949d50c3abf6b467fb1cdc7fa74300498d203targetblank5ee949da">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7cca5269f3eb05de0776316dce0704a9df47d12dtargetblank7cca526a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/5ee949d50c3abf6b467fb1cdc7fa74300498d203" target="_blank">5ee949d</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7cca5269f3eb05de0776316dce0704a9df47d12d" target="_blank">7cca526</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree5ee949d50c3abf6b467fb1cdc7fa74300498d203targetblank5ee949da"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7cca5269f3eb05de0776316dce0704a9df47d12dtargetblank7cca526a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/5ee949d50c3abf6b467fb1cdc7fa74300498d203" target="_blank">5ee949d</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7cca5269f3eb05de0776316dce0704a9df47d12d" target="_blank">7cca526</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -562,7 +562,6 @@ Ignored files:
 Unstaged changes:
     Modified:   analysis/mr_bias.Rmd
     Deleted:    analysis/mr_result.Rmd
-    Modified:   analysis/mr_trio.Rmd
 
 </code></pre>
 <p>
@@ -608,6 +607,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7cca5269f3eb05de0776316dce0704a9df47d12d/analysis/calibration_sibling.Rmd" target="_blank">7cca526</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-19
+</td>
+<td>
+wflow_publish("analysis/calibration_sibling.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/37b335c3841667181a297f7bbe6a330ca75dfa4b/docs/calibration_sibling.html" target="_blank">37b335c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-18
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -704,6 +737,13 @@ wflow_publish("analysis/calibration_sibling.Rmd")
 <h3>Description:</h3>
 <p>Parametric simulation result for calibration. Plot empirical variance
 for each snp. Combine 10 SNPs into boxplot.</p>
+<p>Theoretical variance reduction formula:</p>
+<p><span class="math display">\[
+VR = \frac{1-\pi}{2}\frac{1-\rho}{1+\pi\rho},
+\]</span> <span class="math inline">\(\pi=cor(G,G^{sib})\)</span> and
+<span class="math inline">\(\rho=Cor(Y, Y^{sib})\)</span>.</p>
+<pre class="r"><code>phe_seq = seq(0, 1, by = 0.01)
+theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq)</code></pre>
 <pre class="r"><code>res = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear/res.rds&quot;)</code></pre>
 </div>
 <div id="linear-regression-exposure-trait." class="section level3">
@@ -729,14 +769,15 @@ for (i in 1:p){
 }</code></pre>
 <pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;)</code></pre>
-<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, pch = 20)
+lines(x = phe_seq, y = theo_vr, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
-Past versions of unnamed-chunk-3-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div id="fig-unnamed-chunk-4-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -755,13 +796,13 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9595bff7ffd74147c438e284cf5656d77772a6a4/docs/figure/calibration_sibling.Rmd/unnamed-chunk-3-1.png" target="_blank">9595bff</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/37b335c3841667181a297f7bbe6a330ca75dfa4b/docs/figure/calibration_sibling.Rmd/unnamed-chunk-4-1.png" target="_blank">37b335c</a>
 </td>
 <td>
 yunqi yang
 </td>
 <td>
-2024-04-05
+2024-04-18
 </td>
 </tr>
 </tbody>
@@ -771,7 +812,7 @@ yunqi yang
 <pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
 plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
-<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="linear-regression-outcome-trait." class="section level3">
 <h3>2. Linear regression: outcome trait.</h3>
@@ -798,48 +839,8 @@ for (i in 1:p){
 }</code></pre>
 <pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;)</code></pre>
-<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
-Past versions of unnamed-chunk-6-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-6-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9595bff7ffd74147c438e284cf5656d77772a6a4/docs/figure/calibration_sibling.Rmd/unnamed-chunk-6-1.png" target="_blank">9595bff</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-04-05
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, pch = 20)
+lines(x = phe_seq, y = theo_vr, col = &quot;red&quot;)</code></pre>
 <p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
@@ -863,6 +864,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/37b335c3841667181a297f7bbe6a330ca75dfa4b/docs/figure/calibration_sibling.Rmd/unnamed-chunk-7-1.png" target="_blank">37b335c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d72b499a1624687cfbc41e2e53cd9eb582960a1b/docs/figure/calibration_sibling.Rmd/unnamed-chunk-7-1.png" target="_blank">d72b499</a>
@@ -889,6 +901,10 @@ yunqi yang
 </table>
 </div>
 </div>
+<pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
+<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="logistic-regression-exposure-trait." class="section level3">
 <h3>3. Logistic regression: exposure trait.</h3>
@@ -914,11 +930,8 @@ for (i in 1:p){
 }</code></pre>
 <pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;)</code></pre>
-<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, pch = 20)
+lines(x = phe_seq, y = theo_vr, col = &quot;red&quot;)</code></pre>
 <p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
@@ -944,6 +957,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/37b335c3841667181a297f7bbe6a330ca75dfa4b/docs/figure/calibration_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">37b335c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-18
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9595bff7ffd74147c438e284cf5656d77772a6a4/docs/figure/calibration_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">9595bff</a>
 </td>
 <td>
@@ -957,6 +981,10 @@ yunqi yang
 </table>
 </div>
 </div>
+<pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
+<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="logistic-regression-outcome-trait." class="section level3">
 <h3>4. Logistic regression: outcome trait.</h3>
@@ -983,11 +1011,8 @@ for (i in 1:p){
 }</code></pre>
 <pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;)</code></pre>
-<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-13-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, pch = 20)
+lines(x = phe_seq, y = theo_vr, col = &quot;red&quot;)</code></pre>
 <p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
@@ -1011,6 +1036,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/37b335c3841667181a297f7bbe6a330ca75dfa4b/docs/figure/calibration_sibling.Rmd/unnamed-chunk-14-1.png" target="_blank">37b335c</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-04-18
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d72b499a1624687cfbc41e2e53cd9eb582960a1b/docs/figure/calibration_sibling.Rmd/unnamed-chunk-14-1.png" target="_blank">d72b499</a>
@@ -1037,6 +1073,10 @@ yunqi yang
 </table>
 </div>
 </div>
+<pre class="r"><code>combinations$pheno.cor = round(combinations$pheno.cor,2)
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, xaxt = &#39;n&#39;)</code></pre>
+<p><img src="figure/calibration_sibling.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
