@@ -19,7 +19,7 @@ mr_method = c("ivw", "mr.raps")
 ### 1. IVW
 ```{r }
 
-n_rep = 50
+n_rep = 500
 combinations <- expand.grid(r1 = r1, r2 = r2)
 
 output = c()
@@ -50,7 +50,7 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
 abline(h = 1, lty =2, col = "grey")
 
 axis(1, at = c(1:ncomb), labels = labels, las = 2)
-legend("topleft", legend = c("calibrated", "adjuted+uncali", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
+legend("topleft", legend = c("calibrated", "adjusted, uncalibrated", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
 ```
 
 
@@ -96,6 +96,7 @@ legend("topleft", legend = c("calibrated", "adjuted+uncali", "unadjusted"), lty 
 
 #### 2.1 IVW
 ```{r}
+nrep = 50
 aggregated_data <- data.frame(cali_point = numeric(), adj_uncali_point = numeric(),
                               cali = numeric(), adj_uncali = numeric(), 
                               emp_var_cali = numeric(), emp_var_adj_uncali = numeric(), 
@@ -104,10 +105,10 @@ aggregated_data <- data.frame(cali_point = numeric(), adj_uncali_point = numeric
 for(i in 1:length(r1)) {
   for(j in 1:length(r2)) {
     res <- dat[dat$sim_data.r1 == r1[i] & dat$sim_data.r2 == r2[j] & dat$mr.mr_method == "ivw", ]
-    cali_point = res$mr.point_est[res$fit.method == "calibrated_model_T"]
-    adj_uncali_point = res$mr.point_est[res$fit.method == "adj_uncalibrated"]
-    cali = (res$mr.stderr[res$fit.method == "calibrated_model_T"])^2
-    adj_uncali = (res$mr.stderr[res$fit.method == "adj_uncalibrated"])^2
+    cali_point = res$mr.point_est[res$fit.method == "calibrated_model_T"][1:nrep]
+    adj_uncali_point = res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:nrep]
+    cali = (res$mr.stderr[res$fit.method == "calibrated_model_T"][1:nrep])^2
+    adj_uncali = (res$mr.stderr[res$fit.method == "adj_uncalibrated"][1:nrep])^2
     
     # These empirical values are the same across replicates 
     emp_var_cali = var(cali_point)
