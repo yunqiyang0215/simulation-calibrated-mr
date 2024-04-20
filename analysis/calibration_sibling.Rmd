@@ -16,6 +16,11 @@ $$
 $\pi=cor(G,G^{sib})$ and $\rho=Cor(Y, Y^{sib})$.
 
 ```{r}
+library(ggplot2)
+library(reshape2)
+```
+
+```{r}
 phe_seq = seq(0, 1, by = 0.01)
 theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq)
 ```
@@ -53,16 +58,10 @@ for (i in 1:p){
 
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20, xlim = c(0,0.8), cex = 0.6)
 lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
-
-```{r}
-combinations$pheno.cor = round(combinations$pheno.cor,2)
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
-```
 
 ### 2. Linear regression: outcome trait. 
 
@@ -93,15 +92,14 @@ for (i in 1:p){
 ```{r}
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20, cex = 0.6, xlim = c(0, 0.8))
+lines(x = phe_seq, y = theo_vr, col = "red")
+
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20, cex = 0.6, xlim = c(0, 0.1))
 lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
-```{r}
-combinations$pheno.cor = round(combinations$pheno.cor,2)
-vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = as.factor(rep(combinations$pheno.cor, p)), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", xaxt = 'n')
-```
+
 
 
 
@@ -138,7 +136,7 @@ for (i in 1:p){
 ```{r}
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20, xlim = c(0, 0.8), cex = 0.6)
 lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
@@ -178,7 +176,7 @@ for (i in 1:p){
 ```{r}
 combinations$pheno.cor = round(combinations$pheno.cor,2)
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
-plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20)
+plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "variance reduction", pch = 20, xlim = c(0, 0.8), cex = 0.6)
 lines(x = phe_seq, y = theo_vr, col = "red")
 ```
 
