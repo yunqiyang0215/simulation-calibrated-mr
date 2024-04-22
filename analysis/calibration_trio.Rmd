@@ -8,6 +8,14 @@ date: '2024-01-31'
 
 Parametric simulation result for calibration. Plot empirical variance for each snp. Combine 10 SNPs into boxplot. 
 
+```{r}
+compute_theo_vr <- function(sigma2, rho, r, b2, sample_size_ratio){
+  vr = sigma2*(1-rho)^2*(1-r)/((sigma2 + b2*(1-r^2))*(1+sample_size_ratio - 2*rho))/2
+  return(vr)
+}
+
+theo_vr = compute_theo_vr(1, 0, 0, 0, 0.1)
+```
 
 ```{r}
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/trio_linear/res.rds")
@@ -51,7 +59,7 @@ rownames(vr) = r1
 x_values = c(1, 2, 3)
 plot(x = as.factor(rep(x_values, p)), y = c(vr), xlab = "r1 value", ylab = "Empirical variance reduction", xaxt="n", pch = 20,ylim = c(0, 1), boxwex = 0.5)
 axis(1, at = x_values, labels = c("0", "0.1", "0.5"))
-
+abline(h = theo_vr, col = "red", lty = 2)
 ```
 
 ### 2. Linear regression: outcome trait. 
@@ -98,6 +106,7 @@ x_values = 1:length(combination_labels)
 plot(x = as.factor(rep(x_values, p)), c(vr), type = "p",
      xaxt = 'n', xlab = "", ylab = "Empirical variance reduction", pch = 20, ylim = c(0, 1))
 axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
+abline(h = theo_vr, col = "red", lty = 2)
 ```
 
 
@@ -135,6 +144,7 @@ rownames(vr) = r1
 x_values = c(1, 2, 3)
 plot(x = as.factor(rep(x_values, p)), y = c(vr), xlab = "r1 value", ylab = "Empirical variance reduction", xaxt="n", pch = 20, ylim = c(0, 1))
 axis(1, at = x_values, labels = c("0", "0.1", "0.5"))
+abline(h = theo_vr, col = "red", lty = 2)
 ```
 
 
@@ -182,6 +192,7 @@ x_values = 1:length(combination_labels)
 plot(x = as.factor(rep(x_values, p)), c(vr), type = "p",
      xaxt = 'n', xlab = "", ylab = "Empirical variance reduction", pch = 20, ylim = c(0, 1))
 axis(side = 1, at = c(1:length(combination_labels)), labels = rep(combination_labels), las = 2, cex.axis = 0.8)
+abline(h = theo_vr, col = "red", lty = 2)
 ```
 
 
