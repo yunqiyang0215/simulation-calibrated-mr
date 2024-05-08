@@ -24,6 +24,18 @@ abline(a = 0, b = 1, col = "red")
 plot(ext2$BETA[1:784], sumstat[, "raw"], xlab = "external gwas", ylab = "uncalibrated estimator")
 abline(a = 0, b = 1, col = "red")
 ```
+```{r}
+# check Zscore
+par(mfrow = c(1,2))
+plot(ext2$BETA[1:784]/ext2$SE, sumstat[, "cali"]/sqrt(sumstat[, "cali.var"]), xlab = "external gwas", ylab = "calibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(ext2$BETA[1:784]/ext2$SE, sumstat[, "raw"]/sqrt(sumstat[, "raw.var"]), xlab = "external gwas", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+
+```
+
+
+
 ```{r }
 pval.ext = pnorm(abs(ext2$BETA/ext2$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(sumstat[, "cali"]/sqrt(sumstat[, "cali.var"])), lower.tail = FALSE)
