@@ -68,5 +68,5 @@ Parametric simulation combined:
 
 UKB data analysis:
 
-+ [bmi on diabetes ](bmi_t2d.html)
++ [UKB trait calibration result](ukb_trait_calibration.html)
 
