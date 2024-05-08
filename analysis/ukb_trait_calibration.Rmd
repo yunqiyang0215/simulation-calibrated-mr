@@ -1,0 +1,52 @@
+---
+title: "Calibration on ukb real data"
+author: "Yunqi Yang"
+date: "5/8/2024"
+output: html_document
+---
+
+### 1. BMI
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear", sep = "\t")
+```
+
+```{r}
+ext2 = ext[1:784, ]
+```
+
+```{r }
+# check estimate scale
+par(mfrow = c(1,2))
+plot(ext2$BETA[1:784], sumstat[, "cali"], xlab = "external gwas", ylab = "calibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(ext2$BETA[1:784], sumstat[, "raw"], xlab = "external gwas", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+```
+```{r }
+pval.ext = pnorm(abs(ext2$BETA/ext2$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(sumstat[, "cali"]/sqrt(sumstat[, "cali.var"])), lower.tail = FALSE)
+pval.uncali = pnorm(abs(sumstat[, "raw"]/sqrt(sumstat[, "raw.var"])), lower.tail = FALSE)
+```
+
+
+```{r}
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+```
+
+#### Calibration result
+
+```{r fig.width=8, fig.height=4}
+
+par(mfrow = c(1, 3))
+sumstat = data.frame(sumstat)
+boxplot(sumstat[sumstat$cali.var < 0.0005, c("cali.var", "raw.var")], ylab = "variance")
+boxplot(sumstat[sumstat$cali.var > 0.0005, c("cali.var", "raw.var")], ylab = "variance")
+hist((sumstat[, "raw.var"] - sumstat[, "cali.var"])/sumstat[, "raw.var"], main = "variance reduction", xlab = "")
+```
+
+
+
