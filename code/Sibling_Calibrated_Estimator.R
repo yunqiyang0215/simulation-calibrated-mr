@@ -95,7 +95,6 @@ calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,
 
   X = matrix(X, N, 1)
   XZ = cbind(X, Z)
-  XZ = XZ[sapply(XZ, is.numeric)]
   XZ_tilde = XZ
 
   if(dim_Z != 0){
