@@ -16,12 +16,14 @@ ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-anal
 ext2 = ext[1:784, ]
 ```
 
-```{r }
+```{r fig.width=8, fig.height=4}
 # check estimate scale
-par(mfrow = c(1,2))
+par(mfrow = c(1,3))
 plot(ext2$BETA[1:784], sumstat[, "cali"], xlab = "external gwas", ylab = "calibrated estimator")
 abline(a = 0, b = 1, col = "red")
 plot(ext2$BETA[1:784], sumstat[, "raw"], xlab = "external gwas", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(sumstat[, "cali"], sumstat[, "raw"], xlab = "calibrated estimator", ylab = "uncalibrated estimator")
 abline(a = 0, b = 1, col = "red")
 ```
 ```{r}
