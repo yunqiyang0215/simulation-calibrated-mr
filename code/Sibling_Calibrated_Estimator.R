@@ -43,13 +43,12 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 ##' Compute the calibrated estimator
 ##' @param Y: a vector that contains response variable values
 ##' @param X: a vector that contains transmitted allele values
-##' @param Z: a matrix that contains other covariates
 ##' @param F_ind: family index
 ##' @param alpha_ext: estimate of alpha from external data
 ##' @param alpha_ext_var: variance of alpha from external data
 ##' @param N_ext: number of samples in external data
 ##' @param overlap_ratio: proportion of internal data from external data
-##' @param Z: other covariates (the number of rows should be internal data size)
+##' @param Z: data frame of other covariates (the number of rows should be internal data size)
 ##'
 calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,
                                  overlap_ratio = 0, Z = NULL){
@@ -87,6 +86,7 @@ calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,
   # Y_tilde = \beta_1 X_tilde + epsilon
 
   if(! is.null(Z)){
+    Z = as.matrix(model.matrix( ~ -1 + ., data = Z))
     dim_Z = length(Z) / N
   } else{
     dim_Z = 0
