@@ -2,7 +2,7 @@
 
 ###### INCLUDING rho_shared
 # @param data_int: 3 columns, Y, X1 and X2 where X1 = T and X2 = NT
-# @param Z: other covariates, NULL if no other covariates
+# @param Z: a matrix with other covariates, NULL if no other covariates
 # @param rho_shared = n_shared/N
 # @param alpha_ext = summary statistic gwas
 # @param sd_alpha_ext = sd of alpha from gwas summary statistic
@@ -37,7 +37,7 @@ calibrated_est_trio_1 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
     matrix(rowSums(out.prod1%*%diag((mod_int$residuals)^2)),(p+3),(p+3))
   C_22_hat <- (1/n)*(1/sigma_star_hat_sq^2)*
     matrix(rowSums(out.prod2%*%diag((mod_unadjusted$residuals)^2)),(p+2),(p+2))
-  out.prod3 <- out.prod1[-seq(3,(p+3)^2,(p+3)),]
+  out.prod3 <- out.prod1[-c((2*(p+3)+1):(3*(p+3))),]
   C_12_hat <- (1/n)*(1/(sigma_hat_sq*sigma_star_hat_sq))*
     matrix(rowSums(out.prod3%*%diag((mod_unadjusted$residuals)*(mod_int$residuals))),(p+3),(p+2),byrow = "F")
   D_1_inv <- solve(D_1_hat)
@@ -61,7 +61,7 @@ calibrated_est_trio_1 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
 ### INCLUDING rho_shared for G,G_PA
 
 # @param data_int: 3 columns, Y, X1 and X2 where X1 = G and X2 = G_PA
-# @param Z: other covariates, NULL if no other covariates
+# @param Z: a matrix with other covariates, NULL if no other covariates
 # @param data_ext: 2 columns, Y, X1
 # @param rho_shared = n_shared/N
 # @param alpha_ext = summary statistic gwas
@@ -88,7 +88,7 @@ calibrated_est_trio_2 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
   # want  (\tilde{X}_i*\tilde{X}_i^T) which is a 2*2 matrix
   # as the i-th column of out.prod2
   # like out.prod2 <- apply(X_tilde,1,function(x){outer(x,x)})
-  ## but for faster computation, remove some indexes from out.prod1 to get out.prod2
+  ## but for faster computation, remove some indices from out.prod1 to get out.prod2
   index_rem <- c(seq(3,(p+3)^2,(p+3)),seq(2*(p+3)+1,3*(p+3),1))
   out.prod2 <- out.prod1[-index_rem,]
   D_1_hat <- - (1/(n*sigma_hat_sq))*matrix(rowSums(out.prod1),(p+3),(p+3))
@@ -97,7 +97,7 @@ calibrated_est_trio_2 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
     matrix(rowSums(out.prod1%*%diag((mod_int$residuals)^2)),(p+3),(p+3))
   C_22_hat <- (1/n)*(1/sigma_star_hat_sq^2)*
     matrix(rowSums(out.prod2%*%diag((mod_unadjusted$residuals)^2)),(p+2),(p+2))
-  out.prod3 <- out.prod1[-seq(3,(p+3)^2,(p+3)),]
+  out.prod3 <- out.prod1[-c((2*(p+3)+1):(3*(p+3))),]
   C_12_hat <- (1/n)*(1/(sigma_hat_sq*sigma_star_hat_sq))*
     matrix(rowSums(out.prod3%*%diag((mod_unadjusted$residuals)*(mod_int$residuals))),(p+3),(p+2),byrow = "F")
   D_1_inv <- solve(D_1_hat)
@@ -118,13 +118,10 @@ calibrated_est_trio_2 <- function(data_int,Z = NULL,rho_shared,alpha_ext,sd_alph
   return (list("Raw Estimator" = tau_raw, "raw_variance" = V_hat[1,1]/n, "calibrated_est" = tau_cal,"variance" = var_tau_cal))
 }
 
-
-
-
-
 ######################### Logistic Regression ###################################
 
 # @param data_int: n by 3 matrix of internal full data, (Y1, X1, X2) with X1 = T, X2 = NT
+# @param Z: a matrix with other covariates, NULL if no other covariates
 # @param alpha_ext: coefficient from unadjusted model on external data
 # @param sd_alpha_ext: sd of alpha_ext from GWAS summary statistic
 # @param rho_shared: proportion of shared samples between internal and external data
@@ -155,7 +152,7 @@ calibrated_estimator_logistic_1 <- function(data_int, Z = NULL, rho_shared, alph
   D_2_hat <- - (1/n)*matrix(rowSums(out.prod2%*%diag(mod_unadjusted$fitted.values*(1 - mod_unadjusted$fitted.values))),(p+2),(p+2))
   C_11_hat <- (1/n)*matrix(rowSums(out.prod1%*%diag((data_int[,1] - mod_int$fitted.values)^2)),(p+3),(p+3))
   C_22_hat <- (1/n)*matrix(rowSums(out.prod2%*%diag((data_int[,1] - mod_unadjusted$fitted.values)^2)),(p+2),(p+2))
-  out.prod3 <- out.prod1[-seq(3,(p+3)^2,(p+3)),]
+  out.prod3 <- out.prod1[-c((2*(p+3)+1):(3*(p+3))),]
   C_12_hat <- (1/n)*matrix(rowSums(out.prod3%*%diag((data_int[,1] - mod_int$fitted.values)*
                                                       (data_int[,1] - mod_unadjusted$fitted.values))),(p+3),(p+2),byrow = "F")
   D_1_inv <- solve(D_1_hat)
@@ -179,7 +176,8 @@ calibrated_estimator_logistic_1 <- function(data_int, Z = NULL, rho_shared, alph
 }
 
 
-# @param data_int: n by 3 matrix of internal full data, (Y1, X1, X2) with X1 = G, X2 = G_po
+# @param data_int: n by 3 matrix of internal full data, (Y1, X1, X2) with X1 = G, X2 = G_pa
+# @param Z: a matrix with other covariates, NULL if no other covariates
 # @param alpha_ext: coefficient from unadjusted model on external data
 # @param sd_alpha_ext: sd of alpha_ext from GWAS summary statistic
 # @param rho_shared: proportion of shared samples between internal and external data
@@ -209,7 +207,7 @@ calibrated_estimator_logistic_2 <- function(data_int,Z,rho_shared, alpha_ext, sd
   D_2_hat <- - (1/n)*matrix(rowSums(out.prod2%*%diag(mod_unadjusted$fitted.values*(1 - mod_unadjusted$fitted.values))),(p+2),(p+2))
   C_11_hat <- (1/n)*matrix(rowSums(out.prod1%*%diag((data_int[,1] - mod_int$fitted.values)^2)),(p+3),(p+3))
   C_22_hat <- (1/n)*matrix(rowSums(out.prod2%*%diag((data_int[,1] - mod_unadjusted$fitted.values)^2)),(p+2),(p+2))
-  out.prod3 <- out.prod1[-seq(3,(p+3)^2,(p+3)),]
+  out.prod3 <- out.prod1[-c((2*(p+3)+1):(3*(p+3))),]
   C_12_hat <- (1/n)*matrix(rowSums(out.prod3%*%diag((data_int[,1] - mod_int$fitted.values)*
                                                       (data_int[,1] - mod_unadjusted$fitted.values))),(p+3),(p+2),byrow = "F")
   D_1_inv <- solve(D_1_hat)
