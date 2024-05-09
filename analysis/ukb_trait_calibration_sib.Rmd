@@ -1,0 +1,137 @@
+---
+title: "Calibration on ukb sibling data"
+author: "Yunqi Yang"
+date: "5/8/2024"
+output: html_document
+---
+
+### 1. BMI
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear", sep = "\t")
+```
+
+```{r}
+sumstat = data.frame(sumstat)
+sumstat$ID = rownames(sumstat)
+dat = merge(sumstat, ext, by.x = "ID", by.y = "ID", all = FALSE)
+head(dat)
+```
+
+```{r fig.width=10, fig.height=6}
+# check estimate scale
+par(mfrow = c(1,3))
+plot(dat$BETA, dat$cali, xlab = "external gwas", ylab = "calibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$cali, dat$raw, xlab = "calibrated estimator", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$BETA, dat$int, xlab = "external gwas", ylab = "internal gwas")
+abline(a = 0, b = -1, col = "red")
+```
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1,2))
+hist(dat$cali - dat$raw, main = "Differece: calibrated estimator - uncalibrated estimator", xlab = "")
+hist(dat$int - dat$BETA, main = "Difference: internal gwas - external gwas", xlab = "")
+
+```
+
+```{r}
+res1 <- t.test(dat$cali, dat$raw)
+res2<- t.test(dat$int, dat$BETA)
+res1
+res2
+```
+
+```{r }
+pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+```
+
+#### Calibration result
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1, 3))
+sumstat = data.frame(sumstat)
+boxplot(dat[dat$cali.var < 0.0005, c("cali.var", "raw.var")], ylab = "variance")
+boxplot(dat[dat$cali.var > 0.0005, c("cali.var", "raw.var")], ylab = "variance")
+hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab = "")
+```
+
+
+
+
+
+
+
+
+### 2. DBP
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_dbp.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear", sep = "\t")
+```
+
+```{r}
+sumstat = data.frame(sumstat)
+sumstat$ID = rownames(sumstat)
+dat = merge(sumstat, ext, by.x = "ID", by.y = "ID", all = FALSE)
+head(dat)
+```
+
+```{r fig.width=10, fig.height=6}
+# check estimate scale
+par(mfrow = c(1,3))
+plot(dat$BETA, dat$cali, xlab = "external gwas", ylab = "calibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$cali, dat$raw, xlab = "calibrated estimator", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$BETA, dat$int, xlab = "external gwas", ylab = "internal gwas")
+abline(a = 0, b = -1, col = "red")
+```
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1,2))
+hist(dat$cali - dat$raw, main = "Differece: calibrated estimator - uncalibrated estimator", xlab = "")
+hist(dat$int - dat$BETA, main = "Difference: internal gwas - external gwas", xlab = "")
+
+```
+
+```{r}
+res1 <- t.test(dat$cali, dat$raw)
+res2<- t.test(dat$int, dat$BETA)
+res1
+res2
+```
+
+
+```{r }
+pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+```
+
+#### Calibration result
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1, 3))
+sumstat = data.frame(sumstat)
+boxplot(dat[dat$cali.var < 0.0005, c("cali.var", "raw.var")], ylab = "variance")
+boxplot(dat[dat$cali.var > 0.0005, c("cali.var", "raw.var")], ylab = "variance")
+hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab = "")
+```
+
+
+
+
+
