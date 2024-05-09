@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Yunqi Yang" />
+
+
+<title>Calibration on ukb trio data</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">simulation-calibrated-mr</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Calibration on ukb trio data</h1>
+<h4 class="author">Yunqi Yang</h4>
+<h4 class="date">5/8/2024</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-05-09
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
+</p>
+<p>
+<strong>Knit directory:</strong> <code>simulation-calibrated-mr/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230217code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20230217)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230217code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230217)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree733a03522ed3bcbd793cdcf1c57a50fca255abdbtargetblank733a035a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/733a03522ed3bcbd793cdcf1c57a50fca255abdb" target="_blank">733a035</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree733a03522ed3bcbd793cdcf1c57a50fca255abdbtargetblank733a035a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/733a03522ed3bcbd793cdcf1c57a50fca255abdb" target="_blank">733a035</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    data/.DS_Store
+
+Untracked files:
+    Untracked:  analysis/ukb_trait_calibration_sib.Rmd
+
+Unstaged changes:
+    Deleted:    analysis/bmi_t2d.Rmd
+    Deleted:    analysis/ukb_trait_calibration.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/ukb_trait_calibration_trio.Rmd</code>) and HTML (<code>docs/ukb_trait_calibration_trio.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/733a03522ed3bcbd793cdcf1c57a50fca255abdb/analysis/ukb_trait_calibration_trio.Rmd" target="_blank">733a035</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-09
+</td>
+<td>
+wflow_publish("analysis/ukb_trait_calibration_trio.Rmd")
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="bmi" class="section level3">
+<h3>1. BMI</h3>
+<pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds&quot;)
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear&quot;, sep = &quot;\t&quot;)</code></pre>
+<pre class="r"><code>sumstat = data.frame(sumstat)
+sumstat$ID = rownames(sumstat)
+dat = merge(sumstat, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = FALSE)
+head(dat)</code></pre>
+<pre><code>          ID          cali    cali.var         raw     raw.var         int
+1 rs10004698 -0.0151337904 0.001681406 -0.05218778 0.004394767 -0.05218778
+2 rs10009336  0.2030265661 0.002572814  0.19414371 0.005619499  0.19414371
+3  rs1000940 -0.0621282363 0.001642207 -0.06196002 0.003946237 -0.06196002
+4  rs1003081 -0.0236439902 0.001890722  0.06847810 0.003934939  0.06847810
+5 rs10036136  0.0214230239 0.001836773  0.04861030 0.003730940  0.04861030
+6 rs10050688  0.0003728553 0.002099614 -0.03202102 0.004670161 -0.03202102
+      int.var X.CHROM       POS REF ALT A1 TEST OBS_CT        BETA         SE
+1 0.004398049       4 188961336   A   G  G  ADD 257429  0.00197690 0.00302184
+2 0.007166299       4  44480783   T   C  C  ADD 257429  0.01168170 0.00377308
+3 0.004092325      17   5283252   G   A  A  ADD 257429 -0.01851870 0.00302595
+4 0.003835607      11 118913993   T   C  C  ADD 257429 -0.01212200 0.00279283
+5 0.003964067       5  32869686   A   G  G  ADD 257429 -0.00457835 0.00282191
+6 0.004342678       5 116657963   A   G  G  ADD 257429  0.00613477 0.00297863
+     T_STAT           P
+1  0.654206 5.12980e-01
+2  3.096060 1.96131e-03
+3 -6.119940 9.37432e-10
+4 -4.340420 1.42268e-05
+5 -1.622430 1.04712e-01
+6  2.059590 3.94385e-02</code></pre>
+<pre class="r"><code># check estimate scale
+par(mfrow = c(1,3))
+plot(dat$BETA, dat$cali, xlab = &quot;external gwas&quot;, ylab = &quot;calibrated estimator&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+plot(dat$cali, dat$raw, xlab = &quot;calibrated estimator&quot;, ylab = &quot;uncalibrated estimator&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+plot(dat$BETA, dat$int, xlab = &quot;external gwas&quot;, ylab = &quot;internal gwas&quot;)
+abline(a = 0, b = -1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(1,2))
+hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
+hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>res1 &lt;- t.test(dat$cali, dat$raw)
+res2&lt;- t.test(dat$int, dat$BETA)
+res1</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$cali and dat$raw
+t = 0.077765, df = 1414.4, p-value = 0.938
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.006986317  0.007563095
+sample estimates:
+   mean of x    mean of y 
+0.0009851306 0.0006967412 </code></pre>
+<pre class="r"><code>res2</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$int and dat$BETA
+t = 0.46328, df = 819.4, p-value = 0.6433
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.004582697  0.007414230
+sample estimates:
+    mean of x     mean of y 
+ 0.0007047380 -0.0007110287 </code></pre>
+<pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext &lt; 1e-8)</code></pre>
+<pre><code>[1] 78</code></pre>
+<pre class="r"><code>sum(pval.cali &lt; 1e-3)</code></pre>
+<pre><code>[1] 6</code></pre>
+<pre class="r"><code>sum(pval.uncali &lt; 1e-3)</code></pre>
+<pre><code>[1] 2</code></pre>
+<div id="calibration-result" class="section level4">
+<h4>Calibration result</h4>
+<pre class="r"><code>par(mfrow = c(1, 2))
+sumstat = data.frame(sumstat)
+boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
+hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="dbp" class="section level3">
+<h3>2. DBP</h3>
+<pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_dbp.rds&quot;)
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear&quot;, sep = &quot;\t&quot;)</code></pre>
+<pre class="r"><code>sumstat = data.frame(sumstat)
+sumstat$ID = rownames(sumstat)
+dat = merge(sumstat, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = FALSE)
+head(dat)</code></pre>
+<pre><code>          ID          cali    cali.var          raw     raw.var          int
+1 rs10004698  0.0229710551 0.001861947  0.045065276 0.004854948  0.045065276
+2 rs10009336  0.0539054207 0.003376672  0.099499025 0.007399003  0.099499025
+3  rs1000940 -0.0017808311 0.001479061 -0.037989997 0.004388344 -0.037989997
+4  rs1003081 -0.0013340742 0.001767758  0.019687178 0.004093925  0.019687178
+5 rs10036136 -0.0604286168 0.001905079 -0.007335407 0.003908259 -0.007335407
+6 rs10050688  0.0007609039 0.002375252  0.007284161 0.005243662  0.007284161
+      int.var X.CHROM       POS REF ALT A1 TEST OBS_CT        BETA         SE
+1 0.004755702       4 188961336   A   G  G  ADD 257429  0.00197690 0.00302184
+2 0.008064450       4  44480783   T   C  C  ADD 257429  0.01168170 0.00377308
+3 0.004364237      17   5283252   G   A  A  ADD 257429 -0.01851870 0.00302595
+4 0.004061763      11 118913993   T   C  C  ADD 257429 -0.01212200 0.00279283
+5 0.004323469       5  32869686   A   G  G  ADD 257429 -0.00457835 0.00282191
+6 0.004853808       5 116657963   A   G  G  ADD 257429  0.00613477 0.00297863
+     T_STAT           P
+1  0.654206 5.12980e-01
+2  3.096060 1.96131e-03
+3 -6.119940 9.37432e-10
+4 -4.340420 1.42268e-05
+5 -1.622430 1.04712e-01
+6  2.059590 3.94385e-02</code></pre>
+<pre class="r"><code># check estimate scale
+par(mfrow = c(1,3))
+plot(dat$BETA, dat$cali, xlab = &quot;external gwas&quot;, ylab = &quot;calibrated estimator&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+plot(dat$cali, dat$raw, xlab = &quot;calibrated estimator&quot;, ylab = &quot;uncalibrated estimator&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+plot(dat$BETA, dat$int, xlab = &quot;external gwas&quot;, ylab = &quot;internal gwas&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(1,2))
+hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
+hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>res1 &lt;- t.test(dat$cali, dat$raw)
+res2&lt;- t.test(dat$int, dat$BETA)
+res1</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$cali and dat$raw
+t = 1.0156, df = 1361.1, p-value = 0.31
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.003732262  0.011744860
+sample estimates:
+   mean of x    mean of y 
+-0.001049822 -0.005056121 </code></pre>
+<pre class="r"><code>res2</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$int and dat$BETA
+t = -1.3028, df = 813.75, p-value = 0.193
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.010838063  0.002190848
+sample estimates:
+    mean of x     mean of y 
+-0.0050346357 -0.0007110287 </code></pre>
+<pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext &lt; 1e-8)</code></pre>
+<pre><code>[1] 78</code></pre>
+<pre class="r"><code>sum(pval.cali &lt; 1e-3)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>sum(pval.uncali &lt; 1e-3)</code></pre>
+<pre><code>[1] 5</code></pre>
+<div id="calibration-result-1" class="section level4">
+<h4>Calibration result</h4>
+<pre class="r"><code>par(mfrow = c(1, 2))
+sumstat = data.frame(sumstat)
+boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
+vr = (dat$raw.var - dat$cali.var)/dat$raw.var
+hist(vr, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>vr[order(vr, decreasing = TRUE)][1:5]</code></pre>
+<pre><code>[1] 0.9933775 0.7258196 0.6904291 0.6837973 0.6738215</code></pre>
+<pre class="r"><code>dat[486, ]</code></pre>
+<pre><code>        ID        cali     cali.var        raw     raw.var        int
+486 rs4311 0.005576307 1.652403e-05 0.04308604 0.002495142 0.05993063
+        int.var X.CHROM      POS REF ALT A1 TEST OBS_CT       BETA         SE
+486 0.004457873      17 61560763   C   T  T  ADD 257429 0.00519877 0.00279203
+     T_STAT         P
+486 1.86201 0.0626031</code></pre>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.1 (2021-08-10)
+Platform: x86_64-apple-darwin20.6.0 (64-bit)
+Running under: macOS Monterey 12.0.1
+
+Matrix products: default
+BLAS:   /usr/local/Cellar/openblas/0.3.18/lib/libopenblasp-r0.3.18.dylib
+LAPACK: /usr/local/Cellar/r/4.1.1_1/lib/R/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] workflowr_1.6.2
+
+loaded via a namespace (and not attached):
+ [1] Rcpp_1.0.8.3     rstudioapi_0.13  whisker_0.4      knitr_1.36      
+ [5] magrittr_2.0.1   R6_2.5.1         rlang_1.1.1      fastmap_1.1.0   
+ [9] fansi_0.5.0      highr_0.9        stringr_1.4.0    tools_4.1.1     
+[13] xfun_0.27        utf8_1.2.2       cli_3.6.1        git2r_0.28.0    
+[17] jquerylib_0.1.4  htmltools_0.5.5  ellipsis_0.3.2   rprojroot_2.0.2 
+[21] yaml_2.2.1       digest_0.6.28    tibble_3.1.5     lifecycle_1.0.3 
+[25] later_1.3.0      sass_0.4.4       vctrs_0.6.3      promises_1.2.0.1
+[29] fs_1.5.0         cachem_1.0.6     glue_1.4.2       evaluate_0.14   
+[33] rmarkdown_2.11   stringi_1.7.5    bslib_0.4.1      compiler_4.1.1  
+[37] pillar_1.9.0     jsonlite_1.7.2   httpuv_1.6.3     pkgconfig_2.0.3 </code></pre>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
