@@ -18,10 +18,6 @@ sumstat$ID = rownames(sumstat)
 dat = merge(sumstat, ext, by.x = "ID", by.y = "ID", all = FALSE)
 ```
 
-```{r}
-head(dat)
-```
-
 ```{r fig.width=10, fig.height=6}
 # check estimate scale
 par(mfrow = c(1,2))
