@@ -51,3 +51,50 @@ hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab
 
 
 
+
+
+
+### 2. DBP
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/sib_result/sib_calibration_dbp.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_dbp.linear", sep = "\t")
+```
+
+```{r}
+sumstat = data.frame(sumstat)
+sumstat$ID = rownames(sumstat)
+dat = merge(sumstat, ext, by.x = "ID", by.y = "ID", all = FALSE)
+```
+
+```{r fig.width=10, fig.height=6}
+# check estimate scale
+par(mfrow = c(1,2))
+plot(dat$BETA, dat$cali, xlab = "external gwas", ylab = "calibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$BETA, dat$raw, xlab = "external gwas", ylab = "uncalibrated estimator")
+abline(a = 0, b = -1, col = "red")
+
+```
+
+```{r }
+pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+```
+
+#### Calibration result
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1, 2))
+sumstat = data.frame(sumstat)
+boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
+hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab = "")
+```
+
+
+
