@@ -68,5 +68,7 @@ Parametric simulation combined:
 
 UKB data analysis:
 
-+ [UKB trait calibration result](ukb_trait_calibration.html)
++ [UKB trait calibration result trio](ukb_trait_calibration_trio.html)
+
++ [UKB trait calibration result sibling](ukb_trait_calibration_sib.html)
 
