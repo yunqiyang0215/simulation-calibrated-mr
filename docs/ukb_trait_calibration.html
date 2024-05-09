@@ -12,7 +12,7 @@
 <meta name="author" content="Yunqi Yang" />
 
 
-<title>Calibration on ukb real data</title>
+<title>Calibration on ukb sibling data</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -357,7 +357,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Calibration on ukb real data</h1>
+<h1 class="title toc-ignore">Calibration on ukb sibling data</h1>
 <h4 class="author">Yunqi Yang</h4>
 <h4 class="date">5/8/2024</h4>
 
@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-08
+<strong>Last updated:</strong> 2024-05-09
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea959215b06974d10e064ae7e422fe1334363b289targetblanka959215a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a959215b06974d10e064ae7e422fe1334363b289" target="_blank">a959215</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec0537db22aea614a0c5011e857bf8c27fb0d032atargetblankc0537dba"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c0537db22aea614a0c5011e857bf8c27fb0d032a" target="_blank">c0537db</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea959215b06974d10e064ae7e422fe1334363b289targetblanka959215a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec0537db22aea614a0c5011e857bf8c27fb0d032atargetblankc0537dba" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a959215b06974d10e064ae7e422fe1334363b289" target="_blank">a959215</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c0537db22aea614a0c5011e857bf8c27fb0d032a" target="_blank">c0537db</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -537,6 +537,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c0537db22aea614a0c5011e857bf8c27fb0d032a/analysis/ukb_trait_calibration.Rmd" target="_blank">c0537db</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-09
+</td>
+<td>
+wflow_publish("analysis/ukb_trait_calibration.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/5190b8d3e1fba74d79c987df2f157558bf56972c/docs/ukb_trait_calibration.html" target="_blank">5190b8d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -767,16 +801,40 @@ wflow_publish("analysis/ukb_trait_calibration.Rmd")
 </div>
 <div id="bmi" class="section level3">
 <h3>1. BMI</h3>
-<pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/sib_result/sib_calibration_bmi.rds&quot;)
+<pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds&quot;)
 ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear&quot;, sep = &quot;\t&quot;)</code></pre>
 <pre class="r"><code>sumstat = data.frame(sumstat)
 sumstat$ID = rownames(sumstat)
-dat = merge(sumstat, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = FALSE)</code></pre>
+dat = merge(sumstat, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = FALSE)
+head(dat)</code></pre>
+<pre><code>          ID          cali     cali.var          raw      raw.var          int
+1 rs10004698  0.0002856091 0.0001751302 -0.003960951 0.0002060997 -0.004852940
+2 rs10009336  0.0081149064 0.0002789649 -0.015738750 0.0003286186 -0.025876301
+3  rs1000940 -0.0121745655 0.0001718697  0.012413332 0.0002038394  0.020569064
+4  rs1003081 -0.0025580026 0.0001438800  0.015351719 0.0001695287  0.017613143
+5 rs10036136 -0.0051647561 0.0001511676 -0.006109080 0.0001816326 -0.006027097
+6 rs10050688  0.0142942677 0.0001638802  0.009708311 0.0001941920 -0.001300271
+       int.var X.CHROM       POS REF ALT A1 TEST OBS_CT        BETA         SE
+1 8.010906e-05       4 188961336   A   G  G  ADD 257429  0.00197690 0.00302184
+2 1.230968e-04       4  44480783   T   C  C  ADD 257429  0.01168170 0.00377308
+3 8.079359e-05      17   5283252   G   A  A  ADD 257429 -0.01851870 0.00302595
+4 7.070126e-05      11 118913993   T   C  C  ADD 257429 -0.01212200 0.00279283
+5 7.170416e-05       5  32869686   A   G  G  ADD 257429 -0.00457835 0.00282191
+6 7.967414e-05       5 116657963   A   G  G  ADD 257429  0.00613477 0.00297863
+     T_STAT           P
+1  0.654206 5.12980e-01
+2  3.096060 1.96131e-03
+3 -6.119940 9.37432e-10
+4 -4.340420 1.42268e-05
+5 -1.622430 1.04712e-01
+6  2.059590 3.94385e-02</code></pre>
 <pre class="r"><code># check estimate scale
-par(mfrow = c(1,2))
+par(mfrow = c(1,3))
 plot(dat$BETA, dat$cali, xlab = &quot;external gwas&quot;, ylab = &quot;calibrated estimator&quot;)
 abline(a = 0, b = 1, col = &quot;red&quot;)
-plot(dat$BETA, dat$raw, xlab = &quot;external gwas&quot;, ylab = &quot;uncalibrated estimator&quot;)
+plot(dat$cali, dat$raw, xlab = &quot;calibrated estimator&quot;, ylab = &quot;uncalibrated estimator&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+plot(dat$BETA, dat$int, xlab = &quot;external gwas&quot;, ylab = &quot;internal gwas&quot;)
 abline(a = 0, b = -1, col = &quot;red&quot;)</code></pre>
 <p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-3-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
@@ -849,30 +907,16 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
-pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
-pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
-
-sum(pval.ext &lt; 1e-8)</code></pre>
-<pre><code>[1] 78</code></pre>
-<pre class="r"><code>sum(pval.cali &lt; 1e-3)</code></pre>
-<pre><code>[1] 3</code></pre>
-<pre class="r"><code>sum(pval.uncali &lt; 1e-3)</code></pre>
-<pre><code>[1] 16</code></pre>
-<div id="calibration-result" class="section level4">
-<h4>Calibration result</h4>
-<pre class="r"><code>par(mfrow = c(1, 3))
-sumstat = data.frame(sumstat)
-boxplot(dat[dat$cali.var &lt; 0.0005, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
-boxplot(dat[dat$cali.var &gt; 0.0005, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
-hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(1,2))
+hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
+hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
+Past versions of unnamed-chunk-4-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
+<div id="fig-unnamed-chunk-4-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -891,7 +935,132 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e37ddd218e40eae6e19e3e518ffe33d9c1d11835/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-5-1.png" target="_blank">e37ddd2</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e37ddd218e40eae6e19e3e518ffe33d9c1d11835/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">e37ddd2</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9c87c03907f8bb0a3d272cd6619980321312c446/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">9c87c03</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ca6ada663f10a17680b85915b7997af15ac9510d/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">ca6ada6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ebc2aa69d20d86ef0f8fcb5b60826c60040afa6d/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-4-1.png" target="_blank">ebc2aa6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>res1 &lt;- t.test(dat$cali, dat$raw)
+res2&lt;- t.test(dat$int, dat$BETA)
+res1</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$cali and dat$raw
+t = -1.3595, df = 1502.7, p-value = 0.1742
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0032046973  0.0005809555
+sample estimates:
+   mean of x    mean of y 
+0.0002613758 0.0015732466 </code></pre>
+<pre class="r"><code>res2</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$int and dat$BETA
+t = 2.9004, df = 1488.3, p-value = 0.003782
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.0006963528 0.0036062569
+sample estimates:
+    mean of x     mean of y 
+ 0.0014402762 -0.0007110287 </code></pre>
+<pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext &lt; 1e-8)</code></pre>
+<pre><code>[1] 78</code></pre>
+<pre class="r"><code>sum(pval.cali &lt; 1e-3)</code></pre>
+<pre><code>[1] 3</code></pre>
+<pre class="r"><code>sum(pval.uncali &lt; 1e-3)</code></pre>
+<pre><code>[1] 16</code></pre>
+<div id="calibration-result" class="section level4">
+<h4>Calibration result</h4>
+<pre class="r"><code>par(mfrow = c(1, 3))
+sumstat = data.frame(sumstat)
+boxplot(dat[dat$cali.var &lt; 0.0005, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
+boxplot(dat[dat$cali.var &gt; 0.0005, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
+hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-7-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-7-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ca6ada663f10a17680b85915b7997af15ac9510d/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-7-1.png" target="_blank">ca6ada6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ebc2aa69d20d86ef0f8fcb5b60826c60040afa6d/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-7-1.png" target="_blank">ebc2aa6</a>
 </td>
 <td>
 yunqiyang0215
@@ -908,35 +1077,127 @@ yunqiyang0215
 </div>
 <div id="dbp" class="section level3">
 <h3>2. DBP</h3>
-<pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/sib_result/sib_calibration_dbp.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_dbp.linear&quot;, sep = &quot;\t&quot;)</code></pre>
+<pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_dbp.rds&quot;)
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear&quot;, sep = &quot;\t&quot;)</code></pre>
 <pre class="r"><code>sumstat = data.frame(sumstat)
 sumstat$ID = rownames(sumstat)
-dat = merge(sumstat, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = FALSE)</code></pre>
+dat = merge(sumstat, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = FALSE)
+head(dat)</code></pre>
+<pre><code>          ID         cali     cali.var          raw      raw.var           int
+1 rs10004698  0.013327697 0.0002200848  0.020132330 0.0002730751  1.091803e-02
+2 rs10009336 -0.015609819 0.0003514771 -0.030320642 0.0004356758 -1.457450e-02
+3  rs1000940  0.030518062 0.0002175631  0.030824529 0.0002680676 -6.789493e-05
+4  rs1003081  0.006541574 0.0001766007  0.010685809 0.0002199603  1.092934e-02
+5 rs10036136 -0.018420148 0.0001924148 -0.007429358 0.0002381727 -1.557236e-03
+6 rs10050688 -0.015076464 0.0001978316 -0.010764056 0.0002475944  7.617037e-03
+       int.var X.CHROM       POS REF ALT A1 TEST OBS_CT        BETA         SE
+1 8.514264e-05       4 188961336   A   G  G  ADD 257429  0.00197690 0.00302184
+2 1.318185e-04       4  44480783   T   C  C  ADD 257429  0.01168170 0.00377308
+3 8.503697e-05      17   5283252   G   A  A  ADD 257429 -0.01851870 0.00302595
+4 7.102066e-05      11 118913993   T   C  C  ADD 257429 -0.01212200 0.00279283
+5 7.587676e-05       5  32869686   A   G  G  ADD 257429 -0.00457835 0.00282191
+6 8.086405e-05       5 116657963   A   G  G  ADD 257429  0.00613477 0.00297863
+     T_STAT           P
+1  0.654206 5.12980e-01
+2  3.096060 1.96131e-03
+3 -6.119940 9.37432e-10
+4 -4.340420 1.42268e-05
+5 -1.622430 1.04712e-01
+6  2.059590 3.94385e-02</code></pre>
 <pre class="r"><code># check estimate scale
-par(mfrow = c(1,2))
+par(mfrow = c(1,3))
 plot(dat$BETA, dat$cali, xlab = &quot;external gwas&quot;, ylab = &quot;calibrated estimator&quot;)
 abline(a = 0, b = 1, col = &quot;red&quot;)
-plot(dat$BETA, dat$raw, xlab = &quot;external gwas&quot;, ylab = &quot;uncalibrated estimator&quot;)
+plot(dat$cali, dat$raw, xlab = &quot;calibrated estimator&quot;, ylab = &quot;uncalibrated estimator&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;)
+plot(dat$BETA, dat$int, xlab = &quot;external gwas&quot;, ylab = &quot;internal gwas&quot;)
 abline(a = 0, b = -1, col = &quot;red&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-8-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/5190b8d3e1fba74d79c987df2f157558bf56972c/docs/figure/ukb_trait_calibration.Rmd/unnamed-chunk-10-1.png" target="_blank">5190b8d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-08
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>par(mfrow = c(1,2))
+hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
+hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
+<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-11-1.png" width="960" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>res1 &lt;- t.test(dat$cali, dat$raw)
+res2&lt;- t.test(dat$int, dat$BETA)
+res1</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$cali and dat$raw
+t = -1.0104, df = 1552.5, p-value = 0.3124
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ -0.0028050352  0.0008976364
+sample estimates:
+   mean of x    mean of y 
+0.0008229704 0.0017766698 </code></pre>
+<pre class="r"><code>res2</code></pre>
+<pre><code>
+    Welch Two Sample t-test
+
+data:  dat$int and dat$BETA
+t = 2.4478, df = 1566, p-value = 0.01448
+alternative hypothesis: true difference in means is not equal to 0
+95 percent confidence interval:
+ 0.0003167067 0.0028711993
+sample estimates:
+    mean of x     mean of y 
+ 0.0008829243 -0.0007110287 </code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
 
 sum(pval.ext &lt; 1e-8)</code></pre>
-<pre><code>[1] 4</code></pre>
+<pre><code>[1] 78</code></pre>
 <pre class="r"><code>sum(pval.cali &lt; 1e-3)</code></pre>
 <pre><code>[1] 3</code></pre>
 <pre class="r"><code>sum(pval.uncali &lt; 1e-3)</code></pre>
 <pre><code>[1] 3</code></pre>
 <div id="calibration-result-1" class="section level4">
 <h4>Calibration result</h4>
-<pre class="r"><code>par(mfrow = c(1, 2))
+<pre class="r"><code>par(mfrow = c(1, 3))
 sumstat = data.frame(sumstat)
-boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
+boxplot(dat[dat$cali.var &lt; 0.0005, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
+boxplot(dat[dat$cali.var &gt; 0.0005, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
 hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_trait_calibration.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
