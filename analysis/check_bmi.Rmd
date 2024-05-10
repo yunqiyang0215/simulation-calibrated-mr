@@ -47,7 +47,7 @@ abline(a = 0, b = -1, col = "red")
 dat2 = merge(ext, ext2, by.x = "ID", by.y = "rsid")
 ```
 
-```{r fig.width=8, fig.height = 8}
+```{r }
 plot(dat2$BETA, dat2$beta, xlab = "PLINK ukb (I computed)", ylab = "ukb sumstat")
 abline(a = 0, b = -1, col = "red")
 ```
