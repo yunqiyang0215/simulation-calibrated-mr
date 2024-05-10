@@ -31,13 +31,24 @@ dat = merge(int.all2, ext, by.x = "ID", by.y = "ID", all = FALSE)
 # 4. plink external ukb
 ```
 
-```{r}
-par(mfrow = c(1,3))
+```{r fig.width=8, fig.height = 8}
+par(mfrow = c(2,2))
 
 plot(dat$int.x,  dat$int.y, xlab = "linreg on independent sibling", ylab = "linreg on random sample")
 plot(dat$int.x, dat$BETA.x, xlab = "linreg on independent sibling", ylab = "plink linreg on random sample")
 plot(dat$int.y, dat$BETA.x, xlab = "linreg on random sample", ylab = "plink linreg on random sample")
 abline(a = 0, b = -1, col = "red")
+plot(dat$BETA.y, dat$int.x, xlab = "plink ukb", ylab = "linreg on independent sibling")
+abline(a = 0, b = -1, col = "red")
 
+```
+
+```{r}
+dat2 = merge(ext, ext2, by.x = "ID", by.y = "rsid")
+```
+
+```{r fig.width=8, fig.height = 8}
+plot(dat2$BETA, dat2$beta, xlab = "PLINK ukb (I computed)", ylab = "ukb sumstat")
+abline(a = 0, b = -1, col = "red")
 ```
 
