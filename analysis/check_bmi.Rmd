@@ -1,0 +1,43 @@
+---
+title: "check bmi result"
+author: "Yunqi Yang"
+date: "5/9/2024"
+output: html_document
+---
+
+```{r}
+
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear", sep = "\t")
+int.rand.plink = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/bmi.linear", sep = "\t")
+int.rand.linreg = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_random_linreg.rds")
+int = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_sib_linreg.rds")
+ext2 = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/external_gwas/bmi_21001_exp_bmi.csv")
+```
+
+```{r}
+int = data.frame(int)
+int$ID = rownames(int)
+int.rand.linreg = data.frame(int.rand.linreg)
+int.rand.linreg$ID = rownames(int.rand.linreg)
+int.rand.linreg$ID = gsub("_G|_T|_A|_C", "", int.rand.linreg$ID)
+int.all = merge(int, int.rand.linreg, by = "ID", all = FALSE)
+int.all2 = merge(int.all, int.rand.plink, by = "ID", all = FALSE)
+
+dat = merge(int.all2, ext, by.x = "ID", by.y = "ID", all = FALSE)
+# data sequence
+# 1. linreg on independent sibling
+# 2. linreg on random sample
+# 3. plink linreg on random sample
+# 4. plink external ukb
+```
+
+```{r}
+par(mfrow = c(1,3))
+
+plot(dat$int.x,  dat$int.y, xlab = "linreg on independent sibling", ylab = "linreg on random sample")
+plot(dat$int.x, dat$BETA.x, xlab = "linreg on independent sibling", ylab = "plink linreg on random sample")
+plot(dat$int.y, dat$BETA.x, xlab = "linreg on random sample", ylab = "plink linreg on random sample")
+abline(a = 0, b = -1, col = "red")
+
+```
+
