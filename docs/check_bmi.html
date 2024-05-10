@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea63d8f8dc6ba82b1835c4afbb952f49b9503c5fctargetblanka63d8f8a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a63d8f8dc6ba82b1835c4afbb952f49b9503c5fc" target="_blank">a63d8f8</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreed0423776a8bceb5163e7e671a925c6c87b22682atargetblankd042377a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/d0423776a8bceb5163e7e671a925c6c87b22682a" target="_blank">d042377</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreea63d8f8dc6ba82b1835c4afbb952f49b9503c5fctargetblanka63d8f8a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreed0423776a8bceb5163e7e671a925c6c87b22682atargetblankd042377a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/a63d8f8dc6ba82b1835c4afbb952f49b9503c5fc" target="_blank">a63d8f8</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/d0423776a8bceb5163e7e671a925c6c87b22682a" target="_blank">d042377</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -543,6 +543,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d0423776a8bceb5163e7e671a925c6c87b22682a/analysis/check_bmi.Rmd" target="_blank">d042377</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-10
+</td>
+<td>
+wflow_publish("analysis/check_bmi.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/2e2bacab0f39a328a318d1e8f3168befe18ce072/docs/check_bmi.html" target="_blank">2e2baca</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a63d8f8dc6ba82b1835c4afbb952f49b9503c5fc/analysis/check_bmi.Rmd" target="_blank">a63d8f8</a>
 </td>
 <td>
@@ -581,13 +615,56 @@ dat = merge(int.all2, ext, by.x = &quot;ID&quot;, by.y = &quot;ID&quot;, all = F
 # 2. linreg on random sample
 # 3. plink linreg on random sample
 # 4. plink external ukb</code></pre>
-<pre class="r"><code>par(mfrow = c(1,3))
+<pre class="r"><code>par(mfrow = c(2,2))
 
 plot(dat$int.x,  dat$int.y, xlab = &quot;linreg on independent sibling&quot;, ylab = &quot;linreg on random sample&quot;)
 plot(dat$int.x, dat$BETA.x, xlab = &quot;linreg on independent sibling&quot;, ylab = &quot;plink linreg on random sample&quot;)
 plot(dat$int.y, dat$BETA.x, xlab = &quot;linreg on random sample&quot;, ylab = &quot;plink linreg on random sample&quot;)
+abline(a = 0, b = -1, col = &quot;red&quot;)
+plot(dat$BETA.y, dat$int.x, xlab = &quot;plink ukb&quot;, ylab = &quot;linreg on independent sibling&quot;)
 abline(a = 0, b = -1, col = &quot;red&quot;)</code></pre>
-<p><img src="figure/check_bmi.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/check_bmi.Rmd/unnamed-chunk-3-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
+Past versions of unnamed-chunk-3-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2e2bacab0f39a328a318d1e8f3168befe18ce072/docs/figure/check_bmi.Rmd/unnamed-chunk-3-1.png" target="_blank">2e2baca</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-10
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>dat2 = merge(ext, ext2, by.x = &quot;ID&quot;, by.y = &quot;rsid&quot;)</code></pre>
+<pre class="r"><code>plot(dat2$BETA, dat2$beta, xlab = &quot;PLINK ukb (I computed)&quot;, ylab = &quot;ukb sumstat&quot;)
+abline(a = 0, b = -1, col = &quot;red&quot;)</code></pre>
+<p><img src="figure/check_bmi.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
