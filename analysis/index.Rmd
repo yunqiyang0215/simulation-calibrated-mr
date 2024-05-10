@@ -72,3 +72,5 @@ UKB data analysis:
 
 + [UKB trait calibration result sibling](ukb_trait_calibration_sib.html)
 
++ [genotype convert issue](check_bmi.html)
+
