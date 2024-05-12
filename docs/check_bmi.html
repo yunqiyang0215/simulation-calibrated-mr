@@ -12,7 +12,7 @@
 <meta name="author" content="Yunqi Yang" />
 
 
-<title>check bmi result</title>
+<title>Allele flip issue and check for association</title>
 
 <script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -357,7 +357,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">check bmi result</h1>
+<h1 class="title toc-ignore">Allele flip issue and check for association</h1>
 <h4 class="author">Yunqi Yang</h4>
 <h4 class="date">5/9/2024</h4>
 
@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-10
+<strong>Last updated:</strong> 2024-05-12
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb975d402a9f663c680bab09cd7d8c0cc04e807f1targetblankb975d40a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b975d402a9f663c680bab09cd7d8c0cc04e807f1" target="_blank">b975d40</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreefd2a59dd179a65ea6b3b5ef945eb61ffdd63d340targetblankfd2a59da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/fd2a59dd179a65ea6b3b5ef945eb61ffdd63d340" target="_blank">fd2a59d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb975d402a9f663c680bab09cd7d8c0cc04e807f1targetblankb975d40a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreefd2a59dd179a65ea6b3b5ef945eb61ffdd63d340targetblankfd2a59da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b975d402a9f663c680bab09cd7d8c0cc04e807f1" target="_blank">b975d40</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/fd2a59dd179a65ea6b3b5ef945eb61ffdd63d340" target="_blank">fd2a59d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -538,6 +538,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/fd2a59dd179a65ea6b3b5ef945eb61ffdd63d340/analysis/check_bmi.Rmd" target="_blank">fd2a59d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-12
+</td>
+<td>
+wflow_publish("analysis/check_bmi.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/c1a55796f6ceb1896380a0af8ecacb4f3f4e44b6/docs/check_bmi.html" target="_blank">c1a5579</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-10
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -632,11 +666,14 @@ wflow_publish("analysis/check_bmi.Rmd")
 </div>
 <pre class="r"><code>ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear&quot;, sep = &quot;\t&quot;)
 int.rand.plink = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/bmi.linear&quot;, sep = &quot;\t&quot;)
-int.rand.linreg = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_random_linreg.rds&quot;)
+dat.rand = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_random_linreg.rds&quot;)
 int = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_sib_linreg.rds&quot;)
 ext2 = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/external_gwas/bmi_21001_exp_bmi.csv&quot;)</code></pre>
+<div id="sibling-data" class="section level3">
+<h3>1. Sibling data</h3>
 <pre class="r"><code>int = data.frame(int)
 int$ID = rownames(int)
+int.rand.linreg = dat.rand[[1]]
 int.rand.linreg = data.frame(int.rand.linreg)
 int.rand.linreg$ID = rownames(int.rand.linreg)
 int.rand.linreg$ID = gsub(&quot;_G|_T|_A|_C&quot;, &quot;&quot;, int.rand.linreg$ID)
@@ -706,9 +743,21 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>dat2 = merge(ext, ext2, by.x = &quot;ID&quot;, by.y = &quot;rsid&quot;)</code></pre>
-<pre class="r"><code>plot(dat2$BETA, dat2$beta, xlab = &quot;PLINK ukb (I computed)&quot;, ylab = &quot;ukb sumstat&quot;)
-abline(a = 0, b = -1, col = &quot;red&quot;)</code></pre>
+</div>
+<div id="trio-data-sign-flip-issue-corrected" class="section level3">
+<h3>2. Trio data (sign flip issue corrected)</h3>
+<pre class="r"><code>int.rand.linreg.sub = dat.rand[[2]]
+int.rand.linreg.sub = data.frame(int.rand.linreg.sub)
+
+var_names = rownames(int.rand.linreg.sub)
+ss = strsplit(var_names, split = &quot;_&quot;)
+snp_list = sapply(ss, function(x) x[1])
+alleles = sapply(ss, function(x) x[2])
+int.rand.linreg.sub$variant = snp_list
+int.rand.linreg.sub$allele = alleles</code></pre>
+<pre class="r"><code>dat = merge(int.rand.linreg.sub, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+dat$BETA = ifelse(dat$A1 == dat$allele, dat$BETA, -dat$BETA)
+plot(dat$BETA, dat$int, xlab = &quot;external gwas&quot;, ylab = &quot;gwas on 1k random individuals&quot;)</code></pre>
 <p><img src="figure/check_bmi.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
@@ -734,6 +783,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c1a55796f6ceb1896380a0af8ecacb4f3f4e44b6/docs/figure/check_bmi.Rmd/unnamed-chunk-5-1.png" target="_blank">c1a5579</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-10
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/75b13f7c47bb75010a97511f96bc028f8cba1624/docs/figure/check_bmi.Rmd/unnamed-chunk-5-1.png" target="_blank">75b13f7</a>
 </td>
 <td>
@@ -747,6 +807,28 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
+<pre><code>[1] 0.2147248</code></pre>
+<pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
+summary(fit)</code></pre>
+<pre><code>
+Call:
+lm(formula = dat$int ~ dat$BETA)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.32051 -0.03669 -0.00235  0.03651  0.30136 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 0.001461   0.002093   0.698    0.485    
+dat$BETA    0.996928   0.162154   6.148 1.25e-09 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.05853 on 782 degrees of freedom
+Multiple R-squared:  0.04611,   Adjusted R-squared:  0.04489 
+F-statistic:  37.8 on 1 and 782 DF,  p-value: 1.25e-09</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -783,6 +865,7 @@ loaded via a namespace (and not attached):
 [29] fs_1.5.0         cachem_1.0.6     glue_1.4.2       evaluate_0.14   
 [33] rmarkdown_2.11   stringi_1.7.5    bslib_0.4.1      compiler_4.1.1  
 [37] pillar_1.9.0     jsonlite_1.7.2   httpuv_1.6.3     pkgconfig_2.0.3 </code></pre>
+</div>
 </div>
 
 
