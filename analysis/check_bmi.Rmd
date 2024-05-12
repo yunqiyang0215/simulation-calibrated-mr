@@ -1,22 +1,24 @@
 ---
-title: "check bmi result"
+title: "Allele flip issue and check for association"
 author: "Yunqi Yang"
 date: "5/9/2024"
 output: html_document
 ---
 
 ```{r}
-
 ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear", sep = "\t")
 int.rand.plink = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/bmi.linear", sep = "\t")
-int.rand.linreg = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_random_linreg.rds")
+dat.rand = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_random_linreg.rds")
 int = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_sib_linreg.rds")
 ext2 = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/external_gwas/bmi_21001_exp_bmi.csv")
 ```
 
+### 1. Sibling data 
+
 ```{r}
 int = data.frame(int)
 int$ID = rownames(int)
+int.rand.linreg = dat.rand[[1]]
 int.rand.linreg = data.frame(int.rand.linreg)
 int.rand.linreg$ID = rownames(int.rand.linreg)
 int.rand.linreg$ID = gsub("_G|_T|_A|_C", "", int.rand.linreg$ID)
@@ -43,12 +45,32 @@ abline(a = 0, b = -1, col = "red")
 
 ```
 
+
+### 2. Trio data (sign flip issue corrected)
+
 ```{r}
-dat2 = merge(ext, ext2, by.x = "ID", by.y = "rsid")
+int.rand.linreg.sub = dat.rand[[2]]
+int.rand.linreg.sub = data.frame(int.rand.linreg.sub)
+
+var_names = rownames(int.rand.linreg.sub)
+ss = strsplit(var_names, split = "_")
+snp_list = sapply(ss, function(x) x[1])
+alleles = sapply(ss, function(x) x[2])
+int.rand.linreg.sub$variant = snp_list
+int.rand.linreg.sub$allele = alleles
 ```
 
-```{r }
-plot(dat2$BETA, dat2$beta, xlab = "PLINK ukb (I computed)", ylab = "ukb sumstat")
-abline(a = 0, b = -1, col = "red")
+
+```{r}
+dat = merge(int.rand.linreg.sub, ext, by.x = "variant", by.y = "ID", all = FALSE)
+dat$BETA = ifelse(dat$A1 == dat$allele, dat$BETA, -dat$BETA)
+plot(dat$BETA, dat$int, xlab = "external gwas", ylab = "gwas on 1k random individuals")
 ```
+
+```{r}
+cor(dat$BETA, dat$int)
+fit = lm(dat$int ~ dat$BETA)
+summary(fit)
+```
+
 
