@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9ba2033224ac731e77179357419cfdeb3cd14a46targetblank9ba2033a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9ba2033224ac731e77179357419cfdeb3cd14a46" target="_blank">9ba2033</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreecd4fb1608eafb227b50f1548747e90e389c4056atargetblankcd4fb16a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/cd4fb1608eafb227b50f1548747e90e389c4056a" target="_blank">cd4fb16</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9ba2033224ac731e77179357419cfdeb3cd14a46targetblank9ba2033a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreecd4fb1608eafb227b50f1548747e90e389c4056atargetblankcd4fb16a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9ba2033224ac731e77179357419cfdeb3cd14a46" target="_blank">9ba2033</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/cd4fb1608eafb227b50f1548747e90e389c4056a" target="_blank">cd4fb16</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -499,6 +499,7 @@ Ignored files:
 
 Unstaged changes:
     Deleted:    analysis/bmi_t2d.Rmd
+    Modified:   analysis/check_bmi.Rmd
     Deleted:    analysis/ukb_trait_calibration.Rmd
 
 </code></pre>
@@ -538,6 +539,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/cd4fb1608eafb227b50f1548747e90e389c4056a/analysis/ukb_trait_calibration_trio.Rmd" target="_blank">cd4fb16</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-12
+</td>
+<td>
+wflow_publish("analysis/ukb_trait_calibration_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/721bdc76c948513281d4d8fc6e1a8298b1065c48/docs/ukb_trait_calibration_trio.html" target="_blank">721bdc7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -640,6 +675,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/721bdc76c948513281d4d8fc6e1a8298b1065c48/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-3-1.png" target="_blank">721bdc7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-12
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d80436f2aaa960f1c47398d7f9b5a071f8c5d893/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-3-1.png" target="_blank">d80436f</a>
 </td>
 <td>
@@ -657,6 +703,26 @@ yunqiyang0215
 <pre><code>[1] 0.679289</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
 <pre><code>[1] 0.06603614</code></pre>
+<pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
+summary(fit)</code></pre>
+<pre><code>
+Call:
+lm(formula = dat$int ~ dat$BETA)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.30917 -0.05457 -0.00094  0.04813  0.53780 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept) 0.0003968  0.0030210   0.131   0.8955  
+dat$BETA    0.4330476  0.2339923   1.851   0.0646 .
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.08446 on 782 degrees of freedom
+Multiple R-squared:  0.004361,  Adjusted R-squared:  0.003088 
+F-statistic: 3.425 on 1 and 782 DF,  p-value: 0.06459</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -672,7 +738,7 @@ sum(pval.ext &lt; 1e-8)</code></pre>
 <pre class="r"><code>par(mfrow = c(1, 2))
 boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
 hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-5-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="dbp" class="section level3">
@@ -694,11 +760,29 @@ abline(a = 0, b = 1, col = &quot;red&quot;)
 
 hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
 hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-8-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-9-1.png" width="768" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
 <pre><code>[1] 0.6874159</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
 <pre><code>[1] 0.03365522</code></pre>
+<pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
+summary(fit)</code></pre>
+<pre><code>
+Call:
+lm(formula = dat$int ~ dat$BETA)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.40237 -0.05710  0.00811  0.05297  0.75733 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept) -0.005204   0.003292  -1.581    0.114
+dat$BETA     0.500095   0.531068   0.942    0.347
+
+Residual standard error: 0.09203 on 782 degrees of freedom
+Multiple R-squared:  0.001133,  Adjusted R-squared:  -0.0001447 
+F-statistic: 0.8868 on 1 and 782 DF,  p-value: 0.3466</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -714,44 +798,7 @@ sum(pval.ext &lt; 1e-8)</code></pre>
 <pre class="r"><code>par(mfrow = c(1, 2))
 boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
 hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d80436f2aaa960f1c47398d7f9b5a071f8c5d893/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-10-1.png" target="_blank">d80436f</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-09
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-12-1.png" width="960" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="sbp" class="section level3">
@@ -773,11 +820,68 @@ abline(a = 0, b = 1, col = &quot;red&quot;)
 
 hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
 hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-13-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-15-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-15-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/721bdc76c948513281d4d8fc6e1a8298b1065c48/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-15-1.png" target="_blank">721bdc7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
 <pre><code>[1] 0.7374956</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
 <pre><code>[1] 0.06481681</code></pre>
+<pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
+summary(fit)</code></pre>
+<pre><code>
+Call:
+lm(formula = dat$int ~ dat$BETA)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.48972 -0.04890  0.00302  0.04741  0.50642 
+
+Coefficients:
+             Estimate Std. Error t value Pr(&gt;|t|)  
+(Intercept) -0.002981   0.003011  -0.990   0.3225  
+dat$BETA     1.004492   0.553021   1.816   0.0697 .
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+
+Residual standard error: 0.08432 on 782 degrees of freedom
+Multiple R-squared:  0.004201,  Adjusted R-squared:  0.002928 
+F-statistic: 3.299 on 1 and 782 DF,  p-value: 0.0697</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -793,7 +897,7 @@ sum(pval.ext &lt; 1e-8)</code></pre>
 <pre class="r"><code>par(mfrow = c(1, 2))
 boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;variance&quot;)
 hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = &quot;variance reduction&quot;, xlab = &quot;&quot;)</code></pre>
-<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-15-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
