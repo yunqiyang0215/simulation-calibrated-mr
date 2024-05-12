@@ -35,6 +35,11 @@ cor(dat$cali, dat$raw)
 cor(dat$BETA, dat$int)
 ```
 
+```{r}
+fit = lm(dat$int ~ dat$BETA)
+summary(fit)
+```
+
 ```{r }
 pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
@@ -90,6 +95,12 @@ cor(dat$cali, dat$raw)
 cor(dat$BETA, dat$int)
 ```
 
+
+```{r}
+fit = lm(dat$int ~ dat$BETA)
+summary(fit)
+```
+
 ```{r }
 pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
@@ -137,6 +148,11 @@ hist(dat$cali - dat$raw, main = "Differece: calibrated estimator - uncalibrated 
 hist(dat$int - dat$BETA, main = "Difference: internal gwas - external gwas", xlab = "")
 cor(dat$cali, dat$raw)
 cor(dat$BETA, dat$int)
+```
+
+```{r}
+fit = lm(dat$int ~ dat$BETA)
+summary(fit)
 ```
 
 ```{r }
