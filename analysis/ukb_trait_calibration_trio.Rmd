@@ -59,7 +59,9 @@ vr = dat$cali.var/dat$raw.var
 hist(vr, main = "variance ratio", xlab = "")
 ```
 
-
+```{r}
+dat[vr < 0.2, c("variant", "allele.test", "cali.var", "raw.var")]
+```
 
 
 
@@ -96,7 +98,6 @@ cor(dat$cali, dat$raw)
 cor(dat$BETA, dat$int)
 ```
 
-
 ```{r}
 fit = lm(dat$int ~ dat$BETA)
 summary(fit)
@@ -119,6 +120,10 @@ par(mfrow = c(1, 2))
 boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
 vr = dat$cali.var/dat$raw.var
 hist(vr, main = "variance ratio", xlab = "")
+```
+
+```{r}
+dat[vr < 0.2, c("variant", "allele.test", "cali.var", "raw.var")]
 ```
 
 
@@ -176,13 +181,9 @@ vr = dat$cali.var/dat$raw.var
 hist(vr, main = "variance ratio", xlab = "")
 ```
 
-
-
-
-
-
-
-
+```{r}
+dat[vr < 0.2, c("variant", "allele.test", "cali.var", "raw.var")]
+```
 
 
 ### 4. diabetes
@@ -230,6 +231,7 @@ sum(pval.cali < 1e-3)
 sum(pval.uncali < 1e-3)
 ```
 
+
 #### Calibration result
 
 ```{r fig.width=10, fig.height=6}
@@ -239,6 +241,13 @@ vr = dat$cali.var/dat$raw.var
 hist(vr, main = "variance ratio", xlab = "")
 ```
 
+```{r}
+dat[vr < 0.2, c("variant", "allele.test", "cali.var", "raw.var")]
+```
+
+```{r}
+dat[vr > 0.95, c("variant", "allele.test", "cali.var", "raw.var")]
+```
 
 ### 5. Education years  
 
@@ -294,7 +303,9 @@ vr = dat$cali.var/dat$raw.var
 hist(vr, main = "variance ratio", xlab = "")
 ```
 
-
+```{r}
+dat[vr < 0.2, c("variant", "allele.test", "cali.var", "raw.var")]
+```
 
 
 
