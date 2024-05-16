@@ -55,7 +55,8 @@ sum(pval.uncali < 1e-3)
 ```{r fig.width=10, fig.height=6}
 par(mfrow = c(1, 2))
 boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
-hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab = "")
+vr = dat$cali.var/dat$raw.var
+hist(vr, main = "variance ratio", xlab = "")
 ```
 
 
@@ -116,7 +117,8 @@ sum(pval.uncali < 1e-3)
 ```{r fig.width=10, fig.height=6}
 par(mfrow = c(1, 2))
 boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
-hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab = "")
+vr = dat$cali.var/dat$raw.var
+hist(vr, main = "variance ratio", xlab = "")
 ```
 
 
@@ -170,7 +172,126 @@ sum(pval.uncali < 1e-3)
 ```{r fig.width=10, fig.height=6}
 par(mfrow = c(1, 2))
 boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
-hist((dat$raw.var - dat$cali.var)/dat$raw.var, main = "variance reduction", xlab = "")
+vr = dat$cali.var/dat$raw.var
+hist(vr, main = "variance ratio", xlab = "")
+```
+
+
+
+
+
+
+
+
+
+
+### 4. diabetes
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_diabetes.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear", sep = "\t")
+```
+
+```{r}
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat$BETA = ifelse(dat$allele.test == dat$A1, dat$BETA, -dat$BETA)
+```
+
+```{r fig.width=8, fig.height=8}
+# check estimate scale
+par(mfrow = c(2,2))
+
+plot(dat$cali, dat$raw, xlab = "calibrated estimator", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$BETA, dat$int, xlab = "external gwas", ylab = "internal gwas")
+abline(a = 0, b = 1, col = "red")
+
+hist(dat$cali - dat$raw, main = "Differece: calibrated estimator - uncalibrated estimator", xlab = "")
+hist(dat$int - dat$BETA, main = "Difference: internal gwas - external gwas", xlab = "")
+cor(dat$cali, dat$raw)
+cor(dat$BETA, dat$int)
+```
+
+```{r}
+fit = lm(dat$int ~ dat$BETA)
+summary(fit)
+```
+
+```{r }
+pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+```
+
+#### Calibration result
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1, 2))
+boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
+vr = dat$cali.var/dat$raw.var
+hist(vr, main = "variance ratio", xlab = "")
+```
+
+
+### 5. Education years  
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_education_yrs.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear", sep = "\t")
+```
+
+```{r}
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat$BETA = ifelse(dat$allele.test == dat$A1, dat$BETA, -dat$BETA)
+```
+
+```{r fig.width=8, fig.height=8}
+# check estimate scale
+par(mfrow = c(2,2))
+
+plot(dat$cali, dat$raw, xlab = "calibrated estimator", ylab = "uncalibrated estimator")
+abline(a = 0, b = 1, col = "red")
+plot(dat$BETA, dat$int, xlab = "external gwas", ylab = "internal gwas")
+abline(a = 0, b = 1, col = "red")
+
+hist(dat$cali - dat$raw, main = "Differece: calibrated estimator - uncalibrated estimator", xlab = "")
+hist(dat$int - dat$BETA, main = "Difference: internal gwas - external gwas", xlab = "")
+cor(dat$cali, dat$raw)
+cor(dat$BETA, dat$int)
+```
+
+```{r}
+fit = lm(dat$int ~ dat$BETA)
+summary(fit)
+```
+
+```{r }
+pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
+
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+```
+
+#### Calibration result
+
+```{r fig.width=10, fig.height=6}
+par(mfrow = c(1, 2))
+boxplot(dat[, c("cali.var", "raw.var")], ylab = "variance")
+vr = dat$cali.var/dat$raw.var
+hist(vr, main = "variance ratio", xlab = "")
 ```
 
 
