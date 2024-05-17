@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-16
+<strong>Last updated:</strong> 2024-05-17
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree1f4f99c49dca979b50bcc33e04bb52b7c46c2656targetblank1f4f99ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeda8c9fd616f9414d89d8e1bce8080fd098452674targetblankda8c9fda">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/1f4f99c49dca979b50bcc33e04bb52b7c46c2656" target="_blank">1f4f99c</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/da8c9fd616f9414d89d8e1bce8080fd098452674" target="_blank">da8c9fd</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree1f4f99c49dca979b50bcc33e04bb52b7c46c2656targetblank1f4f99ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeda8c9fd616f9414d89d8e1bce8080fd098452674targetblankda8c9fda"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/1f4f99c49dca979b50bcc33e04bb52b7c46c2656" target="_blank">1f4f99c</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/da8c9fd616f9414d89d8e1bce8080fd098452674" target="_blank">da8c9fd</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -611,6 +611,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/da8c9fd616f9414d89d8e1bce8080fd098452674/analysis/ukb_mr_sibling.Rmd" target="_blank">da8c9fd</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-17
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_sibling.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/68d0f83e8c7482bf418cf658957b7de05bff63e1/docs/ukb_mr_sibling.html" target="_blank">68d0f83</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -700,6 +734,9 @@ sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat2 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
 dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)</code></pre>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
+dat1 = dat1[indx, ]
+dat2 = dat2[indx, ]</code></pre>
 <div id="ivw" class="section level4">
 <h4>1. IVW</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -742,8 +779,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.16949708       0.13673125    0.17852136    0.21048397
-std       0.03157943       0.03257973    0.02421017    0.01534621</code></pre>
+point.est 0.25377357       0.24469011    0.23942755    0.22720776
+std       0.07634288       0.07942329    0.05106519    0.04122251</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -753,44 +790,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
-Past versions of unnamed-chunk-7-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-7-1.png" target="_blank">7a87cfe</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mr.raps" class="section level4">
 <h4>2. mr.raps</h4>
@@ -823,8 +823,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  0.4601809       0.37911096    0.33615858   0.258866547
-std        0.0702789       0.08773447    0.03819816   0.009706462</code></pre>
+point.est 0.39477427       0.38226988    0.29846700     0.2617863
+std       0.07600144       0.09675482    0.04696843     0.0129411</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -834,44 +834,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-10-1.png" target="_blank">7a87cfe</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="bmi-on-education-yrs" class="section level3">
@@ -894,6 +857,9 @@ sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat2 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
 dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)</code></pre>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
+dat1 = dat1[indx, ]
+dat2 = dat2[indx, ]</code></pre>
 <div id="ivw-1" class="section level4">
 <h4>1. IVW</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -936,8 +902,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
-point.est -0.04088706       0.03527903    0.19291543   -0.13394807
-std        0.03409865       0.03536783    0.03223209    0.01489025</code></pre>
+point.est -0.04762544       0.01012382    0.11149120   -0.12257214
+std        0.06862821       0.07628908    0.05962246    0.03002803</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -947,44 +913,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
-Past versions of unnamed-chunk-15-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-15-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-15-1.png" target="_blank">7a87cfe</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mr.raps-1" class="section level4">
 <h4>2. mr.raps</h4>
@@ -1017,8 +946,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
-point.est -0.09862245       0.09726523    0.36635756   -0.15619134
-std        0.08304872       0.09508578    0.05024201    0.01095668</code></pre>
+point.est -0.06156528       0.01318673    0.13345670   -0.13014622
+std        0.09080663       0.11528355    0.06169933    0.01470978</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1028,44 +957,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
-Past versions of unnamed-chunk-18-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-18-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">7a87cfe</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-16
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
