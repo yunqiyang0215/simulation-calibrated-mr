@@ -1,0 +1,300 @@
+---
+title: "UKB mr result: sibling"
+output: html_document
+date: '2024-05-16'
+---
+
+```{r}
+library(MendelianRandomization)
+library(mr.raps)
+```
+
+### 1. BMI on diabetes
+
+```{r}
+# BMI
+sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_bmi.rds")
+ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/combined_bmi.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat1 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)
+```
+
+
+```{r}
+pval.ext = pnorm(abs(dat1$BETA/dat1$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat1$cali/sqrt(dat1$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat1$raw/sqrt(dat1$raw.var)), lower.tail = FALSE)
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+
+```
+
+
+```{r}
+# Diabetes
+sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_diabetes.rds")
+ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/gwas_diabetes.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat2 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
+
+```
+
+
+
+#### 1. IVW
+```{r }
+
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+MRInput <- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput <- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput <- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput <- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+```
+
+```{r}
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+
+
+
+#### 2. mr.raps
+
+```{r  }
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)
+```
+
+```{r}
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+### 2. BMI on education yrs
+
+
+```{r}
+# BMI
+sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_bmi.rds")
+ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/combined_bmi.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat1 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)
+```
+
+```{r}
+# education years
+sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_education_yrs.rds")
+ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/gwas_education_yrs.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat2 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
+
+```
+
+
+#### 1. IVW
+```{r }
+
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+MRInput <- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput <- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput <- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput <- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+```
+
+```{r}
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+
+
+
+#### 2. mr.raps
+
+```{r  }
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)
+```
+
+```{r}
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
