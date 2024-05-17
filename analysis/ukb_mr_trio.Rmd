@@ -23,6 +23,18 @@ dat1 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
 dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)
 ```
 
+
+```{r}
+pval.ext = pnorm(abs(dat1$BETA/dat1$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat1$cali/sqrt(dat1$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat1$raw/sqrt(dat1$raw.var)), lower.tail = FALSE)
+sum(pval.ext < 1e-8)
+sum(pval.cali < 1e-3)
+sum(pval.uncali < 1e-3)
+
+```
+
+
 ```{r}
 # Diabetes
 sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/trio_calibration_diabetes.rds")
@@ -35,6 +47,8 @@ dat2 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
 dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 
 ```
+
+
 
 #### 1. IVW
 ```{r }
