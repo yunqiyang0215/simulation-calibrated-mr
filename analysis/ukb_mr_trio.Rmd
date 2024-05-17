@@ -229,7 +229,7 @@ error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
