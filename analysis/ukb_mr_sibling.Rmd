@@ -29,8 +29,8 @@ pval.ext = pnorm(abs(dat1$BETA/dat1$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat1$cali/sqrt(dat1$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat1$raw/sqrt(dat1$raw.var)), lower.tail = FALSE)
 sum(pval.ext < 1e-8)
-sum(pval.cali < 1e-3)
-sum(pval.uncali < 1e-3)
+sum(pval.cali < 1e-4)
+sum(pval.uncali < 1e-4)
 
 ```
 
