@@ -48,7 +48,11 @@ dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 
 ```
 
-
+```{r}
+indx = which(pval.ext < 1e-8)
+dat1 = dat1[indx, ]
+dat2 = dat2[indx, ]
+```
 
 #### 1. IVW
 ```{r }
@@ -188,6 +192,11 @@ dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 
 ```
 
+```{r}
+indx = which(pval.ext < 1e-8)
+dat1 = dat1[indx, ]
+dat2 = dat2[indx, ]
+```
 
 #### 1. IVW
 ```{r }
