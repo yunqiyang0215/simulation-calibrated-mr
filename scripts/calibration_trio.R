@@ -4,7 +4,6 @@ source("/home/yunqiyang/calibrated_mr/trio_data_cov.R")
 args <- commandArgs(trailingOnly = TRUE)
 pheno <- args[1]
 
-print(pheno)
 
 if (length(args) > 1) {
   val_to_remove <- eval(parse(text = args[2]))
@@ -20,7 +19,6 @@ if (pheno == "education_yrs"){
   val_to_remove = c(6, -7, -3)
 }
 
-print(val_to_remove)
 
 dat_int = readRDS("/home/yunqiyang/calibrated_mr/real_data_analysis/data/trio_geno_pheno.rds")
 pheno.file = paste0("/scratch/yunqiyang/ukb_gwas_sumstat/gwas_", pheno, ".linear")
@@ -32,7 +30,6 @@ ss = strsplit(var_names, split = "_")
 snp_list = sapply(ss, function(x) x[1])
 alleles = sapply(ss, function(x) x[2])
 
-print(alleles)
 ## processing dat_int
 # rename SNP
 colnames(dat_int) <- gsub("_G|_T|_A|_C", "", colnames(dat_int))
@@ -99,7 +96,8 @@ for (i in 1:length(snp_list)){
     alpha_ext = -alpha_ext
   }
   
-  snp_columns <- grep(snp, colnames(dat), value = TRUE)
+  snp_col = c(paste0(snp, ".x"), paste0(snp, ".y"))
+  snp_columns <- which(colnames(dat) == snp_col[1] | colnames(dat) == snp_col[2])
   dat_exp = cbind(Y, dat[ , snp_columns])
   res <- calibrated_est_trio_2(dat_exp, Z = Z, rho_shared = 0, alpha_ext, alpha_ext_sd)
   
