@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-16
+<strong>Last updated:</strong> 2024-05-18
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,31 +475,24 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree8628c98bfa1e5b67ea8213c5f85a9629e789686etargetblank8628c98a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/8628c98bfa1e5b67ea8213c5f85a9629e789686e" target="_blank">8628c98</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree025210a767b349468cbbf42df259104e27b66cd9targetblank025210aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/025210a767b349468cbbf42df259104e27b66cd9" target="_blank">025210a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree8628c98bfa1e5b67ea8213c5f85a9629e789686etargetblank8628c98a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree025210a767b349468cbbf42df259104e27b66cd9targetblank025210aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/8628c98bfa1e5b67ea8213c5f85a9629e789686e" target="_blank">8628c98</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/025210a767b349468cbbf42df259104e27b66cd9" target="_blank">025210a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
-    Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/.DS_Store
-    Ignored:    data/.DS_Store
-
-Unstaged changes:
-    Deleted:    analysis/bmi_t2d.Rmd
-    Deleted:    analysis/ukb_trait_calibration.Rmd
 
 </code></pre>
 <p>
@@ -538,6 +531,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/025210a767b349468cbbf42df259104e27b66cd9/analysis/ukb_trait_calibration_trio.Rmd" target="_blank">025210a</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-18
+</td>
+<td>
+wflow_publish("analysis/ukb_trait_calibration_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/2b40156f862267404ceb918f4ab9de4c12eead62/docs/ukb_trait_calibration_trio.html" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -718,7 +745,7 @@ wflow_publish("analysis/ukb_trait_calibration_trio.Rmd")
 <div id="bmi" class="section level3">
 <h3>1. BMI</h3>
 <pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear&quot;, sep = &quot;\t&quot;)</code></pre>
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear&quot;, sep = &quot;\t&quot;)</code></pre>
 <pre class="r"><code>sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
@@ -784,9 +811,9 @@ yunqiyang0215
 </div>
 </div>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
-<pre><code>[1] 0.679289</code></pre>
+<pre><code>[1] 0.6792842</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
-<pre><code>[1] 0.06603614</code></pre>
+<pre><code>[1] 0.06603958</code></pre>
 <pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
 summary(fit)</code></pre>
 <pre><code>
@@ -795,18 +822,18 @@ lm(formula = dat$int ~ dat$BETA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.30917 -0.05457 -0.00094  0.04813  0.53780 
+-0.30917 -0.05457 -0.00094  0.04813  0.53781 
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept) 0.0003968  0.0030210   0.131   0.8955  
-dat$BETA    0.4330476  0.2339923   1.851   0.0646 .
+(Intercept) 0.0003961  0.0030210   0.131   0.8957  
+dat$BETA    0.4330719  0.2339932   1.851   0.0646 .
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 0.08446 on 782 degrees of freedom
 Multiple R-squared:  0.004361,  Adjusted R-squared:  0.003088 
-F-statistic: 3.425 on 1 and 782 DF,  p-value: 0.06459</code></pre>
+F-statistic: 3.425 on 1 and 782 DF,  p-value: 0.06458</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -873,16 +900,15 @@ yunqiyang0215
 </div>
 </div>
 <pre class="r"><code>dat[vr &lt; 0.2, c(&quot;variant&quot;, &quot;allele.test&quot;, &quot;cali.var&quot;, &quot;raw.var&quot;)]</code></pre>
-<pre><code>      variant allele.test     cali.var     raw.var
-486    rs4311           C 1.674037e-05 0.002245485
-491 rs4406342           T 1.373914e-02 0.074228775
-777 rs9820650           T 2.466415e-02 0.142479172</code></pre>
+<pre><code>      variant allele.test   cali.var    raw.var
+491 rs4406342           T 0.01373914 0.07422877
+777 rs9820650           T 0.02466415 0.14247917</code></pre>
 </div>
 </div>
 <div id="dbp" class="section level3">
 <h3>2. DBP</h3>
 <pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_dbp.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_dbp.linear&quot;, sep = &quot;\t&quot;)</code></pre>
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_dbp.linear&quot;, sep = &quot;\t&quot;)</code></pre>
 <pre class="r"><code>sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
@@ -923,6 +949,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-10-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/fa5bd10367cd024dce15ed0054c2d2bc8533d93e/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-10-1.png" target="_blank">fa5bd10</a>
 </td>
 <td>
@@ -959,9 +996,9 @@ yunqiyang0215
 </div>
 </div>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
-<pre><code>[1] 0.6874159</code></pre>
+<pre><code>[1] 0.6874893</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
-<pre><code>[1] 0.03365522</code></pre>
+<pre><code>[1] 0.03372446</code></pre>
 <pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
 summary(fit)</code></pre>
 <pre><code>
@@ -970,16 +1007,16 @@ lm(formula = dat$int ~ dat$BETA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.40237 -0.05710  0.00811  0.05297  0.75733 
+-0.40236 -0.05709  0.00811  0.05298  0.75736 
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -0.005204   0.003292  -1.581    0.114
-dat$BETA     0.500095   0.531068   0.942    0.347
+(Intercept) -0.005209   0.003292  -1.583    0.114
+dat$BETA     0.501106   0.531049   0.944    0.346
 
 Residual standard error: 0.09203 on 782 degrees of freedom
-Multiple R-squared:  0.001133,  Adjusted R-squared:  -0.0001447 
-F-statistic: 0.8868 on 1 and 782 DF,  p-value: 0.3466</code></pre>
+Multiple R-squared:  0.001137,  Adjusted R-squared:  -0.00014 
+F-statistic: 0.8904 on 1 and 782 DF,  p-value: 0.3457</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -1021,6 +1058,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-13-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/fa5bd10367cd024dce15ed0054c2d2bc8533d93e/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-13-1.png" target="_blank">fa5bd10</a>
 </td>
 <td>
@@ -1046,14 +1094,14 @@ yunqiyang0215
 </div>
 </div>
 <pre class="r"><code>dat[vr &lt; 0.2, c(&quot;variant&quot;, &quot;allele.test&quot;, &quot;cali.var&quot;, &quot;raw.var&quot;)]</code></pre>
-<pre><code>    variant allele.test     cali.var     raw.var
-486  rs4311           C 1.652403e-05 0.002495142</code></pre>
+<pre><code>[1] variant     allele.test cali.var    raw.var    
+&lt;0 rows&gt; (or 0-length row.names)</code></pre>
 </div>
 </div>
 <div id="sbp" class="section level3">
 <h3>3. SBP</h3>
 <pre class="r"><code>sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_sbp.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_sbp.linear&quot;, sep = &quot;\t&quot;)</code></pre>
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_sbp.linear&quot;, sep = &quot;\t&quot;)</code></pre>
 <pre class="r"><code>sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
@@ -1070,10 +1118,47 @@ abline(a = 0, b = 1, col = &quot;red&quot;)
 hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
 hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
 <p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-17-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-17-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
-<pre><code>[1] 0.7374956</code></pre>
+<pre><code>[1] 0.7378141</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
-<pre><code>[1] 0.06481681</code></pre>
+<pre><code>[1] 0.06482806</code></pre>
 <pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
 summary(fit)</code></pre>
 <pre><code>
@@ -1086,14 +1171,14 @@ Residuals:
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)  
-(Intercept) -0.002981   0.003011  -0.990   0.3225  
-dat$BETA     1.004492   0.553021   1.816   0.0697 .
+(Intercept) -0.002982   0.003011  -0.990   0.3224  
+dat$BETA     1.004659   0.553016   1.817   0.0696 .
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 
 Residual standard error: 0.08432 on 782 degrees of freedom
-Multiple R-squared:  0.004201,  Adjusted R-squared:  0.002928 
-F-statistic: 3.299 on 1 and 782 DF,  p-value: 0.0697</code></pre>
+Multiple R-squared:  0.004203,  Adjusted R-squared:  0.002929 
+F-statistic:   3.3 on 1 and 782 DF,  p-value: 0.06965</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -1111,9 +1196,46 @@ boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;varian
 vr = dat$cali.var/dat$raw.var
 hist(vr, main = &quot;variance ratio&quot;, xlab = &quot;&quot;)</code></pre>
 <p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-20-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
+Past versions of unnamed-chunk-20-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-20-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-20-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat[vr &lt; 0.2, c(&quot;variant&quot;, &quot;allele.test&quot;, &quot;cali.var&quot;, &quot;raw.var&quot;)]</code></pre>
-<pre><code>    variant allele.test     cali.var     raw.var
-486  rs4311           C 1.344805e-05 0.001946394</code></pre>
+<pre><code>[1] variant     allele.test cali.var    raw.var    
+&lt;0 rows&gt; (or 0-length row.names)</code></pre>
 </div>
 </div>
 <div id="diabetes" class="section level3">
@@ -1160,6 +1282,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-24-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9420878bdc72785a918f8a0cd12e01915efe7276/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-24-1.png" target="_blank">9420878</a>
 </td>
 <td>
@@ -1174,9 +1307,9 @@ yunqiyang0215
 </div>
 </div>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
-<pre><code>[1] 0.7333437</code></pre>
+<pre><code>[1] 0.7333494</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
-<pre><code>[1] -0.01032733</code></pre>
+<pre><code>[1] -0.01037944</code></pre>
 <pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
 summary(fit)</code></pre>
 <pre><code>
@@ -1185,16 +1318,16 @@ lm(formula = dat$int ~ dat$BETA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.40009 -0.05727 -0.00183  0.05544  0.54108 
+-0.40010 -0.05727 -0.00183  0.05544  0.54108 
 
 Coefficients:
               Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept)  0.0007309  0.0032712   0.223    0.823
-dat$BETA    -0.1585051  0.5488186  -0.289    0.773
+(Intercept)  0.0007339  0.0032712   0.224    0.823
+dat$BETA    -0.1593039  0.5488146  -0.290    0.772
 
 Residual standard error: 0.09147 on 782 degrees of freedom
-Multiple R-squared:  0.0001067, Adjusted R-squared:  -0.001172 
-F-statistic: 0.08341 on 1 and 782 DF,  p-value: 0.7728</code></pre>
+Multiple R-squared:  0.0001077, Adjusted R-squared:  -0.001171 
+F-statistic: 0.08426 on 1 and 782 DF,  p-value: 0.7717</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -1236,6 +1369,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-27-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/9420878bdc72785a918f8a0cd12e01915efe7276/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-27-1.png" target="_blank">9420878</a>
 </td>
 <td>
@@ -1250,24 +1394,23 @@ yunqiyang0215
 </div>
 </div>
 <pre class="r"><code>dat[vr &lt; 0.2, c(&quot;variant&quot;, &quot;allele.test&quot;, &quot;cali.var&quot;, &quot;raw.var&quot;)]</code></pre>
-<pre><code>       variant allele.test     cali.var     raw.var
-24  rs10418716           C 4.432053e-03 0.023709915
-175 rs12699752           C 9.405362e-03 0.050733703
-182 rs12893606           G 1.543047e-03 0.024931841
-198 rs13049795           T 1.470356e-03 0.014956594
-260 rs16851483           T 1.084286e-03 0.009735251
-301 rs17592050           G 2.227273e-03 0.012932645
-424  rs2826760           T 3.665709e-03 0.083613014
-429  rs2869619           C 1.594219e-03 0.010780676
-437  rs2962334           T 3.358816e-03 0.143086129
-480  rs4145595           G 2.505691e-03 0.013314071
-486     rs4311           C 1.397864e-05 0.001954556
-536  rs4937035           G 1.018316e-03 0.005831101
-595  rs6768819           C 1.094919e-03 0.005932215
-611  rs6891362           A 1.052925e-03 0.005564188
-620  rs7071961           T 1.778109e-03 0.011277854
-662  rs7550711           T 1.684601e-03 0.015015539
-699  rs7947143           A 1.934870e-03 0.010373242</code></pre>
+<pre><code>       variant allele.test    cali.var     raw.var
+24  rs10418716           C 0.004432053 0.023709915
+175 rs12699752           C 0.009405362 0.050733703
+182 rs12893606           G 0.001543047 0.024931841
+198 rs13049795           T 0.001470356 0.014956594
+260 rs16851483           T 0.001084286 0.009735251
+301 rs17592050           G 0.002227273 0.012932645
+424  rs2826760           T 0.003665709 0.083613014
+429  rs2869619           C 0.001594219 0.010780676
+437  rs2962334           T 0.003358816 0.143086129
+480  rs4145595           G 0.002505691 0.013314071
+536  rs4937035           G 0.001018316 0.005831101
+595  rs6768819           C 0.001094919 0.005932215
+611  rs6891362           A 0.001052925 0.005564188
+620  rs7071961           T 0.001778109 0.011277854
+662  rs7550711           T 0.001684601 0.015015539
+699  rs7947143           A 0.001934870 0.010373242</code></pre>
 <pre class="r"><code>dat[vr &gt; 0.95, c(&quot;variant&quot;, &quot;allele.test&quot;, &quot;cali.var&quot;, &quot;raw.var&quot;)]</code></pre>
 <pre><code>       variant allele.test     cali.var      raw.var
 39  rs10733051           G 0.0029573764 0.0030255048
@@ -1302,10 +1445,47 @@ abline(a = 0, b = 1, col = &quot;red&quot;)
 hist(dat$cali - dat$raw, main = &quot;Differece: calibrated estimator - uncalibrated estimator&quot;, xlab = &quot;&quot;)
 hist(dat$int - dat$BETA, main = &quot;Difference: internal gwas - external gwas&quot;, xlab = &quot;&quot;)</code></pre>
 <p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-32-1.png" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-32-1">
+Past versions of unnamed-chunk-32-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-32-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-32-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>cor(dat$cali, dat$raw)</code></pre>
-<pre><code>[1] 0.6865857</code></pre>
+<pre><code>[1] 0.6865699</code></pre>
 <pre class="r"><code>cor(dat$BETA, dat$int)</code></pre>
-<pre><code>[1] -0.04101017</code></pre>
+<pre><code>[1] -0.04101158</code></pre>
 <pre class="r"><code>fit = lm(dat$int ~ dat$BETA)
 summary(fit)</code></pre>
 <pre><code>
@@ -1314,16 +1494,16 @@ lm(formula = dat$int ~ dat$BETA)
 
 Residuals:
      Min       1Q   Median       3Q      Max 
--0.64953 -0.08209 -0.00182  0.08262  0.61222 
+-0.64954 -0.08210 -0.00163  0.08261  0.61221 
 
 Coefficients:
              Estimate Std. Error t value Pr(&gt;|t|)
-(Intercept) -0.001793   0.004855  -0.369    0.712
-dat$BETA    -1.009648   0.879650  -1.148    0.251
+(Intercept) -0.001779   0.004855  -0.366    0.714
+dat$BETA    -1.009679   0.879646  -1.148    0.251
 
 Residual standard error: 0.1358 on 782 degrees of freedom
-Multiple R-squared:  0.001682,  Adjusted R-squared:  0.0004052 
-F-statistic: 1.317 on 1 and 782 DF,  p-value: 0.2514</code></pre>
+Multiple R-squared:  0.001682,  Adjusted R-squared:  0.0004053 
+F-statistic: 1.318 on 1 and 782 DF,  p-value: 0.2514</code></pre>
 <pre class="r"><code>pval.ext = pnorm(abs(dat$BETA/dat$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat$cali/sqrt(dat$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat$raw/sqrt(dat$raw.var)), lower.tail = FALSE)
@@ -1341,10 +1521,46 @@ boxplot(dat[, c(&quot;cali.var&quot;, &quot;raw.var&quot;)], ylab = &quot;varian
 vr = dat$cali.var/dat$raw.var
 hist(vr, main = &quot;variance ratio&quot;, xlab = &quot;&quot;)</code></pre>
 <p><img src="figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-35-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-35-1">
+Past versions of unnamed-chunk-35-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-35-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2b40156f862267404ceb918f4ab9de4c12eead62/docs/figure/ukb_trait_calibration_trio.Rmd/unnamed-chunk-35-1.png" target="_blank">2b40156</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>dat[vr &lt; 0.2, c(&quot;variant&quot;, &quot;allele.test&quot;, &quot;cali.var&quot;, &quot;raw.var&quot;)]</code></pre>
-<pre><code>       variant allele.test     cali.var     raw.var
-121 rs11980825           T 1.345844e-02 0.068779469
-486     rs4311           C 2.625333e-05 0.006177973</code></pre>
+<pre><code>       variant allele.test   cali.var    raw.var
+121 rs11980825           T 0.01345844 0.06877947</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
