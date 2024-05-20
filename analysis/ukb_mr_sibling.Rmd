@@ -13,8 +13,8 @@ library(mr.raps)
 
 ```{r}
 # BMI
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_bmi.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/combined_bmi.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -37,8 +37,8 @@ sum(pval.uncali < 1e-4)
 
 ```{r}
 # Diabetes
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_diabetes.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/gwas_diabetes.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -52,6 +52,9 @@ dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 indx = which(pval.ext < 1e-8)
 dat1 = dat1[indx, ]
 dat2 = dat2[indx, ]
+# sanity check
+sum(dat1$variant != dat2$variant)
+sum(dat1$allele.test != dat2$allele.test)
 ```
 
 
@@ -170,8 +173,8 @@ axis(1, at=1:4, labels=labels)
 
 ```{r}
 # BMI
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_bmi.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/combined_bmi.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -182,8 +185,8 @@ dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)
 
 ```{r}
 # education years
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_education_yrs.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/gwas_education_yrs.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_education_yrs.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -198,6 +201,10 @@ dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 indx = which(pval.ext < 1e-8)
 dat1 = dat1[indx, ]
 dat2 = dat2[indx, ]
+
+# sanity check
+sum(dat1$variant != dat2$variant)
+sum(dat1$allele.test != dat2$allele.test)
 ```
 
 #### 1. IVW
