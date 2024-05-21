@@ -40,6 +40,20 @@ generate_data <- function(sigma_eps = .5, eps_cor = .1, sigma_x =1,
 
 }
 
+##‘ Sample one sibling from each family
+sample_indices <- function(vec, K) {
+  sampled_indices <- sapply(1:K, function(k) {
+    indices <- which(vec == k)
+    if (length(indices) > 0) {
+      sample(indices, 1)
+    } else {
+      NA  # Handle the case where there are no elements equal to k
+    }
+  })
+  return(sampled_indices)
+}
+
+
 ##' Compute the calibrated estimator
 ##' @param Y: a vector that contains response variable values
 ##' @param X: a vector that contains transmitted allele values
@@ -114,12 +128,12 @@ calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,
 
 
   correct_int = lm(Y_tilde ~ -1 +  XZ_tilde)
-  beta_int = summary(correct_int)$coefficients[1]
+  beta_int = summary(correct_int)$coefficients[1, 1]
 
   # Compute the incorrect model for internal data
 
   incorrect_int = lm( Y ~  XZ)
-  alpha_int = summary(incorrect_int)$coefficients[2]
+  alpha_int = summary(incorrect_int)$coefficients[2, 1]
   # Compute the C_{22}, C_{33}, C_{23}
 
   M = max(F_size)
@@ -197,57 +211,23 @@ calibrated_estimator <- function(Y, X,F_ind, alpha_ext, alpha_ext_var, N_ext,
   # Compute the final calibrated estimator
   beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
   beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
+  
+  
+  # Compute internal false model by sampling one sibling from each family
+  
+  sub_ind = sample_indices(F_ind, max(F_ind))
+  
+  incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
+  alpha_int_single = summary(incorrect_int)$coefficients[2,1]
+  alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
+  
   return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int,
-              beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N) ))
+              beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N),
+              alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single) )
 }
 
 
 
 
 
-
-
-# Example
-# n_trial = 1000
-# K_ext = 50000
-# K_int = 200
-#
-# beta_int = rep(0, n_trial)
-# beta_cal = rep(0, n_trial)
-#
-# beta_cal_sd = rep(0, n_trial)
-# sigma_f = 1
-# for(i in 1:n_trial){
-#   external_data = generate_data(K = K_ext, sigma_f = sigma_f, seed = i, eps_cor = 0)
-#   model = summary(lm(external_data$Y[1:K_ext] ~  external_data$X[1:K_ext]))
-#
-#   ext_estimate = model$coefficients[2, 1]
-#   ext_var = model$coefficients[2, 2]^2
-#   internal_data =  generate_data(K = K_int, sigma_f = sigma_f, seed = n_trial+ i, eps_cor = 0)
-#   result = calibrated_estimator(internal_data$Y, internal_data$X, internal_data$F_ind, ext_estimate
-#                                 , ext_var)
-#   beta_int[i] = result$beta_int
-#   beta_cal[i] = result$beta_cal
-#   beta_cal_sd[i] = result$beta_cal_sd
-# }
-#
-# # MSE
-#
-# sum( (beta_int - 1)^2)
-# sum( (beta_cal - 1)^2)
-#
-# # Variance reduction
-# var(beta_int)
-# var(beta_cal)
-#
-# 1 - var(beta_cal)/var(beta_int)
-#
-# # Computed sd vs true sd
-#
-# sd(beta_cal)
-# mean(beta_cal_sd)
-#
-# # Density plot
-# plot(density(beta_int), ylim = c(0,20))
-# lines(density(beta_cal), col = "red")
 
