@@ -9,7 +9,7 @@ output: html_document
 
 ```{r}
 sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
-ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_bmi.linear", sep = "\t")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
 ```
 
 
@@ -63,7 +63,7 @@ mean(vr)
 
 ```{r}
 sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_dbp.rds")
-ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_dbp.linear", sep = "\t")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_dbp.linear", sep = "\t")
 ```
 
 
@@ -115,7 +115,7 @@ mean(vr)
 
 ```{r}
 sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_sbp.rds")
-ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/combined_sbp.linear", sep = "\t")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_sbp.linear", sep = "\t")
 ```
 
 
