@@ -474,16 +474,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree43157aaeba0d1afaf15154adcb411d24f583dfcbtargetblank43157aaa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/43157aaeba0d1afaf15154adcb411d24f583dfcb" target="_blank">43157aa</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef25014221d7c57c8238150096499990ab2a74056targetblankf250142a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f25014221d7c57c8238150096499990ab2a74056" target="_blank">f250142</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree43157aaeba0d1afaf15154adcb411d24f583dfcbtargetblank43157aaa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef25014221d7c57c8238150096499990ab2a74056targetblankf250142a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/43157aaeba0d1afaf15154adcb411d24f583dfcb" target="_blank">43157aa</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f25014221d7c57c8238150096499990ab2a74056" target="_blank">f250142</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -493,9 +493,6 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Unstaged changes:
-    Modified:   analysis/ukb_mr_sibling.Rmd
 
 </code></pre>
 <p>
@@ -534,6 +531,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/8f2d948fffbd7be96eb65851d13f1a12d4e2259d/docs/ukb_mr_trio.html" target="_blank">8f2d948</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -806,6 +820,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8f2d948fffbd7be96eb65851d13f1a12d4e2259d/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-8-1.png" target="_blank">8f2d948</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e116791a9eca78c94f0c181cb58e18524e946d60/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-8-1.png" target="_blank">e116791</a>
 </td>
 <td>
@@ -885,6 +910,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8f2d948fffbd7be96eb65851d13f1a12d4e2259d/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-11-1.png" target="_blank">8f2d948</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e116791a9eca78c94f0c181cb58e18524e946d60/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-11-1.png" target="_blank">e116791</a>
@@ -967,8 +1003,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est -0.2355757       -0.2552951    -0.2510062   -0.12257214
-std        0.1671232        0.1798769     0.1817636    0.03002803</code></pre>
+point.est  0.1578513        0.1861965     0.1795380   -0.12257214
+std        0.1612316        0.1763099     0.1816681    0.03002803</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1001,6 +1037,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8f2d948fffbd7be96eb65851d13f1a12d4e2259d/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-17-1.png" target="_blank">8f2d948</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e116791a9eca78c94f0c181cb58e18524e946d60/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-17-1.png" target="_blank">e116791</a>
@@ -1058,8 +1105,9 @@ stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-point_est = mr$beta.hat
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced</code></pre>
+<pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
@@ -1070,8 +1118,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est -1.0399340        -1.386255     -1.418790   -0.13014622
-std        0.7189622         1.900979      5.854295    0.01470978</code></pre>
+point.est  0.6309279        0.8414236     0.7521352   -0.13014622
+std        0.7262000       15.9935662     2.0876840    0.01470978</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1104,6 +1152,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8f2d948fffbd7be96eb65851d13f1a12d4e2259d/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-20-1.png" target="_blank">8f2d948</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e116791a9eca78c94f0c181cb58e18524e946d60/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-20-1.png" target="_blank">e116791</a>
