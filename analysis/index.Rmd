@@ -74,6 +74,8 @@ UKB data analysis:
 
 + [genotype convert issue](check_bmi.html)
 
++ [UKB mr on random sample](ukb_mr_random_sample.html)
+
 + [UKB mr result: trio](ukb_mr_trio.html)
 
 + [UKB mr result: sibling](ukb_mr_sibling.html)
