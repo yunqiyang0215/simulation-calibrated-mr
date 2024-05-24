@@ -383,7 +383,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-23
+<strong>Last updated:</strong> 2024-05-24
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -474,16 +474,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb5370fd4459d8d687d1f2c7b801414001d501bd5targetblankb5370fda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b5370fd4459d8d687d1f2c7b801414001d501bd5" target="_blank">b5370fd</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree4dc981dfd7b88e6ffc51c20f052be548b2cc52a5targetblank4dc981da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/4dc981dfd7b88e6ffc51c20f052be548b2cc52a5" target="_blank">4dc981d</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb5370fd4459d8d687d1f2c7b801414001d501bd5targetblankb5370fda" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree4dc981dfd7b88e6ffc51c20f052be548b2cc52a5targetblank4dc981da" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b5370fd4459d8d687d1f2c7b801414001d501bd5" target="_blank">b5370fd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/4dc981dfd7b88e6ffc51c20f052be548b2cc52a5" target="_blank">4dc981d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -531,6 +531,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/4dc981dfd7b88e6ffc51c20f052be548b2cc52a5/analysis/ukb_mr_sibling.Rmd" target="_blank">4dc981d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-24
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_sibling.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/f25014221d7c57c8238150096499990ab2a74056/docs/ukb_mr_sibling.html" target="_blank">f250142</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -820,14 +854,16 @@ ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
-dat1 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+dat.exp = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
-dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)</code></pre>
-<pre class="r"><code>pval.ext = pnorm(abs(dat1$BETA/dat1$SE), lower.tail = FALSE)
-pval.cali = pnorm(abs(dat1$cali/sqrt(dat1$cali.var)), lower.tail = FALSE)
-pval.uncali = pnorm(abs(dat1$raw/sqrt(dat1$raw.var)), lower.tail = FALSE)
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code>pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)
+pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)
+pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)
 sum(pval.ext &lt; 1e-8)</code></pre>
 <pre><code>[1] 78</code></pre>
+<pre class="r"><code>sum(pval.ext &lt; 1e-5)</code></pre>
+<pre><code>[1] 165</code></pre>
 <pre class="r"><code>sum(pval.cali &lt; 1e-4)</code></pre>
 <pre><code>[1] 6</code></pre>
 <pre class="r"><code>sum(pval.uncali &lt; 1e-4)</code></pre>
@@ -838,12 +874,12 @@ ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
-dat2 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+dat.out = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
-dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)</code></pre>
-<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
-dat1 = dat1[indx, ]
-dat2 = dat2[indx, ]
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
 # sanity check
 sum(dat1$variant != dat2$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
@@ -891,8 +927,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.25377357       0.24469011    0.26755029    0.22720776
-std       0.07634288       0.07942329    0.06510503    0.04122251</code></pre>
+point.est 0.24317166        0.2295997    0.21317566    0.22759230
+std       0.05191165        0.0557970    0.04772173    0.02685883</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1005,8 +1041,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.39477427       0.38226988    0.38025604     0.2617863
-std       0.07600144       0.09675482    0.07715442     0.0129411</code></pre>
+point.est 0.37495407       0.36998882    0.32776516    0.25848609
+std       0.06691257       0.08379391    0.06467791    0.01119801</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1087,37 +1123,15 @@ yunqi yang
 </table>
 </div>
 </div>
-</div>
-</div>
-<div id="bmi-on-education-yrs" class="section level3">
-<h3>2. BMI on education yrs</h3>
-<pre class="r"><code># BMI
-sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear&quot;, sep = &quot;\t&quot;)
-
-sumstat = as.data.frame(sumstat)
-sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
-dat1 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
-# flip sign of effect if the allele tested is different
-dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)</code></pre>
-<pre class="r"><code># education years
-sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_education_yrs.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear&quot;, sep = &quot;\t&quot;)
-
-sumstat = as.data.frame(sumstat)
-sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
-dat2 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
-# flip sign of effect if the allele tested is different
-dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)</code></pre>
 <pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
-dat1 = dat1[indx, ]
-dat2 = dat2[indx, ]
-
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
 # sanity check
 sum(dat1$variant != dat2$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
 <pre><code>[1] 0</code></pre>
+</div>
 <div id="ivw-1" class="section level4">
 <h4>1. IVW</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -1159,25 +1173,25 @@ MRInput &lt;- mr_input(bx = dat1$BETA,
 mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
-<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
-point.est -0.02018656      -0.03407055   -0.18439400   -0.12257214
-std        0.06899503       0.07680355    0.07618339    0.03002803</code></pre>
+<pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
+point.est 0.25377357       0.24469011    0.26755029    0.22720776
+std       0.07634288       0.07942329    0.06510503    0.04122251</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-15-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
-Past versions of unnamed-chunk-17-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-15-1">
+Past versions of unnamed-chunk-15-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-17-1" class="collapse">
+<div id="fig-unnamed-chunk-15-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1196,46 +1210,24 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">03df7e3</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">ccb1525</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">ba88f5e</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">508300b</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-15-1.png" target="_blank">508300b</a>
 </td>
 <td>
 yunqi yang
 </td>
 <td>
 2024-05-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-15-1.png" target="_blank">7a87cfe</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-16
 </td>
 </tr>
 </tbody>
@@ -1273,25 +1265,25 @@ point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
-<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
-point.est -0.02509163      -0.04455099   -0.25259326   -0.13014622
-std        0.09334062       0.11506360    0.09582579    0.01470978</code></pre>
+<pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
+point.est 0.39477427       0.38226988    0.38025604     0.2617863
+std       0.07600144       0.09675482    0.07715442     0.0129411</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
-Past versions of unnamed-chunk-20-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
+Past versions of unnamed-chunk-18-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-20-1" class="collapse">
+<div id="fig-unnamed-chunk-18-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1310,7 +1302,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">03df7e3</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f25014221d7c57c8238150096499990ab2a74056/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">f250142</a>
 </td>
 <td>
 yunqiyang0215
@@ -1321,29 +1313,29 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">ccb1525</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a6c4b0de55ebf8ac1f1d6608a3758e1bf1d6719e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">a6c4b0d</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
-2024-05-22
+2024-05-23
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">ba88f5e</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">03df7e3</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
-2024-05-20
+2024-05-23
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">508300b</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">508300b</a>
 </td>
 <td>
 yunqi yang
@@ -1352,10 +1344,258 @@ yunqi yang
 2024-05-17
 </td>
 </tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">7a87cfe</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
+</div>
+</div>
+<div id="bmi-on-education-yrs" class="section level3">
+<h3>2. BMI on education yrs</h3>
+<pre class="r"><code># BMI
+sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds&quot;)
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear&quot;, sep = &quot;\t&quot;)
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat.exp = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># education years
+sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_education_yrs.rds&quot;)
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear&quot;, sep = &quot;\t&quot;)
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat.out = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
+
+# sanity check
+sum(dat1$variant != dat2$variant)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
+<pre><code>[1] 0</code></pre>
+<div id="ivw-2" class="section level4">
+<h4>1. IVW</h4>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+MRInput &lt;- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput &lt;- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput &lt;- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput &lt;- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
+<pre class="r"><code>res.mr</code></pre>
+<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
+point.est -0.02516506      -0.04085770    -0.1553742   -0.12298912
+std        0.05391434       0.05869196     0.0556189    0.02199542</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="mr.raps-2" class="section level4">
+<h4>2. mr.raps</h4>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)</code></pre>
+<pre class="r"><code>res.mr</code></pre>
+<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
+point.est -0.03477908      -0.06199037   -0.22025627   -0.13166522
+std        0.07956399       0.09436296    0.08407073    0.01264142</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
+
+# sanity check
+sum(dat1$variant != dat2$variant)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
+<pre><code>[1] 0</code></pre>
+</div>
+<div id="ivw-3" class="section level4">
+<h4>1. IVW</h4>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+MRInput &lt;- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput &lt;- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput &lt;- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput &lt;- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
+<pre class="r"><code>res.mr</code></pre>
+<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
+point.est -0.02516506      -0.04085770    -0.1553742   -0.12298912
+std        0.05391434       0.05869196     0.0556189    0.02199542</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="mr.raps-3" class="section level4">
+<h4>2. mr.raps</h4>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)</code></pre>
+<pre class="r"><code>res.mr</code></pre>
+<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
+point.est -0.03477908      -0.06199037   -0.22025627   -0.13166522
+std        0.07956399       0.09436296    0.08407073    0.01264142</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="bmi-on-education-yrs-1" class="section level3">
