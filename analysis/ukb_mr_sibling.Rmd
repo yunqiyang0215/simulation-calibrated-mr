@@ -442,7 +442,7 @@ axis(1, at=1:4, labels=labels)
 
 
 ```{r}
-indx = which(pval.ext < 1e-5)
+indx = which(pval.ext < 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 
