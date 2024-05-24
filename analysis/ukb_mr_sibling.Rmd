@@ -21,10 +21,18 @@ sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat.exp = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
 # flip sign of effect if the allele tested is different
 dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)
-```
 
 
-```{r}
+# Diabetes
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat.out = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
+
 pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)
@@ -36,29 +44,13 @@ sum(pval.uncali < 1e-4)
 ```
 
 
-```{r}
-# Diabetes
-sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds")
-ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear", sep = "\t")
-
-sumstat = as.data.frame(sumstat)
-sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
-dat.out = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
-# flip sign of effect if the allele tested is different
-dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
-
-```
-
-```{r}
-indx = which(pval.ext < 1e-5)
-dat1 = dat.exp[indx, ]
-dat2 = dat.out[indx, ]
-# sanity check
-sum(dat1$variant != dat2$variant)
-sum(dat1$allele.test != dat2$allele.test)
-```
-
 #### 1. IVW
+
+```{r}
+dat1 = dat.exp
+dat2 = dat.out
+```
+
 ```{r }
 
 res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -99,9 +91,6 @@ MRInput <- mr_input(bx = dat1$BETA,
                     byse = dat1$SE)
 mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)
-```
-
-```{r}
 res.mr
 ```
 
@@ -116,8 +105,6 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
-
-
 
 
 #### 2. mr.raps
@@ -150,9 +137,6 @@ mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
-```
-
-```{r}
 res.mr
 ```
 
@@ -170,8 +154,11 @@ axis(1, at=1:4, labels=labels)
 
 
 
+
+#### 1. IVW
+
 ```{r}
-indx = which(pval.ext < 1e-8)
+indx = which(pval.ext < 1e-5)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 # sanity check
@@ -179,7 +166,6 @@ sum(dat1$variant != dat2$variant)
 sum(dat1$allele.test != dat2$allele.test)
 ```
 
-#### 1. IVW
 ```{r }
 
 res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -220,9 +206,120 @@ MRInput <- mr_input(bx = dat1$BETA,
                     byse = dat1$SE)
 mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)
+res.mr
 ```
 
 ```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+
+#### 2. mr.raps
+
+```{r  }
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+
+#### 1. IVW
+
+```{r}
+indx = which(pval.ext < 1e-8)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
+# sanity check
+sum(dat1$variant != dat2$variant)
+sum(dat1$allele.test != dat2$allele.test)
+```
+
+
+```{r }
+
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+MRInput <- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput <- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput <- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput <- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
@@ -271,9 +368,6 @@ mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
-```
-
-```{r}
 res.mr
 ```
 
@@ -318,6 +412,120 @@ dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$
 
 ```
 
+
+#### 1. IVW
+```{r}
+dat1 = dat.exp
+dat2 = dat.out
+```
+
+```{r }
+
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+MRInput <- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput <- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput <- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput <- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+
+
+
+#### 2. mr.raps
+
+```{r  }
+res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)
+res.mr
+```
+
+```{r}
+labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
+point_est <- res.mr[1, ]
+error_bars <- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+axis(1, at=1:4, labels=labels)
+```
+
+
+
+#### 1. IVW
+
 ```{r}
 indx = which(pval.ext < 1e-5)
 dat1 = dat.exp[indx, ]
@@ -328,7 +536,6 @@ sum(dat1$variant != dat2$variant)
 sum(dat1$allele.test != dat2$allele.test)
 ```
 
-#### 1. IVW
 ```{r }
 
 res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -440,6 +647,7 @@ axis(1, at=1:4, labels=labels)
 
 
 
+#### 1. IVW
 
 ```{r}
 indx = which(pval.ext < 1e-8)
@@ -451,7 +659,6 @@ sum(dat1$variant != dat2$variant)
 sum(dat1$allele.test != dat2$allele.test)
 ```
 
-#### 1. IVW
 ```{r }
 
 res.mr = matrix(NA, ncol = 4, nrow = 2)
