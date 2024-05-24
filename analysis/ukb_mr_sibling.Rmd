@@ -170,7 +170,6 @@ axis(1, at=1:4, labels=labels)
 
 ### 2. BMI on education yrs
 
-
 ```{r}
 # BMI
 sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
@@ -194,11 +193,6 @@ dat2 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
 # flip sign of effect if the allele tested is different
 dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 
-```
-
-
-```{r}
-plot(dat2$BETA, dat2$int)
 ```
 
 ```{r}
@@ -459,15 +453,6 @@ dat2 = dat2[indx, ]
 sum(dat1$variant != dat2$variant)
 sum(dat1$allele.test != dat2$allele.test)
 ```
-```{r eval = FALSE}
-plot(dat1$BETA, dat2$BETA)
-plot(dat1$int, dat2$int)
-plot(dat1$BETA, dat2$int)
-plot(dat1$int, dat2$BETA)
-
-plot(dat2$BETA, dat2$int)
-```
-
 
 ```{r}
 # internal gwas
