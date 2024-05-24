@@ -198,6 +198,10 @@ dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)
 
 
 ```{r}
+plot(dat2$BETA, dat2$int)
+```
+
+```{r}
 indx = which(pval.ext < 1e-8)
 dat1 = dat1[indx, ]
 dat2 = dat2[indx, ]
@@ -447,6 +451,10 @@ dat2$BETA = ifelse(dat2$allele_test == dat2$A1, dat2$BETA, -dat2$BETA)
 
 
 ```{r}
+
+```
+
+```{r}
 indx = which(pval.ext < 1e-8)
 dat1 = dat1[indx, ]
 dat2 = dat2[indx, ]
@@ -454,6 +462,14 @@ dat2 = dat2[indx, ]
 # sanity check
 sum(dat1$variant != dat2$variant)
 sum(dat1$allele.test != dat2$allele.test)
+```
+```{r}
+plot(dat1$BETA, dat2$BETA)
+plot(dat1$int, dat2$int)
+plot(dat1$BETA, dat2$int)
+plot(dat1$int, dat2$BETA)
+
+plot(dat2$BETA, dat2$int)
 ```
 
 
