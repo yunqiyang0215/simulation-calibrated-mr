@@ -474,16 +474,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7bb0d992ab37ff7ed5147bb4fc69da401951177ctargetblank7bb0d99a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7bb0d992ab37ff7ed5147bb4fc69da401951177c" target="_blank">7bb0d99</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb5370fd4459d8d687d1f2c7b801414001d501bd5targetblankb5370fda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b5370fd4459d8d687d1f2c7b801414001d501bd5" target="_blank">b5370fd</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7bb0d992ab37ff7ed5147bb4fc69da401951177ctargetblank7bb0d99a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb5370fd4459d8d687d1f2c7b801414001d501bd5targetblankb5370fda" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7bb0d992ab37ff7ed5147bb4fc69da401951177c" target="_blank">7bb0d99</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b5370fd4459d8d687d1f2c7b801414001d501bd5" target="_blank">b5370fd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -531,6 +531,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/b5370fd4459d8d687d1f2c7b801414001d501bd5/analysis/ukb_mr_sibling.Rmd" target="_blank">b5370fd</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_sibling.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/a6c4b0de55ebf8ac1f1d6608a3758e1bf1d6719e/docs/ukb_mr_sibling.html" target="_blank">a6c4b0d</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-23
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1075,45 +1109,6 @@ sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat2 = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
 dat2$BETA = ifelse(dat2$allele.test == dat2$A1, dat2$BETA, -dat2$BETA)</code></pre>
-<pre class="r"><code>plot(dat2$BETA, dat2$int)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-14-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
-Past versions of unnamed-chunk-14-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-14-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-14-1.png" target="_blank">03df7e3</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-23
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 <pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
 dat1 = dat1[indx, ]
 dat2 = dat2[indx, ]
@@ -1176,13 +1171,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
-Past versions of unnamed-chunk-18-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-18-1" class="collapse">
+<div id="fig-unnamed-chunk-17-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1201,7 +1196,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">03df7e3</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">03df7e3</a>
 </td>
 <td>
 yunqiyang0215
@@ -1212,24 +1207,35 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">508300b</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">ccb1525</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-22
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">ba88f5e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-20
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">508300b</a>
 </td>
 <td>
 yunqi yang
 </td>
 <td>
 2024-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">7a87cfe</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-16
 </td>
 </tr>
 </tbody>
@@ -1279,13 +1285,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-21-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
-Past versions of unnamed-chunk-21-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-20-1">
+Past versions of unnamed-chunk-20-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-21-1" class="collapse">
+<div id="fig-unnamed-chunk-20-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1304,13 +1310,46 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-21-1.png" target="_blank">03df7e3</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">03df7e3</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
 2024-05-23
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">ccb1525</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-22
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">ba88f5e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-20
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-20-1.png" target="_blank">508300b</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-17
 </td>
 </tr>
 </tbody>
@@ -1427,12 +1466,6 @@ sum(dat1$variant != dat2$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
 <pre><code>[1] 0</code></pre>
-<pre class="r"><code>plot(dat1$BETA, dat2$BETA)
-plot(dat1$int, dat2$int)
-plot(dat1$BETA, dat2$int)
-plot(dat1$int, dat2$BETA)
-
-plot(dat2$BETA, dat2$int)</code></pre>
 <pre class="r"><code># internal gwas
 MRInput &lt;- mr_input(bx = dat1$int,
                     bxse = sqrt(dat1$int.var),
