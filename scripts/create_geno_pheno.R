@@ -31,11 +31,11 @@ dat2 = merge(dat, geno, by.x = "Individual.ID", by.y = "IID")
 
 # create education yrs 
 dat2$education_yrs = dat2$education_attainment
-dat$education_attainment[which(dat$education_attainment == 1)] = 17
-dat$education_attainment[which(dat$education_attainment == 2)] = 14
-dat$education_attainment[which(dat$education_attainment == 3)] = 11
-dat$education_attainment[which(dat$education_attainment == 4)] = 11
-dat$education_attainment[which(dat$education_attainment == 5)] = 15
+dat2$education_yrs[which(dat2$education_attainment == 1)] = 17
+dat2$education_yrs[which(dat2$education_attainment == 2)] = 14
+dat2$education_yrs[which(dat2$education_attainment == 3)] = 11
+dat2$education_yrs[which(dat2$education_attainment == 4)] = 11
+dat2$education_yrs[which(dat2$education_attainment == 5)] = 15
 saveRDS(dat2, "/home/yunqiyang/calibrated_mr/real_data_analysis/data/trio_geno_pheno.rds")
 
 
@@ -69,11 +69,11 @@ geno = readRDS("/scratch/yunqiyang/geno_ukb/bmi/sib_geno.rds")
 dat2 = merge(dat, geno, by.x = "Individual", by.y = "IID")
 # create education yrs
 dat2$education_yrs = dat2$education_attainment
-dat$education_attainment[which(dat$education_attainment == 1)] = 17
-dat$education_attainment[which(dat$education_attainment == 2)] = 14
-dat$education_attainment[which(dat$education_attainment == 3)] = 11
-dat$education_attainment[which(dat$education_attainment == 4)] = 11
-dat$education_attainment[which(dat$education_attainment == 5)] = 15
+dat2$education_yrs[which(dat2$education_attainment == 1)] = 17
+dat2$education_yrs[which(dat2$education_attainment == 2)] = 14
+dat2$education_yrs[which(dat2$education_attainment == 3)] = 11
+dat2$education_yrs[which(dat2$education_attainment == 4)] = 11
+dat2$education_yrs[which(dat2$education_attainment == 5)] = 15
 saveRDS(dat2, "/home/yunqiyang/calibrated_mr/real_data_analysis/data/sib_geno_pheno.rds")
 
 
