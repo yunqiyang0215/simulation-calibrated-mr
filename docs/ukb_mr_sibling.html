@@ -474,16 +474,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreecb858dd0328f6e0a310055ae9f120e0cafb9da91targetblankcb858dda"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/cb858dd0328f6e0a310055ae9f120e0cafb9da91" target="_blank">cb858dd</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0b5fdcf69a679ac4405c75017dd0eefe2a3ca942targetblank0b5fdcfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0b5fdcf69a679ac4405c75017dd0eefe2a3ca942" target="_blank">0b5fdcf</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreecb858dd0328f6e0a310055ae9f120e0cafb9da91targetblankcb858dda" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0b5fdcf69a679ac4405c75017dd0eefe2a3ca942targetblank0b5fdcfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/cb858dd0328f6e0a310055ae9f120e0cafb9da91" target="_blank">cb858dd</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0b5fdcf69a679ac4405c75017dd0eefe2a3ca942" target="_blank">0b5fdcf</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -531,6 +531,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0b5fdcf69a679ac4405c75017dd0eefe2a3ca942/analysis/ukb_mr_sibling.Rmd" target="_blank">0b5fdcf</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-24
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_sibling.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/d51f0b8288725b22edef20d3672ebf7a65996979/docs/ukb_mr_sibling.html" target="_blank">d51f0b8</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-24
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -890,8 +924,20 @@ sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat.exp = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
-dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
-<pre class="r"><code>pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)
+
+
+# Diabetes
+sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds&quot;)
+ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear&quot;, sep = &quot;\t&quot;)
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat.out = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
+
+pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)
 pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)
 pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)
 sum(pval.ext &lt; 1e-8)</code></pre>
@@ -902,25 +948,10 @@ sum(pval.ext &lt; 1e-8)</code></pre>
 <pre><code>[1] 6</code></pre>
 <pre class="r"><code>sum(pval.uncali &lt; 1e-4)</code></pre>
 <pre><code>[1] 3</code></pre>
-<pre class="r"><code># Diabetes
-sumstat = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear&quot;, sep = &quot;\t&quot;)
-
-sumstat = as.data.frame(sumstat)
-sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
-dat.out = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
-# flip sign of effect if the allele tested is different
-dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
-<pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
-dat1 = dat.exp[indx, ]
-dat2 = dat.out[indx, ]
-# sanity check
-sum(dat1$variant != dat2$variant)</code></pre>
-<pre><code>[1] 0</code></pre>
-<pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
-<pre><code>[1] 0</code></pre>
 <div id="ivw" class="section level4">
 <h4>1. IVW</h4>
+<pre class="r"><code>dat1 = dat.exp
+dat2 = dat.out</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
@@ -958,11 +989,11 @@ MRInput &lt;- mr_input(bx = dat1$BETA,
                     by = dat2$BETA,
                     byse = dat1$SE)
 mr = mr_ivw(MRInput)
-res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
-<pre class="r"><code>res.mr</code></pre>
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.24317166        0.2295997    0.21317566    0.22759230
-std       0.05191165        0.0557970    0.04772173    0.02685883</code></pre>
+point.est 0.16949708       0.13673125    0.14740713    0.21048397
+std       0.03157943       0.03257973    0.02852137    0.01534621</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -972,88 +1003,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-8-1">
-Past versions of unnamed-chunk-8-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-8-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" target="_blank">45af8f0</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" target="_blank">03df7e3</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" target="_blank">ccb1525</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" target="_blank">ba88f5e</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-8-1.png" target="_blank">508300b</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-17
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mr.raps" class="section level4">
 <h4>2. mr.raps</h4>
@@ -1083,11 +1033,11 @@ res.mr[, 3] = c(point_est, stderr)
 mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
-res.mr[, 4] = c(point_est, stderr)</code></pre>
-<pre class="r"><code>res.mr</code></pre>
+res.mr[, 4] = c(point_est, stderr)
+res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.37495407       0.36998882    0.32776516    0.25848609
-std       0.06691257       0.08379391    0.06467791    0.01119801</code></pre>
+point.est  0.4601809       0.37911096    0.37425008   0.258866547
+std        0.0702789       0.08773447    0.06580886   0.009706462</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1097,13 +1047,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
-Past versions of unnamed-chunk-11-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
+Past versions of unnamed-chunk-7-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-11-1" class="collapse">
+<div id="fig-unnamed-chunk-7-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1122,51 +1072,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">45af8f0</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">03df7e3</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-23
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">ccb1525</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">ba88f5e</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-20
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-11-1.png" target="_blank">508300b</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-7-1.png" target="_blank">508300b</a>
 </td>
 <td>
 yunqi yang
@@ -1175,11 +1081,25 @@ yunqi yang
 2024-05-17
 </td>
 </tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-7-1.png" target="_blank">7a87cfe</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
-<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
+</div>
+<div id="ivw-1" class="section level4">
+<h4>1. IVW</h4>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 # sanity check
@@ -1187,9 +1107,6 @@ sum(dat1$variant != dat2$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
 <pre><code>[1] 0</code></pre>
-</div>
-<div id="ivw-1" class="section level4">
-<h4>1. IVW</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
@@ -1227,8 +1144,163 @@ MRInput &lt;- mr_input(bx = dat1$BETA,
                     by = dat2$BETA,
                     byse = dat1$SE)
 mr = mr_ivw(MRInput)
-res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
-<pre class="r"><code>res.mr</code></pre>
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+res.mr</code></pre>
+<pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
+point.est 0.24317166        0.2295997    0.21317566    0.22759230
+std       0.05191165        0.0557970    0.04772173    0.02685883</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on Diabetes&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
+Past versions of unnamed-chunk-10-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-10-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-10-1.png" target="_blank">508300b</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-17
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-10-1.png" target="_blank">7a87cfe</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="mr.raps-1" class="section level4">
+<h4>2. mr.raps</h4>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)
+res.mr</code></pre>
+<pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
+point.est 0.37495407       0.36998882    0.32776516    0.25848609
+std       0.06691257       0.08379391    0.06467791    0.01119801</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on Diabetes&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-12-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="ivw-2" class="section level4">
+<h4>1. IVW</h4>
+<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
+# sanity check
+sum(dat1$variant != dat2$variant)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
+<pre><code>[1] 0</code></pre>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+MRInput &lt;- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput &lt;- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput &lt;- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput &lt;- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
 point.est 0.25377357       0.24469011    0.26755029    0.22720776
 std       0.07634288       0.07942329    0.06510503    0.04122251</code></pre>
@@ -1302,7 +1374,7 @@ yunqi yang
 </div>
 </div>
 </div>
-<div id="mr.raps-1" class="section level4">
+<div id="mr.raps-2" class="section level4">
 <h4>2. mr.raps</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
@@ -1330,8 +1402,8 @@ res.mr[, 3] = c(point_est, stderr)
 mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
-res.mr[, 4] = c(point_est, stderr)</code></pre>
-<pre class="r"><code>res.mr</code></pre>
+res.mr[, 4] = c(point_est, stderr)
+res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
 point.est 0.39477427       0.38226988    0.38025604     0.2617863
 std       0.07600144       0.09675482    0.07715442     0.0129411</code></pre>
@@ -1344,13 +1416,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on Diabetes&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
-Past versions of unnamed-chunk-18-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
+Past versions of unnamed-chunk-17-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-18-1" class="collapse">
+<div id="fig-unnamed-chunk-17-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1369,7 +1441,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">45af8f0</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">45af8f0</a>
 </td>
 <td>
 yunqiyang0215
@@ -1380,7 +1452,7 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f25014221d7c57c8238150096499990ab2a74056/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">f250142</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f25014221d7c57c8238150096499990ab2a74056/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">f250142</a>
 </td>
 <td>
 yunqiyang0215
@@ -1391,7 +1463,7 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/a6c4b0de55ebf8ac1f1d6608a3758e1bf1d6719e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">a6c4b0d</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">03df7e3</a>
 </td>
 <td>
 yunqiyang0215
@@ -1402,35 +1474,35 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03df7e39247fdabba91d3ac4ce5ae07b4aa65e18/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">03df7e3</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ccb152507c46002da380283f4b24a87a25f02a09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">ccb1525</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
-2024-05-23
+2024-05-22
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">508300b</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ba88f5ec76b4bb1ca7bb61be891fe919a882857e/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">ba88f5e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-20
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/508300b45264b29758cb501c74fc5413b1c97f97/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-17-1.png" target="_blank">508300b</a>
 </td>
 <td>
 yunqi yang
 </td>
 <td>
 2024-05-17
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/7a87cfe4dff76b633b3a77ac9eb8531700d63af8/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-18-1.png" target="_blank">7a87cfe</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-05-16
 </td>
 </tr>
 </tbody>
@@ -1459,6 +1531,146 @@ sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
 dat.out = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<div id="ivw-3" class="section level4">
+<h4>1. IVW</h4>
+<pre class="r"><code>dat1 = dat.exp
+dat2 = dat.out</code></pre>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+MRInput &lt;- mr_input(bx = dat1$cali,
+                    bxse = sqrt(dat1$cali.var),
+                    by = dat2$cali,
+                    byse = sqrt(dat2$cali.var))
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# uncalibrated
+MRInput &lt;- mr_input(bx = dat1$raw,
+                    bxse = sqrt(dat1$raw.var),
+                    by = dat2$raw,
+                    byse = sqrt(dat2$raw.var))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+
+
+# internal gwas
+MRInput &lt;- mr_input(bx = dat1$int,
+                    bxse = sqrt(dat1$int.var),
+                    by = dat2$int,
+                    byse = sqrt(dat2$int.var))
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput &lt;- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 4] = c(mr@Estimate, mr@StdError)
+res.mr</code></pre>
+<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
+point.est 0.003496006      -0.02687654   -0.10578373   -0.13394807
+std       0.034296888       0.03547024    0.03578121    0.01489025</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-22-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="mr.raps-3" class="section level4">
+<h4>2. mr.raps</h4>
+<pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
+colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+
+# calibrated
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# adj+uncalibrated
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 3] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 4] = c(point_est, stderr)
+res.mr</code></pre>
+<pre><code>           calibrated adj+uncalibrated internal.gwas external.gwas
+point.est 0.008124265      -0.06862638   -0.27390218   -0.15619134
+std       0.085969265       0.10205600    0.08074869    0.01095668</code></pre>
+<pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+point_est &lt;- res.mr[1, ]
+error_bars &lt;- 1.96 * res.mr[2, ]
+
+# Plotting
+plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+     xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
+arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+axis(1, at=1:4, labels=labels)</code></pre>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-1">
+Past versions of unnamed-chunk-24-1.png
+</button>
+</p>
+<div id="fig-unnamed-chunk-24-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-24-1.png" target="_blank">45af8f0</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-24
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="ivw-4" class="section level4">
+<h4>1. IVW</h4>
 <pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
@@ -1468,8 +1680,6 @@ sum(dat1$variant != dat2$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
 <pre><code>[1] 0</code></pre>
-<div id="ivw-2" class="section level4">
-<h4>1. IVW</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
@@ -1521,46 +1731,9 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-24-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-24-1">
-Past versions of unnamed-chunk-24-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-24-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-24-1.png" target="_blank">45af8f0</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-28-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-</div>
-<div id="mr.raps-2" class="section level4">
+<div id="mr.raps-4" class="section level4">
 <h4>2. mr.raps</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
@@ -1602,13 +1775,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-27-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-27-1">
-Past versions of unnamed-chunk-27-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
+Past versions of unnamed-chunk-31-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-27-1" class="collapse">
+<div id="fig-unnamed-chunk-31-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1627,7 +1800,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-27-1.png" target="_blank">45af8f0</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d51f0b8288725b22edef20d3672ebf7a65996979/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-31-1.png" target="_blank">d51f0b8</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-05-24
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-31-1.png" target="_blank">45af8f0</a>
 </td>
 <td>
 yunqiyang0215
@@ -1640,6 +1824,9 @@ yunqiyang0215
 </table>
 </div>
 </div>
+</div>
+<div id="ivw-5" class="section level4">
+<h4>1. IVW</h4>
 <pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
@@ -1649,9 +1836,6 @@ sum(dat1$variant != dat2$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
 <pre class="r"><code>sum(dat1$allele.test != dat2$allele.test)</code></pre>
 <pre><code>[1] 0</code></pre>
-</div>
-<div id="ivw-3" class="section level4">
-<h4>1. IVW</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
@@ -1703,46 +1887,9 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
-Past versions of unnamed-chunk-31-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-31-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-31-1.png" target="_blank">45af8f0</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-35-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-</div>
-<div id="mr.raps-3" class="section level4">
+<div id="mr.raps-5" class="section level4">
 <h4>2. mr.raps</h4>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
@@ -1784,44 +1931,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-34-1">
-Past versions of unnamed-chunk-34-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-34-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/45af8f0684e66d11a957c77c1cbefbb71c270f09/docs/figure/ukb_mr_sibling.Rmd/unnamed-chunk-34-1.png" target="_blank">45af8f0</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_sibling.Rmd/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 </div>
 <div id="bmi-on-education-yrs-1" class="section level3">
