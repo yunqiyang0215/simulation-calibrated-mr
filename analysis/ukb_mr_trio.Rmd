@@ -13,8 +13,8 @@ library(mr.raps)
 
 ```{r}
 # BMI
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/trio_calibration_bmi.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/combined_bmi.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -37,8 +37,8 @@ sum(pval.uncali < 1e-3)
 
 ```{r}
 # Diabetes
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/trio_calibration_diabetes.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/gwas_diabetes.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_diabetes.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -169,8 +169,8 @@ axis(1, at=1:4, labels=labels)
 
 ```{r}
 # BMI
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/trio_calibration_bmi.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/combined_bmi.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
@@ -181,8 +181,8 @@ dat1$BETA = ifelse(dat1$allele.test == dat1$A1, dat1$BETA, -dat1$BETA)
 
 ```{r}
 # education years
-sumstat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/trio_calibration_education_yrs.rds")
-ext = read.csv("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/gwas_education_yrs.linear", sep = "\t")
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_education_yrs.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear", sep = "\t")
 
 sumstat = as.data.frame(sumstat)
 sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
