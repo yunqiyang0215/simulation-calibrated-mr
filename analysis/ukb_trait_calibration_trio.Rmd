@@ -309,6 +309,37 @@ dat[vr < 0.2, c("variant", "allele.test", "cali.var", "raw.var")]
 
 
 
+### Summary
+```{r}
+bmi = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+sbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_sbp.rds")
+dbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_dbp.rds")
+diabetes = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_diabetes.rds")
+edu = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_education_yrs.rds")
+```
+
+```{r}
+dat = list(bmi, sbp, dbp, diabetes, edu)
+for (i in 1:length(dat)){
+  dat[[i]] = as.data.frame(dat[[i]])
+  dat[[i]][, c(3:8)] = apply(dat[[i]][, c(3:8)], 2, as.numeric)
+}
+
+```
+
+```{r}
+diff = sapply(1:5, function(i) dat[[i]]$cali - dat[[i]]$raw)
+vr =  sapply(1:5, function(i) 1 - dat[[i]]$cali.var/dat[[i]]$raw.var)
+colnames(diff) = c("bmi", "sbp", "dbp", "diabetes", "education years")
+colnames(vr) = c("bmi", "sbp", "dbp", "diabetes", "education years")
+```
+
+```{r fig.width = 10, fig.height=5}
+par(mfrow = c(1,2))
+boxplot(diff, main = "Difference beween calibrated estimator and raw estimator", 
+        ylab = "", names = colnames(diff), pch = 20, cex = 0.6)
+boxplot(vr, main = "variance reduction",names = colnames(diff), pch = 20, cex = 0.6)
+```
 
 
 
