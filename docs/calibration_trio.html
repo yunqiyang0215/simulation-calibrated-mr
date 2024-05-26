@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree17908c2b23c984656fdb80a0e54f6ac204f91d2btargetblank17908c2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec7f2ff0a1dbb9214a51f4e5fedb8138e6ca8c80etargetblankc7f2ff0a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/17908c2b23c984656fdb80a0e54f6ac204f91d2b" target="_blank">17908c2</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c7f2ff0a1dbb9214a51f4e5fedb8138e6ca8c80e" target="_blank">c7f2ff0</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree17908c2b23c984656fdb80a0e54f6ac204f91d2btargetblank17908c2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec7f2ff0a1dbb9214a51f4e5fedb8138e6ca8c80etargetblankc7f2ff0a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/17908c2b23c984656fdb80a0e54f6ac204f91d2b" target="_blank">17908c2</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c7f2ff0a1dbb9214a51f4e5fedb8138e6ca8c80e" target="_blank">c7f2ff0</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -611,6 +611,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c7f2ff0a1dbb9214a51f4e5fedb8138e6ca8c80e/analysis/calibration_trio.Rmd" target="_blank">c7f2ff0</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-25
+</td>
+<td>
+wflow_publish("analysis/calibration_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/e5c79fbea9c079fad6fd578070ea489688acb9ab/docs/calibration_trio.html" target="_blank">e5c79fb</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-25
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -946,7 +980,7 @@ rownames(vr) = r1
 
 # Create a vector for equally spaced x-values
 x_values = c(1, 2, 3)
-plot(x = as.factor(rep(x_values, p)), y = c(vr), xlab = &quot;r1 value&quot;, ylab = &quot;Empirical variance reduction&quot;, xaxt=&quot;n&quot;, pch = 20,ylim = c(0, 1), boxwex = 0.5)
+plot(x = as.factor(rep(x_values, p)), y = c(vr), xlab = &quot;r1 value&quot;, ylab = &quot;Empirical variance reduction&quot;, xaxt=&quot;n&quot;, pch = 20,ylim = c(0, 1), boxwex = 0.5, main = &quot;Linear regression&quot;)
 axis(1, at = x_values, labels = c(&quot;0&quot;, &quot;0.1&quot;, &quot;0.5&quot;))
 abline(h = theo_vr, col = &quot;red&quot;, lty = 2)</code></pre>
 <p><img src="figure/calibration_trio.Rmd/unnamed-chunk-5-1.png" width="384" style="display: block; margin: auto;" /></p>
@@ -1088,7 +1122,7 @@ rownames(vr) = r1
 
 # Create a vector for equally spaced x-values
 x_values = c(1, 2, 3)
-plot(x = as.factor(rep(x_values, p)), y = c(vr), xlab = &quot;r1 value&quot;, ylab = &quot;Empirical variance reduction&quot;, xaxt=&quot;n&quot;, pch = 20, ylim = c(0, 1))
+plot(x = as.factor(rep(x_values, p)), y = c(vr), xlab = &quot;r1 value&quot;, ylab = &quot;Empirical variance reduction&quot;, xaxt=&quot;n&quot;, pch = 20, ylim = c(0, 1), main = &quot;Logistic regression&quot;)
 axis(1, at = x_values, labels = c(&quot;0&quot;, &quot;0.1&quot;, &quot;0.5&quot;))
 abline(h = theo_vr, col = &quot;red&quot;, lty = 2)</code></pre>
 <p><img src="figure/calibration_trio.Rmd/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;" /></p>
@@ -1114,6 +1148,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e5c79fbea9c079fad6fd578070ea489688acb9ab/docs/figure/calibration_trio.Rmd/unnamed-chunk-10-1.png" target="_blank">e5c79fb</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/609cef8d24eee0ecbbf70bd1907950ad172504ba/docs/figure/calibration_trio.Rmd/unnamed-chunk-10-1.png" target="_blank">609cef8</a>
