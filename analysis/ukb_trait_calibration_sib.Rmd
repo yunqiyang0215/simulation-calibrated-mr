@@ -264,7 +264,7 @@ edu = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analy
 ```
 
 ```{r}
-dat = list(bmi, sbp, dbp, diabetes, edu)
+dat = list(edu, bmi, sbp, dbp, diabetes)
 for (i in 1:length(dat)){
   dat[[i]] = as.data.frame(dat[[i]])
   dat[[i]][, c(3:8)] = apply(dat[[i]][, c(3:8)], 2, as.numeric)
@@ -275,15 +275,23 @@ for (i in 1:length(dat)){
 ```{r}
 diff = sapply(1:5, function(i) dat[[i]]$cali - dat[[i]]$raw)
 vr =  sapply(1:5, function(i) 1 - dat[[i]]$cali.var/dat[[i]]$raw.var)
-colnames(diff) = c("bmi", "sbp", "dbp", "diabetes", "edu_yrs")
-colnames(vr) = c("bmi", "sbp", "dbp", "diabetes", "edu_yrs")
+colnames(diff) = c("edu_yrs", "bmi", "sbp", "dbp", "diabetes")
+colnames(vr) = c("edu_yrs", "bmi", "sbp", "dbp", "diabetes")
 ```
+
+
+```{r}
+pheno.cor = c(0.355, 0.284, 0.202, 0.148, 0.091)
+theo_vr = (1-0.5)/2*(1-pheno.cor)/(1+0.5*pheno.cor)
+```
+
 
 ```{r fig.width = 12, fig.height=6}
 par(mfrow = c(1,2))
 boxplot(diff, main = "calibrated estimator - raw estimator", 
         ylab = "", names = colnames(diff), pch = 20, cex = 0.6)
-boxplot(vr, main = "variance reduction",names = colnames(diff), pch = 20, cex = 0.6)
+boxplot(vr, main = "variance reduction",names = colnames(vr), pch = 20, cex = 0.6)
+points(1:length(theo_vr), theo_vr, col = "red", pch = 4)
 ```
 
 
