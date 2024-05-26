@@ -136,7 +136,7 @@ for (i in 1:p){
 ```
 
 
-```{r}
+```{r fig.height = 5, fig.width=4}
 vr = (empirical_var_raw - empirical_var_cali) / empirical_var_raw
 rownames(vr) = r1
 
