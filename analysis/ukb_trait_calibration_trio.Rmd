@@ -330,8 +330,8 @@ for (i in 1:length(dat)){
 ```{r}
 diff = sapply(1:5, function(i) dat[[i]]$cali - dat[[i]]$raw)
 vr =  sapply(1:5, function(i) 1 - dat[[i]]$cali.var/dat[[i]]$raw.var)
-colnames(diff) = c("bmi", "sbp", "dbp", "diabetes", "education yrs")
-colnames(vr) = c("bmi", "sbp", "dbp", "diabetes", "education yrs")
+colnames(diff) = c("bmi", "sbp", "dbp", "diabetes", "edu_yrs")
+colnames(vr) = c("bmi", "sbp", "dbp", "diabetes", "edu_yrs")
 ```
 
 ```{r fig.width = 12, fig.height=6}
