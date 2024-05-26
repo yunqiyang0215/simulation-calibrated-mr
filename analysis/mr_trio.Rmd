@@ -38,7 +38,7 @@ for (i in 1:nrow(combinations)){
 means <- colMeans(output)
 ses <- apply(output, 2, sd)
 ncomb = nrow(combinations)
-labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
+labels = apply(combinations, 1, function(x) paste0("(",x[1], ",", x[2], ")"))
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
@@ -46,10 +46,10 @@ plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
      xlab = "", ylab = "", main = "MR estimates: IVW", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
-       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+      length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 abline(h = 1, lty =2, col = "grey")
 
-axis(1, at = c(1:ncomb), labels = labels, las = 2, cex.axis = 0.6)
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.6)
 legend("topleft", legend = c("calibrated", "adjusted, uncalibrated", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
 ```
 
