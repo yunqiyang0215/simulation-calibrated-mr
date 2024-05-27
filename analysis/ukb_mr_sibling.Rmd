@@ -94,7 +94,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -140,7 +140,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -209,7 +209,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -255,7 +255,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -323,7 +323,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -371,7 +371,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -462,7 +462,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -510,7 +510,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -582,7 +582,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -633,7 +633,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -705,7 +705,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
@@ -753,7 +753,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=5, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
