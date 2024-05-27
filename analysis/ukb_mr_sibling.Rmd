@@ -753,7 +753,7 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r fig.width=5, fig.height=6}
+```{r fig.width=5, fig.height=8}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
