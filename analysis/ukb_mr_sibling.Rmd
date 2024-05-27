@@ -94,7 +94,7 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r fig.width=8, fig.height=5}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
