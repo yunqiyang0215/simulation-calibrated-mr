@@ -102,7 +102,8 @@ for (i in 1:length(snp_list)){
   res <- calibrated_est_trio_2(dat_exp, Z = Z, rho_shared = 0, alpha_ext, alpha_ext_sd)
   
   # get internal fit 
-  dat_complete = cbind(Y, dat[ , snp_columns], Z)
+  dat_complete = as.data.frame(cbind(Y, dat[ , snp_columns][,1], Z))
+  colnames(dat_complete)[1] = "Y" 
   fit = lm(Y ~ ., data = dat_complete)
   int = coef(summary(fit))[2, 1]
   int.var = coef(summary(fit))[2,2]^2
