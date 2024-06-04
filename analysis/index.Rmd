@@ -75,8 +75,7 @@ UKB EDA:
 
 UKB data analysis:
 
-+ [UKB trait calibration result trio](ukb_trait_calibration_trio.html)
-
++ [UKB trait calibration: check summary stat](check_sumstat.html)
 
 + [UKB trait calibration result trio](ukb_trait_calibration_trio.html)
 
