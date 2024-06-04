@@ -5,6 +5,31 @@ date: "5/8/2024"
 output: html_document
 ---
 
+### 0. Check result for G&Gpa model and T&NT model
+
+```{r}
+sumstat1 = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+sumstat2 = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_NT_bmi.rds")
+```
+
+
+```{r}
+head(sumstat1)
+head(sumstat2)
+```
+
+
+```{r}
+sumstat1 = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_education_yrs.rds")
+sumstat2 = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_NT_education_yrs.rds")
+```
+
+
+```{r}
+head(sumstat1)
+head(sumstat2)
+```
+
 ### 1. BMI
 
 ```{r}
