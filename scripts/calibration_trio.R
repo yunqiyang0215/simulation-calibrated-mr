@@ -81,6 +81,7 @@ Z = as.matrix(Z)
 Y = scale(dat[, pheno])
 
 N_ext = 2e5
+# Use G/Gpa model
 for (i in 1:length(snp_list)){
   snp = snp_list[i]
   if (!(snp %in% pheno.gwas$ID)){
@@ -112,6 +113,46 @@ for (i in 1:length(snp_list)){
 }
 
 saveRDS(sumstat, paste0("/home/yunqiyang/calibrated_mr/real_data_analysis/result/trio_calibration_", pheno, ".rds"))
+
+
+
+# Use T&NT model
+sumstat_NT = matrix(NA, nrow = p, ncol = 8)
+colnames(sumstat_NT) = c("variant", "allele.test", "cali", "cali.var", "raw", "raw.var", "int", "int.var")
+
+for (i in 1:length(snp_list)){
+  snp = snp_list[i]
+  if (!(snp %in% pheno.gwas$ID)){
+    next
+  }
+  indx = which(pheno.gwas$ID == snp)
+  
+  # check if the allele tested in external gwas the same as internal genotype dosage
+  alpha_ext = pheno.gwas[indx, "BETA"]
+  alpha_ext_sd = pheno.gwas[indx, "SE"]
+  
+  if (pheno.gwas[indx, "A1"] != alleles[i]){
+    alpha_ext = -alpha_ext
+  }
+  
+  snp_col = c(paste0(snp, ".x"), paste0(snp, ".y"))
+  snp_columns <- which(colnames(dat) == snp_col[1] | colnames(dat) == snp_col[2])
+  dat_snp = cbind(dat[ , snp_columns][1], dat[ , snp_columns][2] - dat[, snp_columns][1])
+  dat_exp = cbind(Y, dat_snp)
+  res <- calibrated_est_trio_1(dat_exp, Z = Z, rho_shared = 0, alpha_ext, alpha_ext_sd)
+  
+  # get internal fit 
+  dat_complete = as.data.frame(cbind(Y, dat[ , snp_columns][,1], Z))
+  colnames(dat_complete)[1] = "Y" 
+  fit = lm(Y ~ ., data = dat_complete)
+  int = coef(summary(fit))[2, 1]
+  int.var = coef(summary(fit))[2,2]^2
+  
+  sumstat_NT[i, ] = c(snp, alleles[i], res$calibrated_est, res$variance, res$`Raw Estimator`, res$raw_variance, int, int.var)
+}
+
+
+saveRDS(sumstat_NT, paste0("/home/yunqiyang/calibrated_mr/real_data_analysis/result/trio_calibration_NT_", pheno, ".rds"))
 
 
 
