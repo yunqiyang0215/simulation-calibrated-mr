@@ -27,8 +27,6 @@ editor_options:
 
 Simulation using ukb real genotype
 
-+ [EDA on UKB trio data](ukb_EDA.html)
-
 + [Calibration result: ukb trio](ukb_calibration.html)
 
 + [Calibration result: ukb trio with resampling](calibration_fixedX.html)
@@ -65,8 +63,20 @@ Parametric simulation combined:
 
 + [MR result: trio data](mr_trio.html)
 
+UKB EDA:
+
++ [EDA on UKB trio data 1](ukb_EDA.html)
+
++ [EDA on UKB trio data 2](eda_ukb_trio.html)
+
++ [EDA on UKB external data](eda_ukb_external.html)
+
+
 
 UKB data analysis:
+
++ [UKB trait calibration result trio](ukb_trait_calibration_trio.html)
+
 
 + [UKB trait calibration result trio](ukb_trait_calibration_trio.html)
 
