@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Check sumstat"
 author: "Yunqi Yang"
 date: "6/4/2024"
 output: html_document
@@ -90,11 +90,6 @@ abline(a = 0,  b = 1, col = "red")
 
 plot(dat_sib$BETA, dat_sib$int, xlab = "external gwas", ylab = "sibling internal gwas")
 abline(a = 0,  b = 1, col = "red")
-```
-
-```{r}
-pval.ext = pnorm(abs(dat_trio$BETA/dat_trio$SE), lower.tail = FALSE)
-indx <- which(pval.ext < 1e-5)
 ```
 
 ```{r fig.height=5, fig.width = 10} 
