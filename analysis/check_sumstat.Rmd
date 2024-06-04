@@ -1,0 +1,113 @@
+---
+title: "Untitled"
+author: "Yunqi Yang"
+date: "6/4/2024"
+output: html_document
+---
+
+## Description: 
+
+check summary statistics of BMI and education years in trio & sibling data. 
+
+### 1. BMI
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat_trio = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat_trio$BETA = ifelse(dat_trio$allele.test == dat_trio$A1, dat_trio$BETA, -dat_trio$BETA)
+```
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat_sib = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat_sib$BETA = ifelse(dat_sib$allele.test == dat_sib$A1, dat_sib$BETA, -dat_sib$BETA)
+```
+
+```{r }
+par(mfrow = c(1,2))
+plot(dat_trio$BETA, dat_trio$int, xlab = "external gwas", ylab = "trio internal gwas")
+abline(a = 0,  b = 1, col = "red")
+
+plot(dat_sib$BETA, dat_sib$int, xlab = "external gwas", ylab = "sibling internal gwas")
+abline(a = 0,  b = 1, col = "red")
+```
+
+```{r}
+pval.ext = pnorm(abs(dat_trio$BETA/dat_trio$SE), lower.tail = FALSE)
+indx <- which(pval.ext < 1e-5)
+```
+
+```{r fig.height=5, fig.width = 10} 
+sub_trio = dat_trio[indx, ]
+sub_sib = dat_sib[indx, ]
+
+par(mfrow = c(1,3))
+plot(sub_trio$cali, sub_sib$cali, xlab = "trio: calibrated", ylab = "sib: calibrated")
+abline(a = 0, b = 1, col = "red")
+plot(sub_trio$raw, sub_sib$raw, xlab = "trio: raw", ylab = "sib: raw")
+abline(a = 0, b = 1, col = "red")
+plot(sub_trio$int, sub_sib$int, xlab = "trio: internal gwas", ylab = "sib: internal gwas")
+abline(a = 0, b = 1, col = "red")
+
+```
+
+
+
+
+
+### 2. Education years
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_education_yrs.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear", sep = "\t")
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat_trio = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat_trio$BETA = ifelse(dat_trio$allele.test == dat_trio$A1, dat_trio$BETA, -dat_trio$BETA)
+```
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_education_yrs.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_education_yrs.linear", sep = "\t")
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+dat_sib = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat_sib$BETA = ifelse(dat_sib$allele.test == dat_sib$A1, dat_sib$BETA, -dat_sib$BETA)
+```
+
+```{r }
+par(mfrow = c(1,2))
+plot(dat_trio$BETA, dat_trio$int, xlab = "external gwas", ylab = "trio internal gwas")
+abline(a = 0,  b = 1, col = "red")
+
+plot(dat_sib$BETA, dat_sib$int, xlab = "external gwas", ylab = "sibling internal gwas")
+abline(a = 0,  b = 1, col = "red")
+```
+
+```{r}
+pval.ext = pnorm(abs(dat_trio$BETA/dat_trio$SE), lower.tail = FALSE)
+indx <- which(pval.ext < 1e-5)
+```
+
+```{r fig.height=5, fig.width = 10} 
+sub_trio = dat_trio[indx, ]
+sub_sib = dat_sib[indx, ]
+
+par(mfrow = c(1,3))
+plot(sub_trio$cali, sub_sib$cali, xlab = "trio: calibrated", ylab = "sib: calibrated")
+abline(a = 0, b = 1, col = "red")
+plot(sub_trio$raw, sub_sib$raw, xlab = "trio: raw", ylab = "sib: raw")
+abline(a = 0, b = 1, col = "red")
+plot(sub_trio$int, sub_sib$int, xlab = "trio: internal gwas", ylab = "sib: internal gwas")
+abline(a = 0, b = 1, col = "red")
+
+```
+
