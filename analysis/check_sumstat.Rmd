@@ -123,3 +123,54 @@ plot(sub_trio$int, sumstat_random$int[indx], xlab = "trio: internal gwas", ylab 
 abline(a = 0, b = 1, col = "red")
 ```
 
+
+### 4. BMI (trio internal gwas) on education years (330 random sample, gwas)
+
+```{r}
+library(MendelianRandomization)
+library(mr.raps)
+```
+
+```{r}
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:8)] = apply(sumstat[, c(3:8)], 2, as.numeric)
+
+sumstat_random <- readRDS("/Users/nicholeyang/downloads/calibrated_estimator/real-data-analysis/result/education_yrs_330_random_linreg.rds")
+
+# select 1e-5 snps
+dat.exp = sumstat[indx, ]
+dat.out = sumstat_random[indx, ]
+```
+
+#### IVW
+```{r}
+MRInput <- mr_input(bx = dat.exp$int,
+                    bxse = sqrt(dat.exp$int.var),
+                    by = dat.out$int,
+                    byse = dat.out$int.std)
+mr = mr_ivw(MRInput)
+res.mr = c(mr@Estimate, mr@StdError)
+res.mr
+```
+
+#### mr.raps
+```{r}
+mr = mr.raps.shrinkage(dat.exp$int, dat.out$int, sqrt(dat.exp$int.var),
+                       dat.out$int.std)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr = c(point_est, stderr)
+res.mr
+```
+
+```{r}
+mr = mr.raps.mle(dat.exp$int, dat.out$int, sqrt(dat.exp$int.var),
+                       dat.out$int.std)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr = c(point_est, stderr)
+res.mr
+```
+
+
