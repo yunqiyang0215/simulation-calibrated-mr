@@ -106,3 +106,20 @@ abline(a = 0, b = 1, col = "red")
 
 ```
 
+
+
+### 3. Education years (random sample vs. sibling sample)
+
+```{r}
+sumstat_random <- readRDS("/Users/nicholeyang/downloads/calibrated_estimator/real-data-analysis/result/education_yrs_330_random_linreg.rds")
+```
+
+```{r}
+par(mfrow = c(1,2))
+plot(sumstat_random$int[indx], dat_sib$int[indx], xlab = "random sample 330: internal gwas", ylab ="sib: internal gwas")
+abline(a = 0, b = 1, col = "red")
+
+plot(sub_trio$int, sumstat_random$int[indx], xlab = "trio: internal gwas", ylab = "random sample 330: internal gwas")
+abline(a = 0, b = 1, col = "red")
+```
+
