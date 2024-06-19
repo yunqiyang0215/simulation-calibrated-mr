@@ -295,5 +295,9 @@ points(1:length(theo_vr), theo_vr, col = "red", pch = 4)
 ```
 
 
-
+dat_int <- dat_int %>%
+  group_by(Family.ID) %>%
+  filter(n() == 2) %>%
+  ungroup() %>%
+  as.data.frame()
 
