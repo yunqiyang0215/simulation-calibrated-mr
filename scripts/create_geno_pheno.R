@@ -1,4 +1,5 @@
 # Description: create internal phenotype data
+# Geno data contains SNPs associated with BMI
 library(dplyr)
 
 # create trio data 
