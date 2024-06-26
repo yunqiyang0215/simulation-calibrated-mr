@@ -1,15 +1,10 @@
 library(dplyr)
-source("/home/yunqiyang/calibrated_mr/trio_data_cov.R")
+source("/home/yunqiyang/simulation-calibrated-mr/code/trio_data_cov.R")
 
 args <- commandArgs(trailingOnly = TRUE)
 pheno <- args[1]
 
 
-if (length(args) > 1) {
-  val_to_remove <- eval(parse(text = args[2]))
-} else {
-  val_to_remove <- NULL
-}
 
 if (pheno == "diabetes"){
   val_to_remove = c(-1, -3)
