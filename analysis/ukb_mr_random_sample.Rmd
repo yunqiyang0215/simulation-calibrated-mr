@@ -9,6 +9,84 @@ library(MendelianRandomization)
 library(mr.raps)
 ```
 
+### 1. both BMI and diabetes use 2k random sample
+
+```{r}
+# BMI
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/bmi_2k_random_linreg.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:4)] = apply(sumstat[, c(3:4)], 2, as.numeric)
+dat1 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat1$BETA = ifelse(dat1$allele_test == dat1$A1, dat1$BETA, -dat1$BETA)
+
+# diabetes
+sumstat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/diabetes_2k_random_linreg.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_diabetes.linear", sep = "\t")
+
+sumstat = as.data.frame(sumstat)
+sumstat[, c(3:4)] = apply(sumstat[, c(3:4)], 2, as.numeric)
+dat2 = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat2$BETA = ifelse(dat2$allele_test == dat2$A1, dat2$BETA, -dat2$BETA)
+```
+
+#### 1. IVW
+
+```{r}
+pval.ext = pnorm(abs(dat1$BETA/dat1$SE), lower.tail = FALSE)
+indx = which(pval.ext < 1e-8)
+dat1 = dat1[indx, ]
+dat2 = dat2[indx, ]
+```
+
+```{r}
+res.mr = matrix(NA, ncol = 2, nrow = 2)
+colnames(res.mr) = c("internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# internal gwas
+MRInput <- mr_input(bx = dat1$int,
+                    bxse = dat1$int.std,
+                    by = dat2$int,
+                    byse = dat2$int.std)
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+
+
+# external gwas
+MRInput <- mr_input(bx = dat1$BETA,
+                    bxse = dat1$SE,
+                    by = dat2$BETA,
+                    byse = dat1$SE)
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+res.mr
+```
+
+#### 2. mr.raps
+```{r  }
+res.mr = matrix(NA, ncol = 2, nrow = 2)
+colnames(res.mr) = c("internal.gwas", "external.gwas")
+rownames(res.mr) = c("point.est", "std")
+
+# internal gwas
+mr = mr.raps.mle(dat1$int, dat2$int, dat1$int.std, dat2$int.std)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 1] = c(point_est, stderr)
+
+# external gwas
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+point_est = mr$beta.hat
+stderr = mr$beta.se
+res.mr[, 2] = c(point_est, stderr)
+res.mr
+```
+
+
 ### 1. both BMI and education yrs use 2k random sample
 
 ```{r}
@@ -191,3 +269,7 @@ point_est = mr$beta.hat
 stderr = mr$beta.se
 print(c(point_est, stderr))
 ```
+
+
+
+

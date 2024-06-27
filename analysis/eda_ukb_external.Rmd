@@ -1,0 +1,41 @@
+---
+title: "EDA: ukb external"
+author: "Yunqi Yang"
+date: "6/4/2024"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+```
+
+```{r}
+dat = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/pheno_cov.rds")
+```
+
+```{r}
+# Get GWAS samples. Remove relatedness
+dat <- dat %>% filter(kinship_genetic == 0)
+cat(sprintf(paste("After removing relatedness individuals based on kinship,",
+                  "%d rows remain.\n"),nrow(dat)))
+
+```
+
+```{r}
+dat = dat[!(dat$education_attainment %in% c(6, -7, -3)), ] 
+dat$education_attainment = as.numeric(dat$education_attainment)
+dat = dat[!is.na(dat$education_attainment), ] 
+
+# map EA to years
+dat$education_attainment[which(dat$education_attainment == 1)] = 17
+dat$education_attainment[which(dat$education_attainment == 2)] = 14
+dat$education_attainment[which(dat$education_attainment == 3)] = 11
+dat$education_attainment[which(dat$education_attainment == 4)] = 11
+dat$education_attainment[which(dat$education_attainment == 5)] = 15
+dat$education_yrs = dat$education_attainment
+```
+
+```{r}
+cor(as.numeric(dat$bmi), as.numeric(dat$education_yrs), use = "complete.obs")
+```
+

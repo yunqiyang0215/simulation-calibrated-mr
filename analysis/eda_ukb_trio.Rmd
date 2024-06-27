@@ -1,0 +1,87 @@
+---
+title: "EDA: ukb trio data"
+author: "Yunqi Yang"
+date: "6/4/2024"
+output: html_document
+---
+```{r}
+library(dplyr)
+```
+
+```{r}
+dat_int = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/trio_geno_pheno.rds")
+
+pheno = "education_yrs"
+if (pheno == "education_yrs"){
+  val_to_remove = c(6, -7, -3)
+}
+```
+
+```{r}
+var_names = colnames(dat_int)[grep("^rs", colnames(dat_int))]
+ss = strsplit(var_names, split = "_")
+snp_list = sapply(ss, function(x) x[1])
+alleles = sapply(ss, function(x) x[2])
+
+## processing dat_int
+# rename SNP
+colnames(dat_int) <- gsub("_G|_T|_A|_C", "", colnames(dat_int))
+dat_int <- data.frame(lapply(dat_int, function(x) as.numeric(as.character(x))), stringsAsFactors = FALSE)
+# remove NA
+dat_int <- dat_int[!is.na(dat_int[, pheno]), ]
+# val_to_remove
+if (!is.null(val_to_remove)){
+  dat_int = dat_int[!(dat_int[, pheno] %in% val_to_remove), ]
+}
+```
+
+```{r}
+dat_child = dat_int[dat_int$If.Child == 1, ]
+dat_par = dat_int[dat_int$If.Child == 0, c("Individual.ID", "Family.ID", snp_list)]
+
+# only keep families with two parents
+dat_par <- dat_par %>%
+  group_by(Family.ID) %>%
+  filter(n() == 2) %>%
+  ungroup() %>%
+  as.data.frame()
+
+# get parents genotype sum
+X.pa = c()
+family_indx = unique(dat_par$Family.ID)
+for (indx in family_indx){
+  dat_sub = dat_par[dat_par$Family.ID == indx, snp_list]
+  val = colSums(dat_sub, na.rm = TRUE)
+  X.pa = rbind(X.pa, c(indx, val))
+}
+
+colnames(X.pa)[1] = "Family.ID"
+dat = merge(dat_child, X.pa, by = "Family.ID", all = FALSE)
+```
+
+### 1. check phenotypic correlation
+
+```{r}
+unique(dat$education_yrs)
+```
+
+```{r}
+cor(dat$bmi, dat$education_yrs, use = "complete.obs")
+```
+
+### 2. check T & NT correlation
+```{r}
+res.cor = rep(NA, length(snp_list))
+for (i in 1:length(snp_list)){
+  snp = snp_list[i]
+  snp_col = c(paste0(snp, ".x"), paste0(snp, ".y"))
+  snp_columns <- which(colnames(dat) == snp_col[1] | colnames(dat) == snp_col[2])
+  dat_snp = dat[ , snp_columns]
+  res.cor[i] = cor(dat_snp[, 1], dat_snp[, 2] - dat_snp[, 1])
+}
+```
+
+```{r}
+hist(res.cor, main = "T & NT correlation", xlab = "")
+```
+

@@ -254,4 +254,50 @@ hist(vr, main = "variance ratio", xlab = "")
 mean(vr)
 ```
 
+### Summary
+```{r}
+bmi = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+sbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_sbp.rds")
+dbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_dbp.rds")
+diabetes = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds")
+edu = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_education_yrs.rds")
+```
+
+```{r}
+dat = list(edu, bmi, sbp, dbp, diabetes)
+for (i in 1:length(dat)){
+  dat[[i]] = as.data.frame(dat[[i]])
+  dat[[i]][, c(3:8)] = apply(dat[[i]][, c(3:8)], 2, as.numeric)
+}
+
+```
+
+```{r}
+diff = sapply(1:5, function(i) dat[[i]]$cali - dat[[i]]$raw)
+vr =  sapply(1:5, function(i) 1 - dat[[i]]$cali.var/dat[[i]]$raw.var)
+colnames(diff) = c("edu_yrs", "bmi", "sbp", "dbp", "diabetes")
+colnames(vr) = c("edu_yrs", "bmi", "sbp", "dbp", "diabetes")
+```
+
+
+```{r}
+pheno.cor = c(0.355, 0.284, 0.202, 0.148, 0.091)
+theo_vr = (1-0.5)/2*(1-pheno.cor)/(1+0.5*pheno.cor)
+```
+
+
+```{r fig.width = 12, fig.height=6}
+par(mfrow = c(1,2))
+boxplot(diff, main = "calibrated estimator - raw estimator", 
+        ylab = "", names = colnames(diff), pch = 20, cex = 0.6)
+boxplot(vr, main = "variance reduction",names = colnames(vr), pch = 20, cex = 0.6)
+points(1:length(theo_vr), theo_vr, col = "red", pch = 4)
+```
+
+
+dat_int <- dat_int %>%
+  group_by(Family.ID) %>%
+  filter(n() == 2) %>%
+  ungroup() %>%
+  as.data.frame()
 

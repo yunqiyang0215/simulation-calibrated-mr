@@ -94,14 +94,14 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -115,39 +115,39 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -209,14 +209,14 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -230,39 +230,39 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -323,14 +323,14 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='IVW: BMI on Diabetes', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -346,39 +346,39 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='mr.raps: BMI on Diabetes', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -462,14 +462,14 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -485,39 +485,39 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -582,14 +582,14 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -605,25 +605,25 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
@@ -633,14 +633,14 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -705,14 +705,14 @@ res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='IVW: BMI on education yrs', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -725,25 +725,25 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
@@ -753,14 +753,14 @@ res.mr[, 4] = c(point_est, stderr)
 res.mr
 ```
 
-```{r}
+```{r fig.width=6, fig.height=5}
 labels <- c('calibrated', 'adj+uncalibrated', 'internal.gwas', 'external.gwas')
 point_est <- res.mr[1, ]
 error_bars <- 1.96 * res.mr[2, ]
 
 # Plotting
 plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-     xaxt='n', pch=19, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
+     xaxt='n', pch=20, xlab='', ylab='Point Estimate', main='mr.raps: BMI on education years', cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
 axis(1, at=1:4, labels=labels)
 ```
@@ -846,13 +846,13 @@ colnames(res.mr) = c("internal.gwas", "external.gwas")
 rownames(res.mr) = c("point.est", "std")
 
 # internal gwas
-mr = mr.raps.mle(dat1$int, dat2$int, dat1$int.std, dat2$int.std)
+mr = mr.raps.shrinkage(dat1$int, dat2$int, dat1$int.std, dat2$int.std)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
@@ -916,7 +916,7 @@ mr = mr_ivw(MRInput)
 print(c(mr@Estimate, mr@StdError))
 
 
-mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), dat2$int.std)
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), dat2$int.std)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 print(c(point_est, stderr))
