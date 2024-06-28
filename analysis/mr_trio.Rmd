@@ -50,14 +50,14 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
 abline(h = 1, lty =2, col = "grey")
 
 axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
-legend("topleft", legend = c("calibrated", "adjusted, uncalibrated", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
+legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"))
 ```
 
 
 ### 2. mr.raps
 ```{r }
 
-n_rep = 50
+n_rep = 500
 combinations <- expand.grid(r1 = r1, r2 = r2)
 output = c()
 for (i in 1:nrow(combinations)){
@@ -71,11 +71,11 @@ for (i in 1:nrow(combinations)){
 ```
 
 ```{r fig.height = 6, fig.width=8}
-
+#pdf("fig1_convergence.pdf", width = 8, height = 8)
 means <- colMeans(output)
 ses <- apply(output, 2, sd)
 ncomb = nrow(combinations)
-labels = apply(combinations, 1, function(x) paste0("r1=",x[1], " & r2=", x[2]))
+labels = apply(combinations, 1, function(x) paste0("(",x[1], ",", x[2], ")"))
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
@@ -86,8 +86,8 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 abline(h = 1, lty =2, col = "grey")
 
-axis(1, at = c(1:ncomb), labels = labels, las = 2)
-legend("topleft", legend = c("calibrated", "adjuted+uncali", "unadjusted"), lty = 1, col = c("coral1", "skyblue", "gold"))
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"))
 ```
 
 
