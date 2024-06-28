@@ -44,6 +44,7 @@ empirical_var_raw = matrix(NA, ncol = p, nrow = length(r1))
 empirical_var_cali = matrix(NA, ncol = p, nrow = length(r1))
 
 for (i in 1:p){
+  # result merged for different r2 values 
   snp_dat_list = lapply(1:length(r1), function(k) combine_single_snp_stat(which(res$sim_data.r1 == r1[k] & res$fit.method == "calibrated_model_T"), i, data.list = res$fit.sumstat, column_names = c("Y1.raw")))
   dat_estimator <- do.call(cbind, snp_dat_list)
   empirical_var_raw[, i] = apply(dat_estimator, 2, var)
