@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-05-26
+<strong>Last updated:</strong> 2024-06-28
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9d5c8697a5e2d38261386e606c4b9618a107a615targetblank9d5c869a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree64c927f4d41fa1705ea637184ddb621f2c7d3d3ftargetblank64c927fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9d5c8697a5e2d38261386e606c4b9618a107a615" target="_blank">9d5c869</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/64c927f4d41fa1705ea637184ddb621f2c7d3d3f" target="_blank">64c927f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree9d5c8697a5e2d38261386e606c4b9618a107a615targetblank9d5c869a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree64c927f4d41fa1705ea637184ddb621f2c7d3d3ftargetblank64c927fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/9d5c8697a5e2d38261386e606c4b9618a107a615" target="_blank">9d5c869</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/64c927f4d41fa1705ea637184ddb621f2c7d3d3f" target="_blank">64c927f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -611,6 +611,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/64c927f4d41fa1705ea637184ddb621f2c7d3d3f/analysis/mr_trio.Rmd" target="_blank">64c927f</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-06-28
+</td>
+<td>
+wflow_publish("analysis/mr_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/e530b536b50ff4adaf378e0b1b820854c69fa13f/docs/mr_trio.html" target="_blank">e530b53</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-26
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1129,7 +1163,7 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
 abline(h = 1, lty =2, col = &quot;grey&quot;)
 
 axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
-legend(&quot;topleft&quot;, legend = c(&quot;calibrated&quot;, &quot;adjusted, uncalibrated&quot;, &quot;unadjusted&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;))</code></pre>
+legend(&quot;topleft&quot;, legend = c(&quot;Calibrated estimator&quot;, &quot;Raw estimator&quot;, &quot;External GWAS&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;))</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-4-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
@@ -1153,6 +1187,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e530b536b50ff4adaf378e0b1b820854c69fa13f/docs/figure/mr_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">e530b53</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-05-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f397f77c44b5b02c85a747a890dd706a587d25d2/docs/figure/mr_trio.Rmd/unnamed-chunk-4-1.png" target="_blank">f397f77</a>
@@ -1281,7 +1326,7 @@ yunqi yang
 </div>
 <div id="mr.raps" class="section level3">
 <h3>2. mr.raps</h3>
-<pre class="r"><code>n_rep = 50
+<pre class="r"><code>n_rep = 500
 combinations &lt;- expand.grid(r1 = r1, r2 = r2)
 output = c()
 for (i in 1:nrow(combinations)){
@@ -1291,10 +1336,11 @@ for (i in 1:nrow(combinations)){
               res$mr.point_est[res$fit.method == &quot;unadj_ext&quot;][1:n_rep])
   output = cbind(output, val)
 }</code></pre>
-<pre class="r"><code>means &lt;- colMeans(output)
+<pre class="r"><code>#pdf(&quot;fig1_convergence.pdf&quot;, width = 8, height = 8)
+means &lt;- colMeans(output)
 ses &lt;- apply(output, 2, sd)
 ncomb = nrow(combinations)
-labels = apply(combinations, 1, function(x) paste0(&quot;r1=&quot;,x[1], &quot; &amp; r2=&quot;, x[2]))
+labels = apply(combinations, 1, function(x) paste0(&quot;(&quot;,x[1], &quot;,&quot;, x[2], &quot;)&quot;))
 x_pos &lt;- rep(1:ncomb, each = 3)
 x_pos &lt;- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
@@ -1305,8 +1351,8 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), ncomb))
 abline(h = 1, lty =2, col = &quot;grey&quot;)
 
-axis(1, at = c(1:ncomb), labels = labels, las = 2)
-legend(&quot;topleft&quot;, legend = c(&quot;calibrated&quot;, &quot;adjuted+uncali&quot;, &quot;unadjusted&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;))</code></pre>
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+legend(&quot;topleft&quot;, legend = c(&quot;Calibrated estimator&quot;, &quot;Raw estimator&quot;, &quot;External GWAS&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;))</code></pre>
 <p><img src="figure/mr_trio.Rmd/unnamed-chunk-6-1.png" width="768" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
@@ -1940,18 +1986,17 @@ other attached packages:
 [1] workflowr_1.7.0
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.3.1      compiler_4.2.0  
- [5] pillar_1.7.0     later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
+ [1] Rcpp_1.0.12      highr_0.9        compiler_4.2.0   pillar_1.9.0    
+ [5] bslib_0.3.1      later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
  [9] tools_4.2.0      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    tibble_3.1.7     lifecycle_1.0.1  pkgconfig_2.0.3 
-[17] rlang_1.0.2      cli_3.3.0        rstudioapi_0.13  yaml_2.3.5      
-[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.4.0   
-[25] knitr_1.39       sass_0.4.1       fs_1.5.2         vctrs_0.4.1     
+[13] evaluate_0.15    lifecycle_1.0.4  tibble_3.2.1     pkgconfig_2.0.3 
+[17] rlang_1.1.3      cli_3.6.2        rstudioapi_0.13  yaml_2.3.5      
+[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.5.1   
+[25] knitr_1.39       fs_1.5.2         vctrs_0.6.5      sass_0.4.1      
 [29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.8.0  
 [33] fansi_1.0.3      rmarkdown_2.14   callr_3.7.3      magrittr_2.0.3  
 [37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
-[41] ellipsis_0.3.2   httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   
-[45] crayon_1.5.1    </code></pre>
+[41] httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   </code></pre>
 </div>
 </div>
 </div>
