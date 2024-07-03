@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-02-01
+<strong>Last updated:</strong> 2024-07-03
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree18786dde388b74dd785575b8fd844c25008e8572targetblank18786dda">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree65df637c7c06afbab9e83e6c6eee3a452cc29064targetblank65df637a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/18786dde388b74dd785575b8fd844c25008e8572" target="_blank">18786dd</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/65df637c7c06afbab9e83e6c6eee3a452cc29064" target="_blank">65df637</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree18786dde388b74dd785575b8fd844c25008e8572targetblank18786dda"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree65df637c7c06afbab9e83e6c6eee3a452cc29064targetblank65df637a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/18786dde388b74dd785575b8fd844c25008e8572" target="_blank">18786dd</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/65df637c7c06afbab9e83e6c6eee3a452cc29064" target="_blank">65df637</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -555,11 +555,17 @@ were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .RData
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
 
+Untracked files:
+    Untracked:  analysis/heritability.Rmd
+    Untracked:  analysis/mr_sibling.Rmd
+
 Unstaged changes:
-    Modified:   analysis/ukb_calibration.Rmd
+    Modified:   analysis/mr_bias.Rmd
+    Deleted:    analysis/mr_result.Rmd
 
 </code></pre>
 <p>
@@ -605,6 +611,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/65df637c7c06afbab9e83e6c6eee3a452cc29064/analysis/ukb_EDA.Rmd" target="_blank">65df637</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-07-03
+</td>
+<td>
+wflow_publish("analysis/ukb_EDA.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/034e9ca8ee6455e396ad39a1a705c6c7a857fe8b/docs/ukb_EDA.html" target="_blank">034e9ca</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-02-01
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -663,6 +703,19 @@ wflow_publish("analysis/ukb_EDA.Rmd")
 </div>
 </div>
 </div>
+<pre class="r"><code>library(data.table)
+library(dplyr)</code></pre>
+<pre><code>
+Attaching package: &#39;dplyr&#39;</code></pre>
+<pre><code>The following objects are masked from &#39;package:data.table&#39;:
+
+    between, first, last</code></pre>
+<pre><code>The following objects are masked from &#39;package:stats&#39;:
+
+    filter, lag</code></pre>
+<pre><code>The following objects are masked from &#39;package:base&#39;:
+
+    intersect, setdiff, setequal, union</code></pre>
 <pre class="r"><code># Load real data
 dat_int = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/dat_int.rds&quot;)
 dat_child = dat_int[[1]]
@@ -685,51 +738,6 @@ abline(v = m, col = &quot;red&quot;, lwd = 2)
 abline(v = q75, col = &quot;blue&quot;, lwd = 2, lty = 2) 
 legend(&quot;topright&quot;, legend=c(&quot;25th Quantile&quot;, &quot;Mean&quot;, &quot;75th Quantile&quot;), 
        col=c(&quot;blue&quot;, &quot;red&quot;, &quot;blue&quot;), lwd=2, lty=c(2,1,2))</code></pre>
-<p><img src="figure/ukb_EDA.Rmd/unnamed-chunk-2-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-2-1">
-Past versions of unnamed-chunk-2-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-2-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/568dd8b592f3128b9dced7bc708038c2486217ba/docs/figure/ukb_EDA.Rmd/unnamed-chunk-2-1.png" target="_blank">568dd8b</a>
-</td>
-<td>
-yunqi yang
-</td>
-<td>
-2024-02-01
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="check-correlation-between-transmitted-alleles"
-class="section level3">
-<h3>2. Check correlation between transmitted alleles</h3>
-<pre class="r"><code>corMatrix &lt;- cor(trans.all)
-upperTriValues &lt;- corMatrix[upper.tri(corMatrix, diag = FALSE)]
-hist(upperTriValues, xlab = &quot;correlation&quot;, main = &quot;SNP correlations&quot;)</code></pre>
 <p><img src="figure/ukb_EDA.Rmd/unnamed-chunk-3-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-3-1">
@@ -768,6 +776,44 @@ yunqi yang
 </table>
 </div>
 </div>
+</div>
+<div id="check-correlation-between-transmitted-alleles"
+class="section level3">
+<h3>2. Check correlation between transmitted alleles</h3>
+<pre class="r"><code>corMatrix &lt;- cor(trans.all)
+upperTriValues &lt;- corMatrix[upper.tri(corMatrix, diag = FALSE)]
+hist(upperTriValues, xlab = &quot;correlation&quot;, main = &quot;SNP correlations&quot;)</code></pre>
+<p><img src="figure/ukb_EDA.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="check-correlation-between-t-nt-using-snps-from-chromesome-22"
+class="section level3">
+<h3>3. Check correlation between T &amp; NT using SNPs from chromesome
+22</h3>
+<pre class="r"><code>dat = readRDS(&quot;/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/chr22_G_Gpa.rds&quot;)</code></pre>
+<pre class="r"><code>G = dat[[1]]
+G.pa = dat[[2]]
+snp_list = colnames(G)[grep(&quot;^rs&quot;, colnames(G))]
+colnames(G.pa) = c(&quot;Family.ID&quot;, snp_list)
+G.pa = as.data.frame(G.pa)</code></pre>
+<pre class="r"><code>G = G[order(G$Family.ID), ]
+G.pa = G.pa[order(G.pa$Family.ID), ]</code></pre>
+<pre class="r"><code># Remove SNPs with MAF &lt; 0.01
+maf &lt;- colMeans(G[, 4:ncol(G)])/2
+snp_list2 = snp_list[maf &gt;= 0.01]</code></pre>
+<pre class="r"><code>trans = G[, colnames(G) %in% snp_list2]
+nontrans = G.pa[, colnames(G.pa) %in% snp_list2] - trans
+cor = sapply(1:ncol(trans), function(i) cor(trans[,i], nontrans[,i]))</code></pre>
+<pre class="r"><code>hist(cor, main = &quot;Correlation between T &amp; NT&quot;)
+q25 &lt;- quantile(cor, 0.25)
+m &lt;- mean(cor)
+q75 &lt;- quantile(cor, 0.75)
+
+abline(v = q25, col = &quot;blue&quot;, lwd = 2, lty = 2) 
+abline(v = m, col = &quot;red&quot;, lwd = 2) 
+abline(v = q75, col = &quot;blue&quot;, lwd = 2, lty = 2) 
+legend(&quot;topright&quot;, legend=c(&quot;25th Quantile&quot;, &quot;Mean&quot;, &quot;75th Quantile&quot;), 
+       col=c(&quot;blue&quot;, &quot;red&quot;, &quot;blue&quot;), lwd=2, lty=c(2,1,2))</code></pre>
+<p><img src="figure/ukb_EDA.Rmd/unnamed-chunk-10-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -794,21 +840,21 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.7.0
+[1] dplyr_1.1.4       data.table_1.14.2 workflowr_1.7.0  
 
 loaded via a namespace (and not attached):
- [1] Rcpp_1.0.8.3     highr_0.9        bslib_0.3.1      compiler_4.2.0  
- [5] pillar_1.7.0     later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
+ [1] Rcpp_1.0.12      highr_0.9        compiler_4.2.0   pillar_1.9.0    
+ [5] bslib_0.3.1      later_1.3.0      git2r_0.30.1     jquerylib_0.1.4 
  [9] tools_4.2.0      getPass_0.2-2    digest_0.6.29    jsonlite_1.8.0  
-[13] evaluate_0.15    tibble_3.1.7     lifecycle_1.0.1  pkgconfig_2.0.3 
-[17] rlang_1.0.2      cli_3.3.0        rstudioapi_0.13  yaml_2.3.5      
-[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.4.0   
-[25] knitr_1.39       sass_0.4.1       fs_1.5.2         vctrs_0.4.1     
-[29] rprojroot_2.0.3  glue_1.6.2       R6_2.5.1         processx_3.8.0  
-[33] fansi_1.0.3      rmarkdown_2.14   callr_3.7.3      magrittr_2.0.3  
-[37] whisker_0.4      ps_1.7.0         promises_1.2.0.1 htmltools_0.5.2 
-[41] ellipsis_0.3.2   httpuv_1.6.5     utf8_1.2.2       stringi_1.7.6   
-[45] crayon_1.5.1    </code></pre>
+[13] evaluate_0.15    lifecycle_1.0.4  tibble_3.2.1     pkgconfig_2.0.3 
+[17] rlang_1.1.3      cli_3.6.2        rstudioapi_0.13  yaml_2.3.5      
+[21] xfun_0.30        fastmap_1.1.0    httr_1.4.3       stringr_1.5.1   
+[25] knitr_1.39       generics_0.1.2   fs_1.5.2         vctrs_0.6.5     
+[29] sass_0.4.1       tidyselect_1.2.1 rprojroot_2.0.3  glue_1.6.2      
+[33] R6_2.5.1         processx_3.8.0   fansi_1.0.3      rmarkdown_2.14  
+[37] callr_3.7.3      magrittr_2.0.3   whisker_0.4      ps_1.7.0        
+[41] promises_1.2.0.1 htmltools_0.5.2  httpuv_1.6.5     utf8_1.2.2      
+[45] stringi_1.7.6   </code></pre>
 </div>
 </div>
 
