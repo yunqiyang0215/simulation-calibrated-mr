@@ -5,6 +5,11 @@ date: '2024-02-02'
 ---
 
 ```{r}
+library(data.table)
+library(dplyr)
+```
+
+```{r}
 # Load real data
 dat_int = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/dat_int.rds")
 dat_child = dat_int[[1]]
@@ -43,6 +48,50 @@ hist(upperTriValues, xlab = "correlation", main = "SNP correlations")
 
 ```
 
+
+### 3. Check correlation between T & NT using SNPs from chromesome 22
+
+```{r}
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/chr22_G_Gpa.rds")
+```
+
+```{r}
+G = dat[[1]]
+G.pa = dat[[2]]
+snp_list = colnames(G)[grep("^rs", colnames(G))]
+colnames(G.pa) = c("Family.ID", snp_list)
+G.pa = as.data.frame(G.pa)
+```
+
+```{r}
+G = G[order(G$Family.ID), ]
+G.pa = G.pa[order(G.pa$Family.ID), ]
+```
+
+```{r}
+# Remove SNPs with MAF < 0.01
+maf <- colMeans(G[, 4:ncol(G)])/2
+snp_list2 = snp_list[maf >= 0.01]
+```
+
+```{r}
+trans = G[, colnames(G) %in% snp_list2]
+nontrans = G.pa[, colnames(G.pa) %in% snp_list2] - trans
+cor = sapply(1:ncol(trans), function(i) cor(trans[,i], nontrans[,i]))
+```
+
+```{r}
+hist(cor, main = "Correlation between T & NT")
+q25 <- quantile(cor, 0.25)
+m <- mean(cor)
+q75 <- quantile(cor, 0.75)
+
+abline(v = q25, col = "blue", lwd = 2, lty = 2) 
+abline(v = m, col = "red", lwd = 2) 
+abline(v = q75, col = "blue", lwd = 2, lty = 2) 
+legend("topright", legend=c("25th Quantile", "Mean", "75th Quantile"), 
+       col=c("blue", "red", "blue"), lwd=2, lty=c(2,1,2))
+```
 
 
 
