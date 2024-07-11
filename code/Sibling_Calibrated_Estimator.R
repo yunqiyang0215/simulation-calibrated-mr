@@ -56,11 +56,6 @@ sample_indices <- function(vec, K) {
 library(dplyr)
 
 
-##' Compute the calibrated estimator
-##' @param pheno: a vector that contains response variable values
-##' @param F_ind: family index
-##' @param Z: data frame of other covariates (the number of rows should be internal data size)
-##'
 format_data <- function(pheno, F_ind, Z = NULL){
   Z_tilde = NULL
   
@@ -73,6 +68,10 @@ format_data <- function(pheno, F_ind, Z = NULL){
   size_dic <- as.integer(table(F_ind))
   F_size <- size_dic[F_ind]
   
+  family2ind = list()
+  for(i in 1:K){
+    family2ind[[i]] = which(F_ind == i)
+  }
   
   pheno_tilde <- pheno
   family_means <- tapply(pheno_tilde, F_ind, mean)
@@ -93,7 +92,8 @@ format_data <- function(pheno, F_ind, Z = NULL){
   } 
   
   return(list(Y = pheno, Y_tilde = as.vector(pheno_tilde), F_ind = F_ind, Z = Z, Z_tilde = Z_tilde,
-              size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z ))
+              size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z,
+              family2ind = family2ind))
 }
 
 ##' Compute the calibrated estimator
@@ -130,8 +130,23 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     
     M = max(F_size)
     Cs = list()
-    
     # Consider each family size separately
+    if(M == 2){
+      resid = resid(summary(incorrect_int))
+      
+      resid_tilde = resid(summary(correct_int))
+      
+      
+      C = cbind(XZ_tilde * resid_tilde, resid, XZ * resid)
+      
+      C = t(sapply(1:K,
+                   function(x) colSums(C[family2ind[[x]], ])))
+      
+      
+      Cs[[2]] = cov(C)
+      
+    }
+    else {
     for(m in 2:M){
       
       # Only look at family of size m
@@ -147,31 +162,40 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
       C = cbind(XZ_tilde_sub * resid_tilde_sub, resid_sub, XZ_sub * resid_sub)
       
       C = t(sapply(unique(ind_sub),
-                   function(x) colSums(C[which(ind_sub == x), ])))
+                   function(x) colSums(C[family2ind[[x]], ])))
       
       
       Cs[[m]] = cov(C)
       
-    }
+    }}
     
-    final_C = matrix(0, 2 * (dim(XZ)[2]) + 1, 2 * (dim(XZ)[2]) + 1)
-    
+
     final_C <- Reduce("+", Cs[size_dic[1:K]])
     
-    
+
     ## Compute covariance components
     
+
+    
+
+    
     if(! is.null(Z)){
-      const1 = solve(t(XZ_tilde) %*% XZ_tilde)
+      qr_decomp <- correct_int$qr
+      R <- qr.R(qr_decomp)
+      R_inv <- backsolve(R, diag(ncol(R)))
+      const1 <- t(R_inv) %*% R_inv
       C22 = N* (const1 %*% final_C[(1:(dim_Z + 1)), 1:(dim_Z + 1)] %*% const1)[1, 1]
       
+      qr_decomp <- incorrect_int$qr
+      R <- qr.R(qr_decomp)
+      R_inv <- backsolve(R, diag(ncol(R)))
+      const2 <- t(R_inv) %*% R_inv
       C33 = final_C[(dim_Z + 2):dim(final_C)[2],  (dim_Z + 2):dim(final_C)[2]]
-      design = t(cbind(rep(1, N), XZ)) %*% cbind(rep(1, N), XZ)
-      C33 = (solve(design) %*% C33 %*% solve(design) )[2, 2] * N
+      C33 = (const2 %*% C33 %*% const2 )[2, 2] * N
       
       
       C23 = final_C[1:(dim_Z + 1),  (dim_Z + 2):dim(final_C)[2]]
-      C23 = ( (const1) %*% C23 %*% solve(design) )[1, 2] * N
+      C23 = ( (const1) %*% C23 %*% const2 )[1, 2] * N
       
     } else{
       const1 = solve(t(XZ_tilde) %*% XZ_tilde)
@@ -188,8 +212,8 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
       
     }
     
-    
-    
+
+
     # Compute C12, C13
     
     C12 = overlap_ratio * C23 * N / N_ext
@@ -200,26 +224,8 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     # Compute the final calibrated estimator
     beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
     beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
-    
-    
-    # Compute internal false model by sampling one sibling from each family
-    
-    sub_ind = sample_indices(F_ind, max(F_ind))
-    
-    incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
-    alpha_int_single = summary(incorrect_int)$coefficients[2,1]
-    alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
-    
+
+
     return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int,
-                beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N),
-                alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single) )} )
+                beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N)) )} )
 }
-
-
-
-
-
-
-
-
-
