@@ -63,6 +63,8 @@ Parametric simulation combined:
 
 + [MR result: trio data](mr_trio.html)
 
++ [MR result: sibling data](mr_sibling.html)
+
 UKB EDA:
 
 + [EDA on UKB trio data 1](ukb_EDA.html)
