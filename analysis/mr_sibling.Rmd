@@ -1,0 +1,146 @@
+---
+title: "mr_sibling_linear"
+output: html_document
+date: '2024-07-10'
+---
+
+```{r}
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear_separate/res.mr.rds")
+```
+
+```{r}
+output = c()
+for (i in 1:length(dat)){
+  cor.y1 = unlist(lapply(dat[[i]]$sim_data.cor_pheno, function(x) x[[1]]))
+  cor.y2 = unlist(lapply(dat[[i]]$sim_data.cor_pheno, function(x) x[[2]]))
+  
+  df = data.frame(cbind(dat[[i]]$sim_data.sig, dat[[i]]$sim_data.r1, dat[[i]]$sim_data.r2,
+                        cor.y1, cor.y2, dat[[i]]$fit.method, dat[[1]]$mr.mr_method,
+                        dat[[i]]$mr.point_est, dat[[i]]$mr.stderr))
+  output = rbind(output, df)
+}
+
+colnames(output) = c("sig", "r1", "r2", "phecor.y1", "phecor.y2", 
+                     "calibration_method",  "mr_method", "mr.est", "mr.std")
+```
+
+```{r}
+output[, c(1:5, 8:9)] = apply(output[, c(1:5, 8:9)], 2, as.numeric)
+dat.ivw = output[output$mr_method == "ivw" & output$phecor.y1 >= 0 & output$phecor.y2 >= 0, ]
+dat.mraps = output[output$mr_method == "mr.raps" & output$phecor.y1 >= 0 & output$phecor.y2 >= 0, ]
+```
+
+```{r}
+groups = unique(dat.ivw$r2)
+```
+
+```{r fig.height = 8, fig.width=8}
+par(mfrow = c(2, 2))
+# y1, y2 phenotypic correlation small
+n_rep = 500
+res = c()
+labels = c(0, 0.1, 0.5, 0.8)
+for (group in groups){
+  dat.sub <- dat.ivw[dat.ivw$r2 == group & dat.ivw$phecor.y1 <= 0.4 & dat.ivw$phecor.y2 <= 0.4, ]
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == "calibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "adj_uncalibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "unadj_ext"][1:n_rep])
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  res = cbind(res, val)
+}
+
+means <- colMeans(res)
+ses <- apply(res, 2, sd)
+
+ncomb <- 4
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+plot(x = x_pos, y = means, ylim = c(0.4, 1.8), pch = 20,
+     xlab = "", ylab = "", main = "IVW + low phenotypic correlation", xaxt = 'n')
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty = 2, col = "grey")
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
+
+
+# y1, y2 phenotypic correlation large
+n_rep = 500
+res = c()
+for (group in groups){
+  dat.sub <- dat.ivw[dat.ivw$r2 == group & dat.ivw$phecor.y1 >= 0.6 & dat.ivw$phecor.y2 >= 0.6, ]
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == "calibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "adj_uncalibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "unadj_ext"][1:n_rep])
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  res = cbind(res, val)
+}
+
+means <- colMeans(res)
+ses <- apply(res, 2, sd)
+
+ncomb <- 4
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+plot(x = x_pos, y = means, ylim = c(0.4, 1.8), pch = 20,
+     xlab = "r2 value", ylab = "", main = "IVW + high phenotypic correlation", xaxt = 'n')
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty = 2, col = "grey")
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+
+
+# mr.raps
+# y1, y2 phenotypic correlation small
+n_rep = 500
+res = c()
+for (group in groups){
+  dat.sub <- dat.mraps[dat.mraps$r2 == group & dat.mraps$phecor.y1 <= 0.4 & dat.ivw$phecor.y2 <= 0.4, ]
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == "calibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "adj_uncalibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "unadj_ext"][1:n_rep])
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  res = cbind(res, val)
+}
+
+means <- colMeans(res)
+ses <- apply(res, 2, sd)
+
+ncomb <- 4
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+plot(x = x_pos, y = means, ylim = c(0.6, 1.9), pch = 20,
+     xlab = "", ylab = "", main = "mr.raps + low phenotypic correlation", xaxt = 'n')
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty = 2, col = "grey")
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
+
+
+# y1, y2 phenotypic correlation large
+n_rep = 500
+res = c()
+for (group in groups){
+  dat.sub <- dat.mraps[dat.mraps$r2 == group & dat.mraps$phecor.y1 >= 0.6 & dat.ivw$phecor.y2 >= 0.6, ]
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == "calibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "adj_uncalibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "unadj_ext"][1:n_rep])
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  res = cbind(res, val)
+}
+
+means <- colMeans(res)
+ses <- apply(res, 2, sd)
+
+ncomb <- 4
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+plot(x = x_pos, y = means, ylim = c(0.6, 1.9), pch = 20,
+     xlab = "", ylab = "", main = "mr.raps + high phenotypic correlation", xaxt = 'n')
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty = 2, col = "grey")
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+```
+
