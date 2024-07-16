@@ -1,0 +1,64 @@
+---
+title: "real data calibration"
+author: "Yunqi Yang"
+date: "7/16/2024"
+output: html_document
+---
+
+```{r fig.height = 8, fig.width=8}
+
+pdf("/Users/nicholeyang/downloads/simulation-calibrated-mr/output/real_data_calibration.pdf", height = 8, width = 10)
+par(mfrow = c(2,2))
+## Trio data
+bmi = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+sbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_sbp.rds")
+dbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_dbp.rds")
+diabetes = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_diabetes.rds")
+edu = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_education_yrs.rds")
+
+dat = list(bmi, sbp, dbp, diabetes, edu)
+
+for (i in 1:length(dat)){
+  dat[[i]] = as.data.frame(dat[[i]])
+  dat[[i]][, c(3:8)] = apply(dat[[i]][, c(3:8)], 2, as.numeric)
+}
+
+diff = sapply(1:5, function(i) dat[[i]]$cali - dat[[i]]$raw)
+vr =  sapply(1:5, function(i) 1 - dat[[i]]$cali.var/dat[[i]]$raw.var)
+colnames(diff) = c("BMI", "SBP", "DBP", "Diabetes", "EduYrs")
+colnames(vr) = c("BMI", "SBP", "DBP", "Diabetes", "EduYrs")
+
+boxplot(diff,xlab = "(a)", ylab = "Calibrated estimator - Raw estimator", 
+        names = colnames(diff), pch = 20, cex = 0.6)
+mtext("Trio data", side = 3, adj = 0, line = 1)
+boxplot(vr, xlab = "(b)", ylab = "Estimated variance reduction",names = colnames(diff), pch = 20, cex = 0.6)
+
+
+## sibling data 
+bmi = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+sbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_sbp.rds")
+dbp = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_dbp.rds")
+diabetes = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_diabetes.rds")
+edu = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_education_yrs.rds")
+
+dat = list(edu, bmi, sbp, dbp, diabetes)
+for (i in 1:length(dat)){
+  dat[[i]] = as.data.frame(dat[[i]])
+  dat[[i]][, c(3:8)] = apply(dat[[i]][, c(3:8)], 2, as.numeric)
+}
+
+diff = sapply(1:5, function(i) dat[[i]]$cali - dat[[i]]$raw)
+vr =  sapply(1:5, function(i) 1 - dat[[i]]$cali.var/dat[[i]]$raw.var)
+colnames(diff) = c("EduYrs", "BMI", "SBP", "DBP", "Diabetes")
+colnames(vr) = c("EduYrs", "BMI", "SBP", "DBP", "Diabetes")
+
+pheno.cor = c(0.355, 0.284, 0.202, 0.148, 0.091)
+theo_vr = (1-0.5)/2*(1-pheno.cor)/(1+0.5*pheno.cor)
+
+boxplot(diff, xlab = "(c)", ylab = "Calibrated estimator - Raw estimator", 
+        names = colnames(diff), pch = 20, cex = 0.6)
+mtext("Sibling data", side = 3, adj = 0, line = 1)
+boxplot(vr, xlab = "(d)", ylab = "Estimated variance reduction",names = colnames(vr), pch = 20, cex = 0.6)
+points(1:length(theo_vr), theo_vr, col = "red", pch = 4)
+```
+
