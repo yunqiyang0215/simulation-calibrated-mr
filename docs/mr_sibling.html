@@ -391,7 +391,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-07-12
+<strong>Last updated:</strong> 2024-07-27
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -522,15 +522,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0d2c6c2bc1a672d21680f86e84f86567c9bcafc6targetblank0d2c6c2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreedc57c052f05507ab88dd5dd8c55673e4dff23e18targetblankdc57c05a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0d2c6c2bc1a672d21680f86e84f86567c9bcafc6" target="_blank">0d2c6c2</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/dc57c052f05507ab88dd5dd8c55673e4dff23e18" target="_blank">dc57c05</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0d2c6c2bc1a672d21680f86e84f86567c9bcafc6targetblank0d2c6c2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreedc57c052f05507ab88dd5dd8c55673e4dff23e18targetblankdc57c05a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +540,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0d2c6c2bc1a672d21680f86e84f86567c9bcafc6" target="_blank">0d2c6c2</a>.
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/dc57c052f05507ab88dd5dd8c55673e4dff23e18" target="_blank">dc57c05</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,6 +561,7 @@ Ignored files:
 
 Untracked files:
     Untracked:  analysis/heritability.Rmd
+    Untracked:  scripts/real_dat_calibration_plot.Rmd
 
 Unstaged changes:
     Modified:   analysis/mr_bias.Rmd
@@ -615,6 +616,40 @@ Message
 Rmd
 </td>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/dc57c052f05507ab88dd5dd8c55673e4dff23e18/analysis/mr_sibling.Rmd" target="_blank">dc57c05</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-07-27
+</td>
+<td>
+wflow_publish("analysis/mr_sibling.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/b0a3144b508cff2574662984b9dfc8b7d9bc7d71/docs/mr_sibling.html" target="_blank">b0a3144</a>
+</td>
+<td>
+yunqi yang
+</td>
+<td>
+2024-07-12
+</td>
+<td>
+Build site.
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0d2c6c2bc1a672d21680f86e84f86567c9bcafc6/analysis/mr_sibling.Rmd" target="_blank">0d2c6c2</a>
 </td>
 <td>
@@ -647,11 +682,132 @@ for (i in 1:length(dat)){
 }
 
 colnames(output) = c(&quot;sig&quot;, &quot;r1&quot;, &quot;r2&quot;, &quot;phecor.y1&quot;, &quot;phecor.y2&quot;, 
-                     &quot;calibration_method&quot;,  &quot;mr_method&quot;, &quot;mr.est&quot;, &quot;mr.std&quot;)</code></pre>
-<pre class="r"><code>output[, c(1:5, 8:9)] = apply(output[, c(1:5, 8:9)], 2, as.numeric)
-dat.ivw = output[output$mr_method == &quot;ivw&quot; &amp; output$phecor.y1 &gt;= 0 &amp; output$phecor.y2 &gt;= 0, ]
-dat.mraps = output[output$mr_method == &quot;mr.raps&quot; &amp; output$phecor.y1 &gt;= 0 &amp; output$phecor.y2 &gt;= 0, ]</code></pre>
-<pre class="r"><code>groups = unique(dat.ivw$r2)</code></pre>
+                     &quot;calibration_method&quot;,  &quot;mr_method&quot;, &quot;mr.est&quot;, &quot;mr.std&quot;)
+
+output[, c(1:5, 8:9)] = apply(output[, c(1:5, 8:9)], 2, as.numeric)
+
+dat.ivw = output[output$mr_method == &quot;ivw&quot;, ]
+dat.mraps = output[output$mr_method == &quot;mr.raps&quot;, ]</code></pre>
+<pre class="r"><code># select some scenarios for plotting
+combination = matrix(NA, ncol = 3, nrow = 5)
+colnames(combination) = c(&quot;r1&quot;, &quot;r2&quot;, &quot;sig&quot;)
+combination[1, ] = c(0, 0, 6)
+combination[2, ] = c(0.1, 0.1, 1)
+combination[3, ] = c(0.1, 0.5, 1)
+combination[4, ] = c(0.5, 0.8, 1)
+combination[5, ] = c(0.8, 0.8, 1)
+
+pheno.cor = matrix(NA, ncol = 2, nrow = nrow(combination))
+colnames(pheno.cor) = c(&quot;Y1&quot;, &quot;Y2&quot;)
+for (i in 1:nrow(combination)){
+  dat.sub = dat.ivw[dat.ivw$r1 == combination[i, 1] &amp; dat.ivw$r2 == combination[i, 2]
+                     &amp; dat.ivw$sig == combination[i, 3], ]
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  cor.y2 = round(mean(dat.sub$phecor.y2, na.rm = TRUE), 2)
+  pheno.cor[i, ] = c(cor.y1, cor.y2)
+}
+
+combination2 = data.frame(cbind(combination, pheno.cor))
+combination3 &lt;- combination2[order(combination2$Y1, combination2$Y2), ]</code></pre>
+<pre class="r"><code>par(mfcol = c(2, 2))
+
+### IVW
+n_rep = 500
+res = c()
+for (i in 1:nrow(combination3)){
+  dat.sub = dat.ivw[ dat.ivw$r1 == combination3[i, 1] &amp; dat.ivw$r2 == combination3[i, 2]
+                     &amp; dat.ivw$sig == combination3[i, 3], ]
+  
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == &quot;calibrated&quot;][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == &quot;adj_uncalibrated&quot;][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == &quot;unadj_ext&quot;][1:n_rep])
+  res = cbind(res, val)
+}
+
+means &lt;- colMeans(res)
+ses &lt;- apply(res, 2, sd)
+vr = rep(NA, nrow(combination3))
+for (i in 1:nrow(combination3)){
+  indx.cali = (i - 1) * 3 + 1
+  indx.raw = (i - 1) * 3 + 2
+  vr[i] &lt;- 1-(ses[indx.cali] / ses[indx.raw])^2
+}
+
+ncomb &lt;- nrow(combination3)
+x_pos &lt;- rep(1:ncomb, each = 3)
+x_pos &lt;- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+
+plot(x = x_pos, y = means, ylim = c(-0.5, 2.5), pch = 20,
+     xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;IVW&quot;, xaxt = &#39;n&#39;)
+arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), ncomb))
+
+abline(h = 1, lty = 2, col = &quot;grey&quot;)
+labels &lt;- paste0(&quot;(&quot;, combination3$r1, &quot;, &quot;, combination3$r2, &quot;, &quot;, combination3$sig, &quot;)&quot;)
+                
+
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+legend(&quot;topleft&quot;, legend = c(&quot;Calibrated estimator&quot;, &quot;Raw estimator&quot;, &quot;External GWAS&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), cex = 0.8)
+
+plot(1:ncomb, vr, xaxt = &#39;n&#39;, xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, lty = 2, type = &quot;b&quot;, pch = 20)
+labels &lt;- paste0(&quot;(&quot;, combination3$Y1, &quot;, &quot;, combination3$Y2, &quot;)&quot;)
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+
+
+### mr.raps
+
+for (i in 1:nrow(combination3)){
+  dat.sub = dat.mraps[dat.mraps$r1 == combination3[i, 1] &amp; dat.mraps$r2 == combination3[i, 2]
+                     &amp; dat.mraps$sig == combination3[i, 3], ]
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  cor.y2 = round(mean(dat.sub$phecor.y2, na.rm = TRUE), 2)
+  combination3[i, 4:5] = c(cor.y1, cor.y2)
+}
+
+
+
+n_rep = 500
+res = c()
+for (i in 1:nrow(combination3)){
+  dat.sub = dat.mraps[dat.mraps$r1 == combination3[i, 1] &amp; dat.mraps$r2 == combination3[i, 2]
+                     &amp; dat.mraps$sig == combination3[i, 3], ]
+  
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == &quot;calibrated&quot;][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == &quot;adj_uncalibrated&quot;][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == &quot;unadj_ext&quot;][1:n_rep])
+  res = cbind(res, val)
+}
+
+means &lt;- colMeans(res)
+ses &lt;- apply(res, 2, sd)
+vr = rep(NA, nrow(combination3))
+for (i in 1:nrow(combination3)){
+  indx.cali = (i - 1) * 3 + 1
+  indx.raw = (i - 1) * 3 + 2
+  vr[i] &lt;- 1-(ses[indx.cali] / ses[indx.raw])^2
+}
+
+
+ncomb &lt;- nrow(combination3)
+x_pos &lt;- rep(1:ncomb, each = 3)
+x_pos &lt;- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+
+plot(x = x_pos, y = means, ylim = c(-0.5, 2.5), pch = 20,
+     xlab = &quot;&quot;, ylab = &quot;&quot;, main = &quot;mr.raps&quot;, xaxt = &#39;n&#39;)
+arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), ncomb))
+
+abline(h = 1, lty = 2, col = &quot;grey&quot;)
+labels &lt;- paste0(&quot;(&quot;, combination3$r1, &quot;, &quot;, combination3$r2, &quot;, &quot;, combination3$sig, &quot;)&quot;)
+                
+
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+legend(&quot;topleft&quot;, legend = c(&quot;Calibrated estimator&quot;, &quot;Raw estimator&quot;, &quot;External GWAS&quot;), lty = 1, col = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), cex = 0.8)
+
+plot(1:ncomb, vr, xaxt = &#39;n&#39;, xlab = &quot;phenotypic correlation&quot;, ylab = &quot;variance reduction&quot;, lty = 2, type = &quot;b&quot;, pch = 20)
+labels &lt;- paste0(&quot;(&quot;, combination3$Y1, &quot;, &quot;, combination3$Y2, &quot;)&quot;)
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)</code></pre>
+<p><img src="figure/mr_sibling.Rmd/unnamed-chunk-4-1.png" width="960" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>par(mfrow = c(2, 2))
 # y1, y2 phenotypic correlation small
 n_rep = 500
@@ -759,7 +915,6 @@ arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), ncomb))
 abline(h = 1, lty = 2, col = &quot;grey&quot;)
 axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)</code></pre>
-<p><img src="figure/mr_sibling.Rmd/unnamed-chunk-5-1.png" width="768" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
