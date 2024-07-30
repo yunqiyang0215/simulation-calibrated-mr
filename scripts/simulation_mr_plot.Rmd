@@ -1,0 +1,228 @@
+---
+title: "simulation_mr"
+output: html_document
+date: '2024-07-30'
+---
+
+```{r}
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/trio_linear/res_mr.rds")
+r1 = unique(dat$sim_data.r1) 
+r2 = unique(dat$sim_data.r2) 
+method = c("calibrated_model_T", "adj_uncalibrated", "unadj_ext")
+mr_method = c("ivw", "mr.raps")
+```
+
+```{r}
+pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_mr_trio_linear.pdf",
+    height = 6, width = 14)
+par(mfrow = c(1,2))
+# 1. trio data
+# IVW
+n_rep = 500
+combinations <- expand.grid(r1 = r1, r2 = r2)
+
+output = c()
+for (i in 1:nrow(combinations)){
+  res = dat[dat$sim_data.r1 == combinations[i, 1] & dat$sim_data.r2 == combinations[i, 2] & dat$mr.mr_method == "ivw", ]
+  val = cbind(res$mr.point_est[res$fit.method == "calibrated_model_T"][1:n_rep],
+              res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:n_rep],
+              res$mr.point_est[res$fit.method == "unadj_ext"][1:n_rep])
+  output = cbind(output, val)
+}
+
+means <- colMeans(output)
+ses <- apply(output, 2, sd)
+ncomb = nrow(combinations)
+labels = apply(combinations, 1, function(x) paste0("(",x[1], ",", x[2], ")"))
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+  
+plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
+     xlab = "(a)", ylab = "", main = "Trio data: IVW", xaxt = 'n')
+# Add error bars
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty =2, col = "grey")
+
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
+
+### mr.raps
+n_rep = 500
+combinations <- expand.grid(r1 = r1, r2 = r2)
+output = c()
+for (i in 1:nrow(combinations)){
+  res = dat[dat$sim_data.r1 == combinations[i, 1] & dat$sim_data.r2 == combinations[i, 2] & dat$mr.mr_method == "mr.raps", ]
+  val = cbind(res$mr.point_est[res$fit.method == "calibrated_model_T"][1:n_rep],
+              res$mr.point_est[res$fit.method == "adj_uncalibrated"][1:n_rep],
+              res$mr.point_est[res$fit.method == "unadj_ext"][1:n_rep])
+  output = cbind(output, val)
+}
+
+means <- colMeans(output)
+ses <- apply(output, 2, sd)
+ncomb = nrow(combinations)
+labels = apply(combinations, 1, function(x) paste0("(",x[1], ",", x[2], ")"))
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+  
+plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
+     xlab = "(b)", ylab = "", main = "Trio data: mr.raps", xaxt = 'n')
+# Add error bars
+arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+abline(h = 1, lty =2, col = "grey")
+
+axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+
+```
+
+```{r  }
+# 2. Sibling data
+pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_mr_sibling_linear.pdf",
+    height = 12, width = 14)
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear_separate/res.mr.rds")
+
+output = c()
+for (i in 1:length(dat)){
+  cor.y1 = unlist(lapply(dat[[i]]$sim_data.cor_pheno, function(x) x[[1]]))
+  cor.y2 = unlist(lapply(dat[[i]]$sim_data.cor_pheno, function(x) x[[2]]))
+  
+  df = data.frame(cbind(dat[[i]]$sim_data.sig, dat[[i]]$sim_data.r1, dat[[i]]$sim_data.r2,
+                        cor.y1, cor.y2, dat[[i]]$fit.method, dat[[1]]$mr.mr_method,
+                        dat[[i]]$mr.point_est, dat[[i]]$mr.stderr))
+  output = rbind(output, df)
+}
+
+colnames(output) = c("sig", "r1", "r2", "phecor.y1", "phecor.y2", 
+                     "calibration_method",  "mr_method", "mr.est", "mr.std")
+
+output[, c(1:5, 8:9)] = apply(output[, c(1:5, 8:9)], 2, as.numeric)
+
+dat.ivw = output[output$mr_method == "ivw", ]
+dat.mraps = output[output$mr_method == "mr.raps", ]
+
+# select some scenarios for plotting
+combination = matrix(NA, ncol = 3, nrow = 5)
+colnames(combination) = c("r1", "r2", "sig")
+combination[1, ] = c(0, 0, 6)
+combination[2, ] = c(0.1, 0.1, 1)
+combination[3, ] = c(0.1, 0.5, 1)
+combination[4, ] = c(0.5, 0.8, 1)
+combination[5, ] = c(0.8, 0.8, 1)
+
+pheno.cor = matrix(NA, ncol = 2, nrow = nrow(combination))
+colnames(pheno.cor) = c("Y1", "Y2")
+for (i in 1:nrow(combination)){
+  dat.sub = dat.ivw[dat.ivw$r1 == combination[i, 1] & dat.ivw$r2 == combination[i, 2]
+                     & dat.ivw$sig == combination[i, 3], ]
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  cor.y2 = round(mean(dat.sub$phecor.y2, na.rm = TRUE), 2)
+  pheno.cor[i, ] = c(cor.y1, cor.y2)
+}
+
+combination2 = data.frame(cbind(combination, pheno.cor))
+combination3 <- combination2[order(combination2$Y1, combination2$Y2), ]
+
+par(mfcol = c(2, 2))
+
+### IVW
+n_rep = 500
+res = c()
+for (i in 1:nrow(combination3)){
+  dat.sub = dat.ivw[ dat.ivw$r1 == combination3[i, 1] & dat.ivw$r2 == combination3[i, 2]
+                     & dat.ivw$sig == combination3[i, 3], ]
+  
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == "calibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "adj_uncalibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "unadj_ext"][1:n_rep])
+  res = cbind(res, val)
+}
+
+means <- colMeans(res)
+ses <- apply(res, 2, sd)
+vr = rep(NA, nrow(combination3))
+for (i in 1:nrow(combination3)){
+  indx.cali = (i - 1) * 3 + 1
+  indx.raw = (i - 1) * 3 + 2
+  vr[i] <- 1-(ses[indx.cali] / ses[indx.raw])^2
+}
+
+ncomb <- nrow(combination3)
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+
+plot(x = x_pos, y = means, ylim = c(-0.5, 2.5), pch = 20,
+     xlab = "(c)", ylab = "", main = "Sibling data: IVW", xaxt = 'n')
+arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+
+abline(h = 1, lty = 2, col = "grey")
+labels <- paste0("(", combination3$r1, ", ", combination3$r2, ", ", combination3$sig, ")")
+                
+
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+#legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
+
+plot(1:ncomb, vr, xaxt = 'n', xlab = "phenotypic correlation", ylab = "variance reduction", lty = 2, type = "b", pch = 20)
+mtext("(e)", side = 1, line = 4)
+labels <- paste0("(", combination3$Y1, ", ", combination3$Y2, ")")
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+
+
+### mr.raps
+
+for (i in 1:nrow(combination3)){
+  dat.sub = dat.mraps[dat.mraps$r1 == combination3[i, 1] & dat.mraps$r2 == combination3[i, 2]
+                     & dat.mraps$sig == combination3[i, 3], ]
+  cor.y1 = round(mean(dat.sub$phecor.y1, na.rm = TRUE), 2)
+  cor.y2 = round(mean(dat.sub$phecor.y2, na.rm = TRUE), 2)
+  combination3[i, 4:5] = c(cor.y1, cor.y2)
+}
+
+
+
+n_rep = 500
+res = c()
+for (i in 1:nrow(combination3)){
+  dat.sub = dat.mraps[dat.mraps$r1 == combination3[i, 1] & dat.mraps$r2 == combination3[i, 2]
+                     & dat.mraps$sig == combination3[i, 3], ]
+  
+  val = cbind(dat.sub$mr.est[dat.sub$calibration_method == "calibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "adj_uncalibrated"][1:n_rep],
+              dat.sub$mr.est[dat.sub$calibration_method == "unadj_ext"][1:n_rep])
+  res = cbind(res, val)
+}
+
+means <- colMeans(res)
+ses <- apply(res, 2, sd)
+vr = rep(NA, nrow(combination3))
+for (i in 1:nrow(combination3)){
+  indx.cali = (i - 1) * 3 + 1
+  indx.raw = (i - 1) * 3 + 2
+  vr[i] <- 1-(ses[indx.cali] / ses[indx.raw])^2
+}
+
+
+ncomb <- nrow(combination3)
+x_pos <- rep(1:ncomb, each = 3)
+x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
+
+plot(x = x_pos, y = means, ylim = c(-0.5, 2.5), pch = 20,
+     xlab = "(d)", ylab = "", main = "Sibling data: mr.raps", xaxt = 'n')
+arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
+       code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
+
+abline(h = 1, lty = 2, col = "grey")
+labels <- paste0("(", combination3$r1, ", ", combination3$r2, ", ", combination3$sig, ")")
+                
+
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+#legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
+
+plot(1:ncomb, vr, xaxt = 'n', xlab = "phenotypic correlation", ylab = "variance reduction", lty = 2, type = "b", pch = 20)
+labels <- paste0("(", combination3$Y1, ", ", combination3$Y2, ")")
+axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+mtext("(f)", side = 1, line = 4)
+```
+
