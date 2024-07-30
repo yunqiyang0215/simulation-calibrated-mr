@@ -38,7 +38,7 @@ x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
 plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = "(a)", ylab = "", main = "Trio data: IVW", xaxt = 'n')
+     xlab = "(a)", ylab = "", main = "Trio data: IVW", xaxt = 'n', cex = 0.8)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
@@ -67,7 +67,7 @@ x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
 plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = "(b)", ylab = "", main = "Trio data: mr.raps", xaxt = 'n')
+     xlab = "(b)", ylab = "", main = "Trio data: mr.raps", xaxt = 'n', cex = 0.8)
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
