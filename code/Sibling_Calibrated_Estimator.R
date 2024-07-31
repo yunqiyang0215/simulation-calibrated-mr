@@ -73,6 +73,9 @@ format_data <- function(pheno, F_ind, Z = NULL){
     family2ind[[i]] = which(F_ind == i)
   }
   
+  if(1 %in% table(F_ind) ){
+    warning("Some families only have 1 individual")
+  }
   pheno_tilde <- pheno
   family_means <- tapply(pheno_tilde, F_ind, mean)
   pheno_tilde <- pheno_tilde - family_means[F_ind]
@@ -225,7 +228,22 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     beta_cal = beta_int +  (C23 - C12) / ( C11 + C33 - 2 * C13) * (alpha_ext - alpha_int)
     beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
 
-
+    # Compute internal false model by sampling one sibling from each family
+    
+    sub_ind = sample_indices(F_ind, max(F_ind))
+    
+    incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
+    alpha_int_single = summary(incorrect_int)$coefficients[2,1]
+    alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
+    
     return(list(beta_cal  = beta_cal, beta_cal_var = (beta_cal_var), beta_int = beta_int,
-                beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N)) )} )
+    beta_int_var = (C22/N), alpha_int = alpha_int, alpha_int_var = (C33/N),
+    alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single) )
+  }
+    
+    
+    )
 }
+
+
+
