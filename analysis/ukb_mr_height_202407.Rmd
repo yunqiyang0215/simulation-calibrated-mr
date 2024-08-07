@@ -141,27 +141,27 @@ colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "externa
 rownames(res.mr) = c("point.est", "std")
 
 # calibrated
-mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
 
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
-mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
 
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
 # external gwas
-mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
 point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
