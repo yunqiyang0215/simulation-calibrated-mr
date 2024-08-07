@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree08fc47d2a2930da24472e2579f70a1a3d7e0aeaftargetblank08fc47da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/08fc47d2a2930da24472e2579f70a1a3d7e0aeaf" target="_blank">08fc47d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree87ce4f66b6390ae8c19620d5463def5df700225ctargetblank87ce4f6a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/87ce4f66b6390ae8c19620d5463def5df700225c" target="_blank">87ce4f6</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree08fc47d2a2930da24472e2579f70a1a3d7e0aeaftargetblank08fc47da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree87ce4f66b6390ae8c19620d5463def5df700225ctargetblank87ce4f6a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/08fc47d2a2930da24472e2579f70a1a3d7e0aeaf" target="_blank">08fc47d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/87ce4f66b6390ae8c19620d5463def5df700225c" target="_blank">87ce4f6</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -532,6 +532,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/87ce4f66b6390ae8c19620d5463def5df700225c/analysis/ukb_mr_height_202407.Rmd" target="_blank">87ce4f6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_height_202407.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/edcc3ab3c2d1a54a22e31359af89437a9d945c9b/docs/ukb_mr_height_202407.html" target="_blank">edcc3ab</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -643,8 +677,9 @@ sum(dat.exp$variant != dat.out$variant)</code></pre>
 <pre><code>[1] 0</code></pre>
 <div id="ivw" class="section level4">
 <h4>1. IVW</h4>
-<pre class="r"><code>dat1 = dat.exp
-dat2 = dat.out</code></pre>
+<pre class="r"><code>indx = which(dat.exp$P &lt; 1e-8)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
@@ -685,8 +720,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.04043747      -0.03407905   -0.08509076    0.05958143
-std       0.06891892       0.06790924    0.06625219    0.01052908</code></pre>
+point.est 0.02508198       -0.0350472    -0.1220191    0.05423174
+std       0.11327235        0.1117931     0.1054122    0.01225769</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -768,8 +803,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
 res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  2.3629973       -0.8542164    -0.5106406   0.062693017
-std        0.5461075        0.3493194     0.5251644   0.007832986</code></pre>
+point.est  0.1302393       -0.1439815    -0.2743269   0.055319431
+std        0.2565071        0.4149058     0.3562649   0.008401938</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -802,6 +837,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/edcc3ab3c2d1a54a22e31359af89437a9d945c9b/docs/figure/ukb_mr_height_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">edcc3ab</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/25f6ae12ec650ed8521dfd596f7d3f3586814b64/docs/figure/ukb_mr_height_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">25f6ae1</a>
