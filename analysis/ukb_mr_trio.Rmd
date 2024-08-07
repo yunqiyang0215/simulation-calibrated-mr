@@ -33,9 +33,9 @@ dat.out = merge(sumstat, ext, by.x = "variant", by.y = "ID", all = FALSE)
 # flip sign of effect if the allele tested is different
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 
-pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)
-pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)
-pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)
+pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)*2
+pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)*2
+pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)*2
 sum(pval.ext < 1e-8)
 sum(pval.ext < 1e-5)
 sum(pval.cali < 1e-3)
@@ -159,7 +159,7 @@ axis(1, at=1:4, labels=labels)
 #### 1. IVW
 
 ```{r}
-indx = which(pval.ext < 1e-5)
+indx = which(dat.exp$P < 1e-5)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 ```
@@ -276,7 +276,7 @@ axis(1, at=1:4, labels=labels)
 #### 1. IVW
 
 ```{r}
-indx = which(pval.ext < 1e-8)
+indx = which(dat.exp$P < 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 ```
@@ -390,8 +390,8 @@ axis(1, at=1:4, labels=labels)
 
 
 
-### 2. BMI on education yrs
 
+### 2. BMI on education yrs
 
 ```{r}
 # BMI
@@ -539,9 +539,18 @@ dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 ```
 
-#### 1. IVW
-```{r }
 
+#### 1. IVW
+
+
+```{r}
+indx = which(dat.exp$P < 1e-5)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
+```
+
+
+```{r }
 res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c("calibrated", "adj+uncalibrated", "internal.gwas", "external.gwas")
 rownames(res.mr) = c("point.est", "std")
@@ -649,7 +658,7 @@ axis(1, at=1:4, labels=labels)
 
 
 ```{r}
-indx = which(pval.ext < 1e-8)
+indx = which(dat.exp$P < 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 ```
