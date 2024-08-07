@@ -186,13 +186,13 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
       qr_decomp <- correct_int$qr
       R <- qr.R(qr_decomp)
       R_inv <- backsolve(R, diag(ncol(R)))
-      const1 <- t(R_inv) %*% R_inv
+      const1 <-  R_inv %*% t(R_inv)
       C22 = N* (const1 %*% final_C[(1:(dim_Z + 1)), 1:(dim_Z + 1)] %*% const1)[1, 1]
       
       qr_decomp <- incorrect_int$qr
       R <- qr.R(qr_decomp)
       R_inv <- backsolve(R, diag(ncol(R)))
-      const2 <- t(R_inv) %*% R_inv
+      const2 <- R_inv %*% t(R_inv)
       C33 = final_C[(dim_Z + 2):dim(final_C)[2],  (dim_Z + 2):dim(final_C)[2]]
       C33 = (const2 %*% C33 %*% const2 )[2, 2] * N
       
