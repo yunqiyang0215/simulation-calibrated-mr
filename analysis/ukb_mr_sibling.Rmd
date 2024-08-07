@@ -158,9 +158,11 @@ axis(1, at=1:4, labels=labels)
 #### 1. IVW
 
 ```{r}
-indx = which(pval.ext < 1e-5)
+
+indx = which(dat.exp$P < 1e-5)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
+
 # sanity check
 sum(dat1$variant != dat2$variant)
 sum(dat1$allele.test != dat2$allele.test)
@@ -271,7 +273,7 @@ axis(1, at=1:4, labels=labels)
 #### 1. IVW
 
 ```{r}
-indx = which(pval.ext < 1e-8)
+indx = which(dat.exp$P < 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]
 # sanity check
