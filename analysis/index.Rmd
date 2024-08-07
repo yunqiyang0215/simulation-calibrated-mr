@@ -90,3 +90,7 @@ UKB data analysis:
 + [UKB mr result: trio](ukb_mr_trio.html)
 
 + [UKB mr result: sibling](ukb_mr_sibling.html)
+
++ [UKB mr: bmi as exposure (202407)](ukb_mr_bmi_202407.html)
+
++ [UKB mr: height as exposure (202407)](ukb_mr_height_202407.html)
