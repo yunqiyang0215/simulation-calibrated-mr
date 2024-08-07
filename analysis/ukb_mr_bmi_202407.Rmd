@@ -63,7 +63,7 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 10}
+```{r fig.width=15, fig.height = 12}
 par(mfrow = c(3,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
@@ -267,7 +267,7 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 10}
+```{r fig.width=15, fig.height = 12}
 par(mfrow = c(3,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
@@ -471,7 +471,7 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 10}
+```{r fig.width=15, fig.height = 12}
 par(mfrow = c(3,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
@@ -676,7 +676,7 @@ dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$
 ```
 
 
-```{r fig.width=15, fig.height = 10}
+```{r fig.width=15, fig.height = 12}
 par(mfrow = c(3,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
@@ -878,7 +878,7 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 10}
+```{r fig.width=15, fig.height = 12}
 par(mfrow = c(3,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
@@ -1081,7 +1081,7 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 10}
+```{r fig.width=15, fig.height = 12}
 par(mfrow = c(3,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
