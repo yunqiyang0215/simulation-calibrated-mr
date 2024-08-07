@@ -383,7 +383,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-06-17
+<strong>Last updated:</strong> 2024-08-07
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -474,27 +474,25 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeedfa60d6a4095445010672f0f522214857bf1659targetblankedfa60da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/edfa60d6a4095445010672f0f522214857bf1659" target="_blank">edfa60d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb52cb32d0560fa4ca591381988a7fc9125b4d5f1targetblankb52cb32a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b52cb32d0560fa4ca591381988a7fc9125b4d5f1" target="_blank">b52cb32</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeedfa60d6a4095445010672f0f522214857bf1659targetblankedfa60da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb52cb32d0560fa4ca591381988a7fc9125b4d5f1targetblankb52cb32a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/edfa60d6a4095445010672f0f522214857bf1659" target="_blank">edfa60d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b52cb32d0560fa4ca591381988a7fc9125b4d5f1" target="_blank">b52cb32</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
 </p>
 <pre><code>
 Ignored files:
+    Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-
-Unstaged changes:
-    Modified:   analysis/ukb_trait_calibration_sib.Rmd
 
 </code></pre>
 <p>
@@ -533,6 +531,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/b52cb32d0560fa4ca591381988a7fc9125b4d5f1/analysis/ukb_mr_trio.Rmd" target="_blank">b52cb32</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-07
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_trio.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/03f7ea64573dd67c28275c77897979c1ccb77dab/docs/ukb_mr_trio.html" target="_blank">03f7ea6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-06-17
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -871,15 +903,15 @@ dat.out = merge(sumstat, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;,
 # flip sign of effect if the allele tested is different
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 
-pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)
-pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)
-pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)
+pval.ext = pnorm(abs(dat.exp$BETA/dat.exp$SE), lower.tail = FALSE)*2
+pval.cali = pnorm(abs(dat.exp$cali/sqrt(dat.exp$cali.var)), lower.tail = FALSE)*2
+pval.uncali = pnorm(abs(dat.exp$raw/sqrt(dat.exp$raw.var)), lower.tail = FALSE)*2
 sum(pval.ext &lt; 1e-8)</code></pre>
-<pre><code>[1] 78</code></pre>
+<pre><code>[1] 73</code></pre>
 <pre class="r"><code>sum(pval.ext &lt; 1e-5)</code></pre>
-<pre><code>[1] 165</code></pre>
+<pre><code>[1] 153</code></pre>
 <pre class="r"><code>sum(pval.cali &lt; 1e-3)</code></pre>
-<pre><code>[1] 4</code></pre>
+<pre><code>[1] 3</code></pre>
 <pre class="r"><code>sum(pval.uncali &lt; 1e-3)</code></pre>
 <pre><code>[1] 2</code></pre>
 <div id="ivw" class="section level4">
@@ -1066,6 +1098,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03f7ea64573dd67c28275c77897979c1ccb77dab/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-7-1.png" target="_blank">03f7ea6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-06-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-7-1.png" target="_blank">41d2098</a>
 </td>
 <td>
@@ -1115,7 +1158,7 @@ yunqi yang
 </div>
 <div id="ivw-1" class="section level4">
 <h4>1. IVW</h4>
-<pre class="r"><code>indx = which(pval.ext &lt; 1e-5)
+<pre class="r"><code>indx = which(dat.exp$P &lt; 1e-5)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -1158,8 +1201,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est 0.16825031       0.10640173    0.15979331    0.22759230
-std       0.07752742       0.07588578    0.07207019    0.02685883</code></pre>
+point.est  0.1534121       0.13671185    0.21168323    0.22306215
+std        0.0799639       0.07931921    0.07613444    0.02795066</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1251,12 +1294,12 @@ rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
 estimating equations might have another finite root. The closest root is beta
-= 1.17802361582916 and the other root is beta = -0.342293098505221 and the
-initialization is beta = 1.17802361582916</code></pre>
+= 1.13677792072341 and the other root is beta = -0.295507260791859 and the
+initialization is beta = 1.13677792072341</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
 estimating equations might have another finite root. The closest root is beta
-= 1.17802361582916 and the other root is beta = -0.342293098632277 and the
-initialization is beta = 1.17802361582916</code></pre>
+= 1.13677792072341 and the other root is beta = -0.295507260790521 and the
+initialization is beta = 1.13677792072341</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
@@ -1271,12 +1314,12 @@ res.mr[, 2] = c(point_est, stderr)
 mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var),
 sqrt(dat2$int.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.685496773100708 and the other root is beta =
--1.47287917928369 and the initialization is beta = 0.685496773100708</code></pre>
+The closest root is beta = 0.838006843265568 and the other root is beta =
+-1.19732059791421 and the initialization is beta = 0.838006843265568</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var),
 sqrt(dat2$int.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.685496773100708 and the other root is beta =
--1.4728791730355 and the initialization is beta = 0.685496773100708</code></pre>
+The closest root is beta = 0.838006843265568 and the other root is beta =
+-1.19732060533995 and the initialization is beta = 0.838006843265568</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
@@ -1288,8 +1331,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)
 res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est   1.178024        1.1431112     0.6854968    0.25848610
-std         0.663653        0.7142153     0.3176574    0.01294187</code></pre>
+point.est  1.1367779         1.200192     0.8380068    0.25354330
+std        0.7314714         0.627267     0.3177906    0.01313349</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1324,6 +1367,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03f7ea64573dd67c28275c77897979c1ccb77dab/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-12-1.png" target="_blank">03f7ea6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-06-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-12-1.png" target="_blank">41d2098</a>
 </td>
 <td>
@@ -1351,7 +1405,7 @@ yunqiyang0215
 </div>
 <div id="ivw-2" class="section level4">
 <h4>1. IVW</h4>
-<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
+<pre class="r"><code>indx = which(dat.exp$P &lt; 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
@@ -1394,8 +1448,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  0.2347462        0.1311777     0.2469444    0.22720776
-std        0.1124385        0.1064211     0.1053423    0.04122251</code></pre>
+point.est  0.3092596        0.1646734     0.2262479    0.25296265
+std        0.1104118        0.1123423     0.1129101    0.01805013</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1487,8 +1541,8 @@ rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
 estimating equations might have another finite root. The closest root is beta
-= 1.00929018816517 and the other root is beta = -1.01230831873906 and the
-initialization is beta = 1.00929018816517</code></pre>
+= 0.93348139281849 and the other root is beta = -0.969341385484275 and the
+initialization is beta = 0.93348139281849</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
@@ -1497,15 +1551,19 @@ res.mr[, 1] = c(point_est, stderr)
 mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
 sqrt(dat2$raw.var)): The estimating equations might have another finite root.
-The closest root is beta = 1.54804504811224 and the other root is beta =
--0.942049765030965 and the initialization is beta = 1.54804504811224</code></pre>
+The closest root is beta = 1.71372124511296 and the other root is beta =
+-0.813453538002797 and the initialization is beta = 1.71372124511296</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-point_est = mr$beta.hat
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced
+
+Warning in sqrt(1/I): NaNs produced</code></pre>
+<pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
@@ -1516,8 +1574,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  1.0092902         1.548045     0.6841492    0.26178633
-std        0.6181389         1.003453     0.3157572    0.01539468</code></pre>
+point.est  0.9334814         1.713721     0.7166189    0.25904245
+std        0.4484053         1.026676     0.3859176    0.01392399</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1550,6 +1608,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03f7ea64573dd67c28275c77897979c1ccb77dab/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-18-1.png" target="_blank">03f7ea6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-06-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-18-1.png" target="_blank">41d2098</a>
@@ -1798,6 +1867,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/03f7ea64573dd67c28275c77897979c1ccb77dab/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-26-1.png" target="_blank">03f7ea6</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-06-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-26-1.png" target="_blank">41d2098</a>
 </td>
 <td>
@@ -1828,6 +1908,9 @@ dat2 = dat.out[indx, ]</code></pre>
 </div>
 <div id="ivw-4" class="section level4">
 <h4>1. IVW</h4>
+<pre class="r"><code>indx = which(dat.exp$P &lt; 1e-5)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 4, nrow = 2)
 colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
@@ -1868,8 +1951,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  0.1746984        0.2853195     0.1435645   -0.12298912
-std        0.1181302        0.1162585     0.1174564    0.02199542</code></pre>
+point.est  0.1622773        0.2664385     0.1337913   -0.11958266
+std        0.1207536        0.1216960     0.1250383    0.02243194</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1879,13 +1962,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-30-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-31-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-30-1">
-Past versions of unnamed-chunk-30-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-31-1">
+Past versions of unnamed-chunk-31-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-30-1" class="collapse">
+<div id="fig-unnamed-chunk-31-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1904,18 +1987,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-30-1.png" target="_blank">41d2098</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c9ee5d608ebad3eb3df22b3e260f2bfd22f854a5/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-31-1.png" target="_blank">c9ee5d6</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
-2024-05-29
+2024-05-24
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c9ee5d608ebad3eb3df22b3e260f2bfd22f854a5/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-30-1.png" target="_blank">c9ee5d6</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ede068c252eff8decf16d0d4c6a30508cb85d1be/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-31-1.png" target="_blank">ede068c</a>
 </td>
 <td>
 yunqiyang0215
@@ -1936,8 +2019,12 @@ colnames(res.mr) = c(&quot;calibrated&quot;, &quot;adj+uncalibrated&quot;, &quot
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 
 # calibrated
-mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
-point_est = mr$beta.hat
+mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.749018249877155 and the other root is beta = -3.65814950740775 and the
+initialization is beta = 0.749018249877155</code></pre>
+<pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
@@ -1945,20 +2032,24 @@ res.mr[, 1] = c(point_est, stderr)
 mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
 sqrt(dat2$raw.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.916440687249952 and the other root is beta =
--2.95319238979524 and the initialization is beta = 0.916440687249952</code></pre>
+The closest root is beta = 0.95061593715862 and the other root is beta =
+-2.87483838959723 and the initialization is beta = 0.95061593715862</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
 sqrt(dat2$raw.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.916440687249952 and the other root is beta =
--2.95319239005115 and the initialization is beta = 0.916440687249952</code></pre>
+The closest root is beta = 0.95061593715862 and the other root is beta =
+-2.87483838489689 and the initialization is beta = 0.95061593715862</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
 sqrt(dat2$raw.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.916440687249952 and the other root is beta =
--2.95319239187407 and the initialization is beta = 0.916440687249952</code></pre>
+The closest root is beta = 0.95061593715862 and the other root is beta =
+-2.87483838323411 and the initialization is beta = 0.95061593715862</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
 sqrt(dat2$raw.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.916440687249952 and the other root is beta =
--2.9531923575099 and the initialization is beta = 0.916440687249952</code></pre>
+The closest root is beta = 0.95061593715862 and the other root is beta =
+-2.87483838983156 and the initialization is beta = 0.95061593715862</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.95061593715862 and the other root is beta =
+-2.87483838093104 and the initialization is beta = 0.95061593715862</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
@@ -1967,8 +2058,8 @@ res.mr[, 2] = c(point_est, stderr)
 mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var),
 sqrt(dat2$int.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.714528471719583 and the other root is beta =
--4.02322128327755 and the initialization is beta = 0.714528471719583</code></pre>
+The closest root is beta = 0.808723010610017 and the other root is beta =
+-3.58393113849649 and the initialization is beta = 0.808723010610017</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
@@ -1980,8 +2071,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  0.7959595        0.9164407     0.7145285    -0.1316652
-std        0.5579369        0.3972912     0.5852368     0.0135154</code></pre>
+point.est  0.7490182        0.9506159     0.8087230   -0.12771917
+std        0.5797349        0.4581301     0.7517007    0.01368121</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -1991,13 +2082,13 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-33-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-34-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-33-1">
-Past versions of unnamed-chunk-33-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-34-1">
+Past versions of unnamed-chunk-34-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-33-1" class="collapse">
+<div id="fig-unnamed-chunk-34-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -2016,18 +2107,18 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-33-1.png" target="_blank">41d2098</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c9ee5d608ebad3eb3df22b3e260f2bfd22f854a5/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-34-1.png" target="_blank">c9ee5d6</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
-2024-05-29
+2024-05-24
 </td>
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c9ee5d608ebad3eb3df22b3e260f2bfd22f854a5/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-33-1.png" target="_blank">c9ee5d6</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ede068c252eff8decf16d0d4c6a30508cb85d1be/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-34-1.png" target="_blank">ede068c</a>
 </td>
 <td>
 yunqiyang0215
@@ -2040,7 +2131,7 @@ yunqiyang0215
 </table>
 </div>
 </div>
-<pre class="r"><code>indx = which(pval.ext &lt; 1e-8)
+<pre class="r"><code>indx = which(dat.exp$P &lt; 1e-8)
 dat1 = dat.exp[indx, ]
 dat2 = dat.out[indx, ]</code></pre>
 </div>
@@ -2086,8 +2177,8 @@ mr = mr_ivw(MRInput)
 res.mr[, 4] = c(mr@Estimate, mr@StdError)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  0.1578513        0.1861965     0.1043548   -0.12257214
-std        0.1612316        0.1763099     0.1752558    0.03002803</code></pre>
+point.est  0.1083759        0.1445338     0.1175578   -0.12243988
+std        0.1742674        0.1886148     0.1875807    0.03123127</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -2097,55 +2188,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;IVW: BMI on education yrs&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-37-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-37-1">
-Past versions of unnamed-chunk-37-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-37-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-37-1.png" target="_blank">41d2098</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-29
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c9ee5d608ebad3eb3df22b3e260f2bfd22f854a5/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-37-1.png" target="_blank">c9ee5d6</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="mr.raps-5" class="section level4">
 <h4>2. mr.raps</h4>
@@ -2157,25 +2200,45 @@ rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
 estimating equations might have another finite root. The closest root is beta
-= 0.630927848655917 and the other root is beta = -4.03601308590883 and the
-initialization is beta = 0.630927848655917</code></pre>
+= 0.635027148188121 and the other root is beta = -3.92556126588534 and the
+initialization is beta = 0.635027148188121</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 1] = c(point_est, stderr)
 
 # adj+uncalibrated
 mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced
+
+Warning in sqrt(1/I): NaNs produced</code></pre>
 <pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
 sqrt(dat2$raw.var)): The estimating equations might have another finite root.
-The closest root is beta = 0.841423612739039 and the other root is beta =
--3.88896728454061 and the initialization is beta = 0.841423612739039</code></pre>
+The closest root is beta = 1.08911250560304 and the other root is beta =
+-2.79783476290158 and the initialization is beta = 1.08911250560304</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 1.08911250560304 and the other root is beta =
+-2.7978331613581 and the initialization is beta = 1.08911250560304</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 1.08911250560304 and the other root is beta =
+-2.79783467299968 and the initialization is beta = 1.08911250560304</code></pre>
 <pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 2] = c(point_est, stderr)
 
 # internal gwas
-mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-point_est = mr$beta.hat
+mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced</code></pre>
+<pre><code>Warning in sqrt(1/I): NaNs produced
+
+Warning in sqrt(1/I): NaNs produced</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var),
+sqrt(dat2$int.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.684507673743644 and the other root is beta =
+-4.42917134382961 and the initialization is beta = 0.684507673743644</code></pre>
+<pre class="r"><code>point_est = mr$beta.hat
 stderr = mr$beta.se
 res.mr[, 3] = c(point_est, stderr)
 
@@ -2186,8 +2249,8 @@ stderr = mr$beta.se
 res.mr[, 4] = c(point_est, stderr)</code></pre>
 <pre class="r"><code>res.mr</code></pre>
 <pre><code>          calibrated adj+uncalibrated internal.gwas external.gwas
-point.est  0.6309278        0.8414236     0.4137579    -0.1301462
-std        0.6478919        0.8367618     0.6997766     0.0157032</code></pre>
+point.est  0.6350271         1.089113     0.6845077   -0.13010005
+std        1.0053324         1.548028     1.1037410    0.01594668</code></pre>
 <pre class="r"><code>labels &lt;- c(&#39;calibrated&#39;, &#39;adj+uncalibrated&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
 point_est &lt;- res.mr[1, ]
 error_bars &lt;- 1.96 * res.mr[2, ]
@@ -2197,55 +2260,7 @@ plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_b
      xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=&#39;mr.raps: BMI on education years&#39;, cex=1.5)
 arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
 axis(1, at=1:4, labels=labels)</code></pre>
-<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-40-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-40-1">
-Past versions of unnamed-chunk-40-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-40-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/41d20980d51ee7f0cc2e4c1b9f1a760adb4b8293/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-40-1.png" target="_blank">41d2098</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-29
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c9ee5d608ebad3eb3df22b3e260f2bfd22f854a5/docs/figure/ukb_mr_trio.Rmd/unnamed-chunk-40-1.png" target="_blank">c9ee5d6</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-05-24
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_trio.Rmd/unnamed-chunk-41-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
