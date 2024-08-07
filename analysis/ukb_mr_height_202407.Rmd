@@ -76,8 +76,10 @@ sum(dat.exp$variant != dat.out$variant)
 #### 1. IVW
 
 ```{r}
-dat1 = dat.exp
-dat2 = dat.out
+
+indx = which(dat.exp$P < 1e-8)
+dat1 = dat.exp[indx, ]
+dat2 = dat.out[indx, ]
 ```
 
 ```{r}
