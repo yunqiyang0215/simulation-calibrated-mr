@@ -979,7 +979,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on smoking: pval=', pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1021,7 +1021,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on smoking: pval=', pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -1182,7 +1182,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on smoking: pval=', pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1224,7 +1224,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on smoking: pval=', pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
