@@ -507,16 +507,16 @@ output/ukb_mr_sib2.pdf
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0420e9ae4c07dc20ed81cac084720602c03038eatargetblank0420e9aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0420e9ae4c07dc20ed81cac084720602c03038ea" target="_blank">0420e9a</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree27a81a7fca6788e53b87d1d2b4e2dbf2882af631targetblank27a81a7a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/27a81a7fca6788e53b87d1d2b4e2dbf2882af631" target="_blank">27a81a7</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0420e9ae4c07dc20ed81cac084720602c03038eatargetblank0420e9aa" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree27a81a7fca6788e53b87d1d2b4e2dbf2882af631targetblank27a81a7a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0420e9ae4c07dc20ed81cac084720602c03038ea" target="_blank">0420e9a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/27a81a7fca6788e53b87d1d2b4e2dbf2882af631" target="_blank">27a81a7</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -535,7 +535,6 @@ Untracked files:
     Untracked:  output/ukb_mr_trio1.pdf
 
 Unstaged changes:
-    Modified:   analysis/real_data_mr_bmi.Rmd
     Deleted:    scripts/real_data_mr_bmi.Rmd
 
 </code></pre>
@@ -575,6 +574,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/27a81a7fca6788e53b87d1d2b4e2dbf2882af631/analysis/real_data_mr_height.Rmd" target="_blank">27a81a7</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+<td>
+wflow_publish("analysis/real_data_mr_height.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/c77af00f5f870d7814fd1f06d04509b18606117a/docs/real_data_mr_height.html" target="_blank">c77af00</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1257,7 +1290,7 @@ for (i in 1:length(pvals)){
   res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
 }
 
-plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on edu_yrs&quot;))
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on EduYrs&quot;))
 
 
 ### mr.raps.mle
@@ -1295,7 +1328,7 @@ for (i in 1:length(pvals)){
   res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
 }
 
-plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on edu_yrs&quot;))
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on EduYrs&quot;))
 
 # mr.raps.shrinkage
 res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
@@ -1330,7 +1363,7 @@ for (i in 1:length(pvals)){
   res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
 }
 
-plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on edu_yrs&quot;))</code></pre>
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on EduYrs&quot;))</code></pre>
 </div>
 <div id="trio-height-on-smoking" class="section level3">
 <h3>3. Trio: height on smoking</h3>
