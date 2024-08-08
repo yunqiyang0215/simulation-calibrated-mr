@@ -309,7 +309,7 @@ for (i in 1:length(pvals)){
   res.mr[["ext"]][,i] = c(mr@Estimate, mr@StdError)
 }
 
-plot_combined_res(res.mr, main = paste0("IVW:", exp, " on ", out))
+plot_combined_res(res.mr, main = paste0("IVW:", exp, " on edu_yrs"))
 
 
 ### mr.raps.mle
@@ -347,7 +347,7 @@ for (i in 1:length(pvals)){
   res.mr[["ext"]][,i] = c(point_est, stderr)
 }
 
-plot_combined_res(res.mr, main = paste0("mr.raps.mle:", exp, " on ", out))
+plot_combined_res(res.mr, main = paste0("mr.raps.mle:", exp, " on edu_yrs"))
 
 # mr.raps.shrinkage
 res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
@@ -382,7 +382,7 @@ for (i in 1:length(pvals)){
   res.mr[["ext"]][,i] = c(point_est, stderr)
 }
 
-plot_combined_res(res.mr, main = paste0("mr.raps.shrinkage:", exp, " on ", out))
+plot_combined_res(res.mr, main = paste0("mr.raps.shrinkage:", exp, " on edu_yrs"))
 ```
 
 
