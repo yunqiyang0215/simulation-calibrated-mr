@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Yunqi Yang" />
+
+
+<title>UKB mr result: BMI as exposure</title>
+
+<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/master/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.tab('show');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">simulation-calibrated-mr</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="license.html">License</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+  <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr">
+    <span class="fa fa-github"></span>
+     
+    Source code
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">UKB mr result: BMI as exposure</h1>
+<h4 class="author">Yunqi Yang</h4>
+<h4 class="date">8/6/2024</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span> workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2024-08-07
+</p>
+<p>
+<strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>simulation-calibrated-mr/</code> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" title="This is the local directory in which the code in this file was executed."> </span>
+</p>
+<p>
+This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis was created with <a
+  href="https://github.com/jdblischak/workflowr">workflowr</a> (version 1.6.2). The <em>Checks</em> tab describes the reproducibility checks that were applied when the results were created. The <em>Past versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguptodate" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great! Since the R Markdown file has been committed to the Git repository, you know the exact version of the code that produced these results.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the global environment can affect the analysis in your R Markdown file in unknown ways. For reproduciblity it’s best to always run the code in an empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20230217code"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Seed:</strong> <code>set.seed(20230217)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20230217code" class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20230217)</code> was run prior to running the code in the R Markdown file. Setting a seed ensures that any results that rely on randomness, e.g. subsampling or permutations, are reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Session information:</strong> recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be confident that you successfully produced the results during this run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongabsolute"> <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> <strong>File paths:</strong> absolute </a>
+</p>
+</div>
+<div id="strongFilepathsstrongabsolute" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Using absolute paths to the files within your workflowr project makes it difficult for you and others to run your code on a different machine. Change the absolute path(s) below to the suggested relative path(s) to make your code more reproducible.
+</p>
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th style="text-align:left;">
+absolute
+</th>
+<th style="text-align:left;">
+relative
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_
+</td>
+<td style="text-align:left;">
+data/snp_list/bmi_
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec915751b41b8156a18000c8a913900cbcdc110e6targetblankc915751a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c915751b41b8156a18000c8a913900cbcdc110e6" target="_blank">c915751</a> </a>
+</p>
+</div>
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreec915751b41b8156a18000c8a913900cbcdc110e6targetblankc915751a" class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/c915751b41b8156a18000c8a913900cbcdc110e6" target="_blank">c915751</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
+    Ignored:    scripts/.DS_Store
+
+Unstaged changes:
+    Deleted:    scripts/real_data_mr_bmi.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not included in this status report because it is ok for generated content to have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+
+<p>
+These are the previous versions of the repository in which changes were made to the R Markdown (<code>analysis/real_data_mr_bmi.Rmd</code>) and HTML (<code>docs/real_data_mr_bmi.html</code>) files. If you’ve configured a remote Git repository (see <code>?wflow_git_remote</code>), click on the hyperlinks in the table below to view the files as they were in that past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c915751b41b8156a18000c8a913900cbcdc110e6/analysis/real_data_mr_bmi.Rmd" target="_blank">c915751</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-07
+</td>
+<td>
+wflow_publish("analysis/real_data_mr_bmi.Rmd")
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="snp-selection-file-available-at" class="section level4">
+<h4>SNP selection file available at:</h4>
+<p><a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/master/analysis/snp_selection.R" class="uri">https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/master/analysis/snp_selection.R</a></p>
+<pre class="r"><code>library(MendelianRandomization)
+library(mr.raps)</code></pre>
+<pre class="r"><code>plot_combined_res &lt;- function(res.mr, main = &quot;IVW: BMI on diabetes&quot;,
+                              colors = c(&quot;coral1&quot;, &quot;skyblue&quot;, &quot;gold&quot;), pch = 20,
+                              label1=c(&#39;1e-2&#39;, &#39;1e-5&#39;, &#39;1e-8&#39;), 
+                              label2 = c(783, 180, 57), 
+                              xlab = &quot;P-value threshold&quot;, ylab = &quot;Point estimate&quot;,
+                              legend=c(&quot;Calibrated estimator&quot;, &quot;Raw estimator&quot;, &quot;External GWAS&quot;)){
+  
+  point_est_cali &lt;- res.mr$cali[1, ]
+  std_err_cali &lt;- res.mr$cali[2, ]
+  point_est_raw &lt;- res.mr$raw[1, ]
+  std_err_raw &lt;- res.mr$raw[2, ]
+  point_est_ext &lt;- res.mr$ext[1, ]
+  std_err_ext &lt;- res.mr$ext[2, ]
+  
+  point_est_all &lt;- c(point_est_cali, point_est_raw, point_est_ext)
+  std_err_all &lt;- c(std_err_cali, std_err_raw, std_err_ext)
+  
+  x_cali &lt;- 1:3 - 0.1
+  x_raw &lt;- 1:3
+  x_ext &lt;- 1:3 + 0.1
+  
+  # Plotting
+  plot(NULL, xlim=c(0.5, 3.5), ylim=c(min(min(point_est_all - 1.96 * std_err_all), 0)-0.1, max(point_est_all + 1.96 * std_err_all) +0.3), 
+       xaxt=&#39;n&#39;, xlab=xlab, ylab=ylab, main= main)
+  abline(h = 0, lty = 2, col = &quot;grey&quot;)
+  axis(1, at=1:3, labels=label1)
+  mtext(label2, side = 1, at = 1:3, line = -1, cex = 0.8)
+  
+  # Plot cali data
+  points(x_cali, point_est_cali, pch=pch, col = colors[1])
+  arrows(x_cali, point_est_cali - 1.96 * std_err_cali, x_cali, point_est_cali + 1.96 * std_err_cali, angle=90, code=3, length = 0.05, lwd = 2, col=colors[1])
+  
+  # Plot raw data
+  points(x_raw, point_est_raw, pch=pch, col=colors[2])
+  arrows(x_raw, point_est_raw - 1.96 * std_err_raw, x_raw, point_est_raw + 1.96 * std_err_raw, angle=90, code=3, length = 0.05, lwd = 2, col=colors[2])
+  
+  # Plot ext data
+  points(x_ext, point_est_ext, pch=pch, col=colors[3])
+  arrows(x_ext, point_est_ext - 1.96 * std_err_ext, x_ext, point_est_ext + 1.96 * std_err_ext, angle=90, code=3, length = 0.05, lwd = 2, col=colors[3])
+  
+  # Add legend
+  legend(&quot;topright&quot;, legend=legend, col=colors, pch=pch)
+}</code></pre>
+</div>
+<div id="trio-bmi-on-diabetes" class="section level3">
+<h3>1. Trio: BMI on diabetes</h3>
+<pre class="r"><code>exp = &quot;bmi&quot;
+out = &quot;diabetes&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+### IVW
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  MRInput &lt;- mr_input(bx = dat1$cali, bxse = sqrt(dat1$cali.var), by = dat2$cali, byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;cali&quot;]][,i] = c(mr@Estimate, mr@StdError)
+ 
+  # raw estimator
+  MRInput &lt;- mr_input(bx = dat1$raw, bxse = sqrt(dat1$raw.var), by = dat2$raw, byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;raw&quot;]][,i] = c(mr@Estimate, mr@StdError)
+  
+  
+  MRInput &lt;- mr_input(bx = dat1$BETA, bxse = dat1$SE, by = dat2$BETA, byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on &quot;, out))
+
+
+### mr.raps.mle
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on &quot;, out))
+
+# mr.raps.shrinkage
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  # calibrated estimator
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.852672462956953 and the other root is beta = -1.39667137923214 and the
+initialization is beta = 0.852672448208213</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.852672462956953 and the other root is beta = -1.39667137965123 and the
+initialization is beta = 0.852672448208213</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 1.13812384334091 and the other root is beta =
+-1.05476338394564 and the initialization is beta = 1.13812379978625</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.637750917841163 and the other root is beta = -3.24017925596838 and the
+initialization is beta = 0.637750935727596</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.922834055389757 and the other root is beta =
+-1.44220910444175 and the initialization is beta = 0.922834055389757</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.922834055389757 and the other root is beta =
+-1.44220908257259 and the initialization is beta = 0.922834055389757</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.651044138967306 and the other root is beta = -1.93946468773839 and the
+initialization is beta = 0.651044138967306</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.537232941299394 and the other root is beta =
+-2.22445845912266 and the initialization is beta = 0.537232941299394</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.537232941299394 and the other root is beta =
+-2.22445825459873 and the initialization is beta = 0.537232941299394</code></pre>
+<pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sibling-bmi-on-diabetes" class="section level3">
+<h3>2. Sibling: BMI on diabetes</h3>
+<pre class="r"><code>exp = &quot;bmi&quot;
+out = &quot;diabetes&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+### IVW
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  MRInput &lt;- mr_input(bx = dat1$cali, bxse = sqrt(dat1$cali.var), by = dat2$cali, byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;cali&quot;]][,i] = c(mr@Estimate, mr@StdError)
+ 
+  # raw estimator
+  MRInput &lt;- mr_input(bx = dat1$raw, bxse = sqrt(dat1$raw.var), by = dat2$raw, byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;raw&quot;]][,i] = c(mr@Estimate, mr@StdError)
+  
+  
+  MRInput &lt;- mr_input(bx = dat1$BETA, bxse = dat1$SE, by = dat2$BETA, byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on &quot;, out))
+
+
+### mr.raps.mle
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on &quot;, out))
+
+# mr.raps.shrinkage
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  # calibrated estimator
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.501070925779072 and the other root is beta = -2.32915626196375 and the
+initialization is beta = 0.501070913826496</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.381863582680002 and the other root is beta = -3.03773159006722 and the
+initialization is beta = 0.38186359316658</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.504123068547964 and the other root is beta = -2.33412783167304 and the
+initialization is beta = 0.504123073461214</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.504123068547964 and the other root is beta = -2.33412796902399 and the
+initialization is beta = 0.504123073461214</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.504123068547964 and the other root is beta = -2.3341279690262 and the
+initialization is beta = 0.504123073461214</code></pre>
+<pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="trio-bmi-on-education-years" class="section level3">
+<h3>3. Trio: BMI on education years</h3>
+<pre class="r"><code>exp = &quot;bmi&quot;
+out = &quot;education_yrs&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+### IVW
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  MRInput &lt;- mr_input(bx = dat1$cali, bxse = sqrt(dat1$cali.var), by = dat2$cali, byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;cali&quot;]][,i] = c(mr@Estimate, mr@StdError)
+ 
+  # raw estimator
+  MRInput &lt;- mr_input(bx = dat1$raw, bxse = sqrt(dat1$raw.var), by = dat2$raw, byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;raw&quot;]][,i] = c(mr@Estimate, mr@StdError)
+  
+  
+  MRInput &lt;- mr_input(bx = dat1$BETA, bxse = dat1$SE, by = dat2$BETA, byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on &quot;, out))
+
+
+### mr.raps.mle
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on &quot;, out))
+
+# mr.raps.shrinkage
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  # calibrated estimator
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 2.00770554992002 and the other root is beta =
+-0.941963176936371 and the initialization is beta = 2.00770554992002</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 2.00770554992002 and the other root is beta =
+-0.941963176969147 and the initialization is beta = 2.00770554992002</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= 0.541319940126336 and the other root is beta = -4.86989267545783 and the
+initialization is beta = 0.541319940126336</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.743037052466926 and the other root is beta =
+-4.13456435980225 and the initialization is beta = 0.743037052466926</code></pre>
+<pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sibling-bmi-on-education-years" class="section level3">
+<h3>4. Sibling: BMI on education years</h3>
+<pre class="r"><code>exp = &quot;bmi&quot;
+out = &quot;education_yrs&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+### IVW
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  MRInput &lt;- mr_input(bx = dat1$cali, bxse = sqrt(dat1$cali.var), by = dat2$cali, byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;cali&quot;]][,i] = c(mr@Estimate, mr@StdError)
+ 
+  # raw estimator
+  MRInput &lt;- mr_input(bx = dat1$raw, bxse = sqrt(dat1$raw.var), by = dat2$raw, byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;raw&quot;]][,i] = c(mr@Estimate, mr@StdError)
+  
+  
+  MRInput &lt;- mr_input(bx = dat1$BETA, bxse = dat1$SE, by = dat2$BETA, byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on &quot;, out))
+
+
+### mr.raps.mle
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on &quot;, out))
+
+# mr.raps.shrinkage
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  # calibrated estimator
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="trio-bmi-on-smoking" class="section level3">
+<h3>5. Trio: BMI on smoking</h3>
+<pre class="r"><code>exp = &quot;bmi&quot;
+out = &quot;smoking&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+### IVW
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  MRInput &lt;- mr_input(bx = dat1$cali, bxse = sqrt(dat1$cali.var), by = dat2$cali, byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;cali&quot;]][,i] = c(mr@Estimate, mr@StdError)
+ 
+  # raw estimator
+  MRInput &lt;- mr_input(bx = dat1$raw, bxse = sqrt(dat1$raw.var), by = dat2$raw, byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;raw&quot;]][,i] = c(mr@Estimate, mr@StdError)
+  
+  
+  MRInput &lt;- mr_input(bx = dat1$BETA, bxse = dat1$SE, by = dat2$BETA, byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on &quot;, out))
+
+
+### mr.raps.mle
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on &quot;, out))
+
+# mr.raps.shrinkage
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  # calibrated estimator
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= -0.511963589483925 and the other root is beta = 3.21853006643808 and the
+initialization is beta = -0.51196361452806</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var),
+sqrt(dat2$raw.var)): The estimating equations might have another finite root.
+The closest root is beta = 0.503125377566961 and the other root is beta =
+-2.6125552822852 and the initialization is beta = 0.503125377566961</code></pre>
+<pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-22-1.png" width="960" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sibling-bmi-on-smoking" class="section level3">
+<h3>6. Sibling: BMI on smoking</h3>
+<pre class="r"><code>exp = &quot;bmi&quot;
+out = &quot;smoking&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+### IVW
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  MRInput &lt;- mr_input(bx = dat1$cali, bxse = sqrt(dat1$cali.var), by = dat2$cali, byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;cali&quot;]][,i] = c(mr@Estimate, mr@StdError)
+ 
+  # raw estimator
+  MRInput &lt;- mr_input(bx = dat1$raw, bxse = sqrt(dat1$raw.var), by = dat2$raw, byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;raw&quot;]][,i] = c(mr@Estimate, mr@StdError)
+  
+  
+  MRInput &lt;- mr_input(bx = dat1$BETA, bxse = dat1$SE, by = dat2$BETA, byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[[&quot;ext&quot;]][,i] = c(mr@Estimate, mr@StdError)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;IVW:&quot;, exp, &quot; on &quot;, out))
+
+
+### mr.raps.mle
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # calibrated estimator
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.mle:&quot;, exp, &quot; on &quot;, out))
+
+# mr.raps.shrinkage
+res.mr = list(cali = matrix(NA, ncol = length(pvals), nrow = 2),
+              raw = matrix(NA, ncol = length(pvals), nrow = 2),
+              ext = matrix(NA, ncol = length(pvals), nrow = 2))
+colnames(res.mr[[&#39;cali&#39;]]) = colnames(res.mr[[&#39;raw&#39;]]) = colnames(res.mr[[&#39;ext&#39;]]) = pvals
+rownames(res.mr[[&#39;cali&#39;]]) = rownames(res.mr[[&#39;raw&#39;]]) = rownames(res.mr[[&#39;ext&#39;]]) = c(&quot;point_est&quot;, &quot;std&quot;)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  # calibrated estimator
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;cali&quot;]][,i] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;raw&quot;]][,i] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[[&quot;ext&quot;]][,i] = c(point_est, stderr)
+}
+
+plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-26-1.png" width="960" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.1.1 (2021-08-10)
+Platform: x86_64-apple-darwin20.6.0 (64-bit)
+Running under: macOS Monterey 12.0.1
+
+Matrix products: default
+BLAS:   /usr/local/Cellar/openblas/0.3.18/lib/libopenblasp-r0.3.18.dylib
+LAPACK: /usr/local/Cellar/r/4.1.1_1/lib/R/lib/libRlapack.dylib
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] mr.raps_0.4.1                MendelianRandomization_0.7.0
+[3] workflowr_1.6.2             
+
+loaded via a namespace (and not attached):
+ [1] httr_1.4.6         sass_0.4.4         tidyr_1.2.1        jsonlite_1.7.2    
+ [5] viridisLite_0.4.0  splines_4.1.1      foreach_1.5.2      bslib_0.4.1       
+ [9] highr_0.9          arrangements_1.1.9 yaml_2.2.1         robustbase_0.95-1 
+[13] ggrepel_0.9.3      pillar_1.9.0       lattice_0.20-44    quantreg_5.94     
+[17] glue_1.4.2         digest_0.6.28      promises_1.2.0.1   iterpc_0.4.2      
+[21] colorspace_2.0-2   plyr_1.8.6         htmltools_0.5.5    httpuv_1.6.3      
+[25] Matrix_1.5-3       pkgconfig_2.0.3    httpcode_0.3.0     SparseM_1.81      
+[29] purrr_0.3.4        scales_1.2.1       rsnps_0.5.0.0      whisker_0.4       
+[33] rootSolve_1.8.2.3  later_1.3.0        MatrixModels_0.5-1 git2r_0.28.0      
+[37] tibble_3.1.5       gmp_0.7-1          generics_0.1.2     ggplot2_3.4.3     
+[41] ellipsis_0.3.2     cachem_1.0.6       lazyeval_0.2.2     cli_3.6.1         
+[45] survival_3.2-11    magrittr_2.0.1     evaluate_0.14      fs_1.5.0          
+[49] fansi_0.5.0        MASS_7.3-54        tools_4.1.1        data.table_1.14.9 
+[53] lifecycle_1.0.3    stringr_1.4.0      plotly_4.10.1      munsell_0.5.0     
+[57] glmnet_4.1-4       compiler_4.1.1     jquerylib_0.1.4    rlang_1.1.1       
+[61] grid_4.1.1         iterators_1.0.14   rstudioapi_0.13    rjson_0.2.21      
+[65] htmlwidgets_1.6.2  rmarkdown_2.11     gtable_0.3.0       codetools_0.2-18  
+[69] curl_4.3.2         R6_2.5.1           gridExtra_2.3      knitr_1.36        
+[73] dplyr_1.0.7        fastmap_1.1.0      utf8_1.2.2         nortest_1.0-4     
+[77] rprojroot_2.0.2    shape_1.4.6        stringi_1.7.5      crul_1.4.0        
+[81] Rcpp_1.0.8.3       vctrs_0.6.3        DEoptimR_1.0-13    tidyselect_1.2.0  
+[85] xfun_0.27         </code></pre>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+http://docs.mathjax.org/en/latest/configuration.html.  This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
