@@ -491,6 +491,14 @@ relative
 data/snp_list/height_
 </td>
 </tr>
+<tr>
+<td style="text-align:left;">
+/Users/nicholeyang/Downloads/simulation-calibrated-mr/output/ukb_mr_sib2.pdf
+</td>
+<td style="text-align:left;">
+output/ukb_mr_sib2.pdf
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -499,16 +507,16 @@ data/snp_list/height_
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb722cc56b0d7dae8c248e40711abbae67f548e52targetblankb722cc5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b722cc56b0d7dae8c248e40711abbae67f548e52" target="_blank">b722cc5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef428791044513fba7475842d4a1229701fc6cea5targetblankf428791a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f428791044513fba7475842d4a1229701fc6cea5" target="_blank">f428791</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb722cc56b0d7dae8c248e40711abbae67f548e52targetblankb722cc5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef428791044513fba7475842d4a1229701fc6cea5targetblankf428791a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b722cc56b0d7dae8c248e40711abbae67f548e52" target="_blank">b722cc5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f428791044513fba7475842d4a1229701fc6cea5" target="_blank">f428791</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -521,8 +529,11 @@ Ignored files:
     Ignored:    data/.DS_Store
     Ignored:    scripts/.DS_Store
 
+Untracked files:
+    Untracked:  output/ukb_mr_sib1.pdf
+    Untracked:  output/ukb_mr_trio1.pdf
+
 Unstaged changes:
-    Modified:   analysis/real_data_mr_bmi.Rmd
     Deleted:    scripts/real_data_mr_bmi.Rmd
 
 </code></pre>
@@ -562,6 +573,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/f428791044513fba7475842d4a1229701fc6cea5/analysis/real_data_mr_height.Rmd" target="_blank">f428791</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+<td>
+wflow_publish("analysis/real_data_mr_height.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/2453221b73606db95cb1c16521cb137ca9262bf1/docs/real_data_mr_height.html" target="_blank">2453221</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1018,6 +1063,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2453221b73606db95cb1c16521cb137ca9262bf1/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-6-1.png" target="_blank">2453221</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c7bfe58cf802b67cc42eda4a869be046d83b325e/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-6-1.png" target="_blank">c7bfe58</a>
 </td>
 <td>
@@ -1131,7 +1187,8 @@ dat.ext2 &lt;- do.call(rbind, dat.ext2)
 dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
 # flip sign of effect if the allele tested is different
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
-<pre class="r"><code>par(mfrow = c(1,3))
+<pre class="r"><code>pdf(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/output/ukb_mr_sib2.pdf&quot;, width = 12, height = 4)
+par(mfrow = c(1,3))
 pvals = c(1e-2, 1e-5, 1e-8)
 
 ### IVW
@@ -1238,88 +1295,6 @@ for (i in 1:length(pvals)){
 }
 
 plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_height.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
-Past versions of unnamed-chunk-10-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-10-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c7bfe58cf802b67cc42eda4a869be046d83b325e/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-10-1.png" target="_blank">c7bfe58</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ac465f946fff42c334c100967666d22c1bb4d0ca/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-10-1.png" target="_blank">ac465f9</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/569d6532677274d4320eeccefc9aaa062e4f4eb9/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-10-1.png" target="_blank">569d653</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ac4ce8242afed502127e5d38316393fe597e4acf/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-10-1.png" target="_blank">ac4ce82</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-08
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/6af1c5f19b8df978c52e33a5a92eb245e5dc5295/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-10-1.png" target="_blank">6af1c5f</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="trio-height-on-smoking" class="section level3">
 <h3>3. Trio: height on smoking</h3>
@@ -1502,6 +1477,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2453221b73606db95cb1c16521cb137ca9262bf1/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-14-1.png" target="_blank">2453221</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c7bfe58cf802b67cc42eda4a869be046d83b325e/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-14-1.png" target="_blank">c7bfe58</a>
@@ -1736,6 +1722,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/2453221b73606db95cb1c16521cb137ca9262bf1/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-18-1.png" target="_blank">2453221</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c7bfe58cf802b67cc42eda4a869be046d83b325e/docs/figure/real_data_mr_height.Rmd/unnamed-chunk-18-1.png" target="_blank">c7bfe58</a>
