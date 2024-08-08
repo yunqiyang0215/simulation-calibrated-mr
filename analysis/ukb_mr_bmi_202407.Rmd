@@ -5,6 +5,10 @@ date: "8/6/2024"
 output: html_document
 ---
 
+#### SNP selection file available at:
+
+https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/master/analysis/snp_selection.R
+
 ```{r}
 library(MendelianRandomization)
 library(mr.raps)
