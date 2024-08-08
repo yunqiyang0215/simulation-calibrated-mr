@@ -499,16 +499,16 @@ data/snp_list/bmi_
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7585370029c924bdb7001ba422f409aa41b10436targetblank7585370a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7585370029c924bdb7001ba422f409aa41b10436" target="_blank">7585370</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree3ce06df972f849442496d1f9880d0ae751c8df0atargetblank3ce06dfa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/3ce06df972f849442496d1f9880d0ae751c8df0a" target="_blank">3ce06df</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree7585370029c924bdb7001ba422f409aa41b10436targetblank7585370a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree3ce06df972f849442496d1f9880d0ae751c8df0atargetblank3ce06dfa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/7585370029c924bdb7001ba422f409aa41b10436" target="_blank">7585370</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/3ce06df972f849442496d1f9880d0ae751c8df0a" target="_blank">3ce06df</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -561,6 +561,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/3ce06df972f849442496d1f9880d0ae751c8df0a/analysis/real_data_mr_bmi.Rmd" target="_blank">3ce06df</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+<td>
+wflow_publish("analysis/real_data_mr_bmi.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/real_data_mr_bmi.html" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -641,9 +675,9 @@ library(mr.raps)</code></pre>
   point_est_all &lt;- c(point_est_cali, point_est_raw, point_est_ext)
   std_err_all &lt;- c(std_err_cali, std_err_raw, std_err_ext)
   
-  x_cali &lt;- 1:3 - 0.1
+  x_cali &lt;- 1:3 - 0.15
   x_raw &lt;- 1:3
-  x_ext &lt;- 1:3 + 0.1
+  x_ext &lt;- 1:3 + 0.15
   
   # Plotting
   plot(NULL, xlim=c(0.5, 3.5), ylim=c(min(min(point_est_all - 1.96 * std_err_all), 0)-0.2, max(point_est_all + 1.96 * std_err_all) +0.5), 
@@ -854,7 +888,7 @@ sqrt(dat2$raw.var)): The estimating equations might have another finite root.
 The closest root is beta = 0.537232941299394 and the other root is beta =
 -2.22445825459873 and the initialization is beta = 0.537232941299394</code></pre>
 <pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-6-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-6-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
 Past versions of unnamed-chunk-6-1.png
@@ -877,6 +911,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-6-1.png" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d158e4e9cdd23e3cc0995d0ed315e5efd52d168c/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-6-1.png" target="_blank">d158e4e</a>
@@ -1063,7 +1108,7 @@ estimating equations might have another finite root. The closest root is beta
 = 0.504123068547964 and the other root is beta = -2.3341279690262 and the
 initialization is beta = 0.504123073461214</code></pre>
 <pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-10-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-10-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-10-1">
 Past versions of unnamed-chunk-10-1.png
@@ -1086,6 +1131,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-10-1.png" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d158e4e9cdd23e3cc0995d0ed315e5efd52d168c/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-10-1.png" target="_blank">d158e4e</a>
@@ -1268,7 +1324,7 @@ sqrt(dat2$raw.var)): The estimating equations might have another finite root.
 The closest root is beta = 0.743037052466926 and the other root is beta =
 -4.13456435980225 and the initialization is beta = 0.743037052466926</code></pre>
 <pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-14-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-14-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-14-1">
 Past versions of unnamed-chunk-14-1.png
@@ -1291,6 +1347,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-14-1.png" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d158e4e9cdd23e3cc0995d0ed315e5efd52d168c/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-14-1.png" target="_blank">d158e4e</a>
@@ -1458,7 +1525,7 @@ for (i in 1:length(pvals)){
 }
 
 plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-18-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-18-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-18-1">
 Past versions of unnamed-chunk-18-1.png
@@ -1481,6 +1548,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-18-1.png" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d158e4e9cdd23e3cc0995d0ed315e5efd52d168c/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-18-1.png" target="_blank">d158e4e</a>
@@ -1655,7 +1733,7 @@ sqrt(dat2$raw.var)): The estimating equations might have another finite root.
 The closest root is beta = 0.503125377566961 and the other root is beta =
 -2.6125552822852 and the initialization is beta = 0.503125377566961</code></pre>
 <pre class="r"><code>plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-22-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-22-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-22-1">
 Past versions of unnamed-chunk-22-1.png
@@ -1678,6 +1756,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-22-1.png" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d158e4e9cdd23e3cc0995d0ed315e5efd52d168c/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-22-1.png" target="_blank">d158e4e</a>
@@ -1845,7 +1934,7 @@ for (i in 1:length(pvals)){
 }
 
 plot_combined_res(res.mr, main = paste0(&quot;mr.raps.shrinkage:&quot;, exp, &quot; on &quot;, out))</code></pre>
-<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-26-1.png" width="960" style="display: block; margin: auto;" /></p>
+<p><img src="figure/real_data_mr_bmi.Rmd/unnamed-chunk-26-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-26-1">
 Past versions of unnamed-chunk-26-1.png
@@ -1868,6 +1957,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ee27c9e35b8a6141508d8be8bec7fdb8a4f48ba2/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-26-1.png" target="_blank">ee27c9e</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-08
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d158e4e9cdd23e3cc0995d0ed315e5efd52d168c/docs/figure/real_data_mr_bmi.Rmd/unnamed-chunk-26-1.png" target="_blank">d158e4e</a>
