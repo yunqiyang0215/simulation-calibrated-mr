@@ -86,11 +86,34 @@ for (i in 1:p){
   }
 }
 
-combinations$pheno.cor = round(combinations$pheno.cor,2)
+combinations$pheno.cor = combinations$pheno.cor
 vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
 plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "Empirical variance reduction", pch = 20, xlim = c(0,0.8), cex = 0.6, main = "Sibling data")
 lines(x = phe_seq, y = theo_vr, col = "red", lty = 2)
 mtext("(b)", side = 1, line = 4)
+```
+
+```{r}
+set.seed(42)  
+x = rep(combinations$pheno.cor, p)
+colors <- sample(rainbow(length(unique(x))))
+
+# Match each x value to a corresponding color
+col_values <- colors[as.numeric(factor(x))]
+
+# Plot with different colors for each x value
+plot(x = x, 
+     y = c(vr), 
+     xlab = "phenotypic correlation", 
+     ylab = "Empirical variance reduction", 
+     pch = 20, 
+     xlim = c(0, 0.8), 
+     cex = 0.6, 
+     col = col_values, 
+     main = "Sibling data")
+
+lines(x = phe_seq, y = theo_vr, col = "red", lty = 2)
+
 ```
 
 
