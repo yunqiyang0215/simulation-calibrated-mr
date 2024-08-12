@@ -87,6 +87,8 @@ UKB data analysis:
 
 + [UKB mr on random sample](ukb_mr_random_sample.html)
 
++ [UKB calibration result: sanity check](mr_result_check.Rmd)
+
 + [UKB mr result: trio](ukb_mr_trio.html)
 
 + [UKB mr result: sibling](ukb_mr_sibling.html)
