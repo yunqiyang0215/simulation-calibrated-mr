@@ -1,0 +1,322 @@
+---
+title: "Check real data calibration result"
+author: "Yunqi Yang"
+date: "8/12/2024"
+output: html_document
+---
+### Description:
+
+SNP selection is based on Pvalue from family information adjusted model. 
+
+```{r}
+merge_int_ext_res <- function(trait, 
+                              dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/",
+                              dir.ext = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr"){
+  
+  dat.int <- list()
+  dat.ext <- list()
+  for (chr_num in 1:22) {
+    f1 <- paste0(dir.int, trait, "_chr_", chr_num, ".txt")
+    f2 <- paste0(dir.ext, chr_num, ".", trait, ".glm.linear")
+    
+    int <- read.csv(f1, header = TRUE, sep = " ")
+    ext <- read.csv(f2, header = TRUE, sep = "\t")
+    dat.int[[chr_num]] = int
+    dat.ext[[chr_num]] = ext
+  }
+  
+  dat.int <- do.call(rbind, dat.int)
+  dat.ext <- do.call(rbind, dat.ext)
+  
+  dat = merge(dat.int, dat.ext, by.x = "variant", by.y = "ID", all = FALSE)
+  # flip sign of effect if the allele tested is different
+  dat$BETA = ifelse(dat$allele.test == dat$A1, dat$BETA, -dat$BETA)
+  return(dat)
+}
+```
+
+### 1. BMI: selection based on trio data pvalue < 5e-3
+
+```{r}
+par(mfrow = c(1,2))
+res <- merge_int_ext_res(trait = "bmi")
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 5e-3), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# Trio 
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.5), ylim = c(-0.1, 0.5), main = "BMI: trio")
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# sibling data
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = "bmi")
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.06, 0.06), ylim = c(-0.06, 0.06), main = "BMI: sibling")
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+### 2. BMI:  selection based on sibling data pvalue < 1e-3
+```{r}
+par(mfrow = c(1,2))
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = "bmi")
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 1e-3), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.01, 0.1), ylim = c(-0.01, 0.1), main = "BMI: sibling")
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = "bmi")
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.2, 0.3), ylim = c(-0.2, 0.3), main = "BMI: trio")
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
+
+### 3. Diabetes: selection based on trio data pvalue < 1e-2
+
+```{r}
+par(mfrow = c(1,2))
+trait = "diabetes"
+res <- merge_int_ext_res(trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 1e-2), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# Trio 
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.3, 0.8), ylim = c(-0.3, 0.8), main = 
+       paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# sibling data
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.06, 0.06), ylim = c(-0.06, 0.06), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
+### 4. Diabetes:  selection based on sibling data pvalue < 5e-3
+```{r}
+par(mfrow = c(1,2))
+trait = "diabetes"
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 5e-3), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.01, 0.3), ylim = c(-0.01, 0.3), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.4, 0.8), ylim = c(-0.4, 0.8), main = paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
+### 5. Education Years: selection based on trio data pvalue < 5e-3
+
+```{r}
+par(mfrow = c(1,2))
+trait = "education_yrs"
+res <- merge_int_ext_res(trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 5e-3), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# Trio 
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.3, 1), ylim = c(-0.3, 1), main = 
+       paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# sibling data
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.28, 0.1), ylim = c(-0.28, 0.1), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
+### 6. Education Years:  selection based on sibling data pvalue < 1e-2
+```{r}
+par(mfrow = c(1,2))
+trait = "education_yrs"
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 1e-2), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.01, 0.3), ylim = c(-0.01, 0.3), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.4, 0.8), ylim = c(-0.4, 0.8), main = paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
