@@ -14,7 +14,7 @@ mr_method = c("ivw", "mr.raps")
 
 ```{r}
 pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_mr_trio_linear.pdf",
-    height = 6, width = 14)
+    height = 6, width = 18)
 par(mfrow = c(1,2))
 # 1. trio data
 # IVW
@@ -37,15 +37,15 @@ labels = apply(combinations, 1, function(x) paste0("(",x[1], ",", x[2], ")"))
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = "(a)", ylab = "", main = "Trio data: IVW", xaxt = 'n', cex = 0.8)
+plot(x = x_pos, y = means, ylim = c(0.65, 1.45), pch = 20,
+     xlab = "(a)", ylab = "", main = "Trio data: IVW", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 abline(h = 1, lty =2, col = "grey")
 
-axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
-legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
+axis(1, at = c(1:ncomb), labels = labels)
+legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"))
 
 ### mr.raps
 n_rep = 500
@@ -66,21 +66,21 @@ labels = apply(combinations, 1, function(x) paste0("(",x[1], ",", x[2], ")"))
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
   
-plot(x = x_pos, y = means, ylim = range(means - 2*ses, means + 2*ses), pch = 20,
-     xlab = "(b)", ylab = "", main = "Trio data: mr.raps", xaxt = 'n', cex = 0.8)
+plot(x = x_pos, y = means, ylim = c(0.65, 1.45), pch = 20,
+     xlab = "(b)", ylab = "", main = "Trio data: MR.RAPS", xaxt = 'n')
 # Add error bars
 arrows(x0 = x_pos, y0 = means - 1.96*ses, x1 = x_pos, y1 = means + 1.96*ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 abline(h = 1, lty =2, col = "grey")
 
-axis(1, at = c(1:ncomb), labels = labels, cex.axis = 0.8)
+axis(1, at = c(1:ncomb), labels = labels)
 
 ```
 
 ```{r  }
 # 2. Sibling data
 pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_mr_sibling_linear.pdf",
-    height = 12, width = 14)
+    height = 12, width = 18)
 dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear_separate/res.mr.rds")
 
 output = c()
@@ -152,7 +152,7 @@ ncomb <- nrow(combination3)
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
 
-plot(x = x_pos, y = means, ylim = c(-0.5, 2.5), pch = 20,
+plot(x = x_pos, y = means, ylim = c(0.2, 2), pch = 20,
      xlab = "(c)", ylab = "", main = "Sibling data: IVW", xaxt = 'n')
 arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
@@ -161,13 +161,13 @@ abline(h = 1, lty = 2, col = "grey")
 labels <- paste0("(", combination3$r1, ", ", combination3$r2, ", ", combination3$sig, ")")
                 
 
-axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+axis(1, at = 1:ncomb, labels = labels)
 #legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
 
-plot(1:ncomb, vr, xaxt = 'n', xlab = "phenotypic correlation", ylab = "variance reduction", lty = 2, type = "b", pch = 20)
+plot(1:ncomb, vr, xaxt = 'n', xlab = "phenotypic correlation", ylab = "variance reduction", lty = 2, type = "b", pch = 19)
 mtext("(e)", side = 1, line = 4)
 labels <- paste0("(", combination3$Y1, ", ", combination3$Y2, ")")
-axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+axis(1, at = 1:ncomb, labels = labels)
 
 
 ### mr.raps
@@ -208,21 +208,19 @@ ncomb <- nrow(combination3)
 x_pos <- rep(1:ncomb, each = 3)
 x_pos <- x_pos + rep(c(-0.2, 0, 0.2), ncomb)
 
-plot(x = x_pos, y = means, ylim = c(-0.5, 2.5), pch = 20,
-     xlab = "(d)", ylab = "", main = "Sibling data: mr.raps", xaxt = 'n')
+plot(x = x_pos, y = means, ylim = c(0.2, 2), pch = 20,
+     xlab = "(d)", ylab = "", main = "Sibling data: MR.RAPS", xaxt = 'n')
 arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 
 abline(h = 1, lty = 2, col = "grey")
 labels <- paste0("(", combination3$r1, ", ", combination3$r2, ", ", combination3$sig, ")")
-                
-
-axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+axis(1, at = 1:ncomb, labels = labels)
 #legend("topleft", legend = c("Calibrated estimator", "Raw estimator", "External GWAS"), lty = 1, col = c("coral1", "skyblue", "gold"), cex = 0.8)
 
-plot(1:ncomb, vr, xaxt = 'n', xlab = "phenotypic correlation", ylab = "variance reduction", lty = 2, type = "b", pch = 20)
+plot(1:ncomb, vr, xaxt = 'n', xlab = "Phenotypic correlation", ylab = "Variance reduction", lty = 2, type = "b", pch = 19)
 labels <- paste0("(", combination3$Y1, ", ", combination3$Y2, ")")
-axis(1, at = 1:ncomb, labels = labels, cex.axis = 0.8)
+axis(1, at = 1:ncomb, labels = labels)
 mtext("(f)", side = 1, line = 4)
 ```
 
