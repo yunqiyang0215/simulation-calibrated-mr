@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreebd881a1d96f590e4a173da83ebe4e7347a402f37targetblankbd881a1a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/bd881a1d96f590e4a173da83ebe4e7347a402f37" target="_blank">bd881a1</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeeaaf312d94b8bb27b3860e90b4b4a7ed328d1561targetblankeaaf312a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/eaaf312d94b8bb27b3860e90b4b4a7ed328d1561" target="_blank">eaaf312</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreebd881a1d96f590e4a173da83ebe4e7347a402f37targetblankbd881a1a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeeaaf312d94b8bb27b3860e90b4b4a7ed328d1561targetblankeaaf312a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/bd881a1d96f590e4a173da83ebe4e7347a402f37" target="_blank">bd881a1</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/eaaf312d94b8bb27b3860e90b4b4a7ed328d1561" target="_blank">eaaf312</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -542,6 +542,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/eaaf312d94b8bb27b3860e90b4b4a7ed328d1561/analysis/mr_result_check.Rmd" target="_blank">eaaf312</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-13
+</td>
+<td>
+wflow_publish("analysis/mr_result_check.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/ba32e00f6fd56e99450b4a476cc3be621aa6e982/docs/mr_result_check.html" target="_blank">ba32e00</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -707,7 +741,7 @@ dat$raw_error &lt;- sqrt(dat$raw.var)
 
 
 # sibling
-plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.01, 0.1), ylim = c(-0.01, 0.1), main = &quot;BMI: sibling&quot;)
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.01, 0.15), ylim = c(-0.01, 0.15), main = &quot;BMI: sibling&quot;)
 arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
        dat$cali + 1.96*dat$cali_error, dat$raw, 
        angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
@@ -726,7 +760,7 @@ dat = res[indx, ]
 dat$cali_error &lt;- sqrt(dat$cali.var)
 dat$raw_error &lt;- sqrt(dat$raw.var)
 
-plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.2, 0.3), ylim = c(-0.2, 0.3), main = &quot;BMI: trio&quot;)
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.3, 0.35), ylim = c(-0.3, 0.35), main = &quot;BMI: trio&quot;)
 arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
        dat$cali + 1.96*dat$cali_error, dat$raw, 
        angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
@@ -774,6 +808,9 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<pre class="r"><code>1- dat$cali.var/dat$raw.var</code></pre>
+<pre><code>[1] 0.4052301 0.5884076 0.5064035 0.5425630 0.6046076 0.6232654 0.5865029
+[8] 0.4424861</code></pre>
 </div>
 <div id="diabetes-selection-based-on-trio-data-pvalue-1e-2" class="section level3">
 <h3>3. Diabetes: selection based on trio data pvalue &lt; 1e-2</h3>
@@ -810,7 +847,7 @@ dat = res[indx, ]
 dat$cali_error &lt;- sqrt(dat$cali.var)
 dat$raw_error &lt;- sqrt(dat$raw.var)
 
-plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.06, 0.06), ylim = c(-0.06, 0.06), main = paste0(trait, &quot;: sibling&quot;))
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.1, 0.1), ylim = c(-0.1, 0.1), main = paste0(trait, &quot;: sibling&quot;))
 arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
        dat$cali + 1.96*dat$cali_error, dat$raw, 
        angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
@@ -820,13 +857,13 @@ arrows(dat$cali, dat$raw - 1.96*dat$raw_error,
 abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
 abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
 abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
-<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-4-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-4-1">
-Past versions of unnamed-chunk-4-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
+Past versions of unnamed-chunk-5-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-4-1" class="collapse">
+<div id="fig-unnamed-chunk-5-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -845,7 +882,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8bf40ee0f4ceb3b8eab5da310e2c4066c59e3008/docs/figure/mr_result_check.Rmd/unnamed-chunk-4-1.png" target="_blank">8bf40ee</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8bf40ee0f4ceb3b8eab5da310e2c4066c59e3008/docs/figure/mr_result_check.Rmd/unnamed-chunk-5-1.png" target="_blank">8bf40ee</a>
 </td>
 <td>
 yunqiyang0215
@@ -903,90 +940,6 @@ arrows(dat$cali, dat$raw - 1.96*dat$raw_error,
 abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
 abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
 abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
-<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-5-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-5-1">
-Past versions of unnamed-chunk-5-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-5-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8bf40ee0f4ceb3b8eab5da310e2c4066c59e3008/docs/figure/mr_result_check.Rmd/unnamed-chunk-5-1.png" target="_blank">8bf40ee</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="education-years-selection-based-on-trio-data-pvalue-5e-3" class="section level3">
-<h3>5. Education Years: selection based on trio data pvalue &lt; 5e-3</h3>
-<pre class="r"><code>par(mfrow = c(1,2))
-trait = &quot;education_yrs&quot;
-res &lt;- merge_int_ext_res(trait = trait)
-zscore &lt;- res$raw/sqrt(res$raw.var)
-res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
-
-dat = res[which(res$P.raw &lt; 5e-3), ]
-dat$cali_error &lt;- sqrt(dat$cali.var)
-dat$raw_error &lt;- sqrt(dat$raw.var)
-
-
-# Trio 
-plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.3, 1), ylim = c(-0.3, 1), main = 
-       paste0(trait, &quot;: trio&quot;))
-arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
-       dat$cali + 1.96*dat$cali_error, dat$raw, 
-       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
-arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
-       dat$cali, dat$raw + 1.96*dat$raw_error, 
-       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
-abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
-abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
-abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)
-
-
-# sibling data
-res &lt;- merge_int_ext_res(dir.int = &quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;,
-                         trait = trait)
-indx = which(res$variant %in% dat$variant)
-dat = res[indx, ] 
-dat$cali_error &lt;- sqrt(dat$cali.var)
-dat$raw_error &lt;- sqrt(dat$raw.var)
-
-plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.28, 0.1), ylim = c(-0.28, 0.1), main = paste0(trait, &quot;: sibling&quot;))
-arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
-       dat$cali + 1.96*dat$cali_error, dat$raw, 
-       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
-arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
-       dat$cali, dat$raw + 1.96*dat$raw_error, 
-       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
-abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
-abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
-abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
 <p><img src="figure/mr_result_check.Rmd/unnamed-chunk-6-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-6-1">
@@ -1025,6 +978,58 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<pre class="r"><code>1- dat$cali.var/dat$raw.var</code></pre>
+<pre><code>[1] 0.1010299 0.9546678 0.4428191 0.4577394 0.3587101 0.3592438 0.3218541
+[8] 0.4868795</code></pre>
+</div>
+<div id="education-years-selection-based-on-trio-data-pvalue-5e-3" class="section level3">
+<h3>5. Education Years: selection based on trio data pvalue &lt; 5e-3</h3>
+<pre class="r"><code>par(mfrow = c(1,2))
+trait = &quot;education_yrs&quot;
+res &lt;- merge_int_ext_res(trait = trait)
+zscore &lt;- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw &lt; 5e-3), ]
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+
+# Trio 
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.3, 1), ylim = c(-0.3, 1), main = 
+       paste0(trait, &quot;: trio&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)
+
+1- dat$cali.var/dat$raw.var</code></pre>
+<pre><code> [1] 0.7738394 0.4979510 0.5683898 0.5099786 0.6447234 0.5100401 0.4869023
+ [8] 0.5304416 0.5983916 0.6015369 0.5593028 0.5812979</code></pre>
+<pre class="r"><code># sibling data
+res &lt;- merge_int_ext_res(dir.int = &quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;,
+                         trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.28, 0.1), ylim = c(-0.28, 0.1), main = paste0(trait, &quot;: sibling&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
+<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-8-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="education-years-selection-based-on-sibling-data-pvalue-1e-2" class="section level3">
 <h3>6. Education Years: selection based on sibling data pvalue &lt; 1e-2</h3>
@@ -1070,44 +1075,7 @@ arrows(dat$cali, dat$raw - 1.96*dat$raw_error,
 abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
 abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
 abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
-<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-7-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-7-1">
-Past versions of unnamed-chunk-7-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-7-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/8bf40ee0f4ceb3b8eab5da310e2c4066c59e3008/docs/figure/mr_result_check.Rmd/unnamed-chunk-7-1.png" target="_blank">8bf40ee</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-12
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-9-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
