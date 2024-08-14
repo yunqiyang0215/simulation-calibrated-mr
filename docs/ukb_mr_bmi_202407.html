@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-08-07
+<strong>Last updated:</strong> 2024-08-13
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -499,16 +499,16 @@ data/snp_list/bmi_
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree40643d5cdf22f2e10612f64d5a0ed90c895dd147targetblank40643d5a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/40643d5cdf22f2e10612f64d5a0ed90c895dd147" target="_blank">40643d5</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreed1323c0bb3b797bfd051b597066aeb7ab0b65af1targetblankd1323c0a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/d1323c0bb3b797bfd051b597066aeb7ab0b65af1" target="_blank">d1323c0</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree40643d5cdf22f2e10612f64d5a0ed90c895dd147targetblank40643d5a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreed1323c0bb3b797bfd051b597066aeb7ab0b65af1targetblankd1323c0a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/40643d5cdf22f2e10612f64d5a0ed90c895dd147" target="_blank">40643d5</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/d1323c0bb3b797bfd051b597066aeb7ab0b65af1" target="_blank">d1323c0</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -519,6 +519,15 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/.DS_Store
+    Ignored:    scripts/.DS_Store
+
+Untracked files:
+    Untracked:  output/ukb_mr_sib1.pdf
+    Untracked:  output/ukb_mr_sib2.pdf
+    Untracked:  output/ukb_mr_trio1.pdf
+
+Unstaged changes:
+    Deleted:    scripts/real_data_mr_bmi.Rmd
 
 </code></pre>
 <p>
@@ -557,6 +566,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d1323c0bb3b797bfd051b597066aeb7ab0b65af1/analysis/ukb_mr_bmi_202407.Rmd" target="_blank">d1323c0</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-13
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_bmi_202407.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/2919327adb86772679cdfb5019f162dfaae45916/docs/ukb_mr_bmi_202407.html" target="_blank">2919327</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1249,6 +1292,77 @@ yunqiyang0215
 </table>
 </div>
 </div>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # Debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  MRInput &lt;- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput &lt;- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput &lt;- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput &lt;- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;Debiased IVW: BMI on diabetes: pval=&#39;, pvals[i]) , cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+}</code></pre>
+<pre><code>          calibrated      raw internal.gwas external.gwas
+point.est  1.3827611 1.380499      1.967138    0.23040006
+std        0.7602672 2.026258      2.125639    0.01708713</code></pre>
+<pre><code>          calibrated       raw internal.gwas external.gwas
+point.est  0.7034634 0.8917999      1.794472    0.21935251
+std        0.3580443 0.6988244      2.104226    0.03041011</code></pre>
+<pre><code>          calibrated       raw internal.gwas external.gwas
+point.est  0.7451782 0.4178795      0.563110    0.22090121
+std        0.4135047 0.3845947      0.560563    0.05489029</code></pre>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-6-1.png" width="1440" style="display: block; margin: auto;" /></p>
 </div>
 <div id="sibling-bmi-on-diabetes" class="section level3">
 <h3>2. Sibling: BMI on diabetes</h3>
@@ -1492,13 +1606,84 @@ The closest root is beta = 0.518995682071063 and the other root is beta =
 <pre><code>          calibrated       raw internal.gwas external.gwas
 point.est  0.5041231 0.5189957    0.33804200    0.26155270
 std        0.1057312 0.1181563    0.09166537    0.01838022</code></pre>
-<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-10-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>par(mfrow = c(1,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # Debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  MRInput &lt;- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput &lt;- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput &lt;- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput &lt;- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;Debiased IVW: BMI on diabetes: pval=&#39;, pvals[i]) , cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+}</code></pre>
+<pre><code>          calibrated       raw internal.gwas external.gwas
+point.est 0.45362967 0.3984430    0.25204762    0.23040006
+std       0.09004477 0.1024335    0.06250326    0.01708713</code></pre>
+<pre><code>          calibrated        raw internal.gwas external.gwas
+point.est 0.32237072 0.29611540    0.26670543    0.21935251
+std       0.08823803 0.09920197    0.07178127    0.03041011</code></pre>
+<pre><code>          calibrated       raw internal.gwas external.gwas
+point.est   0.418180 0.4683126     0.2770039    0.22090121
+std         0.114872 0.1255145     0.1006931    0.05489029</code></pre>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-11-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-9-1">
-Past versions of unnamed-chunk-9-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-11-1">
+Past versions of unnamed-chunk-11-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-9-1" class="collapse">
+<div id="fig-unnamed-chunk-11-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -1517,7 +1702,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/47e777a9d3974dcd94c63cfeac246bca3225ba56/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" target="_blank">47e777a</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">d17ce97</a>
 </td>
 <td>
 yunqiyang0215
@@ -1528,7 +1713,7 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/711b69207310a97738a72fe4d53a67b9e02cae57/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" target="_blank">711b692</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e2b5caca6796af8957601a6289a31eace7d69c44/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">e2b5cac</a>
 </td>
 <td>
 yunqiyang0215
@@ -1539,29 +1724,7 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" target="_blank">d17ce97</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/e2b5caca6796af8957601a6289a31eace7d69c44/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" target="_blank">e2b5cac</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c2819fa100af91266389c8e5cd71a7072e838c86/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" target="_blank">c2819fa</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/c2819fa100af91266389c8e5cd71a7072e838c86/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">c2819fa</a>
 </td>
 <td>
 yunqiyang0215
@@ -1572,7 +1735,18 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/1584f2809565e293474f8d371a271cb50a587041/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-9-1.png" target="_blank">1584f28</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/fe15e0731151212f52ec1d0c9b3c09a7cd8c589c/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">fe15e07</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-06
+</td>
+</tr>
+<tr>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/1584f2809565e293474f8d371a271cb50a587041/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-11-1.png" target="_blank">1584f28</a>
 </td>
 <td>
 yunqiyang0215
@@ -1824,66 +1998,7 @@ std        0.6323016 1.6475888     0.6967661    0.01690865</code></pre>
 <pre><code>          calibrated       raw internal.gwas external.gwas
 point.est  0.2104791 0.2852621     0.2960719   -0.09119262
 std        0.2815900 0.3890766     0.9749314    0.01772449</code></pre>
-<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-13-1.png" width="1440" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-13-1">
-Past versions of unnamed-chunk-13-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-13-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/47e777a9d3974dcd94c63cfeac246bca3225ba56/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-13-1.png" target="_blank">47e777a</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/711b69207310a97738a72fe4d53a67b9e02cae57/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-13-1.png" target="_blank">711b692</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-13-1.png" target="_blank">d17ce97</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-15-1.png" width="1440" style="display: block; margin: auto;" /></p>
 </div>
 <div id="sibling-bmi-on-education-years" class="section level3">
 <h3>4. Sibling: BMI on education years</h3>
@@ -2103,66 +2218,7 @@ std        0.09620649  0.11514805    0.09396632    0.01690865</code></pre>
 <pre><code>           calibrated         raw internal.gwas external.gwas
 point.est -0.03388451 -0.07216306   -0.14327112   -0.09119262
 std        0.09064139  0.10329808    0.08783489    0.01772449</code></pre>
-<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-17-1.png" width="1440" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-17-1">
-Past versions of unnamed-chunk-17-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-17-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/47e777a9d3974dcd94c63cfeac246bca3225ba56/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-17-1.png" target="_blank">47e777a</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/711b69207310a97738a72fe4d53a67b9e02cae57/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-17-1.png" target="_blank">711b692</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-17-1.png" target="_blank">d17ce97</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-19-1.png" width="1440" style="display: block; margin: auto;" /></p>
 </div>
 <div id="trio-bmi-on-smoking" class="section level3">
 <h3>5. Trio: BMI on smoking</h3>
@@ -2420,77 +2476,7 @@ The closest root is beta = 0.503125377566961 and the other root is beta =
 <pre><code>          calibrated       raw internal.gwas external.gwas
 point.est  0.2027309 0.5031254    -0.2219370    0.07256776
 std        0.2671649 0.3825085     0.3847335    0.01571885</code></pre>
-<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-21-1.png" width="1440" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-21-1">
-Past versions of unnamed-chunk-21-1.png
-</button>
-</p>
-<div id="fig-unnamed-chunk-21-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ceb7aae41766ff85e99caf85621cbf766ab389a0/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-21-1.png" target="_blank">ceb7aae</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/47e777a9d3974dcd94c63cfeac246bca3225ba56/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-21-1.png" target="_blank">47e777a</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/711b69207310a97738a72fe4d53a67b9e02cae57/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-21-1.png" target="_blank">711b692</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-21-1.png" target="_blank">d17ce97</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-23-1.png" width="1440" style="display: block; margin: auto;" /></p>
 </div>
 <div id="sibling-bmi-on-smoking" class="section level3">
 <h3>6. Sibling: BMI on smoking</h3>
@@ -2710,13 +2696,13 @@ std       0.07925882  0.091617541    0.07214723    0.01514555</code></pre>
 <pre><code>          calibrated          raw internal.gwas external.gwas
 point.est 0.04271851 -0.008889599    0.03305786    0.07256776
 std       0.09202153  0.123183937    0.07939483    0.01571885</code></pre>
-<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-25-1.png" width="1440" style="display: block; margin: auto;" /></p>
+<p><img src="figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-27-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-25-1">
-Past versions of unnamed-chunk-25-1.png
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-unnamed-chunk-27-1">
+Past versions of unnamed-chunk-27-1.png
 </button>
 </p>
-<div id="fig-unnamed-chunk-25-1" class="collapse">
+<div id="fig-unnamed-chunk-27-1" class="collapse">
 <div class="table-responsive">
 <table class="table table-condensed table-hover">
 <thead>
@@ -2735,7 +2721,7 @@ Date
 <tbody>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/ceb7aae41766ff85e99caf85621cbf766ab389a0/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-25-1.png" target="_blank">ceb7aae</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-27-1.png" target="_blank">d17ce97</a>
 </td>
 <td>
 yunqiyang0215
@@ -2746,46 +2732,13 @@ yunqiyang0215
 </tr>
 <tr>
 <td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/47e777a9d3974dcd94c63cfeac246bca3225ba56/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-25-1.png" target="_blank">47e777a</a>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/fe15e0731151212f52ec1d0c9b3c09a7cd8c589c/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-27-1.png" target="_blank">fe15e07</a>
 </td>
 <td>
 yunqiyang0215
 </td>
 <td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/711b69207310a97738a72fe4d53a67b9e02cae57/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-25-1.png" target="_blank">711b692</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/818190488ce7da0f341fa7b5807a7f8817a01c6f/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-25-1.png" target="_blank">8181904</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/d17ce9773a200d70f36a81c6e4f8158ba5603455/docs/figure/ukb_mr_bmi_202407.Rmd/unnamed-chunk-25-1.png" target="_blank">d17ce97</a>
-</td>
-<td>
-yunqiyang0215
-</td>
-<td>
-2024-08-07
+2024-08-06
 </td>
 </tr>
 </tbody>
