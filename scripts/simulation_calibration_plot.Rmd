@@ -117,6 +117,71 @@ lines(x = phe_seq, y = theo_vr, col = "red", lty = 2)
 ```
 
 
+```{r}
+### Sibling data
+phe_seq = seq(0, 1, by = 0.01)
+theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq)
+res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear/res.rds")
+
+p = 10
+r1 = unique(res$sim_data.r1)
+sigs = unique(res$sim_data.sig)
+combinations = expand.grid(r1 = r1, sigs = sigs)
+ncomb = nrow(combinations)
+combinations$pheno.cor = rep(NA, ncomb)
+
+empirical_var_raw = matrix(NA, ncol = p, nrow = ncomb)
+empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
+
+
+for (i in 1:p){
+  for (k in 1:nrow(combinations)){
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == combinations[k, 2] & res$fit.method == "calibrated")
+    combinations[k, 3] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx[1:nrep]], function(x) x[1])))
+    empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx[1:nrep]], function(x) x[i, "Y1.raw"])))
+    empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx[1:nrep]], function(x) x[i, "Y1.cali"])))
+  }
+}
+
+combinations$pheno.cor = combinations$pheno.cor
+vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
+```
+
+```{r}
+head(combinations)
+vr = t(vr)
+rownames(vr) = c(1:10)
+head(vr)
+```
+
+```{r}
+# allele frequency
+f= c(0.61, 0.78, 0.15, 0.41, 0.37, 0.46, 0.51, 0.21, 0.64, 0.19)
+# input p
+set.seed(1)
+b = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+bp = matrix(rnorm(p, sd = 1), ncol = 1, nrow = p)
+
+r1 <- c(0, 0.1, 0.5, 0.8)
+res <- matrix(NA, ncol = 4, nrow = 10)
+for (i in 1:length(r1)){
+  res[,i] <- (b + r1[i]*bp)^2*2*f*(1-f)
+}
+
+colnames(res) = c(0.0, 0.1, 0.5, 0.8)
+```
+
+```{r}
+output = list(sim.setting = combinations, vr = vr, var.bg = res)
+saveRDS(output, "/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sibling_vr_check.rds")
+```
+
+
+
+
+
+
+
 ### 2. Logistic regression 
 ```{r}
 pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_calibration_logit.pdf", height = 5, width = 8)
