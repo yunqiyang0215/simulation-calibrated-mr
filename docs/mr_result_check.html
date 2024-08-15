@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0780c702fdd5dd990a4fe00f221f8bb347da8e8dtargetblank0780c70a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0780c702fdd5dd990a4fe00f221f8bb347da8e8d" target="_blank">0780c70</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree6e61c4f8f5e649794b85ae58a5cf7f36cc70ee02targetblank6e61c4fa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/6e61c4f8f5e649794b85ae58a5cf7f36cc70ee02" target="_blank">6e61c4f</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0780c702fdd5dd990a4fe00f221f8bb347da8e8dtargetblank0780c70a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree6e61c4f8f5e649794b85ae58a5cf7f36cc70ee02targetblank6e61c4fa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0780c702fdd5dd990a4fe00f221f8bb347da8e8d" target="_blank">0780c70</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/6e61c4f8f5e649794b85ae58a5cf7f36cc70ee02" target="_blank">6e61c4f</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -542,6 +542,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/6e61c4f8f5e649794b85ae58a5cf7f36cc70ee02/analysis/mr_result_check.Rmd" target="_blank">6e61c4f</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-14
+</td>
+<td>
+wflow_publish("analysis/mr_result_check.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/4b4f2bf1432afa0fd999a196d3106507819dd296/docs/mr_result_check.html" target="_blank">4b4f2bf</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1834,6 +1868,158 @@ yunqiyang0215
 </table>
 </div>
 </div>
+</div>
+<div id="smoking-selection-based-on-trio-data-pvalue-1e-2" class="section level3">
+<h3>smoking: selection based on trio data pvalue &lt; 1e-2</h3>
+<pre class="r"><code>par(mfrow = c(1,2))
+trait = &quot;smoking&quot;
+res &lt;- merge_int_ext_res(trait = trait)
+zscore &lt;- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw &lt; 1e-2), ]
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+
+# Trio 
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.2, 0.6), ylim = c(-0.2, 0.6), main = 
+       paste0(trait, &quot;: trio&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)
+
+1- dat$cali.var/dat$raw.var</code></pre>
+<pre><code>[1] 0.4618630 0.5948808 0.4417826</code></pre>
+<pre class="r"><code># sibling data
+res &lt;- merge_int_ext_res(dir.int = &quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;,
+                         trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.1, 0.1), ylim = c(-0.1, 0.1), main = paste0(trait, &quot;: sibling&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
+<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-17-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="smoking-selection-based-on-sibling-data-pvalue-1e-2" class="section level3">
+<h3>smoking: selection based on sibling data pvalue &lt; 1e-2</h3>
+<pre class="r"><code>par(mfrow = c(1,2))
+trait = &quot;smoking&quot;
+res &lt;- merge_int_ext_res(dir.int = &quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;,
+                         trait = trait)
+zscore &lt;- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw &lt; 1e-2), ]
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+
+# sibling
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.01, 0.3), ylim = c(-0.01, 0.3), main = paste0(trait, &quot;: sibling&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)
+
+
+# trio data
+res &lt;- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.4, 0.4), ylim = c(-0.4, 0.4), main = paste0(trait, &quot;: trio&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
+<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-18-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="smoking-selection-based-on-external-gwas-pvalue-1e-5" class="section level3">
+<h3>smoking: selection based on external gwas pvalue &lt; 1e-5</h3>
+<pre class="r"><code>par(mfrow = c(1, 3))
+
+trait = &quot;smoking&quot;
+res &lt;- merge_int_ext_res(dir.int = &quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;,
+                         trait = trait)
+zscore &lt;- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P &lt; 1e-5), ]
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+# sibling
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, &quot;: sibling&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)
+
+# sibling calibrated vs. external gwas
+plot(dat$cali, dat$BETA, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;external gwas (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, &quot;: sibling&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$BETA, 
+       dat$cali + 1.96*dat$cali_error, dat$BETA, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$BETA - 1.96*dat$SE, 
+       dat$cali, dat$BETA + 1.96*dat$SE, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)
+
+
+# trio data
+res &lt;- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error &lt;- sqrt(dat$cali.var)
+dat$raw_error &lt;- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = &quot;Calibrated estimator (+- 1.96*sd)&quot;, ylab = &quot;Raw estimator (+- 1.96*sd)&quot;, pch = 20, xlim = c(-0.3, 0.4), ylim = c(-0.3, 0.4), main = paste0(trait, &quot;: trio&quot;))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = &quot;grey&quot;)
+abline(a = 0, b = 1, col = &quot;red&quot;, lty = 2)
+abline(v = 0, col = &quot;#3690AE&quot;, lty = 2)
+abline(h = 0, col = &quot;#3690AE&quot;, lty = 2)</code></pre>
+<p><img src="figure/mr_result_check.Rmd/unnamed-chunk-19-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
