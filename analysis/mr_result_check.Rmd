@@ -35,7 +35,7 @@ merge_int_ext_res <- function(trait,
 }
 ```
 
-### 1. BMI: selection based on trio data pvalue < 5e-3
+### BMI: selection based on trio data pvalue < 5e-3
 
 ```{r}
 par(mfrow = c(1,2))
@@ -81,7 +81,7 @@ abline(v = 0, col = "#3690AE", lty = 2)
 abline(h = 0, col = "#3690AE", lty = 2)
 ```
 
-### 2. BMI:  selection based on sibling data pvalue < 1e-3
+### BMI:  selection based on sibling data pvalue < 1e-3
 ```{r}
 par(mfrow = c(1,2))
 res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
@@ -131,7 +131,72 @@ abline(h = 0, col = "#3690AE", lty = 2)
 ```
 
 
-### 3. Diabetes: selection based on trio data pvalue < 1e-2
+
+
+### BMI:  selection based on external gwas pvalue < 1e-20
+```{r}
+par(mfrow = c(1, 3))
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = "bmi")
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P < 1e-20), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = "BMI: sibling")
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+# sibling calibrated vs. external gwas
+plot(dat$cali, dat$BETA, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "external gwas (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = "BMI: sibling")
+arrows(dat$cali - 1.96*dat$cali_error, dat$BETA, 
+       dat$cali + 1.96*dat$cali_error, dat$BETA, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$BETA - 1.96*dat$SE, 
+       dat$cali, dat$BETA + 1.96*dat$SE, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = "bmi")
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.3, 0.4), ylim = c(-0.3, 0.4), main = "BMI: trio")
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+```{r}
+1- dat$cali.var/dat$raw.var
+```
+
+
+
+
+### Diabetes: selection based on trio data pvalue < 1e-2
 
 ```{r}
 par(mfrow = c(1,2))
@@ -180,7 +245,7 @@ abline(h = 0, col = "#3690AE", lty = 2)
 ```
 
 
-### 4. Diabetes:  selection based on sibling data pvalue < 5e-3
+### Diabetes:  selection based on sibling data pvalue < 5e-3
 ```{r}
 par(mfrow = c(1,2))
 trait = "diabetes"
@@ -230,7 +295,69 @@ abline(h = 0, col = "#3690AE", lty = 2)
 1- dat$cali.var/dat$raw.var
 ```
 
-### 5. Education Years: selection based on trio data pvalue < 5e-3
+
+
+### Diabetes:  selection based on external gwas pvalue < 1e-8
+```{r}
+par(mfrow = c(1, 3))
+
+trait = "diabetes"
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P < 1e-8), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+# sibling calibrated vs. external gwas
+plot(dat$cali, dat$BETA, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "external gwas (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$BETA, 
+       dat$cali + 1.96*dat$cali_error, dat$BETA, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$BETA - 1.96*dat$SE, 
+       dat$cali, dat$BETA + 1.96*dat$SE, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.3, 0.4), ylim = c(-0.3, 0.4), main = paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
+
+### Education Years: selection based on trio data pvalue < 5e-3
 
 ```{r}
 par(mfrow = c(1,2))
@@ -280,7 +407,7 @@ abline(h = 0, col = "#3690AE", lty = 2)
 ```
 
 
-### 6. Education Years:  selection based on sibling data pvalue < 1e-2
+### Education Years:  selection based on sibling data pvalue < 1e-2
 ```{r}
 par(mfrow = c(1,2))
 trait = "education_yrs"
@@ -325,5 +452,216 @@ abline(a = 0, b = 1, col = "red", lty = 2)
 abline(v = 0, col = "#3690AE", lty = 2)
 abline(h = 0, col = "#3690AE", lty = 2)
 ```
+### Education Years:  selection based on external gwas pvalue < 1e-8
+```{r}
+par(mfrow = c(1, 3))
+
+trait = "education_yrs"
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P < 1e-8), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+# sibling calibrated vs. external gwas
+plot(dat$cali, dat$BETA, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "external gwas (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$BETA, 
+       dat$cali + 1.96*dat$cali_error, dat$BETA, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$BETA - 1.96*dat$SE, 
+       dat$cali, dat$BETA + 1.96*dat$SE, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.3, 0.4), ylim = c(-0.3, 0.4), main = paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+### Height: selection based on trio data pvalue < 5e-3
+
+```{r}
+par(mfrow = c(1,2))
+trait = "height"
+res <- merge_int_ext_res(trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 5e-3), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# Trio 
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.6), ylim = c(-0.1, 0.6), main = 
+       paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+1- dat$cali.var/dat$raw.var
+
+# sibling data
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.1), ylim = c(-0.1, 0.1), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
+
+### Height:  selection based on sibling data pvalue < 1e-5
+```{r}
+par(mfrow = c(1,2))
+trait = "height"
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P.raw < 1e-4), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.01, 0.1), ylim = c(-0.01, 0.1), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.2, 0.4), ylim = c(-0.2, 0.4), main = paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+### Height:  selection based on external gwas pvalue < 1e-60
+```{r}
+par(mfrow = c(1, 3))
+
+trait = "height"
+res <- merge_int_ext_res(dir.int = "/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/",
+                         trait = trait)
+zscore <- res$raw/sqrt(res$raw.var)
+res$P.raw = pnorm(zscore, lower.tail = FALSE)*2
+
+dat = res[which(res$P < 1e-60), ]
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+# sibling
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+# sibling calibrated vs. external gwas
+plot(dat$cali, dat$BETA, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "external gwas (+- 1.96*sd)", pch = 20, xlim = c(-0.1, 0.15), ylim = c(-0.1, 0.15), main = paste0(trait, ": sibling"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$BETA, 
+       dat$cali + 1.96*dat$cali_error, dat$BETA, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$BETA - 1.96*dat$SE, 
+       dat$cali, dat$BETA + 1.96*dat$SE, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+
+
+# trio data
+res <- merge_int_ext_res(trait = trait)
+indx = which(res$variant %in% dat$variant)
+dat = res[indx, ] 
+dat$cali_error <- sqrt(dat$cali.var)
+dat$raw_error <- sqrt(dat$raw.var)
+
+plot(dat$cali, dat$raw, xlab = "Calibrated estimator (+- 1.96*sd)", ylab = "Raw estimator (+- 1.96*sd)", pch = 20, xlim = c(-0.3, 0.4), ylim = c(-0.3, 0.4), main = paste0(trait, ": trio"))
+arrows(dat$cali - 1.96*dat$cali_error, dat$raw, 
+       dat$cali + 1.96*dat$cali_error, dat$raw, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+arrows(dat$cali, dat$raw - 1.96*dat$raw_error, 
+       dat$cali, dat$raw + 1.96*dat$raw_error, 
+       angle = 90, code = 3, length = 0.02, col = "grey")
+abline(a = 0, b = 1, col = "red", lty = 2)
+abline(v = 0, col = "#3690AE", lty = 2)
+abline(h = 0, col = "#3690AE", lty = 2)
+```
+
 
 
