@@ -561,7 +561,7 @@ abline(v = 0, col = "#3690AE", lty = 2)
 abline(h = 0, col = "#3690AE", lty = 2)
 ```
 
-### Height:  selection based on sibling data pvalue < 1e-5
+### Height:  selection based on sibling data pvalue < 1e-4
 ```{r}
 par(mfrow = c(1,2))
 trait = "height"
