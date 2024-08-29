@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2024-08-07
+<strong>Last updated:</strong> 2024-08-28
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 1
@@ -499,16 +499,16 @@ data/snp_list/height_
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree3fc513dfd97e1f089959c8bacdb2e869568a3e51targetblank3fc513da"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/3fc513dfd97e1f089959c8bacdb2e869568a3e51" target="_blank">3fc513d</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree4a9184a13ad7d4864192dd08d9d079d8c923f544targetblank4a9184aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/4a9184a13ad7d4864192dd08d9d079d8c923f544" target="_blank">4a9184a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree3fc513dfd97e1f089959c8bacdb2e869568a3e51targetblank3fc513da" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree4a9184a13ad7d4864192dd08d9d079d8c923f544targetblank4a9184aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/3fc513dfd97e1f089959c8bacdb2e869568a3e51" target="_blank">3fc513d</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/4a9184a13ad7d4864192dd08d9d079d8c923f544" target="_blank">4a9184a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -519,9 +519,15 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/.DS_Store
+    Ignored:    scripts/.DS_Store
+
+Untracked files:
+    Untracked:  output/ukb_mr_sib1.pdf
+    Untracked:  output/ukb_mr_sib2.pdf
+    Untracked:  output/ukb_mr_trio1.pdf
 
 Unstaged changes:
-    Modified:   analysis/ukb_mr_bmi_202407.Rmd
+    Deleted:    scripts/real_data_mr_bmi.Rmd
 
 </code></pre>
 <p>
@@ -560,6 +566,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/4a9184a13ad7d4864192dd08d9d079d8c923f544/analysis/ukb_mr_height_202407.Rmd" target="_blank">4a9184a</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-28
+</td>
+<td>
+wflow_publish("analysis/ukb_mr_height_202407.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/21f897c9bcbb2f0c9762e471719b24c32b00fd6d/docs/ukb_mr_height_202407.html" target="_blank">21f897c</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2024-08-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1817,6 +1857,458 @@ yunqiyang0215
 </table>
 </div>
 </div>
+</div>
+<div id="trio-height-on-diabetes" class="section level3">
+<h3>5. Trio: height on diabetes</h3>
+<pre class="r"><code>exp = &quot;height&quot;
+out = &quot;diabetes&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(3,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+for (i in 1:length(pvals)){
+  height_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/height_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% height_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% height_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  MRInput &lt;- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput &lt;- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput &lt;- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_ivw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput &lt;- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;IVW: height on diabetes: pval=&#39;, pvals[i]) , cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+  
+  
+  # mr.raps.mle
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;mr.raps.mle: height on diabetes: pval=&#39;, pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+  
+  ## mr.raps.shrinkage
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;mr.raps.shrinkage: height on diabetes: pval=&#39;, pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+    
+}</code></pre>
+<pre><code>           calibrated         raw internal.gwas external.gwas
+point.est -0.07166396 -0.01047502   -0.01649322  -0.010400585
+std        0.03936082  0.03610097    0.04011655   0.008825948</code></pre>
+<pre><code>          calibrated         raw internal.gwas external.gwas
+point.est -1.2845002 -0.06805657    -0.1170023  -0.010895007
+std        0.3027953  0.25287926     0.2583183   0.006908958</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= -1.28450023092075 and the other root is beta = 0.0998168464845803 and the
+initialization is beta = -1.28450022379505</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), : The
+estimating equations might have another finite root. The closest root is beta
+= -1.28450023092075 and the other root is beta = 1.33963784862914 and the
+initialization is beta = -1.28450022379505</code></pre>
+<pre><code>Warning in mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), :
+The estimating equations might have another finite root. The closest root is
+beta = -1.28450023092075 and the other root is beta = 9.7008135475188 and the
+initialization is beta = -1.28450022379505</code></pre>
+<pre><code>          calibrated         raw internal.gwas external.gwas
+point.est  -1.284500 -0.06805655    -0.1170023  -0.010895010
+std         1.266853  0.21894962     0.2835957   0.007110696</code></pre>
+<pre><code>           calibrated         raw internal.gwas external.gwas
+point.est -0.05803812 -0.02694655   -0.03093218  -0.007298264
+std        0.05151326  0.05096955    0.05563857   0.009396712</code></pre>
+<pre><code>          calibrated        raw internal.gwas external.gwas
+point.est -0.6104849 -0.1329904    -0.1625104  -0.007477625
+std        0.1828465  0.1617767     0.2145497   0.007149181</code></pre>
+<pre><code>          calibrated        raw internal.gwas external.gwas
+point.est -0.6104848 -0.1329904    -0.1625104  -0.007477627
+std        0.5656641  0.2190425     0.2861089   0.007268736</code></pre>
+<pre><code>           calibrated        raw internal.gwas external.gwas
+point.est -0.10594584 0.01459922    0.02132582   -0.01163219
+std        0.06100819 0.06440659    0.06627347    0.01079683</code></pre>
+<pre><code>          calibrated       raw internal.gwas external.gwas
+point.est -0.3860901 0.0472642    0.06432806  -0.011865935
+std        0.1518004 0.1751766    0.25086817   0.007530539</code></pre>
+<pre><code>          calibrated        raw internal.gwas external.gwas
+point.est -0.3860901 0.04726421    0.06432804  -0.011865935
+std        0.2908897 0.20618750    0.19996236   0.007651697</code></pre>
+<p><img src="figure/ukb_mr_height_202407.Rmd/unnamed-chunk-21-1.png" width="1440" style="display: block; margin: auto;" /></p>
+</div>
+<div id="sibling-height-on-diabetes" class="section level3">
+<h3>6. Sibling: height on diabetes</h3>
+<pre class="r"><code>exp = &quot;height&quot;
+out = &quot;diabetes&quot;</code></pre>
+<pre class="r"><code># exposure trait
+dat.int1 &lt;- list()
+dat.ext1 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, exp, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, exp, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int1[[chr_num]] = int
+  dat.ext1[[chr_num]] = ext
+}
+
+dat.int1 &lt;- do.call(rbind, dat.int1)
+dat.ext1 &lt;- do.call(rbind, dat.ext1)
+
+dat.exp = merge(dat.int1, dat.ext1, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.exp$BETA = ifelse(dat.exp$allele.test == dat.exp$A1, dat.exp$BETA, -dat.exp$BETA)</code></pre>
+<pre class="r"><code># outcome trait
+dat.int2 &lt;- list()
+dat.ext2 &lt;- list()
+
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, out, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, out, &quot;.glm.linear&quot;)
+  
+  int &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f2, header = TRUE, sep = &quot;\t&quot;)
+  dat.int2[[chr_num]] = int
+  dat.ext2[[chr_num]] = ext
+}
+
+dat.int2 &lt;- do.call(rbind, dat.int2)
+dat.ext2 &lt;- do.call(rbind, dat.ext2)
+
+dat.out = merge(dat.int2, dat.ext2, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)</code></pre>
+<pre class="r"><code>par(mfrow = c(3,3))
+pvals = c(1e-2, 1e-5, 1e-8)
+
+for (i in 1:length(pvals)){
+  height_snps = read.table(paste0(&quot;/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/height_&quot;,
+                                          pvals[i], &quot;.txt&quot;), header = FALSE)
+  dat1 = dat.exp[dat.exp$variant %in% height_snps$V1, ]
+  dat2 = dat.out[dat.out$variant %in% height_snps$V1, ]
+  sum(dat1$variant != dat2$variant)
+  
+  # IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  MRInput &lt;- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_ivw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput &lt;- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_ivw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput &lt;- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_ivw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput &lt;- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_ivw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;IVW: height on diabetes: pval=&#39;, pvals[i]) , cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+  
+  
+  # mr.raps.mle
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;mr.raps.mle: height on diabetes: pval=&#39;, pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+  
+  ## mr.raps.shrinkage
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c(&quot;calibrated&quot;, &quot;raw&quot;, &quot;internal.gwas&quot;, &quot;external.gwas&quot;)
+  rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
+  
+  # calibrated
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels &lt;- c(&#39;calibrated&#39;, &#39;raw&#39;, &#39;internal.gwas&#39;, &#39;external.gwas&#39;)
+  point_est &lt;- res.mr[1, ]
+  error_bars &lt;- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt=&#39;n&#39;, pch=19, xlab=&#39;&#39;, ylab=&#39;Point Estimate&#39;, main=paste0(&#39;mr.raps.shrinkage: height on diabetes: pval=&#39;, pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col=&#39;red&#39;)
+  axis(1, at=1:4, labels=labels)
+    
+}</code></pre>
+<pre><code>           calibrated        raw internal.gwas external.gwas
+point.est 0.006509713 0.06573522    0.05449189  -0.010400585
+std       0.031633098 0.03524283    0.02478224   0.008825948</code></pre>
+<pre><code>           calibrated        raw internal.gwas external.gwas
+point.est 0.009789818 0.10272215    0.08197984  -0.010895007
+std       0.047179037 0.05409378    0.03297427   0.006908958</code></pre>
+<pre><code>           calibrated        raw internal.gwas external.gwas
+point.est 0.009789818 0.10272214    0.08197985  -0.010895010
+std       0.047411298 0.05465259    0.03551436   0.007110696</code></pre>
+<pre><code>           calibrated        raw internal.gwas external.gwas
+point.est 0.009078447 0.04601616    0.06742111  -0.007298264
+std       0.036337384 0.03985830    0.02734345   0.009396712</code></pre>
+<pre><code>          calibrated        raw internal.gwas external.gwas
+point.est 0.01157426 0.05943460    0.08434153  -0.007477625
+std       0.04504194 0.05143906    0.03244113   0.007149181</code></pre>
+<pre><code>          calibrated       raw internal.gwas external.gwas
+point.est 0.01157426 0.0594346    0.08434153  -0.007477627
+std       0.04555426 0.0513751    0.03320025   0.007268736</code></pre>
+<pre><code>            calibrated        raw internal.gwas external.gwas
+point.est -0.002371786 0.04229345    0.07142877   -0.01163219
+std        0.039168711 0.04360443    0.03053450    0.01079683</code></pre>
+<pre><code>            calibrated        raw internal.gwas external.gwas
+point.est -0.002799403 0.05042485    0.08433139  -0.011865935
+std        0.046274942 0.05249136    0.03271280   0.007530539</code></pre>
+<pre><code>           calibrated        raw internal.gwas external.gwas
+point.est -0.00279941 0.05042484    0.08433138  -0.011865935
+std        0.04618451 0.05200048    0.03381664   0.007651697</code></pre>
+<p><img src="figure/ukb_mr_height_202407.Rmd/unnamed-chunk-25-1.png" width="1440" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
