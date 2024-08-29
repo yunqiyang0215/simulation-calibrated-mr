@@ -64,11 +64,12 @@ mtext("(a)", side = 1, line = 4)
 ### Sibling data
 phe_seq = seq(0, 1, by = 0.01)
 theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq+ 0.1)
-res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear/res.rds")
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear_separate/res.rds")
 
 p = 10
-r1 = unique(res$sim_data.r1)
-sigs = unique(res$sim_data.sig)
+r1 = unique(dat[[1]]$sim_data.r1)
+sigs = unique(sapply(1:4, function(i) dat[[i]]$sim_data.sig))
+
 combinations = expand.grid(r1 = r1, sigs = sigs)
 ncomb = nrow(combinations)
 combinations$pheno.cor = rep(NA, ncomb)
@@ -79,7 +80,13 @@ empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
 
 for (i in 1:p){
   for (k in 1:nrow(combinations)){
-    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == combinations[k, 2] & res$fit.method == "calibrated")
+    sig = combinations[k, 2]
+    if (sig == 1){sig.indx = 1}
+    if (sig == 3){sig.indx = 2}
+    if (sig == 6){sig.indx = 3}
+    if (sig == 10){sig.indx = 4}
+    res = dat[[sig.indx]]
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == sig & res$fit.method == "calibrated")
     combinations[k, 3] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx[1:nrep]], function(x) x[1])))
     empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx[1:nrep]], function(x) x[i, "Y1.raw"])))
     empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx[1:nrep]], function(x) x[i, "Y1.cali"])))
@@ -91,6 +98,26 @@ vr = (empirical_var_raw - empirical_var_cali)/empirical_var_raw
 plot(x = rep(combinations$pheno.cor, p), y = c(vr), xlab = "phenotypic correlation", ylab = "Empirical variance reduction", pch = 20, xlim = c(0,0.8), cex = 0.5, main = "Sibling data")
 lines(x = phe_seq, y = theo_vr, col = "red", lty = 2)
 mtext("(b)", side = 1, line = 4)
+```
+
+```{r}
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear_separate/res.rds")
+for (i in 1:length(dat)){
+  res[["sim_data.r1"]] = lapply(1:4, function(i) dat[[i]]$dat[[1]]$sim_data.r1)
+}
+```
+
+```{r}
+output = c()
+for (i in 1:length(dat)){
+  cor.y1 = unlist(lapply(dat[[i]]$sim_data.cor_pheno, function(x) x[[1]]))
+  cor.y2 = unlist(lapply(dat[[i]]$sim_data.cor_pheno, function(x) x[[2]]))
+  
+  df = data.frame(cbind(dat[[i]]$sim_data.sig, dat[[i]]$sim_data.r1, dat[[i]]$sim_data.r2,
+                        cor.y1, cor.y2, dat[[i]]$fit.method, dat[[1]]$mr.mr_method,
+                        dat[[i]]$mr.point_est, dat[[i]]$mr.stderr))
+  output = rbind(output, df)
+}
 ```
 
 ```{r}
@@ -152,9 +179,7 @@ head(combinations)
 vr = t(vr)
 rownames(vr) = c(1:10)
 head(vr)
-```
 
-```{r}
 # allele frequency
 f= c(0.61, 0.78, 0.15, 0.41, 0.37, 0.46, 0.51, 0.21, 0.64, 0.19)
 # input p
@@ -179,9 +204,6 @@ saveRDS(output, "/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrat
 
 
 
-
-
-
 ### 2. Logistic regression 
 ```{r}
 pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_calibration_logit.pdf", height = 5, width = 8)
@@ -189,6 +211,7 @@ par(mfrow = c(1,2))
 
 nrep = 500
 ### Trio data
+theo_vr = compute_theo_vr(1, 0, 0, 0, 0.1)
 res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/trio_logistic_cutoff1.5/res.rds")
 r1 = unique(res$sim_data.r1)
 p = 10
@@ -217,12 +240,13 @@ mtext("(a)", side = 1, line = 4)
 
 ### Sibling data
 phe_seq = seq(0, 1, by = 0.01)
-theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq)
-res = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_logistic_cutoff1.5/res.rds")
+theo_vr = (1-0.5)/2*(1-phe_seq)/(1+0.5*phe_seq+ 0.1)
+dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_logistic_separate/res.rds")
 
 p = 10
-r1 = unique(res$sim_data.r1)
-sigs = unique(res$sim_data.sig)
+r1 = unique(dat[[1]]$sim_data.r1)
+sigs = unique(sapply(1:4, function(i) dat[[i]]$sim_data.sig))
+
 combinations = expand.grid(r1 = r1, sigs = sigs)
 ncomb = nrow(combinations)
 combinations$pheno.cor = rep(NA, ncomb)
@@ -233,7 +257,13 @@ empirical_var_cali = matrix(NA, ncol = p, nrow = ncomb)
 
 for (i in 1:p){
   for (k in 1:nrow(combinations)){
-    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == combinations[k, 2] & res$fit.method == "calibrated")
+    sig = combinations[k, 2]
+    if (sig == 1){sig.indx = 1}
+    if (sig == 3){sig.indx = 2}
+    if (sig == 6){sig.indx = 3}
+    if (sig == 10){sig.indx = 4}
+    res = dat[[sig.indx]]
+    dat_indx = which(res$sim_data.r1 == combinations[k, 1] & res$sim_data.sig == sig & res$fit.method == "calibrated")
     combinations[k, 3] = mean(unlist(lapply(res$sim_data.cor_pheno[dat_indx[1:nrep]], function(x) x[1])))
     empirical_var_raw[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx[1:nrep]], function(x) x[i, "Y1.raw"])))
     empirical_var_cali[k, i] = var(unlist(lapply(res$fit.sumstat[dat_indx[1:nrep]], function(x) x[i, "Y1.cali"])))
