@@ -67,9 +67,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -125,111 +125,12 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on diabetes: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
   
-  # mr.raps.mle
-  res.mr = matrix(NA, ncol = 4, nrow = 2)
-  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
-  rownames(res.mr) = c("point.est", "std")
-  
-  # calibrated
-  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 1] = c(point_est, stderr)
-  
-  # adj+uncalibrated
-  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 2] = c(point_est, stderr)
-  
-  # internal gwas
-  mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 3] = c(point_est, stderr)
-  
-  # external gwas
-  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 4] = c(point_est, stderr)
-  print(res.mr)
-  
-  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
-  point_est <- res.mr[1, ]
-  error_bars <- 1.96 * res.mr[2, ]
-  
-  # Plotting
-  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on diabetes: pval=', pvals[i]), cex=1.5)
-  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
-  axis(1, at=1:4, labels=labels)
-  
-  ## mr.raps.shrinkage
-  res.mr = matrix(NA, ncol = 4, nrow = 2)
-  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
-  rownames(res.mr) = c("point.est", "std")
-  
-  # calibrated
-  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 1] = c(point_est, stderr)
-  
-  # adj+uncalibrated
-  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 2] = c(point_est, stderr)
-  
-  # internal gwas
-  mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 3] = c(point_est, stderr)
-  
-  # external gwas
-  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 4] = c(point_est, stderr)
-  print(res.mr)
-  
-  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
-  point_est <- res.mr[1, ]
-  error_bars <- 1.96 * res.mr[2, ]
-  
-  # Plotting
-  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on diabetes: pval=', pvals[i]), cex=1.5)
-  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
-  axis(1, at=1:4, labels=labels)
-    
-}
-```
-
-
-```{r fig.width=15, fig.height = 4}
-par(mfrow = c(1,3))
-pvals = c(1e-2, 1e-5, 1e-8)
-
-for (i in 1:length(pvals)){
-  bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
-                                          pvals[i], ".txt"), header = FALSE)
-  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
-  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
-  sum(dat1$variant != dat2$variant)
-  
-  # Debiased IVW
+  # debiased IVW
   res.mr = matrix(NA, ncol = 4, nrow = 2)
   colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
   rownames(res.mr) = c("point.est", "std")
@@ -276,12 +177,98 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('Debiased IVW: BMI on diabetes: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  
+  # mr.raps.mle
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
+  ## mr.raps.shrinkage
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+    
 }
 ```
-
 
 
 ### 2. Sibling: BMI on diabetes
@@ -336,9 +323,10 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -394,110 +382,12 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on diabetes: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
   
-  # mr.raps.mle
-  res.mr = matrix(NA, ncol = 4, nrow = 2)
-  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
-  rownames(res.mr) = c("point.est", "std")
-  
-  # calibrated
-  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 1] = c(point_est, stderr)
-  
-  # adj+uncalibrated
-  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 2] = c(point_est, stderr)
-  
-  # internal gwas
-  mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 3] = c(point_est, stderr)
-  
-  # external gwas
-  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 4] = c(point_est, stderr)
-  print(res.mr)
-  
-  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
-  point_est <- res.mr[1, ]
-  error_bars <- 1.96 * res.mr[2, ]
-  
-  # Plotting
-  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on diabetes: pval=', pvals[i]), cex=1.5)
-  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
-  axis(1, at=1:4, labels=labels)
-  
-  ## mr.raps.shrinkage
-  res.mr = matrix(NA, ncol = 4, nrow = 2)
-  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
-  rownames(res.mr) = c("point.est", "std")
-  
-  # calibrated
-  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 1] = c(point_est, stderr)
-  
-  # adj+uncalibrated
-  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
-  
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 2] = c(point_est, stderr)
-  
-  # internal gwas
-  mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 3] = c(point_est, stderr)
-  
-  # external gwas
-  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
-  point_est = mr$beta.hat
-  stderr = mr$beta.se
-  res.mr[, 4] = c(point_est, stderr)
-  print(res.mr)
-  
-  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
-  point_est <- res.mr[1, ]
-  error_bars <- 1.96 * res.mr[2, ]
-  
-  # Plotting
-  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on diabetes: pval=', pvals[i]), cex=1.5)
-  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
-  axis(1, at=1:4, labels=labels)
-    
-}
-```
-
-```{r fig.width=15, fig.height = 4}
-par(mfrow = c(1,3))
-pvals = c(1e-2, 1e-5, 1e-8)
-
-for (i in 1:length(pvals)){
-  bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
-                                          pvals[i], ".txt"), header = FALSE)
-  dat1 = dat.exp[dat.exp$variant %in% bmi_snps$V1, ]
-  dat2 = dat.out[dat.out$variant %in% bmi_snps$V1, ]
-  sum(dat1$variant != dat2$variant)
-  
-  # Debiased IVW
+  # debiased IVW
   res.mr = matrix(NA, ncol = 4, nrow = 2)
   colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
   rownames(res.mr) = c("point.est", "std")
@@ -544,9 +434,96 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('Debiased IVW: BMI on diabetes: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  
+  # mr.raps.mle
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  mr = mr.raps.mle(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.mle(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.mle(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
+  ## mr.raps.shrinkage
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  mr = mr.raps.shrinkage(dat1$cali, dat2$cali, sqrt(dat1$cali.var), sqrt(dat2$cali.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 1] = c(point_est, stderr)
+  
+  # adj+uncalibrated
+  mr = mr.raps.shrinkage(dat1$raw, dat2$raw, sqrt(dat1$raw.var), sqrt(dat2$raw.var))
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 2] = c(point_est, stderr)
+  
+  # internal gwas
+  mr = mr.raps.shrinkage(dat1$int, dat2$int, sqrt(dat1$int.var), sqrt(dat2$int.var))
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  # external gwas
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+    
 }
 ```
 
@@ -602,9 +579,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -660,9 +637,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on EduYrs: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -703,7 +733,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on EduYrs: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -745,7 +775,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on EduYrs: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -807,9 +837,9 @@ dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$
 ```
 
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -865,9 +895,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on EduYrs: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -908,7 +991,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on EduYrs: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -950,7 +1033,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on EduYrs: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -1009,9 +1092,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -1067,9 +1150,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on smoking: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -1110,7 +1246,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1152,7 +1288,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -1212,9 +1348,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -1270,9 +1406,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on smoking: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -1313,7 +1502,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1355,7 +1544,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on smoking: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -1415,9 +1604,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -1473,9 +1662,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on sbp: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -1516,7 +1758,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on sbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1558,7 +1800,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on sbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -1618,9 +1860,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -1676,9 +1918,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on sbp: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -1719,7 +2014,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on sbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1761,7 +2056,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on sbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -1821,9 +2116,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -1879,9 +2174,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on dbp: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -1922,7 +2270,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on dbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -1964,7 +2312,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on dbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
@@ -2024,9 +2372,9 @@ dat.out = merge(dat.int2, dat.ext2, by.x = "variant", by.y = "ID", all = FALSE)
 dat.out$BETA = ifelse(dat.out$allele.test == dat.out$A1, dat.out$BETA, -dat.out$BETA)
 ```
 
-```{r fig.width=15, fig.height = 12}
-par(mfrow = c(3,3))
-pvals = c(1e-2, 1e-5, 1e-8)
+```{r fig.width=15, fig.height = 8}
+par(mfrow = c(2,4))
+pvals = c(1e-5, 1e-8)
 
 for (i in 1:length(pvals)){
   bmi_snps = read.table(paste0("/Users/nicholeyang/Downloads/simulation-calibrated-mr/data/snp_list/bmi_",
@@ -2082,9 +2430,62 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: BMI on dbp: pval=', pvals[i]) , cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('IVW: ', exp, " on ", out, ": pval=", pvals[i]) , cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
+  
+  
+  # debiased IVW
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("calibrated", "raw", "internal.gwas", "external.gwas")
+  rownames(res.mr) = c("point.est", "std")
+  
+  # calibrated
+  MRInput <- mr_input(bx = dat1$cali,
+                      bxse = sqrt(dat1$cali.var),
+                      by = dat2$cali,
+                      byse = sqrt(dat2$cali.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  
+  # uncalibrated
+  MRInput <- mr_input(bx = dat1$raw,
+                      bxse = sqrt(dat1$raw.var),
+                      by = dat2$raw,
+                      byse = sqrt(dat2$raw.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  
+  # internal gwas
+  MRInput <- mr_input(bx = dat1$int,
+                      bxse = sqrt(dat1$int.var),
+                      by = dat2$int,
+                      byse = sqrt(dat2$int.var))
+  mr = mr_divw(MRInput)
+  res.mr[, 3] = c(mr@Estimate, mr@StdError)
+  
+  
+  # external gwas
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat1$SE)
+  mr = mr_divw(MRInput)
+  res.mr[, 4] = c(mr@Estimate, mr@StdError)
+  print(res.mr)
+  
+  labels <- c('calibrated', 'raw', 'internal.gwas', 'external.gwas')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('Debiased IVW: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
   
   
   # mr.raps.mle
@@ -2125,7 +2526,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.mle: BMI on dbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.mle: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
   
@@ -2167,7 +2568,7 @@ for (i in 1:length(pvals)){
   
   # Plotting
   plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
-       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main=paste0('mr.raps.shrinkage: BMI on dbp: pval=', pvals[i]), cex=1.5)
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0('mr.raps.shrinkage: ', exp, " on ", out, ": pval=", pvals[i]), cex=1.5)
   arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
   axis(1, at=1:4, labels=labels)
     
