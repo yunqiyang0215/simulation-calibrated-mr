@@ -122,6 +122,7 @@ p2 <- ggplot(vr_long, aes(x = Trait, y = Value, fill = Trait)) +
   labs(x = "(b)", y = "Estimated variance reduction") +
   theme_minimal() + 
   theme(legend.position = "none")
+
 ```
 
 ```{r}
@@ -174,6 +175,12 @@ p4 <- ggplot(vr_long, aes(x = Trait, y = Value, fill = Trait)) +
   labs(x = "(d)", y = "Estimated variance reduction") +
   theme_minimal() +
   theme(legend.position = "none")
+
+
+pheno.cor = c(0.355, 0.284, 0.202, 0.148, 0.091)
+theo_vr = (1-0.5)/2*(1-pheno.cor)/(1+0.5*pheno.cor)
+p4 + 
+  geom_point(aes(x = 1:length(theo_vr), y = theo_vr), color = "red", shape = 4, size = 3)
 
 ```
 
