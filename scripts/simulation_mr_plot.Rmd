@@ -83,8 +83,6 @@ mtext("(b)", side = 1, line = 4)
 
 ```{r  }
 # 2. Sibling data
-pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_mr_sibling_linear.pdf",
-    height = 12, width = 18)
 
 dat = readRDS("/project2/mstephens/yunqiyang/calibrated_mr/sim_parametric202404/sibling_linear_separate/res.mr.rds")
 
@@ -238,8 +236,9 @@ mtext("(f)", side = 1, line = 4)
 
 ```{r }
 pdf("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_mr_sibling_linear_combined.pdf",
-    height = 6, width = 20)
+    height = 6, width = 18)
 par(mfrow = c(1,2))
+par(mar = c(7, 4, 4, 6) + 0.1) 
 ### IVW
 n_rep = 500
 res = c()
@@ -279,18 +278,20 @@ mtext("Variance Reduction", side = 4, line = 3)
 
 par(new = TRUE)
 plot(x = x_pos, y = means, ylim = c(0.2, 2), pch = 20,
-     xlab = "Phenotypic correlation (exposure, outcome)", ylab = "MR Estimates", main = "Sibling data: IVW", xaxt = 'n')
+     xlab = "", ylab = "MR Estimates", main = "Sibling data: IVW", xaxt = 'n')
 arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 abline(h = 1, lty = 2, col = "grey")
-mtext("(c)", side = 1, line = 4)
+mtext(paste0("Nurture effect vs. noise", "\n", "Phenotypic correlation (exposure, outcome)"), side = 1, line = 4)
 
 # X-axis labels
-labels <- paste0("(", combination3$Y1, ",", combination3$Y2, ")")
-axis(1, at = 1:ncomb, labels = labels)
+label1 <- paste0("(", combination3$r1, ", ", combination3$r2, ", ", combination3$sig, ")")
+label2 <- paste0("(", combination3$Y1, ",", combination3$Y2, ")")
+labels <- paste0(label1, "\n", label2)
+axis(1, at = 1:ncomb, labels = labels, padj = 0.3)
 
 
-
+par(mar = c(7, 4, 4, 6) + 0.1) 
 ## Mr.raps
 n_rep = 500
 res = c()
@@ -328,15 +329,18 @@ mtext("Variance Reduction", side = 4, line = 3)
 
 par(new = TRUE)
 plot(x = x_pos, y = means, ylim = c(0.2, 2), pch = 20,
-     xlab = "Phenotypic correlation (exposure, outcome)", ylab = "MR Estimates", main = "Sibling data: MR.RAPS", xaxt = 'n')
+     xlab = "", ylab = "MR Estimates", main = "Sibling data: MR.RAPS", xaxt = 'n')
 arrows(x0 = x_pos, y0 = means - 1.96 * ses, x1 = x_pos, y1 = means + 1.96 * ses,
        code = 3, angle = 90, length = 0.05, lwd = 2, col = rep(c("coral1", "skyblue", "gold"), ncomb))
 abline(h = 1, lty = 2, col = "grey")
-mtext("(d)", side = 1, line = 4)
+mtext(paste0("Nurture effect vs. noise", "\n", "Phenotypic correlation (exposure, outcome)"), side = 1, line = 4)
 
 # X-axis labels
-labels <- paste0("(", combination3$Y1, ",", combination3$Y2, ")")
-axis(1, at = 1:ncomb, labels = labels)
+label1 <- paste0("(", combination3$r1, ", ", combination3$r2, ", ", combination3$sig, ")")
+label2 <- paste0("(", combination3$Y1, ",", combination3$Y2, ")")
+labels <- paste0(label1, "\n", label2)
+
+axis(1, at = 1:ncomb, labels = labels, padj = 0.3)
 
 ```
 
