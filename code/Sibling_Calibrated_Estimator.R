@@ -247,3 +247,45 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
 
 
 
+calibrated_estimator2 <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
+                                 overlap_ratio = 0){
+  with(data, {
+    # Adjust external variance
+    C11 = (alpha_ext_var / N_ext) * N
+    
+    # Compute correct model
+    
+    X = matrix(X, N, 1)
+    X_tilde = X - matrix(tapply(X, F_ind, mean)[F_ind], N, 1)
+    
+    XZ = cbind(X, Z)
+    XZ_tilde = cbind(X_tilde, Z_tilde)
+    
+    
+    correct_int = lm(Y_tilde ~ -1 +  XZ_tilde)
+    beta_int = summary(correct_int)$coefficients[1, 1]
+    
+    # Compute the incorrect model for internal data
+    
+    incorrect_int = lm( Y ~  XZ)
+    alpha_int = summary(incorrect_int)$coefficients[2, 1]
+    
+
+
+    # Compute internal false model by sampling one sibling from each family
+    
+    sub_ind = sample_indices(F_ind, max(F_ind))
+    
+    incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
+    alpha_int_single = summary(incorrect_int)$coefficients[2,1]
+    alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
+    
+    return(list( beta_int = beta_int, alpha_int = alpha_int,
+    alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single) )
+  }
+    
+    
+    )
+}
+
+
