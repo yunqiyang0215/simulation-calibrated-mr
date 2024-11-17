@@ -244,8 +244,43 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     
     )
 }
+            
+
+format_data2 <- function(pheno, F_ind, Z = NULL){
+
+  F_ind = match(F_ind, unique(F_ind))
+  
+  order_indices <- order(F_ind)
+  pheno <- pheno[order_indices]
+  Z <- Z[order_indices, ]
+  F_ind <- F_ind[order_indices]
+  
+  
+  size_dic <- as.integer(table(F_ind))
+  F_size <- size_dic[F_ind]
+  
+  # Reshape pheno and Z into a two-row format by family index
+  pheno_matrix <- matrix(pheno, nrow = 2)
+  Z_matrix <- array(Z, dim = c(2, nrow(Z) / 2, ncol(Z)))
+  
+  # Compute the differences along the two-row pairs
+  pheno_diff <- pheno_matrix[1, ] - pheno_matrix[2, ]
+  Z_diff <- Z_matrix[1, , ] - Z_matrix[2, , ]
+  
+  # Return results as a list
+
+  dim_Z = dim(Z)
+  
+  return(list(Y = pheno, Y1 = pheno_matrix[1, ], Y2 = pheno_matrix[2, ], Y_diff = pheno_diff, F_ind = F_ind, Z = Z, 
+              Z1 = Z_matrix[1, , ], Z2 = Z_matrix[2, , ], Z_diff = Z_diff,
+              size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z))
+}
 
 
+
+
+
+            
 
 calibrated_estimator2 <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
                                  overlap_ratio = 0){
