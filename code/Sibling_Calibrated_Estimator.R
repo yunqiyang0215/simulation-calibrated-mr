@@ -272,7 +272,7 @@ format_data2 <- function(pheno, F_ind, Z = NULL){
   dim_Z = dim(Z)
   
   return(list(Y = pheno, Y1 = pheno_matrix[1, ], Y2 = pheno_matrix[2, ], Y_diff = pheno_diff, F_ind = F_ind, Z = Z, 
-              Z1 = Z_matrix[1, , ], Z2 = Z_matrix[2, , ], Z_diff = Z_diff,
+              Z1 = Z_matrix[1, , ], Z2 = Z_matrix[2, , ], Z_diff = Z_diff, order = order_indices,
               size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z))
 }
 
@@ -290,15 +290,22 @@ calibrated_estimator2 <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     
     # Compute correct model
     
+    X = X[order]
     X = matrix(X, N, 1)
-    X_tilde = X - matrix(tapply(X, F_ind, mean)[F_ind], N, 1)
+
+    X_matrix <- matrix(X, nrow = 2)
+    X_diff = X_matrix[1, ] - X_matrix[2, ]
+    
+    X_diff = matrix(X_diff, N/2, 1)
+    X1 = matrix(X_matrix[1, ], N/2, 1)
     
     XZ = cbind(X, Z)
-    XZ_tilde = cbind(X_tilde, Z_tilde)
+    XZ_diff = cbind(X_diff, Z_diff)    
     
-    
-    correct_int = lm(Y_tilde ~ -1 +  XZ_tilde)
+    correct_int = lm(Y_diff ~ -1 +  XZ_diff)
     beta_int = summary(correct_int)$coefficients[1, 1]
+    beta_int_var = summary(correct_int)$coefficients[1, 2]^2
+
     
     # Compute the incorrect model for internal data
     
@@ -309,14 +316,13 @@ calibrated_estimator2 <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
 
     # Compute internal false model by sampling one sibling from each family
     
-    sub_ind = sample_indices(F_ind, max(F_ind))
     
-    incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
+    incorrect_int = lm( Y1 ~ cbind(X1, Z1) )
     alpha_int_single = summary(incorrect_int)$coefficients[2,1]
     alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
     
-    return(list( beta_int = beta_int, alpha_int = alpha_int,
-    alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single) )
+    return(list( beta_int = beta_int, beta_int_var = beta_int_var, alpha_int = alpha_int,
+    alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single, N = N) )
   }
     
     
