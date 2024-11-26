@@ -329,4 +329,17 @@ calibrated_estimator2 <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     )
 }
 
-
+calibration <- function(beta_int, beta_int_var, alpha_int, alpha_int_var,
+                        alpha_ext, alpha_ext_var){
+  
+  rho =cor( beta_int / sqrt(beta_int_var), alpha_int / sqrt(alpha_int_var) )
+  
+  adjust = - rho * sqrt(beta_int_var / alpha_int_var)
+  
+  cali = beta_int + adjust * (alpha_int - alpha_ext)
+  
+  cali_var = (1 - rho^2) * beta_int_var + adjust^2 * alpha_ext_var
+  
+  return(list(cali = cali, cali_var = cali_var) )
+  
+}
