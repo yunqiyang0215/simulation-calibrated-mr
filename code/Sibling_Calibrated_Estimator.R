@@ -230,7 +230,11 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
 
     # Compute internal false model by sampling one sibling from each family
     
-    sub_ind = sample_indices(F_ind, max(F_ind))
+    grouped_indices <- split(seq_along(F_ind), F_ind)
+
+# Sample one index from each group
+    sub_ind <- as.numeric( sapply(grouped_indices, sample, size = 1) )
+
     
     incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
     alpha_int_single = summary(incorrect_int)$coefficients[2,1]
