@@ -1,0 +1,119 @@
+---
+title: "Compare internal gwas result by plink vs. lm()"
+output: html_document
+date: '2024-12-03'
+---
+
+```{r}
+library(dplyr)
+library(MendelianRandomization)
+library(mr.raps)
+
+```
+
+### 1. GWAS result comparison: BMI
+```{r}
+# plink
+folder_path <- "/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/202412_sib1"
+files <- list.files(folder_path, pattern = "bmi.*\\.glm\\.linear$", full.names = TRUE)
+dat.plink <- read.table(files[1], header = TRUE, sep = "\t", stringsAsFactors = FALSE, comment.char = "")
+
+for (i in 2:length(files)){
+  sub <- read.table(files[i], header = FALSE, sep = "\t", skip = 1, stringsAsFactors = FALSE)
+  colnames(sub) <- colnames(dat.plink)
+  dat.plink = rbind(dat.plink, sub)
+}
+
+# lm()
+dat.lm <- readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_bmi.rds")
+dat.exp = merge(dat.plink, dat.lm, by.x = "ID", by.y = "variant", all = TRUE)
+```
+
+```{r}
+par(mfrow = c(1,2))
+hist(dat.exp$BETA-as.numeric(dat.exp$int), xlab = "beta.plink - beta.lm", main = "")
+abline(a = 0, b = 1, col = "red")
+plot(dat.exp$SE, sqrt(as.numeric(dat.exp$int.var)), pch = 20, cex = 0.6, xlab = "SE.plink", ylab = "SE.lm")
+abline(a = 0, b = 1, col = "red")
+```
+
+
+
+### 2. GWAS result comparison: SBP
+```{r}
+# plink
+folder_path <- "/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/202412_sib1"
+files <- list.files(folder_path, pattern = "sbp.*\\.glm\\.linear$", full.names = TRUE)
+dat.plink <- read.table(files[1], header = TRUE, sep = "\t", stringsAsFactors = FALSE, comment.char = "")
+
+for (i in 2:length(files)){
+  sub <- read.table(files[i], header = FALSE, sep = "\t", skip = 1, stringsAsFactors = FALSE)
+  colnames(sub) <- colnames(dat.plink)
+  dat.plink = rbind(dat.plink, sub)
+}
+
+# lm()
+dat.lm <- readRDS("/project2/mstephens/yunqiyang/calibrated_mr/real_dat_ukb/result/sib_calibration_sbp.rds")
+dat.out = merge(dat.plink, dat.lm, by.x = "ID", by.y = "variant", all = TRUE)
+```
+
+```{r}
+par(mfrow = c(1,2))
+hist(dat.out$BETA-as.numeric(dat.out$int), xlab = "beta.plink - beta.lm", main = "")
+abline(a = 0, b = 1, col = "red")
+plot(dat.out$SE, sqrt(as.numeric(dat.out$int.var)), pch = 20, cex = 0.6, xlab = "SE.plink", ylab = "SE.lm")
+abline(a = 0, b = 1, col = "red")
+```
+
+```{r  }
+pvals = c(1e-5, 1e-8)
+
+
+for (i in 1:length(pvals)){
+  bmi_snps = read.table(paste0("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/data/snp_list/bmi_", pvals[i], ".txt"), header = FALSE)
+  dat1 = dat.exp[dat.exp$ID %in% bmi_snps$V1, ]
+  dat2 = dat.out[dat.out$ID %in% bmi_snps$V1, ]
+  sum(dat1$ID != dat2$ID)
+  
+  
+  res.mr = matrix(NA, ncol = 4, nrow = 2)
+  colnames(res.mr) = c("IVW", "debiased IVW", "mr.raps.mle", "mr.raps.shrinkage")
+  rownames(res.mr) = c("point.est", "std")
+  
+  
+  MRInput <- mr_input(bx = dat1$BETA,
+                      bxse = dat1$SE,
+                      by = dat2$BETA,
+                      byse = dat2$SE)
+  # IVW
+  mr = mr_ivw(MRInput)
+  res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+  # debiased IVW 
+  mr = mr_divw(MRInput)
+  res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+  mr = mr.raps.mle(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 3] = c(point_est, stderr)
+  
+  mr = mr.raps.shrinkage(dat1$BETA, dat2$BETA, dat1$SE, dat2$SE)
+  point_est = mr$beta.hat
+  stderr = mr$beta.se
+  res.mr[, 4] = c(point_est, stderr)
+  
+  labels <- c('IVW', 'de.IVW', 'mr.raps.mle', 'mr.raps.shrinkage')
+  point_est <- res.mr[1, ]
+  error_bars <- 1.96 * res.mr[2, ]
+  
+  # Plotting
+  plot(1:4, point_est, ylim=c(min(point_est - error_bars), max(point_est + error_bars)),
+       xaxt='n', pch=19, xlab='', ylab='Point Estimate', main= paste0("pval=", pvals[i]), cex=1.5)
+  arrows(1:4, point_est - error_bars, 1:4, point_est + error_bars, angle=90, code=3, length=0.1, col='red')
+  axis(1, at=1:4, labels=labels)
+  
+}
+  
+```
