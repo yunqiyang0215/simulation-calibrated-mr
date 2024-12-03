@@ -56,7 +56,7 @@ sample_indices <- function(vec, K) {
 library(dplyr)
 
 
-format_data <- function(pheno, F_ind, Z = NULL){
+format_data <- function(pheno, F_ind, Z = NULL, sib_ind = NULL){
   Z_tilde = NULL
   
   F_ind = match(F_ind, unique(F_ind))
@@ -96,7 +96,7 @@ format_data <- function(pheno, F_ind, Z = NULL){
   
   return(list(Y = pheno, Y_tilde = as.vector(pheno_tilde), F_ind = F_ind, Z = Z, Z_tilde = Z_tilde,
               size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z,
-              family2ind = family2ind))
+              family2ind = family2ind, sib_ind = sib_ind))
 }
 
 ##' Compute the calibrated estimator
@@ -229,14 +229,15 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
 
     # Compute internal false model by sampling one sibling from each family
-    
+    if (is.null(sib_ind)){
+      
     grouped_indices <- split(seq_along(F_ind), F_ind)
 
 # Sample one index from each group
-    sub_ind <- as.numeric( sapply(grouped_indices, sample, size = 1) )
-
+    sib_ind <- as.numeric( sapply(grouped_indices, sample, size = 1) )
+    }           
     
-    incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
+    incorrect_int = lm( Y[sib_ind] ~  XZ[sib_ind, ])
     alpha_int_single = summary(incorrect_int)$coefficients[2,1]
     alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
     
