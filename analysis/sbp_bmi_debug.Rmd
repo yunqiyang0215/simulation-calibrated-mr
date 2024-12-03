@@ -5,7 +5,6 @@ date: '2024-12-03'
 ---
 
 ```{r}
-library(dplyr)
 library(MendelianRandomization)
 library(mr.raps)
 
