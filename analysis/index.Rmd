@@ -87,6 +87,8 @@ UKB data analysis:
 
 + [UKB mr on random sample](ukb_mr_random_sample.html)
 
++ [UKB calibration result: sanity check](mr_result_check.html)
+
 + [UKB mr result: trio](ukb_mr_trio.html)
 
 + [UKB mr result: sibling](ukb_mr_sibling.html)
@@ -94,3 +96,7 @@ UKB data analysis:
 + [UKB mr: bmi as exposure (202407)](ukb_mr_bmi_202407.html)
 
 + [UKB mr: height as exposure (202407)](ukb_mr_height_202407.html)
+
++ [UKB mr: bmi combined (202407)](real_data_mr_bmi.html)
+
++ [UKB mr: height combined (202407)](real_data_mr_height.html)
