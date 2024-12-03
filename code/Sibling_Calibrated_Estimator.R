@@ -56,7 +56,7 @@ sample_indices <- function(vec, K) {
 library(dplyr)
 
 
-format_data <- function(pheno, F_ind, Z = NULL){
+format_data <- function(pheno, F_ind, Z = NULL, sib_ind = NULL){
   Z_tilde = NULL
   
   F_ind = match(F_ind, unique(F_ind))
@@ -96,7 +96,7 @@ format_data <- function(pheno, F_ind, Z = NULL){
   
   return(list(Y = pheno, Y_tilde = as.vector(pheno_tilde), F_ind = F_ind, Z = Z, Z_tilde = Z_tilde,
               size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z,
-              family2ind = family2ind))
+              family2ind = family2ind, sib_ind = sib_ind))
 }
 
 ##' Compute the calibrated estimator
@@ -229,10 +229,15 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     beta_cal_var = (C22 - (C23 - C12)^2 / (C11 + C33 - 2 * C13) ) / N
 
     # Compute internal false model by sampling one sibling from each family
+    if (is.null(sib_ind)){
+      
+    grouped_indices <- split(seq_along(F_ind), F_ind)
+
+# Sample one index from each group
+    sib_ind <- as.numeric( sapply(grouped_indices, sample, size = 1) )
+    }           
     
-    sub_ind = sample_indices(F_ind, max(F_ind))
-    
-    incorrect_int = lm( Y[sub_ind] ~  XZ[sub_ind, ])
+    incorrect_int = lm( Y[sib_ind] ~  XZ[sib_ind, ])
     alpha_int_single = summary(incorrect_int)$coefficients[2,1]
     alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
     
@@ -244,6 +249,87 @@ calibrated_estimator <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
     
     )
 }
+            
+
+format_data2 <- function(pheno, F_ind, Z = NULL){
+
+  F_ind = match(F_ind, unique(F_ind))
+  
+  order_indices <- order(F_ind)
+  pheno <- pheno[order_indices]
+  Z <- Z[order_indices, ]
+  F_ind <- F_ind[order_indices]
+  
+  
+  size_dic <- as.integer(table(F_ind))
+  F_size <- size_dic[F_ind]
+  
+  # Reshape pheno and Z into a two-row format by family index
+  pheno_matrix <- matrix(pheno, nrow = 2)
+  Z_matrix <- array(Z, dim = c(2, nrow(Z) / 2, ncol(Z)))
+  
+  # Compute the differences along the two-row pairs
+  pheno_diff <- pheno_matrix[1, ] - pheno_matrix[2, ]
+  Z_diff <- Z_matrix[1, , ] - Z_matrix[2, , ]
+  
+  # Return results as a list
+
+  dim_Z = dim(Z)
+  
+  return(list(Y = pheno, Y1 = pheno_matrix[1, ], Y2 = pheno_matrix[2, ], Y_diff = pheno_diff, F_ind = F_ind, Z = Z, 
+              Z1 = Z_matrix[1, , ], Z2 = Z_matrix[2, , ], Z_diff = Z_diff, order = order_indices,
+              size_dic = size_dic, F_size = F_size, K = max(F_ind),  N = length(F_ind), dim_Z = dim_Z))
+}
 
 
 
+
+
+            
+
+calibrated_estimator2 <- function(X, data, alpha_ext, alpha_ext_var, N_ext,
+                                 overlap_ratio = 0){
+  with(data, {
+    # Adjust external variance
+    C11 = (alpha_ext_var / N_ext) * N
+    
+    # Compute correct model
+    
+    X = X[order]
+    X = matrix(X, N, 1)
+
+    X_matrix <- matrix(X, nrow = 2)
+    X_diff = X_matrix[1, ] - X_matrix[2, ]
+    
+    X_diff = matrix(X_diff, N/2, 1)
+    X1 = matrix(X_matrix[1, ], N/2, 1)
+    
+    XZ = cbind(X, Z)
+    XZ_diff = cbind(X_diff, Z_diff)    
+    
+    correct_int = lm(Y_diff ~ -1 +  XZ_diff)
+    beta_int = summary(correct_int)$coefficients[1, 1]
+    beta_int_var = summary(correct_int)$coefficients[1, 2]^2
+
+    
+    # Compute the incorrect model for internal data
+    
+    incorrect_int = lm( Y ~  XZ)
+    alpha_int = summary(incorrect_int)$coefficients[2, 1]
+    
+
+
+    # Compute internal false model by sampling one sibling from each family
+    
+    
+    incorrect_int = lm( Y1 ~ cbind(X1, Z1) )
+    alpha_int_single = summary(incorrect_int)$coefficients[2,1]
+    alpha_int_var_single = summary(incorrect_int)$coefficients[2,2]^2
+    
+    return(list( beta_int = beta_int, beta_int_var = beta_int_var, alpha_int = alpha_int,
+    alpha_int_single = alpha_int_single, alpha_int_var_single = alpha_int_var_single, N = N) )
+  }
+    
+    
+    )
+}
