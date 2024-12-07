@@ -257,6 +257,7 @@ format_data2 <- function(pheno, F_ind, Z = NULL){
   
   order_indices <- order(F_ind)
   pheno <- pheno[order_indices]
+  Z = as.matrix(model.matrix( ~ -1 + ., data = Z))
   Z <- Z[order_indices, ]
   F_ind <- F_ind[order_indices]
   
