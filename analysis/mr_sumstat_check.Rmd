@@ -1,0 +1,129 @@
+---
+title: "check_mr_202503"
+author: "Yunqi Yang"
+date: "3/6/2025"
+output: html_document
+---
+
+```{r}
+library(MendelianRandomization)
+library(mr.raps)
+```
+
+### 1. BMI
+```{r}
+sib = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
+trio = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
+
+
+sib = as.data.frame(sib, stringsAsFactors = FALSE)
+trio = as.data.frame(trio, stringsAsFactors = FALSE)
+ext = as.data.frame(ext, stringsAsFactors = FALSE)
+```
+
+
+```{r}
+dat1 = merge(sib, trio, by = "variant")
+dat2 = merge(dat1, ext, by.x = "variant", by.y = "ID")
+dim(dat2)
+
+dat3 = dat2[, c("variant", "int.x", "int.var.x", "int.y", "int.var.y", "BETA","SE")]
+colnames(dat3) = c("variant", "beta.sib", "var.sib", "beta.trio", "var.trio", "beta.ext","se.ext")
+dat3[, c(2:6)] = lapply(dat3[, c(2:6)], as.numeric)
+```
+
+```{r}
+res.mr = matrix(NA, ncol = 3, nrow = 2)
+colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
+rownames(res.mr) = c("point.est", "std")
+
+# ext-trio
+MRInput <- mr_input(bx = dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+
+# ext-sib
+MRInput <- mr_input(bx = dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.sib,
+                      byse = sqrt(dat3$var.sib))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+
+# sib-trio
+MRInput <- mr_input(bx = dat3$beta.sib,
+                      bxse = sqrt(dat3$var.sib),
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+# IVW
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+```
+
+```{r}
+res.mr
+```
+
+### 2. SBP
+```{r}
+sib = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_sbp.rds")
+
+trio = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_sbp.rds")
+
+ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_sbp.linear", sep = "\t")
+
+sib = as.data.frame(sib, stringsAsFactors = FALSE)
+trio = as.data.frame(trio, stringsAsFactors = FALSE)
+ext = as.data.frame(ext, stringsAsFactors = FALSE)
+```
+
+```{r}
+dat1 = merge(sib, trio, by = "variant")
+dat2 = merge(dat1, ext, by.x = "variant", by.y = "ID")
+dim(dat2)
+
+dat3 = dat2[, c("variant", "int.x", "int.var.x", "int.y", "int.var.y", "BETA","SE")]
+colnames(dat3) = c("variant", "beta.sib", "var.sib", "beta.trio", "var.trio", "beta.ext","se.ext")
+dat3[, c(2:6)] = lapply(dat3[, c(2:6)], as.numeric)
+```
+
+```{r}
+res.mr = matrix(NA, ncol = 3, nrow = 2)
+colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
+rownames(res.mr) = c("point.est", "std")
+
+# ext-trio
+MRInput <- mr_input(bx = dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+
+# ext-sib
+MRInput <- mr_input(bx = dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.sib,
+                      byse = sqrt(dat3$var.sib))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+
+# sib-trio
+MRInput <- mr_input(bx = dat3$beta.sib,
+                      bxse = sqrt(dat3$var.sib),
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+# IVW
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+```
