@@ -65,11 +65,45 @@ MRInput <- mr_input(bx = dat3$beta.sib,
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
-```
-
-```{r}
 res.mr
 ```
+
+
+```{r}
+res.mr = matrix(NA, ncol = 3, nrow = 2)
+colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
+rownames(res.mr) = c("point.est", "std")
+
+# ext-trio
+MRInput <- mr_input(bx = -dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+
+# ext-sib
+MRInput <- mr_input(bx = -dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.sib,
+                      byse = sqrt(dat3$var.sib))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+
+# sib-trio
+MRInput <- mr_input(bx = dat3$beta.sib,
+                      bxse = sqrt(dat3$var.sib),
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+# IVW
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+res.mr
+```
+
 
 ### 2. SBP
 ```{r}
@@ -126,9 +160,41 @@ MRInput <- mr_input(bx = dat3$beta.sib,
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
+res.mr
 ```
 
 ```{r}
-print(res.mr)
+res.mr = matrix(NA, ncol = 3, nrow = 2)
+colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
+rownames(res.mr) = c("point.est", "std")
+
+# ext-trio
+MRInput <- mr_input(bx = -dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+
+# ext-sib
+MRInput <- mr_input(bx = -dat3$beta.ext,
+                      bxse = dat3$se.ext,
+                      by = dat3$beta.sib,
+                      byse = sqrt(dat3$var.sib))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+
+# sib-trio
+MRInput <- mr_input(bx = dat3$beta.sib,
+                      bxse = sqrt(dat3$var.sib),
+                      by = dat3$beta.trio,
+                      byse = sqrt(dat3$var.trio))
+# IVW
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+res.mr
 ```
 
