@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb001c27c35a62e2c26746d7bb8e156665c60db92targetblankb001c27a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b001c27c35a62e2c26746d7bb8e156665c60db92" target="_blank">b001c27</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0047d6a4509c2492111cc53361dfe9c53902caa5targetblank0047d6aa"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0047d6a4509c2492111cc53361dfe9c53902caa5" target="_blank">0047d6a</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreeb001c27c35a62e2c26746d7bb8e156665c60db92targetblankb001c27a" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree0047d6a4509c2492111cc53361dfe9c53902caa5targetblank0047d6aa" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/b001c27c35a62e2c26746d7bb8e156665c60db92" target="_blank">b001c27</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/0047d6a4509c2492111cc53361dfe9c53902caa5" target="_blank">0047d6a</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -548,6 +548,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/0047d6a4509c2492111cc53361dfe9c53902caa5/analysis/mr_sumstat_check.Rmd" target="_blank">0047d6a</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2025-03-06
+</td>
+<td>
+wflow_publish("analysis/mr_sumstat_check.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/e71c91a1547c59d9a9dfd18e6b4e93771d6c7c01/docs/mr_sumstat_check.html" target="_blank">e71c91a</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2025-03-06
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -676,6 +710,10 @@ MRInput &lt;- mr_input(bx = dat3$beta.sib,
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)</code></pre>
+<pre class="r"><code>print(res.mr)</code></pre>
+<pre><code>            ext-trio     ext-sib  sib-trio
+point.est -1.2356231 -0.89681040 0.2118038
+std        0.3594508  0.09750785 0.1250710</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
