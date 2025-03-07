@@ -127,3 +127,8 @@ MRInput <- mr_input(bx = dat3$beta.sib,
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 ```
+
+```{r}
+print(res.mr)
+```
+
