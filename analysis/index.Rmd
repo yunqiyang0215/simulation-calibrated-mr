@@ -102,3 +102,5 @@ UKB data analysis:
 + [UKB mr: height combined (202407)](real_data_mr_height.html)
 
 + [UKB debug: bmi on sbp](sbp_bmi_debug.html)
+
++ [UKB debug: bmi & sbp summary stat](mr_sumstat_check.html)
