@@ -115,6 +115,7 @@ mr = mr_divw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
+
 ### 2. SBP
 ```{r }
 
@@ -144,10 +145,10 @@ dat.ext <- do.call(rbind, dat.ext)
 
 ```{r}
 dat.int = merge(dat.trio, dat.sib, by = "variant")
-dat3 = merge(dat.int, dat.ext, by.x = "variant", by.y = "ID", all = FALSE)
+dat4 = merge(dat.int, dat.ext, by.x = "variant", by.y = "ID", all = FALSE)
 # flip sign of effect if the allele tested is different
-dat3$BETA = ifelse(dat3$allele.test.x == dat3$A1, dat3$BETA, -dat3$BETA)
-dat3 = as.data.frame(dat3, stringsAsFactors = FALSE)
+dat4$BETA = ifelse(dat4$allele.test.x == dat4$A1, dat4$BETA, -dat4$BETA)
+dat4 = as.data.frame(dat4, stringsAsFactors = FALSE)
 ```
 
 ```{r}
@@ -156,29 +157,29 @@ colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
 rownames(res.mr) = c("point.est", "std")
 
 # ext-trio
-MRInput <- mr_input(bx = dat3$BETA,
-                      bxse = dat3$SE,
-                      by = dat3$int.x,
-                      byse = sqrt(dat3$int.var.x))
+MRInput <- mr_input(bx = dat4$BETA,
+                      bxse = dat4$SE,
+                      by = dat4$int.x,
+                      byse = sqrt(dat4$int.var.x))
 
 mr = mr_ivw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput <- mr_input(bx = dat3$BETA,
-                      bxse = dat3$SE,
-                      by = dat3$int.y,
-                      byse = sqrt(dat3$int.var.y))
+MRInput <- mr_input(bx = dat4$BETA,
+                      bxse = dat4$SE,
+                      by = dat4$int.y,
+                      byse = sqrt(dat4$int.var.y))
 mr = mr_ivw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput <- mr_input(bx = dat3$int.y,
-                      bxse = sqrt(dat3$int.var.y),
-                      by = dat3$int.x,
-                      byse = sqrt(dat3$int.var.x))
+MRInput <- mr_input(bx = dat4$int.y,
+                      bxse = sqrt(dat4$int.var.y),
+                      by = dat4$int.x,
+                      byse = sqrt(dat4$int.var.x))
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
@@ -191,31 +192,57 @@ colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
 rownames(res.mr) = c("point.est", "std")
 
 # ext-trio
-MRInput <- mr_input(bx = dat3$BETA,
-                      bxse = dat3$SE,
-                      by = dat3$int.x,
-                      byse = sqrt(dat3$int.var.x))
+MRInput <- mr_input(bx = dat4$BETA,
+                      bxse = dat4$SE,
+                      by = dat4$int.x,
+                      byse = sqrt(dat4$int.var.x))
 
 mr = mr_divw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput <- mr_input(bx = dat3$BETA,
-                      bxse = dat3$SE,
-                      by = dat3$int.y,
-                      byse = sqrt(dat3$int.var.y))
+MRInput <- mr_input(bx = dat4$BETA,
+                      bxse = dat4$SE,
+                      by = dat4$int.y,
+                      byse = sqrt(dat4$int.var.y))
 mr = mr_divw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput <- mr_input(bx = dat3$int.y,
-                      bxse = sqrt(dat3$int.var.y),
-                      by = dat3$int.x,
-                      byse = sqrt(dat3$int.var.x))
+MRInput <- mr_input(bx = dat4$int.y,
+                      bxse = sqrt(dat4$int.var.y),
+                      by = dat4$int.x,
+                      byse = sqrt(dat4$int.var.x))
 # IVW
 mr = mr_divw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
+
+### 3. BMI on SBP
+
+```{r}
+# external bmi to external SBP
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat4$BETA,
+                      byse = dat4$SE)
+# debiased IVW
+mr = mr_divw(MRInput)
+print(c(mr@Estimate, mr@StdError))
+```
+```{r}
+# external bmi to trio SBP
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat4$int.x,
+                      byse = sqrt(dat4$int.var.x))
+# debiased IVW
+mr = mr_divw(MRInput)
+print(c(mr@Estimate, mr@StdError))
+```
+
+
+
