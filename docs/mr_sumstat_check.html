@@ -384,7 +384,7 @@ div.tocify {
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2025-03-07
+<strong>Last updated:</strong> 2025-03-19
 </p>
 <p>
 <strong>Checks:</strong> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7 <span class="glyphicon glyphicon-exclamation-sign text-danger" aria-hidden="true"></span> 0
@@ -475,16 +475,16 @@ This reproducible <a href="http://rmarkdown.rstudio.com">R Markdown</a> analysis
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef21946e371c4df77550dd4145b937abc72b1a291targetblankf21946ea"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f21946e371c4df77550dd4145b937abc72b1a291" target="_blank">f21946e</a> </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree914f1890ee5bfdea95c89b228f6f34d139b02a66targetblank914f189a"> <span class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> <strong>Repository version:</strong> <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/914f1890ee5bfdea95c89b228f6f34d139b02a66" target="_blank">914f189</a> </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtreef21946e371c4df77550dd4145b937abc72b1a291targetblankf21946ea" class="panel-collapse collapse">
+<div id="strongRepositoryversionstrongahrefhttpsgithubcomyunqiyang0215simulationcalibratedmrtree914f1890ee5bfdea95c89b228f6f34d139b02a66targetblank914f189a" class="panel-collapse collapse">
 <div class="panel-body">
 <p>
 Great! You are using Git for version control. Tracking code development and connecting the code version to the results is critical for reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/f21946e371c4df77550dd4145b937abc72b1a291" target="_blank">f21946e</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
+The results in this page were generated with repository version <a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/tree/914f1890ee5bfdea95c89b228f6f34d139b02a66" target="_blank">914f189</a>. See the <em>Past versions</em> tab to see a history of the changes made to the R Markdown and HTML files.
 </p>
 <p>
 Note that you need to be careful to ensure that all relevant files for the analysis have been committed to Git prior to generating the results (you can use <code>wflow_publish</code> or <code>wflow_git_commit</code>). workflowr only checks the R Markdown file, but you know if there are other scripts or data files that it depends on. Below is the status of the Git repository when the results were generated:
@@ -548,6 +548,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/yunqiyang0215/simulation-calibrated-mr/blob/914f1890ee5bfdea95c89b228f6f34d139b02a66/analysis/mr_sumstat_check.Rmd" target="_blank">914f189</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2025-03-19
+</td>
+<td>
+wflow_publish("analysis/mr_sumstat_check.Rmd")
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/yunqiyang0215/simulation-calibrated-mr/6a80f40ca8fd2971b285cbcbb19586225a3b5056/docs/mr_sumstat_check.html" target="_blank">6a80f40</a>
+</td>
+<td>
+yunqiyang0215
+</td>
+<td>
+2025-03-07
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -644,180 +678,201 @@ wflow_publish("analysis/mr_sumstat_check.Rmd")
 library(mr.raps)</code></pre>
 <div id="bmi" class="section level3">
 <h3>1. BMI</h3>
-<pre class="r"><code>sib = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds&quot;)
-trio = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds&quot;)
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear&quot;, sep = &quot;\t&quot;)
+<pre class="r"><code>dat.trio &lt;- list()
+dat.sib &lt;- list()
+dat.ext &lt;- list()
+trait = &quot;bmi&quot;
 
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, trait, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, trait, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f3 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, trait, &quot;.glm.linear&quot;)
+  
+  trio &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  sib &lt;- read.csv(f2, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f3, header = TRUE, sep = &quot;\t&quot;)
+  dat.trio[[chr_num]] = trio
+  dat.sib[[chr_num]] = sib
+  dat.ext[[chr_num]] = ext
+}
 
-sib = as.data.frame(sib, stringsAsFactors = FALSE)
-trio = as.data.frame(trio, stringsAsFactors = FALSE)
-ext = as.data.frame(ext, stringsAsFactors = FALSE)</code></pre>
-<pre class="r"><code>dat1 = merge(sib, trio, by = &quot;variant&quot;)
-dat2 = merge(dat1, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;)
-dim(dat2)</code></pre>
-<pre><code>[1] 784  26</code></pre>
-<pre class="r"><code>dat3 = dat2[, c(&quot;variant&quot;, &quot;int.x&quot;, &quot;int.var.x&quot;, &quot;int.y&quot;, &quot;int.var.y&quot;, &quot;BETA&quot;,&quot;SE&quot;)]
-colnames(dat3) = c(&quot;variant&quot;, &quot;beta.sib&quot;, &quot;var.sib&quot;, &quot;beta.trio&quot;, &quot;var.trio&quot;, &quot;beta.ext&quot;,&quot;se.ext&quot;)
-dat3[, c(2:6)] = lapply(dat3[, c(2:6)], as.numeric)</code></pre>
+dat.trio &lt;- do.call(rbind, dat.trio)
+dat.sib &lt;- do.call(rbind, dat.sib)
+dat.ext &lt;- do.call(rbind, dat.ext)</code></pre>
+<pre class="r"><code>dat.int = merge(dat.trio, dat.sib, by = &quot;variant&quot;)
+dat3 = merge(dat.int, dat.ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat3$BETA = ifelse(dat3$allele.test.x == dat3$A1, dat3$BETA, -dat3$BETA)
+dat3 = as.data.frame(dat3, stringsAsFactors = FALSE)</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 3, nrow = 2)
 colnames(res.mr) = c(&quot;ext-trio&quot;, &quot;ext-sib&quot;, &quot;sib-trio&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 
 # ext-trio
-MRInput &lt;- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
 mr = mr_ivw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput &lt;- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
 mr = mr_ivw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput &lt;- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
-<pre><code>            ext-trio     ext-sib  sib-trio
-point.est -0.9587721 -0.88816016 0.4973356
-std        0.1562882  0.03827341 0.1138538</code></pre>
+<pre><code>           ext-trio    ext-sib   sib-trio
+point.est 0.9271353 0.90155082 0.46786441
+std       0.1352952 0.03360999 0.07857939</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 3, nrow = 2)
 colnames(res.mr) = c(&quot;ext-trio&quot;, &quot;ext-sib&quot;, &quot;sib-trio&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 
 # ext-trio
-MRInput &lt;- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput &lt;- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
-mr = mr_ivw(MRInput)
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
+mr = mr_divw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput &lt;- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
-<pre><code>           ext-trio    ext-sib  sib-trio
-point.est 0.9587721 0.88816016 0.4973356
-std       0.1562882 0.03827341 0.1138538</code></pre>
+<pre><code>          ext-trio    ext-sib  sib-trio
+point.est 1.066526 1.03760821 1.5257385
+std       0.155720 0.03921227 0.2825381</code></pre>
 </div>
 <div id="sbp" class="section level3">
 <h3>2. SBP</h3>
-<pre class="r"><code>sib = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_sbp.rds&quot;)
+<pre class="r"><code>dat.trio &lt;- list()
+dat.sib &lt;- list()
+dat.ext &lt;- list()
+trait = &quot;sbp&quot;
 
-trio = readRDS(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_sbp.rds&quot;)
+for (chr_num in 1:22) {
+  f1 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/&quot;, trait, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f2 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/&quot;, trait, &quot;_chr_&quot;, chr_num, &quot;.txt&quot;)
+  f3 &lt;- paste0(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr&quot;, chr_num, &quot;.&quot;, trait, &quot;.glm.linear&quot;)
+  
+  trio &lt;- read.csv(f1, header = TRUE, sep = &quot; &quot;)
+  sib &lt;- read.csv(f2, header = TRUE, sep = &quot; &quot;)
+  ext &lt;- read.csv(f3, header = TRUE, sep = &quot;\t&quot;)
+  dat.trio[[chr_num]] = trio
+  dat.sib[[chr_num]] = sib
+  dat.ext[[chr_num]] = ext
+}
 
-ext = read.csv(&quot;/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_sbp.linear&quot;, sep = &quot;\t&quot;)
-
-sib = as.data.frame(sib, stringsAsFactors = FALSE)
-trio = as.data.frame(trio, stringsAsFactors = FALSE)
-ext = as.data.frame(ext, stringsAsFactors = FALSE)</code></pre>
-<pre class="r"><code>dat1 = merge(sib, trio, by = &quot;variant&quot;)
-dat2 = merge(dat1, ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;)
-dim(dat2)</code></pre>
-<pre><code>[1] 784  26</code></pre>
-<pre class="r"><code>dat3 = dat2[, c(&quot;variant&quot;, &quot;int.x&quot;, &quot;int.var.x&quot;, &quot;int.y&quot;, &quot;int.var.y&quot;, &quot;BETA&quot;,&quot;SE&quot;)]
-colnames(dat3) = c(&quot;variant&quot;, &quot;beta.sib&quot;, &quot;var.sib&quot;, &quot;beta.trio&quot;, &quot;var.trio&quot;, &quot;beta.ext&quot;,&quot;se.ext&quot;)
-dat3[, c(2:6)] = lapply(dat3[, c(2:6)], as.numeric)</code></pre>
+dat.trio &lt;- do.call(rbind, dat.trio)
+dat.sib &lt;- do.call(rbind, dat.sib)
+dat.ext &lt;- do.call(rbind, dat.ext)</code></pre>
+<pre class="r"><code>dat.int = merge(dat.trio, dat.sib, by = &quot;variant&quot;)
+dat3 = merge(dat.int, dat.ext, by.x = &quot;variant&quot;, by.y = &quot;ID&quot;, all = FALSE)
+# flip sign of effect if the allele tested is different
+dat3$BETA = ifelse(dat3$allele.test.x == dat3$A1, dat3$BETA, -dat3$BETA)
+dat3 = as.data.frame(dat3, stringsAsFactors = FALSE)</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 3, nrow = 2)
 colnames(res.mr) = c(&quot;ext-trio&quot;, &quot;ext-sib&quot;, &quot;sib-trio&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 
 # ext-trio
-MRInput &lt;- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
 mr = mr_ivw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput &lt;- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
 mr = mr_ivw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput &lt;- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
-<pre><code>            ext-trio     ext-sib  sib-trio
-point.est -1.2356231 -0.89681040 0.2118038
-std        0.3594508  0.09750785 0.1250710</code></pre>
+<pre><code>           ext-trio   ext-sib   sib-trio
+point.est 0.7224121 0.6316379 0.24003231
+std       0.2246318 0.0583474 0.08562223</code></pre>
 <pre class="r"><code>res.mr = matrix(NA, ncol = 3, nrow = 2)
 colnames(res.mr) = c(&quot;ext-trio&quot;, &quot;ext-sib&quot;, &quot;sib-trio&quot;)
 rownames(res.mr) = c(&quot;point.est&quot;, &quot;std&quot;)
 
 # ext-trio
-MRInput &lt;- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput &lt;- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
-mr = mr_ivw(MRInput)
+MRInput &lt;- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
+mr = mr_divw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput &lt;- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput &lt;- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr</code></pre>
-<pre><code>           ext-trio    ext-sib  sib-trio
-point.est 1.2356231 0.89681040 0.2118038
-std       0.3594508 0.09750785 0.1250710</code></pre>
+<pre><code>           ext-trio    ext-sib sib-trio
+point.est 1.1435958 1.00083656 4.835995
+std       0.3568076 0.09595648 3.485349</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
