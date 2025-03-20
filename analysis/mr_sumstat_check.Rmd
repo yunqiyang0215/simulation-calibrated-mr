@@ -11,26 +11,74 @@ library(mr.raps)
 ```
 
 ### 1. BMI
-```{r}
-sib = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_bmi.rds")
-trio = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_bmi.rds")
-ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_bmi.linear", sep = "\t")
 
+```{r }
 
-sib = as.data.frame(sib, stringsAsFactors = FALSE)
-trio = as.data.frame(trio, stringsAsFactors = FALSE)
-ext = as.data.frame(ext, stringsAsFactors = FALSE)
+dat.trio <- list()
+dat.sib <- list()
+dat.ext <- list()
+trait = "bmi"
+
+for (chr_num in 1:22) {
+  f1 <- paste0("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/", trait, "_chr_", chr_num, ".txt")
+  f2 <- paste0("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/", trait, "_chr_", chr_num, ".txt")
+  f3 <- paste0("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr", chr_num, ".", trait, ".glm.linear")
+  
+  trio <- read.csv(f1, header = TRUE, sep = " ")
+  sib <- read.csv(f2, header = TRUE, sep = " ")
+  ext <- read.csv(f3, header = TRUE, sep = "\t")
+  dat.trio[[chr_num]] = trio
+  dat.sib[[chr_num]] = sib
+  dat.ext[[chr_num]] = ext
+}
+
+dat.trio <- do.call(rbind, dat.trio)
+dat.sib <- do.call(rbind, dat.sib)
+dat.ext <- do.call(rbind, dat.ext)
+
 ```
 
+```{r}
+dat.int = merge(dat.trio, dat.sib, by = "variant")
+dat3 = merge(dat.int, dat.ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat3$BETA = ifelse(dat3$allele.test.x == dat3$A1, dat3$BETA, -dat3$BETA)
+dat3 = as.data.frame(dat3, stringsAsFactors = FALSE)
+```
 
 ```{r}
-dat1 = merge(sib, trio, by = "variant")
-dat2 = merge(dat1, ext, by.x = "variant", by.y = "ID")
-dim(dat2)
+res.mr = matrix(NA, ncol = 3, nrow = 2)
+colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
+rownames(res.mr) = c("point.est", "std")
 
-dat3 = dat2[, c("variant", "int.x", "int.var.x", "int.y", "int.var.y", "BETA","SE")]
-colnames(dat3) = c("variant", "beta.sib", "var.sib", "beta.trio", "var.trio", "beta.ext","se.ext")
-dat3[, c(2:6)] = lapply(dat3[, c(2:6)], as.numeric)
+# ext-trio
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
+
+mr = mr_ivw(MRInput)
+res.mr[, 1] = c(mr@Estimate, mr@StdError)
+  
+
+# ext-sib
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
+mr = mr_ivw(MRInput)
+res.mr[, 2] = c(mr@Estimate, mr@StdError)
+  
+
+# sib-trio
+MRInput <- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
+# IVW
+mr = mr_ivw(MRInput)
+res.mr[, 3] = c(mr@Estimate, mr@StdError)
+res.mr
 ```
 
 ```{r}
@@ -39,93 +87,67 @@ colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
 rownames(res.mr) = c("point.est", "std")
 
 # ext-trio
-MRInput <- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput <- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
-mr = mr_ivw(MRInput)
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
+mr = mr_divw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput <- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput <- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
-
-
-```{r}
-res.mr = matrix(NA, ncol = 3, nrow = 2)
-colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
-rownames(res.mr) = c("point.est", "std")
-
-# ext-trio
-MRInput <- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
-
-mr = mr_ivw(MRInput)
-res.mr[, 1] = c(mr@Estimate, mr@StdError)
-  
-
-# ext-sib
-MRInput <- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
-mr = mr_ivw(MRInput)
-res.mr[, 2] = c(mr@Estimate, mr@StdError)
-  
-
-# sib-trio
-MRInput <- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
-# IVW
-mr = mr_ivw(MRInput)
-res.mr[, 3] = c(mr@Estimate, mr@StdError)
-res.mr
-```
-
-
 ### 2. SBP
-```{r}
-sib = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/sib_calibration_sbp.rds")
+```{r }
 
-trio = readRDS("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/trio_calibration_sbp.rds")
+dat.trio <- list()
+dat.sib <- list()
+dat.ext <- list()
+trait = "sbp"
 
-ext = read.csv("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/gwas_sbp.linear", sep = "\t")
+for (chr_num in 1:22) {
+  f1 <- paste0("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_trio/", trait, "_chr_", chr_num, ".txt")
+  f2 <- paste0("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/result/mr_gwas_sibling/", trait, "_chr_", chr_num, ".txt")
+  f3 <- paste0("/Users/nicholeyang/Downloads/calibrated_estimator/real-data-analysis/202407/chr", chr_num, ".", trait, ".glm.linear")
+  
+  trio <- read.csv(f1, header = TRUE, sep = " ")
+  sib <- read.csv(f2, header = TRUE, sep = " ")
+  ext <- read.csv(f3, header = TRUE, sep = "\t")
+  dat.trio[[chr_num]] = trio
+  dat.sib[[chr_num]] = sib
+  dat.ext[[chr_num]] = ext
+}
 
-sib = as.data.frame(sib, stringsAsFactors = FALSE)
-trio = as.data.frame(trio, stringsAsFactors = FALSE)
-ext = as.data.frame(ext, stringsAsFactors = FALSE)
+dat.trio <- do.call(rbind, dat.trio)
+dat.sib <- do.call(rbind, dat.sib)
+dat.ext <- do.call(rbind, dat.ext)
+
 ```
 
 ```{r}
-dat1 = merge(sib, trio, by = "variant")
-dat2 = merge(dat1, ext, by.x = "variant", by.y = "ID")
-dim(dat2)
-
-dat3 = dat2[, c("variant", "int.x", "int.var.x", "int.y", "int.var.y", "BETA","SE")]
-colnames(dat3) = c("variant", "beta.sib", "var.sib", "beta.trio", "var.trio", "beta.ext","se.ext")
-dat3[, c(2:6)] = lapply(dat3[, c(2:6)], as.numeric)
+dat.int = merge(dat.trio, dat.sib, by = "variant")
+dat3 = merge(dat.int, dat.ext, by.x = "variant", by.y = "ID", all = FALSE)
+# flip sign of effect if the allele tested is different
+dat3$BETA = ifelse(dat3$allele.test.x == dat3$A1, dat3$BETA, -dat3$BETA)
+dat3 = as.data.frame(dat3, stringsAsFactors = FALSE)
 ```
 
 ```{r}
@@ -134,29 +156,29 @@ colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
 rownames(res.mr) = c("point.est", "std")
 
 # ext-trio
-MRInput <- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
 mr = mr_ivw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput <- mr_input(bx = dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
 mr = mr_ivw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput <- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput <- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
 mr = mr_ivw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
@@ -169,32 +191,31 @@ colnames(res.mr) = c("ext-trio", "ext-sib", "sib-trio")
 rownames(res.mr) = c("point.est", "std")
 
 # ext-trio
-MRInput <- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 1] = c(mr@Estimate, mr@StdError)
   
 
 # ext-sib
-MRInput <- mr_input(bx = -dat3$beta.ext,
-                      bxse = dat3$se.ext,
-                      by = dat3$beta.sib,
-                      byse = sqrt(dat3$var.sib))
-mr = mr_ivw(MRInput)
+MRInput <- mr_input(bx = dat3$BETA,
+                      bxse = dat3$SE,
+                      by = dat3$int.y,
+                      byse = sqrt(dat3$int.var.y))
+mr = mr_divw(MRInput)
 res.mr[, 2] = c(mr@Estimate, mr@StdError)
   
 
 # sib-trio
-MRInput <- mr_input(bx = dat3$beta.sib,
-                      bxse = sqrt(dat3$var.sib),
-                      by = dat3$beta.trio,
-                      byse = sqrt(dat3$var.trio))
+MRInput <- mr_input(bx = dat3$int.y,
+                      bxse = sqrt(dat3$int.var.y),
+                      by = dat3$int.x,
+                      byse = sqrt(dat3$int.var.x))
 # IVW
-mr = mr_ivw(MRInput)
+mr = mr_divw(MRInput)
 res.mr[, 3] = c(mr@Estimate, mr@StdError)
 res.mr
 ```
-
