@@ -10,6 +10,7 @@ library(ggplot2)
 library(latex2exp)
 library(dplyr)
 library(tidyr)
+library(gridExtra)
 ```
 
 ```{r}
@@ -65,13 +66,14 @@ df_trio_long <- df_trio %>%
   pivot_longer(cols = -r1, names_to = "snp", values_to = "vr") %>%
   mutate(r1 = factor(r1, levels = c("0", "0.1", "0.5")))
 
-ggplot(df_trio_long, aes(x = r1, y = vr, fill = r1)) +
+p1 <- ggplot(df_trio_long, aes(x = r1, y = vr, fill = r1)) +
   geom_boxplot(color = "black", width = 0.5, outlier.size = 0.5) +
   geom_hline(yintercept = theo_vr, linetype = "dashed", color = "red") +
   scale_fill_manual(values = c("0" = "#a6cee3", "0.1" = "#a6cee3", "0.5" = "#a6cee3")) +
   labs(
     x = expression("Nurture effect size (" * r[1] * " value)"),
-    y = "Empirical variance reduction"
+    y = "Empirical variance reduction",
+    title = "Trio data"
   ) +
   ylim(0, 1) +
   theme_minimal(base_size = 14) +
@@ -130,14 +132,15 @@ df_theo <- data.frame(
   theo_vr = theo_vr
 )
 
-ggplot(df_sib, aes(x = pheno_cor, y = vr)) +
+p2 <- ggplot(df_sib, aes(x = pheno_cor, y = vr)) +
   geom_point(size = 0.5, alpha = 0.7) +
   geom_line(data = df_theo, aes(x = phe_seq, y = theo_vr), color = "red", linetype = "dashed") +
   labs(
     x = "Phenotypic correlation between siblings",
-    y = "Empirical variance reduction"
+    y = "Empirical variance reduction",
+    title = "Sibling data"
   ) +
-  #xlim(0, 0.8) +
+  xlim(0, 0.8) +
  # ylim(0, 1) +
   theme_minimal(base_size = 14)
 
@@ -179,14 +182,13 @@ df_trio_long <- df_trio %>%
   mutate(r1 = factor(r1, levels = c("0", "0.1", "0.5")))
 
 # Plot
-ggplot(df_trio_long, aes(x = r1, y = vr, fill = r1)) +
+p3 <- ggplot(df_trio_long, aes(x = r1, y = vr, fill = r1)) +
   geom_boxplot(width = 0.5, color = "black", outlier.size = 0.5) +
   geom_hline(yintercept = theo_vr, color = "red", linetype = "dashed") +
   scale_fill_manual(values = c("0" = "#a6cee3", "0.1" = "#a6cee3", "0.5" = "#a6cee3")) +
   labs(
-    x = expression(r[1]~"value"),
-    y = "Empirical variance reduction",
-    title = "Trio data"
+    x = expression("Nurture effect size (" * r[1] * " value)"),
+    y = "Empirical variance reduction"
   ) +
   ylim(0, 1) +
   theme_minimal(base_size = 14) +
@@ -244,16 +246,22 @@ df_theo <- data.frame(
 )
 
 # Plot
-p2 <- ggplot(df_sib, aes(x = pheno_cor, y = vr)) +
+p4 <- ggplot(df_sib, aes(x = pheno_cor, y = vr)) +
   geom_point(size = 0.6, alpha = 0.7) +
   geom_line(data = df_theo, aes(x = phe_seq, y = theo_vr), color = "red", linetype = "dashed") +
   labs(
-    x = "Phenotypic correlation",
-    y = "Empirical variance reduction",
-    title = "Sibling data"
+    x = "Phenotypic correlation between siblings",
+    y = "Empirical variance reduction"
   ) +
+  xlim(0, 0.8) +
   theme_minimal(base_size = 14)
 
-p2
+
+```
+
+```{r}
+ggsave("/project2/mstephens/yunqiyang/calibrated_mr/simulation-calibrated-mr/output/sim_calibration.pdf",
+       plot = grid.arrange(p1, p2, p3, p4, ncol = 2),
+       width = 10, height = 8)
 ```
 
